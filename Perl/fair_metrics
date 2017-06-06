@@ -1,0 +1,47 @@
+#!/usr/local/bin/perl -w
+use strict;
+use v5.10;
+use experimental 'smartmatch';
+use CGI;
+use RDF::Trine;
+# use Class::Inpector; #  one day check if execute is exported from the module
+use JSON::Parse 'parse_json';
+
+
+my $cgi = CGI->new();
+my $body = $cgi->param('POSTDATA');
+my $path = $cgi->path_info();
+#print "Content-type: text/plain\n\n";
+#print "$path body: $body***\n";
+#exit 1;
+
+
+if (!$path){
+	print "Content-type: text/plain\n\n";
+	print "one day this will lead to general API instructions\n";
+	exit 1;
+} elsif ($path =~ /\/(\S+)/){
+	my $module = $1;
+
+	eval {
+	    (my $file = $module) =~ s|::|/|g;
+	    require $file . '.pm';
+	    $module->import();
+	    1;
+	} or do {
+		print "Content-type: text/plain\n\n";
+		print "NO SUCH TEST MODULE - $module\n";
+		die "No match to module $module for fair metrics\n";
+		exit 1;
+	};
+
+	print execute_metric_test($body);
+	exit 1;
+	
+} else {
+	print "Content-type: text/plain\n\n";
+	print "NO MATCH - $path body: $body***\n";
+	die "No match to path $path for fair metric\n";
+	exit 1;
+}
+
