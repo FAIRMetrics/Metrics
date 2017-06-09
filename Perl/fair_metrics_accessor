@@ -1,0 +1,96 @@
+#!/usr/local/bin/perl -w
+use strict;
+use warnings;
+use JSON;
+use CGI;
+use URI;
+use FAIR::Accessor::Distribution;
+use FAIR::Accessor::Container;
+use FAIR::Accessor::MetaRecord;
+
+
+
+package fair_metrics_accessor;
+
+        
+ use base 'FAIR::Accessor';
+
+ my $config = {
+   title => 'FAIR Metrics Evaluation Service',
+   serviceTextualDescription => "This is the root of the FAIR Metrics Evaluation service.  This document provides general metadata, and acts as a container for brief descriptions of, and URLs for, individual metrics.  More metadata about each metric is available by calling GET, and the metric can be executed by POSTing appropirate data (as defined by the individual metrics' metadata)",
+   textualAccessibilityInfo => "The information from this server requries no authentication; HTTP GET is sufficient",  # this could also be a $URI describing the accessibiltiy
+   mechanizedAccessibilityInfo => "",  # this must be a URI to an RDF document
+   textualLicenseInfo => "CC-BY",  # this could also be a URI to the license info
+   mechanizedLicenseInfo =>  "https://creativecommons.org/licenses/by/4.0", # this must be a URI to an RDF document
+   ETAG_Base => "SomeIdentifierOfMyAccessor", # this is a unique identificaiton string for the service (required by the LDP specification)
+   localNamespaces => {
+                       pfund => 'http://vocab.ox.ac.uk/projectfunding#term_',
+
+        },  # add a few new namespaces to the list of known namespaces....
+   basePATH => '/cgi-bin', # REQUIRED regexp to match the PATH part of the URL, before the ID number
+
+ };
+            
+ my $service = fair_metrics_accessor->new(%$config);
+
+ # start daemon
+ $service->handle_requests;
+
+
+ #-----------------------------------------------------------------
+ # Accessor Implementation
+ #-----------------------------------------------------------------
+
+
+ #------------- Container Resource --------------
+
+ sub Container {    #REQUIRED SUBROUTINE NAME!!!!
+
+   my ($self, %ARGS) = @_;
+   
+   my $Container = FAIR::Accessor::Container->new(NS => $self->Configuration->Namespaces);
+    
+   my $BASE_URL = URI->new(CGI::url());
+   $BASE_URL =~ s|[^/]+$||;  # get rid of current script name
+   $BASE_URL = $BASE_URL . "Metrics/";
+   opendir my $dir, "./Metrics" or die "Cannot open directory: $!";
+   my @files = readdir $dir;
+   closedir $dir;
+   my @metricsURLs;
+   foreach my $metric (@files) {
+      next if ($metric =~ /^\./);
+      next if ($metric =~ /readme/);
+      push @metricsURLs, "$BASE_URL$metric";   # need to make a URL for each of the meta-records, based on the ID of the PHIBase record, push it onto a list
+   }
+  
+   $Container->addRecords(\@metricsURLs); # the listref of record ids
+   $self->fillContainerMetadata($Container);
+
+   return $Container;
+ }
+
+ sub fillContainerMetadata {
+   my ($self, $Container) = @_;
+   $Container->addMetadata({
+      'dc:title' => "FAIR Metrics Evaluation Service",
+      'dcat:description' => "This is the root of the FAIR Metrics Evaluation service.  This document provides general metadata, and acts as a container for brief descriptions of, and URLs for, individual metrics.  More metadata about each metric is available by calling GET, and the metric can be executed by POSTing appropirate data (as defined by the individual metrics' metadata)",
+      'dcat:identifier' => URI->new(CGI::url()),  # me myself and I
+      'dcat:keyword' => ["FAIR Metrics", "FAIR"],
+      'dcat:publisher' => ['http://wilkinsonlab.info'],
+      'pfund:hasPrincipalInvestigator' => ["Dr. Mark Wilkinson"],
+      'dc:creator' => 'http://wilkinsonlab.info',
+      'pav:authoredBy' => ['http://orcid.org/0000-0002-9699-485X'],
+      'pav:version' => '7 June, 2017',
+      'dcat:contactPoint' => 'http://biordf.org/DataFairPort/MiscRDF/Wilkinson.rdf',
+      'dc:license' => "https://creativecommons.org/licenses/by/4.0",
+      'rdf:type' => ['prov:Collection', 'dctypes:Dataset'],
+   });
+ }
+
+ sub urlencode {
+    my $s = shift;
+    $s =~ s/ /+/g;
+    $s =~ s/([^A-Za-z0-9\+-])/sprintf("%%%02X", ord($1))/seg;
+    return $s;
+ }
+ 
