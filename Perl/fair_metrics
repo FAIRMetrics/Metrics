@@ -3,45 +3,74 @@ use strict;
 use v5.10;
 use experimental 'smartmatch';
 use CGI;
+use URI;
 use RDF::Trine;
+use FAIR::Accessor::Distribution;
+use FAIR::Accessor::Container;
+use FAIR::Accessor::MetaRecord;
+
 # use Class::Inpector; #  one day check if execute is exported from the module
 use JSON::Parse 'parse_json';
 
+#print "Content-Type: text/plain\n\n";
 
+$ENV{SERVER_PROTOCOL} = 'HTTP/1.1';
 my $cgi = CGI->new();
-my $body = $cgi->param('POSTDATA');
-my $path = $cgi->path_info();
-#print "Content-type: text/plain\n\n";
-#print "$path body: $body***\n";
-#exit 1;
 
-
-if (!$path){
-	print "Content-type: text/plain\n\n";
-	print "one day this will lead to general API instructions\n";
+#$ENV{REQUEST_METHOD} = "POST";
+if ($cgi->request_method() eq "GET") {
+	my $URL = URI->new(CGI::url());
+	$URL =~ s|[^/]+$||;  # get rid of current script name
+	$URL = $URL . "fair_metrics_accessor";
+	print $cgi->redirect(
+		-uri=>$URL,
+#		-nph=>1,
+#		-status=>'303 See Other'   # this does not work on some servers... they reject http1.1 tags completely :-(
+	);
 	exit 1;
-} elsif ($path =~ /\/(\S+)/){
-	my $module = $1;
-
-	eval {
-	    (my $file = $module) =~ s|::|/|g;
-	    require $file . '.pm';
-	    $module->import();
-	    1;
-	} or do {
-		print "Content-type: text/plain\n\n";
-		print "NO SUCH TEST MODULE - $module\n";
-		die "No match to module $module for fair metrics\n";
-		exit 1;
-	};
-
-	print execute_metric_test($body);
+} elsif ($cgi->request_method() eq "POST") {
+	evaluateMetric();
 	exit 1;
-	
 } else {
-	print "Content-type: text/plain\n\n";
-	print "NO MATCH - $path body: $body***\n";
-	die "No match to path $path for fair metric\n";
+	print $cgi->header(
+	-type=>'text/plain',
+	-status=> '405 Method Not Allowed',
+	-Allow => "GET, POST"
+	);
+	print "Allowed methods are GET and POST";
 	exit 1;
 }
 
+sub evaluateMetric {
+	my $body = $cgi->param('POSTDATA');
+
+	my $path = $cgi->path_info();
+
+	if (!$path){
+		print "Content-type: text/plain\n\n";
+		print "one day this will lead to general API instructions\n";
+		exit 1;
+	} elsif ($path =~ /\/(\S+)/){
+		my $file = $1;
+		my $module;
+		eval {
+		    $module = $file;
+		    $module  =~ s|/|::|g;
+		    require $file . '.pm';
+		} or do {
+			print "Content-type: text/plain\n\n";
+			print "NO SUCH TEST MODULE - $module  $file.pm\n";
+			die "No match to module $module for fair metrics\n";
+			exit 1;
+		};
+
+		print $module->execute_metric_test($body);
+		exit 1;
+		
+	} else {
+		print "Content-type: text/plain\n\n";
+		print "NO MATCH - $path body: $body***\n";
+		die "No match to path $path for fair metric\n";
+		exit 1;
+	}
+}
