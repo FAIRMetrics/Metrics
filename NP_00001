@@ -1,4 +1,4 @@
-@prefix this: <https://purl.org/fair-metrics/NP_00001> .  # we need to decide on a canonical URI for teh metric
+@prefix this: <https://purl.org/fair-metrics/NP_00001> .  # canonical URI for the metric
 @prefix sub: <https://purl.org/fair-metrics/NP_00001#> .
  @prefix dcterms: <http://purl.org/dc/terms/> .
  @prefix dcelem: <http://purl.org/dc/elements/1.1/> .
