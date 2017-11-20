@@ -1,0 +1,40 @@
+@prefix this: <http://github.org/FAIRMetrics/Metrics/NP_00001> .  # we need to decide on a canonical URI for teh metric
+@prefix sub: <http://github.org/FAIRMetrics/Metrics/NP_00001#> .
+ @prefix dcterms: <http://purl.org/dc/terms/> .
+ @prefix np: <http://www.nanopub.org/nschema#> .
+ @prefix nx: <http://www.nextprot.org/db/search#> .
+ @prefix pav: <http://swan.mindinformatics.org/ontologies/1.2/pav/> .
+ @prefix prov: <http://www.w3.org/ns/prov#> .
+ @prefix prv: <http://purl.org/net/provenance/ns#> .
+ @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+ @prefix ro: <http://purl.org/obo/owl/OBO_REL#> .
+ @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+ @prefix fair: <http://purl.org/fair-ontology#> . 
+ @prefix foaf: <http://xmlns.com/foaf/0.1/> .
+
+sub:Head {
+  this: np:hasAssertion sub:assertion ;
+       np:hasProvenance sub:provenance ;
+       np:hasPublicationInfo sub:pubinfo ;
+       a np:Nanopublication .
+ }
+ 
+sub:assertion {
+ <http://github.org/FAIRMetrics/Metrics/FM-F1.tex> a fair:FAIR-Metric ;
+  foaf:primaryTopic fair:F1 .
+
+ }
+ 
+sub:provenance {
+ sub:assertion dcterms:author  "Michel Dumontier", "Mark Wilkinson" , "Susanna Sansone", "Peter Doorn", "Luiz Bonino", "Erik Schultes" ;
+ rdfs:comment "FAIR Metric for Fair Principle F1"^^xsd:string ;
+ prov:wasGeneratedBy "FAIR Metrics Working Group" .
+}
+ 
+sub:pubinfo {
+ this: dcterms:created "2017-11-20T00:00:00.0Z"^^xsd:dateTime ;
+ dcterms:rights <http://creativecommons.org/licenses/by/4.0/> ;
+ dcterms:rightsHolder <http://go-fair.org> ;
+ pav:authoredBy "Mark Wilkinson" , <http://orcid.org/0000-0001-6960-357X> ;
+ pav:versionNumber "1" ;
+}
