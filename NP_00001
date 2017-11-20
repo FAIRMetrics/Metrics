@@ -1,6 +1,7 @@
-@prefix this: <http://github.org/FAIRMetrics/Metrics/NP_00001> .  # we need to decide on a canonical URI for teh metric
-@prefix sub: <http://github.org/FAIRMetrics/Metrics/NP_00001#> .
+@prefix this: <https://purl.org/fair-metrics/NP_00001> .  # we need to decide on a canonical URI for teh metric
+@prefix sub: <https://purl.org/fair-metrics/NP_00001#> .
  @prefix dcterms: <http://purl.org/dc/terms/> .
+ @prefix dcelem: <http://purl.org/dc/elements/1.1/> .
  @prefix np: <http://www.nanopub.org/nschema#> .
  @prefix nx: <http://www.nextprot.org/db/search#> .
  @prefix pav: <http://swan.mindinformatics.org/ontologies/1.2/pav/> .
@@ -11,6 +12,7 @@
  @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
  @prefix fair: <http://purl.org/fair-ontology#> . 
  @prefix foaf: <http://xmlns.com/foaf/0.1/> .
+ @prefix dcat: <http://www.w3.org/ns/dcat#> .
 
 sub:Head {
   this: np:hasAssertion sub:assertion ;
@@ -28,8 +30,22 @@ sub:assertion {
 sub:provenance {
  sub:assertion dcterms:author  "Michel Dumontier", "Mark Wilkinson" , "Susanna Sansone", "Peter Doorn", "Luiz Bonino", "Erik Schultes" ;
  rdfs:comment "FAIR Metric for Fair Principle F1"^^xsd:string ;
+ dcat:distribution _:dist1 ;
+ dcat:distribution _:dist2 ; 
  prov:wasGeneratedBy "FAIR Metrics Working Group" .
+ 
+ _:dist1 dcelem:format "application/x-texinfo" ;
+	rdf:type <http://rdfs.org/ns/void#Dataset> ;
+	rdf:type <http://www.w3.org/ns/dcat#Distribution> ;
+	dcat:downloadURL <http://example.org/latexfile> .
+
+ _:dist2 dcelem:format "application/pdf" ;
+	rdf:type <http://rdfs.org/ns/void#Dataset> ;
+	rdf:type <http://www.w3.org/ns/dcat#Distribution> ;
+	dcat:downloadURL <http://example.org/pdf> .
+
 }
+
  
 sub:pubinfo {
  this: dcterms:created "2017-11-20T00:00:00.0Z"^^xsd:dateTime ;
