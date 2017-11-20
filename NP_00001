@@ -37,12 +37,12 @@ sub:provenance {
  _:dist1 dcelem:format "application/x-texinfo" ;
 	rdf:type <http://rdfs.org/ns/void#Dataset> ;
 	rdf:type <http://www.w3.org/ns/dcat#Distribution> ;
-	dcat:downloadURL <http://example.org/latexfile> .
+	dcat:downloadURL <https://raw.githubusercontent.com/FAIRMetrics/Metrics/master/Distributions/metricF1.tex> .
 
  _:dist2 dcelem:format "application/pdf" ;
 	rdf:type <http://rdfs.org/ns/void#Dataset> ;
 	rdf:type <http://www.w3.org/ns/dcat#Distribution> ;
-	dcat:downloadURL <http://example.org/pdf> .
+	dcat:downloadURL <https://raw.githubusercontent.com/FAIRMetrics/Metrics/master/Distributions/metricF1.pdf> .
 
 }
 
