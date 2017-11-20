@@ -1,0 +1,127 @@
+\documentclass[english]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{babel}
+\usepackage{color}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+%\usepackage{makecell}  % $ sudo tlmgr install makecell
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\setlength{\headheight}{40pt} 
+
+\begin{document}
+
+\title{FAIR Metric FM-F1A}
+
+\author{Mark D. Wilkinson, Susanna-Assunta Sansone, \\Erik Schultes, Peter Doorn,\\ 
+Luiz Olavo Bonino da Silva Santos, Michel Dumontier}
+
+\maketitle
+\thispagestyle{fancy}
+
+
+\begin{table}
+\centering
+
+\begin{tabular}{|p{5cm}|p{8cm}|}
+\hline
+\emph{FIELD} & \emph{DESCRIPTION} \\
+\hline
+Metric Identifier &   FM-F1A
+ \\
+
+
+\hline
+Metric Name &   Identifier Uniqueness \\
+
+
+
+\hline
+To which principle does it apply? &   F1\\
+
+
+
+\hline
+What is being measured? & Whether there is a scheme to uniquely identify the digital resource.\\
+
+
+
+\hline
+Why should we measure it? & 
+The uniqueness of an identifier is a necessary condition to unambiguously refer that resource, and that resource alone. Otherwise, an identifier shared by multiple resources will confound efforts to describe that resource, or to use the identifier to retrieve it. Examples of identifier schemes include, but are not limited to URN, IRI, DOI, Handle, trustyURI, LSID, etc. For an in-depth understanding of the issues around identifiers, please see http://dx.plos.org/10.1371/journal.pbio.2001414  
+\\
+
+
+
+\hline
+What must be provided? &  URL to a registered identifier scheme. \\
+
+
+
+\hline
+How do we measure it? &  
+An identifier scheme is valid if and only if it is described in a repository that can register and present such identifier schemes (e.g. fairsharing.org). \newline
+\newline
+
+Information about the identifier scheme must be presented with a machine-readable document containing the FM1 attribute with the URL to where the scheme is described.  see specification for implementation.
+\\
+
+
+
+\hline
+What is a valid result? &  
+Present or Absent
+\\
+
+
+
+\hline
+For which digital resource(s) is this relevant? &  All\\
+
+
+
+\hline
+Examples of their application across types of digital resource &  
+
+Ontology \newline
+- Gene Ontology: http://www.ebi.ac.uk/miriam/main/\newline datatypes/MIR:00000022   
+\newline
+- HISCO: [link]\newline
+This resource has not described or registered their identifier scheme. A recommended course of action would be to XXX.
+\newline
+Model/format 
+- RDFS: https://fairsharing.org/bsg-s000283 
+\newline
+Repository \newline
+- JWS Online: https://www.ebi.ac.uk/miriam/main\newline /collections/MIR:00000130 \newline
+- DANS EASY: \newline
+\newline
+Database \newline
+- ArrayExpress: https://fairsharing.org/biodbcore-000305  \newline
+ -> FAIRsharing will implement the FAIR Metric specification to provide a machine-readable link to the MIRIAM repository (for life science content)
+\newline
+API \newline
+- smartAPI’s API\newline
+https://raw.githubusercontent.com/WebsmartAPI\newline /smartAPI/master/docs/iodocs/smartapi.json  \newline
+--> the smartAPI repository will provide accessible specification of the identifier scheme that is embedded in that metadata document.
+\newline
+Journal\newline
+http://www.nature.com/developers/documentation/\newline metadata-resources/doi  \newline
+--> the web site will have to provide a machine-readable pointer to the official DOI specification.
+\newline
+
+\\
+
+
+
+\hline
+\end{tabular}
+% \caption{The template for creating FAIR Metrics}
+\end{table}
+
+
+
+\end{document}

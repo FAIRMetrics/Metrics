@@ -15,7 +15,7 @@
  @prefix dcat: <http://www.w3.org/ns/dcat#> .
 
 sub:Head {
-  this: np:hasAssertion sub:assertion ;
+  this:nanopub np:hasAssertion sub:assertion ;
        np:hasProvenance sub:provenance ;
        np:hasPublicationInfo sub:pubinfo ;
        a np:Nanopublication .
