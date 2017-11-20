@@ -1,5 +1,5 @@
-@prefix this: <https://purl.org/fair-metrics/NP_00001> .  # canonical URI for the metric
-@prefix sub: <https://purl.org/fair-metrics/NP_00001#> .
+@prefix this: <https://purl.org/fair-metrics/FM_F1A> .  # canonical URI for the metric
+@prefix sub: <https://purl.org/fair-metrics/FM_F1A#> .
  @prefix dcterms: <http://purl.org/dc/terms/> .
  @prefix dcelem: <http://purl.org/dc/elements/1.1/> .
  @prefix np: <http://www.nanopub.org/nschema#> .
@@ -22,7 +22,7 @@ sub:Head {
  }
  
 sub:assertion {
- <http://github.org/FAIRMetrics/Metrics/FM-F1.tex> a fair:FAIR-Metric ;
+ this: a fair:FAIR-Metric ;
   foaf:primaryTopic fair:F1 .
 
  }
@@ -37,12 +37,12 @@ sub:provenance {
  _:dist1 dcelem:format "application/x-texinfo" ;
 	rdf:type <http://rdfs.org/ns/void#Dataset> ;
 	rdf:type <http://www.w3.org/ns/dcat#Distribution> ;
-	dcat:downloadURL <https://raw.githubusercontent.com/FAIRMetrics/Metrics/master/Distributions/metricF1.tex> .
+	dcat:downloadURL <https://raw.githubusercontent.com/FAIRMetrics/Metrics/master/Distributions/FM_F1A.tex> .
 
  _:dist2 dcelem:format "application/pdf" ;
 	rdf:type <http://rdfs.org/ns/void#Dataset> ;
 	rdf:type <http://www.w3.org/ns/dcat#Distribution> ;
-	dcat:downloadURL <https://raw.githubusercontent.com/FAIRMetrics/Metrics/master/Distributions/metricF1.pdf> .
+	dcat:downloadURL <https://raw.githubusercontent.com/FAIRMetrics/Metrics/master/Distributions/FM_F1A.pdf> .
 
 }
 
