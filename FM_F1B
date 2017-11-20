@@ -1,0 +1,56 @@
+@prefix this: <https://purl.org/fair-metrics/FM_F1B> .  # canonical URI for the metric
+@prefix sub: <https://purl.org/fair-metrics/FM_F1B#> .
+ @prefix dcterms: <http://purl.org/dc/terms/> .
+ @prefix dcelem: <http://purl.org/dc/elements/1.1/> .
+ @prefix np: <http://www.nanopub.org/nschema#> .
+ @prefix nx: <http://www.nextprot.org/db/search#> .
+ @prefix pav: <http://swan.mindinformatics.org/ontologies/1.2/pav/> .
+ @prefix prov: <http://www.w3.org/ns/prov#> .
+ @prefix prv: <http://purl.org/net/provenance/ns#> .
+ @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+ @prefix ro: <http://purl.org/obo/owl/OBO_REL#> .
+ @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+ @prefix fair: <http://purl.org/fair-ontology#> . 
+ @prefix foaf: <http://xmlns.com/foaf/0.1/> .
+ @prefix dcat: <http://www.w3.org/ns/dcat#> .
+
+sub:Head {
+  sub:nanopub np:hasAssertion sub:assertion ;
+       np:hasProvenance sub:provenance ;
+       np:hasPublicationInfo sub:pubinfo ;
+       a np:Nanopublication .
+ }
+ 
+sub:assertion {
+ this: a fair:FAIR-Metric ;
+  foaf:primaryTopic fair:F1 .
+
+ }
+ 
+sub:provenance {
+ sub:assertion dcterms:author  "Michel Dumontier", "Mark Wilkinson" , "Susanna Sansone", "Peter Doorn", "Luiz Bonino", "Erik Schultes" ;
+ rdfs:comment "FAIR Metric for Fair Principle F1"^^xsd:string ;
+ dcat:distribution _:dist1 ;
+ dcat:distribution _:dist2 ; 
+ prov:wasGeneratedBy "FAIR Metrics Working Group" .
+ 
+ _:dist1 dcelem:format "application/x-texinfo" ;
+	rdf:type <http://rdfs.org/ns/void#Dataset> ;
+	rdf:type <http://www.w3.org/ns/dcat#Distribution> ;
+	dcat:downloadURL <https://raw.githubusercontent.com/FAIRMetrics/Metrics/master/Distributions/FM_F1B.tex> .
+
+ _:dist2 dcelem:format "application/pdf" ;
+	rdf:type <http://rdfs.org/ns/void#Dataset> ;
+	rdf:type <http://www.w3.org/ns/dcat#Distribution> ;
+	dcat:downloadURL <https://raw.githubusercontent.com/FAIRMetrics/Metrics/master/Distributions/FM_F1B.pdf> .
+
+}
+
+ 
+sub:pubinfo {
+ this: dcterms:created "2017-11-20T00:00:00.0Z"^^xsd:dateTime ;
+ dcterms:rights <http://creativecommons.org/licenses/by/4.0/> ;
+ dcterms:rightsHolder <http://go-fair.org> ;
+ pav:authoredBy "Mark Wilkinson" , <http://orcid.org/0000-0001-6960-357X> ;
+ pav:versionNumber "1" ;
+}

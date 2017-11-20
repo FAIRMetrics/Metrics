@@ -1,0 +1,132 @@
+\documentclass[english]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{babel}
+\usepackage{color}
+%\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{longtable}
+%\usepackage{makecell}  % $ sudo tlmgr install makecell
+%\pagestyle{fancy}
+%\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\setlength{\headheight}{20pt} 
+
+\begin{document}
+
+\title{FAIR Metric FM-F1B}
+
+\author{Mark D. Wilkinson, Susanna-Assunta Sansone, \\Erik Schultes, Peter Doorn,\\ 
+Luiz Olavo Bonino da Silva Santos, Michel Dumontier}
+
+\maketitle
+%\thispagestyle{fancy}
+
+
+%\begin{table}
+\centering
+
+\begin{tabular}{|p{5cm}|p{9cm}|}
+\hline
+\emph{FIELD} & \emph{DESCRIPTION} \\
+\hline
+Metric Identifier &   FM-F1B
+ \\
+
+
+\hline
+Metric Name &   
+Identifier persistence
+ \\
+
+
+
+\hline
+To which principle does it apply? &   F1\\
+
+
+
+\hline
+What is being measured? & Whether there is a policy that describes what the provider will do in the event an identifier scheme becomes deprecated.\\
+
+
+
+\hline
+Why should we measure it? & 
+
+The change to an identifier scheme will have widespread implications for resource lookup, linking, and data sharing. Providers of digital resources must ensure that they have a policy to manage changes in their identifier scheme, with a specific emphasis on maintaining/redirecting previously generated identifiers.
+  
+\\
+
+
+
+\hline
+What must be provided? &  
+A URL that resolves to a document containing the relevant policy.
+ \\
+
+
+
+\hline
+How do we measure it? &  
+Use an HTTP GET on URL provided. \newline
+\\
+
+
+
+\hline
+What is a valid result? &  
+Present (HTTP 200) or Absent (any other HTTP code)
+\\
+
+
+
+\hline
+For which digital resource(s) is this relevant? &  All\\
+
+
+
+\hline
+Examples of their application across types of digital resource &  
+for each of the ‘canonical’ data types, examples, if available.
+\newline @todo
+\newline
+\newline
+FAIR principles (scholarly publication in Nature Scientific Data)\newline
+\verb|https://www.doi.org/overview/DOI_article_ELIS3.pdf|
+\newline
+http://www.nature.com/developers/\newline
+documentation/metadata-resources/doi/ \newline
+\newline
+FAIR Principles (computable representation): 
+\newline
+https://github.com/FAIRDataInitiative/\newline
+\verb|FAIR-principles#fair-principles|
+\newline
+For DSA-certified repositories (example below of 3TU-Datacentre at Delft) the identifier persistence policy is described in the self assessment:\newline
+https://assessment.datasealofapproval.org/\newline
+\verb|assessment_187/seal/pdf/| \newline
+\newline
+DOI Handbook - ensuring persistence:\newline 
+\verb|http://www.doi.org/doi_handbook/| \newline
+\verb|6_Policies.html#6.5}|
+\\
+
+
+
+\hline
+
+Comments & 
+
+A first version of this metric would focus on just checking a URL that resolves to a document. We can’t verify that document. \newline
+A second version would indicate how to structure the data policy document with a particular section (similar to how the CC licenses now have a formal structure in RDF).\newline
+A third version would insist that that document and section is signed by an approved organization and made available in an appropriate repository. \\ 
+\hline
+\end{tabular}
+% \caption{The template for creating FAIR Metrics}
+%\end{table}
+
+
+
+\end{document}
