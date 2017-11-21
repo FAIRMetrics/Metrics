@@ -1,0 +1,149 @@
+\documentclass[english]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{babel}
+\usepackage{color}
+%\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{longtable}
+%\usepackage{makecell}  % $ sudo tlmgr install makecell
+%\pagestyle{fancy}
+%\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\setlength{\headheight}{20pt} 
+
+\begin{document}
+
+\title{FAIR Metric FM-F2}
+
+\author{Mark D. Wilkinson, Susanna-Assunta Sansone, \\Erik Schultes, Peter Doorn,\\ 
+Luiz Olavo Bonino da Silva Santos, Michel Dumontier}
+
+\maketitle
+
+\newpage
+
+
+
+
+
+\begin{longtable}{|p{5cm}|p{9cm}|}
+
+
+\hline
+\emph{FIELD} & \emph{DESCRIPTION} \\
+\hline
+Metric Identifier &   FM-F2
+ \\
+
+
+\hline
+Metric Name &   
+Machine-readability of metadata
+
+ \\
+
+
+
+\hline
+To which principle does it apply? &   F2 - Data are described with rich metadata\\
+
+
+
+\hline
+What is being measured? & 
+
+The availability of machine-readable metadata that describes a digital resource.\\
+
+
+
+\hline
+Why should we measure it? & 
+
+
+Richness of metadata can refer to many different aspects. One aspect is that the machine readability of metadata makes it possible to optimize their discovery. For instance, Web search engines suggest the use of particular structured metadata elements to optimize search. Thus, the machine-readability aspect can help people and machines find a digital resource of interest. Here, we focus on metadata being sufficiently rich in this sense - that the metadata document and the metadata elements are machine readable.  Otherwise, it will also be difficult to understand what the digital resource is and what information is being provided about it.
+
+  
+\\
+
+
+
+\hline
+What must be provided? &  
+
+A URL to a document that contains machine-readable metadata for the digital resource. Furthermore, the file format must be specified.
+
+ \\
+
+
+
+\hline
+How do we measure it? &  
+HTTP GET on the metadata URL. A response of HTTP 200 indicates that there is indeed a document. The second URL should resolve to the record of a registered file format (e.g. DCAT, DICOM, schema.org etc.) in a registry like FAIRsharing. \newline
+\\
+
+
+
+\hline
+What is a valid result? &  
+
+Machine-readable or Machine-not-readable
+
+\\
+
+
+
+\hline
+For which digital resource(s) is this relevant? &  All\\
+
+
+
+\hline
+Examples of their application across types of digital resource &  
+This URL can resolve to:\newline
+
+- A record in a metadata registry relevant to your digital object (e.g. FAIRsharing.org, FAIR Data Point, smartAPI editor)\newline
+- Your metadata on an HTML web page using schema.org\newline
+- A FAIR Accessor\newline
+
+Semanticscience Integrated Ontology : \newline\newline
+ http://semanticscience.org/ontology/sio.owl 
+ https://biosharing.org/bsg-s002686\newline
+\newline
+Example of a DANS metadata-record of an archived dataset: \newline
+https://easy.dans.knaw.nl/ui/datasets/id/easy-dataset:67859/tab/1 \newline
+\newline
+smartAPI’s API metadata: https://raw.githubusercontent.com/\newline 
+WebsmartAPI/smartAPI/master/docs/iodocs/smartapi.json \newline
+\newline
+Metadata record of a database: \newline
+- GEO https://fairsharing.org/biodbcore-000441  \newline
+\newline
+Metadata record of a standard: \newline
+- RDF https://fairsharing.org/bsg-s000559 \newline
+\newline
+Non-article Published Work\newline
+- my Zenodo Deposit for polyA (http://doi.org/10.5281/zenodo.47641)\newline
+- myExperiment Workflow (http://www.myexperiment.org/workflows/2999.html)\newline
+- Jupyter notebook on GitHub (https://github.com/VidhyasreeRamu/\newline
+GlobalClimateChange/blob/master/GlobalWarmingAnalysis.ipynb)
+
+\\
+
+
+
+\hline
+
+Comments & 
+
+A first version of this metric would focus on just checking a URL that resolves to a document. We can’t verify that document. \newline
+A second version would indicate how to structure the data policy document with a particular section (similar to how the CC licenses now have a formal structure in RDF).\newline
+A third version would insist that that document and section is signed by an approved organization and made available in an appropriate repository. \\ 
+\hline
+
+\end{longtable}
+
+
+
+\end{document}
