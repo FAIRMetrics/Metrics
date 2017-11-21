@@ -21,16 +21,13 @@
 Luiz Olavo Bonino da Silva Santos, Michel Dumontier}
 
 \maketitle
-
-\newpage
-
+%\thispagestyle{fancy}
 
 
+%\begin{table}
+\centering
 
-
-\begin{longtable}{|p{5cm}|p{9cm}|}
-
-
+\begin{tabular}{|p{5cm}|p{9cm}|}
 \hline
 \emph{FIELD} & \emph{DESCRIPTION} \\
 \hline
@@ -101,35 +98,33 @@ For which digital resource(s) is this relevant? &  All\\
 
 \hline
 Examples of their application across types of digital resource &  
-This URL can resolve to:\newline
+This URL can resolve to:
 
-- A record in a metadata registry relevant to your digital object (e.g. FAIRsharing.org, FAIR Data Point, smartAPI editor)\newline
-- Your metadata on an HTML web page using schema.org\newline
-- A FAIR Accessor\newline
+- A record in a metadata registry relevant to your digital object (e.g. FAIRsharing.org, FAIR Data Point, smartAPI editor)
+- Your metadata on an HTML web page using schema.org
+- A FAIR Accessor………...
 
-Semanticscience Integrated Ontology : \newline\newline
+Semanticscience Integrated Ontology : 
  http://semanticscience.org/ontology/sio.owl 
- https://biosharing.org/bsg-s002686\newline
-\newline
-Example of a DANS metadata-record of an archived dataset: \newline
-https://easy.dans.knaw.nl/ui/datasets/id/easy-dataset:67859/tab/1 \newline
-\newline
-smartAPI’s API metadata: https://raw.githubusercontent.com/\newline 
-WebsmartAPI/smartAPI/master/docs/iodocs/smartapi.json \newline
-\newline
-Metadata record of a database: \newline
-- GEO https://fairsharing.org/biodbcore-000441  \newline
-\newline
-Metadata record of a standard: \newline
-- RDF https://fairsharing.org/bsg-s000559 \newline
-\newline
-Non-article Published Work\newline
-- my Zenodo Deposit for polyA (http://doi.org/10.5281/zenodo.47641)\newline
-- myExperiment Workflow (http://www.myexperiment.org/workflows/2999.html)\newline
-- Jupyter notebook on GitHub (https://github.com/VidhyasreeRamu/\newline
-GlobalClimateChange/blob/master/GlobalWarmingAnalysis.ipynb)
+ https://biosharing.org/bsg-s002686
 
-\\
+Example of a DANS metadata-record of an archived dataset: 
+https://easy.dans.knaw.nl/ui/datasets/id/easy-dataset:67859/tab/1 
+
+smartAPI’s API metadata: https://raw.githubusercontent.com/WebsmartAPI/smartAPI/master/docs/iodocs/smartapi.json 
+
+Metadata record of a database: 
+- GEO https://fairsharing.org/biodbcore-000441  
+
+Metadata record of a standard: 
+- RDF https://fairsharing.org/bsg-s000559 
+
+Non-article Published Work
+- my Zenodo Deposit for polyA (http://doi.org/10.5281/zenodo.47641)
+- myExperiment Workflow (http://www.myexperiment.org/workflows/2999.html)
+- Jupyter notebook on GitHub (https://github.com/VidhyasreeRamu/GlobalClimateChange/blob/master/GlobalWarmingAnalysis.ipynb)
+
+//
 
 
 
@@ -141,8 +136,9 @@ A first version of this metric would focus on just checking a URL that resolves 
 A second version would indicate how to structure the data policy document with a particular section (similar to how the CC licenses now have a formal structure in RDF).\newline
 A third version would insist that that document and section is signed by an approved organization and made available in an appropriate repository. \\ 
 \hline
-
-\end{longtable}
+\end{tabular}
+% \caption{The template for creating FAIR Metrics}
+%\end{table}
 
 
 
