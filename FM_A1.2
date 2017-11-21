@@ -1,5 +1,5 @@
-@prefix this: <https://purl.org/fair-metrics/FM_A1.2> .  # canonical URI for the metric
-@prefix sub: <https://purl.org/fair-metrics/FM_A1.2#> .
+@prefix this: <https://purl.org/fair-metrics/FM_A2> .  # canonical URI for the metric
+@prefix sub: <https://purl.org/fair-metrics/FM_A2#> .
  @prefix dcterms: <http://purl.org/dc/terms/> .
  @prefix dcelem: <http://purl.org/dc/elements/1.1/> .
  @prefix np: <http://www.nanopub.org/nschema#> .
@@ -23,13 +23,13 @@ sub:Head {
  
 sub:assertion {
  this: a fair:FAIR-Metric ;
-  foaf:primaryTopic fair:A1.2 .
+  foaf:primaryTopic fair:A2 .
 
  }
  
 sub:provenance {
  sub:assertion dcterms:author  "Michel Dumontier", "Mark Wilkinson" , "Susanna Sansone", "Peter Doorn", "Luiz Bonino", "Erik Schultes" ;
- rdfs:comment "FAIR Metric for Fair Principle A1.2"^^xsd:string ;
+ rdfs:comment "FAIR Metric for Fair Principle A2"^^xsd:string ;
  dcat:distribution _:dist1 ;
  dcat:distribution _:dist2 ; 
  prov:wasGeneratedBy "FAIR Metrics Working Group" .
@@ -37,12 +37,12 @@ sub:provenance {
  _:dist1 dcelem:format "application/x-texinfo" ;
 	rdf:type <http://rdfs.org/ns/void#Dataset> ;
 	rdf:type <http://www.w3.org/ns/dcat#Distribution> ;
-	dcat:downloadURL <https://raw.githubusercontent.com/FAIRMetrics/Metrics/master/Distributions/FM_A1.2.tex> .
+	dcat:downloadURL <https://raw.githubusercontent.com/FAIRMetrics/Metrics/master/Distributions/FM_A2.tex> .
 
  _:dist2 dcelem:format "application/pdf" ;
 	rdf:type <http://rdfs.org/ns/void#Dataset> ;
 	rdf:type <http://www.w3.org/ns/dcat#Distribution> ;
-	dcat:downloadURL <https://raw.githubusercontent.com/FAIRMetrics/Metrics/master/Distributions/FM_A1.2.pdf> .
+	dcat:downloadURL <https://raw.githubusercontent.com/FAIRMetrics/Metrics/master/Distributions/FM_A2.pdf> .
 
 }
 
