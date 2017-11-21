@@ -6,6 +6,7 @@
 \usepackage{amsmath}
 \usepackage{graphicx}
 \usepackage{fancyhdr}
+\usepackage{longtable}
 %\usepackage{makecell}  % $ sudo tlmgr install makecell
 \pagestyle{fancy}
 \fancyhf{}
@@ -20,17 +21,19 @@
 Luiz Olavo Bonino da Silva Santos, Michel Dumontier}
 
 \maketitle
+
+\newpage
+
 \thispagestyle{fancy}
 
 
-\begin{table}
 \centering
 
-\begin{tabular}{|p{5cm}|p{8cm}|}
+\begin{longtable}{|p{5cm}|p{9cm}|}
 \hline
 \emph{FIELD} & \emph{DESCRIPTION} \\
 \hline
-Metric Identifier &   FM-F1A
+Metric Identifier &   FM-F1A: \verb"https://purl.org/fair-metrics/FM_F1A"
  \\
 
 
@@ -118,9 +121,8 @@ http://www.nature.com/developers/documentation/\newline metadata-resources/doi  
 
 
 \hline
-\end{tabular}
-% \caption{The template for creating FAIR Metrics}
-\end{table}
+
+\end{longtable}
 
 
 
