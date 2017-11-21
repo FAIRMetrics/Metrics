@@ -1,0 +1,145 @@
+\documentclass[english]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{babel}
+\usepackage{color}
+%\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{longtable}
+%\usepackage{makecell}  % $ sudo tlmgr install makecell
+%\pagestyle{fancy}
+%\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\setlength{\headheight}{20pt} 
+
+\begin{document}
+
+\title{FAIR Metric FM-R1.3}
+
+\author{Mark D. Wilkinson, Susanna-Assunta Sansone, \\Erik Schultes, Peter Doorn,\\ 
+Luiz Olavo Bonino da Silva Santos, Michel Dumontier}
+
+\maketitle
+
+\newpage
+
+
+
+
+
+\begin{longtable}{|p{5cm}|p{9cm}|}
+
+
+\hline
+\emph{FIELD} & \emph{DESCRIPTION} \\
+\hline
+Metric Identifier &   FM-R1.3
+\\
+
+
+\hline
+Metric Name &   
+
+
+
+Meets Community Standards
+
+
+ \\
+
+
+
+\hline
+To which principle does it apply? &   
+
+
+R1.3 - (meta)data meet domain-relevant community standards
+
+\\
+
+
+
+\hline
+What is being measured? & 
+
+
+Certification, from a recognized body, of the resource meeting community standards.
+
+\\
+
+
+
+\hline
+Why should we measure it? & 
+
+Various communities have recognized that maximizing the usability of their data requires them to adopt a set of guidelines for metadata (often in the form of “minimal information about…” models).  Non-compliance with these standards will often render a dataset ‘reuseless’ because critical information about its context or provenance is missing.  However, adherence to community standards does more than just improve reusability of the data. The software used by the community for analysis and visualization often depends on the (meta)data having certain fields; thus, non-compliance with standards may result in the data being unreadable by its associated tools.  As such, data should be (individually) certified as being compliant, likely through some automated process (e.g. submitting the data to the community’s online validation service)
+
+
+  
+\\
+
+
+
+\hline
+What must be provided? &  
+
+A certification saying that the resource is compliant
+
+
+\\
+
+
+
+\hline
+How do we measure it? &  
+
+
+Validate the electronic signature as coming from a community authority (e.g. a verisign signature)
+
+
+\\
+
+
+
+\hline
+What is a valid result? &  
+
+
+Successful signature validation
+
+
+\\
+
+
+
+\hline
+For which digital resource(s) is this relevant? &  All\\
+
+
+
+\hline
+Examples of their application across types of digital resource &  None
+
+\\
+
+
+
+\hline
+
+Comments & 
+
+
+Such certification services may not exist, but this principle serves to encourage the community to create both the standard(s) and the verification services for those standards.  
+
+A potentially useful side-effect of this is that it might provide an opportunity for content-verification - e.g. the certification service provides a hash of the data, which can be used to validate that it has not been edited at a later date.
+
+
+\\
+\hline
+
+\end{longtable}
+
+
+
+\end{document}
