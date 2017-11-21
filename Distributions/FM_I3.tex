@@ -1,0 +1,154 @@
+\documentclass[english]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{babel}
+\usepackage{color}
+%\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{longtable}
+%\usepackage{makecell}  % $ sudo tlmgr install makecell
+%\pagestyle{fancy}
+%\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\setlength{\headheight}{20pt} 
+
+\begin{document}
+
+\title{FAIR Metric FM-I3}
+
+\author{Mark D. Wilkinson, Susanna-Assunta Sansone, \\Erik Schultes, Peter Doorn,\\ 
+Luiz Olavo Bonino da Silva Santos, Michel Dumontier}
+
+\maketitle
+
+\newpage
+
+
+
+
+
+\begin{longtable}{|p{5cm}|p{9cm}|}
+
+
+\hline
+\emph{FIELD} & \emph{DESCRIPTION} \\
+\hline
+Metric Identifier &   FM-I3
+\\
+
+
+\hline
+Metric Name &   
+
+
+
+Use Qualified References
+
+
+ \\
+
+
+
+\hline
+To which principle does it apply? &   
+
+
+I3 - (meta)data include qualified references to other (meta)data
+
+\\
+
+
+
+\hline
+What is being measured? & 
+
+
+Relationships within (meta)data, and between local and third-party data, have explicit and ‘useful’ semantic meaning
+
+
+\\
+
+
+
+\hline
+Why should we measure it? & 
+
+
+One of the reasons that HTML is not suitable for machine-readable knowledge representation is that the hyperlinks between one document and another do not explain the nature of the relationship - it is “unqualified”.  For Interoperability, the relationships within and between data must be more semantically rich than “is (somehow) related to”.\newline 
+\newline 
+Numerous ontologies include richer relationships that can be used for this purpose, at various levels of domain-specificity.  For example, the use of skos for terminologies (e.g. exact matches), or the use of SIO for genomics (e.g. “has phenotype” for the relationship between a variant and its phenotypic consequences).\newline 
+\newline 
+Similarly, dbxrefs must be predicated with a meaningful relationship  what is the nature of the cross-reference?\newline 
+\newline 
+Finally, data silos thwart interoperability.  Thus, we should reasonably expect that some of the references/relations point outwards to other resources, owned by third-parties; this is one of the requirements for 5 star linked data. \newline 
+
+  
+\\
+
+
+
+\hline
+What must be provided? &  
+
+
+Linksets (in the formal sense) representing part or all of your resource
+
+
+
+\\
+
+
+
+\hline
+How do we measure it? &  
+
+
+The linksets must have qualified references
+
+At least one of the links must be in a different Web domain (or the equivalent of a different namespace for non-URI identifiers)
+
+
+
+\\
+
+
+
+\hline
+What is a valid result? &  
+
+
+- References are qualified\newline
+- Qualities are beyond “Xref” or “is related to”\newline
+- One of the cross-references points outwards to a distinct namespace\newline
+
+
+\\
+
+
+
+\hline
+For which digital resource(s) is this relevant? &  All\\
+
+
+
+\hline
+Examples of their application across types of digital resource &  None
+
+\\
+
+
+
+\hline
+
+Comments & 
+
+
+\\
+\hline
+
+\end{longtable}
+
+
+
+\end{document}
