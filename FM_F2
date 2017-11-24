@@ -49,7 +49,7 @@ sub:provenance {
  
 sub:pubinfo {
  this: dcterms:created "2017-11-20T00:00:00.0Z"^^xsd:dateTime ;
- dcterms:rights <http://creativecommons.org/licenses/by/4.0/> ;
+ dcterms:rights <https://creativecommons.org/publicdomain/zero/1.0> ;
  dcterms:rightsHolder <http://go-fair.org> ;
  pav:authoredBy "Mark Wilkinson" , <http://orcid.org/0000-0001-6960-357X> ;
  pav:versionNumber "1" ;
