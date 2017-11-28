@@ -1,4 +1,4 @@
-# FAIR Mtrics
+# FAIR Metrics
 Efforts to define metrics to assess the FAIRness of a digital resource.
 
 Initiatives
