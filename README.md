@@ -4,7 +4,9 @@
 
 
 **TO DOWNLOAD THE CURRENT ZENODO RELEASE OF THE METRICS, GO HERE:  https://doi.org/10.5281/zenodo.1065973**
+
 **FOR PDF's OF THE INDIVIDUAL METRICS SEE HERE:  https://github.com/FAIRMetrics/Metrics/tree/master/Distributions**
+
 **FOR LaTex OF THE INDIVIDUAL METRICS SEE HERE:  https://github.com/FAIRMetrics/Metrics/tree/master/Distributions**
 
 
