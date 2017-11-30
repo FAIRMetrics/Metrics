@@ -1,6 +1,8 @@
 # FAIR Metrics
 Efforts to define metrics to assess the FAIRness of a digital resource.
 
+FOR HUMAN READABLE METRICS SEE THE PDF's HERE:  https://github.com/FAIRMetrics/Metrics/Distributions
+
 Initiatives
 
 * [FAIR Metrics Group](http://www.fairmetrics.org/)
