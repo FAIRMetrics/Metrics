@@ -79,7 +79,7 @@ package fair_metrics_accessor;
       'dcat:publisher' => ['http://wilkinsonlab.info'],
       'pfund:hasPrincipalInvestigator' => ["Dr. Mark Wilkinson"],
       'dc:creator' => 'http://wilkinsonlab.info',
-      'pav:authoredBy' => ['http://orcid.org/0000-0002-9699-485X'],
+      'pav:authoredBy' => ['https://orcid.org/0000-0002-9699-485X'],
       'pav:version' => '7 June, 2017',
       'dcat:contactPoint' => 'http://biordf.org/DataFairPort/MiscRDF/Wilkinson.rdf',
       'dc:license' => "https://creativecommons.org/licenses/by/4.0",

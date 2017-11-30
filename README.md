@@ -26,4 +26,4 @@ Initiatives
 
 Publications
 
-* [Preprint describing the metrics in this Git](http://dx.doi.org/10.1101/225490)
+* [Preprint describing the metrics in this Git](https://doi.org/10.1101/225490)
