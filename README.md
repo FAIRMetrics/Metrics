@@ -1,7 +1,14 @@
+
+**TO DOWNLOAD THE CURRENT RELEASE OF THE METRICS, GO HERE:  https://doi.org/10.5281/zenodo.1065973**
+**FOR PDF's OF THE METRICS SEE HERE:  https://github.com/FAIRMetrics/Metrics/tree/master/Distributions**
+**FOR LaTex OF THE METRICS SEE HERE:  https://github.com/FAIRMetrics/Metrics/tree/master/Distributions**
+
+
+
 # FAIR Metrics
 Efforts to define metrics to assess the FAIRness of a digital resource.
 
-Note that the top-level folder contains the NanoPublications for each of the Metrics - the machine-readable format of the Metrics publication.  The other formats are in the Distributions folder, in both LaTex and PDF.  
+Note that the top-level folder (the one you are in now) contains the NanoPublications for each of the Metrics - the machine-readable format of the Metrics publication.  The other formats are in the Distributions folder, in both LaTex and PDF.  
 
 **TO DOWNLOAD THE CURRENT RELEASE OF THE METRICS, GO HERE:  https://doi.org/10.5281/zenodo.1065973**
 **FOR PDF's OF THE METRICS SEE HERE:  https://github.com/FAIRMetrics/Metrics/tree/master/Distributions**
