@@ -1,7 +1,9 @@
 # FAIR Metrics
 Efforts to define metrics to assess the FAIRness of a digital resource.
 
-FOR HUMAN READABLE METRICS SEE THE PDF's HERE:  https://github.com/FAIRMetrics/Metrics/Distributions
+Note that this folder contains the NanoPublications for each of the Metrics - the machine-readable format of the Metrics publication.
+
+**FOR HUMAN READABLE METRICS SEE THE PDF's HERE:  https://github.com/FAIRMetrics/Metrics/Distributions**
 
 Initiatives
 
