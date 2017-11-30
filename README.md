@@ -1,5 +1,6 @@
-**TO DOWNLOAD ALL OF THE METRICS IN ONE PFF:  https://github.com/FAIRMetrics/Metrics/raw/master/ALL.pdf**
+**TO DOWNLOAD ALL OF THE METRICS IN ONE PDF:  https://github.com/FAIRMetrics/Metrics/raw/master/ALL.pdf**
 
+---------------
 
 
 **TO DOWNLOAD THE CURRENT ZENODO RELEASE OF THE METRICS, GO HERE:  https://doi.org/10.5281/zenodo.1065973**
