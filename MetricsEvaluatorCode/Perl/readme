@@ -14,7 +14,7 @@ is the endpoint for the test that the URI scheme is registered somewhere.
 
 so:
 
-echo  '{ "spec" : "http://dx.doi.org" }' | curl -H "Content-Type: application/json" -d @-  http://fairdata.systems/cgi-bin/fair_metrics/Metrics/metric_unique_identifier
+echo  '{ "spec" : "https://doi.org" }' | curl -H "Content-Type: application/json" -d @-  http://fairdata.systems/cgi-bin/fair_metrics/Metrics/metric_unique_identifier
 
 
 will execute the test of whether DOIs are valid identifier schemas (they are... we hope!)
