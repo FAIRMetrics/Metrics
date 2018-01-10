@@ -405,7 +405,7 @@ Why should we measure it? &
 
 
 The discovery of digital object should be possible from its metadata. For this to happen, the metadata must explicitly contain the identifier for the digital resource it describes. 
-A metadata document should also not result in ambiguity about the digital object it is describing. This can be assured if the metadata document explicitly refers to the digital object by its GUID.
+A metadata document should also not result in ambiguity about the digital object it is describing. This can be assured if the metadata document explicitly refers to the digital object by its IRI.
 
   
 \\
@@ -416,7 +416,7 @@ A metadata document should also not result in ambiguity about the digital object
 What must be provided? &  
 
 
-The URL of the metadata and the GUID of the digital resource it describes.
+The URL of the metadata and the IRI of the digital resource it describes.
 
 
  \\
@@ -426,7 +426,7 @@ The URL of the metadata and the GUID of the digital resource it describes.
 \hline
 How do we measure it? &  
 
-Parsing the metadata for the given digital resource GUID.
+Parsing the metadata for the given digital resource IRI.
 
 \\
 
@@ -918,7 +918,7 @@ Why should we measure it? &
 
 
 
-Cross-references to data from third-party’s FAIR data and metadata will naturally degrade over time, and become “stale links”.  In such cases, it is important for FAIR providers to continue to provide descriptors of what the data was to assist in the continued interpretation of those third-party data.  As per FAIR Principle F3, this metadata remains discoverable, even in the absence of the data, because it contains an explicit reference to the GUID of the data.
+Cross-references to data from third-party’s FAIR data and metadata will naturally degrade over time, and become “stale links”.  In such cases, it is important for FAIR providers to continue to provide descriptors of what the data was to assist in the continued interpretation of those third-party data.  As per FAIR Principle F3, this metadata remains discoverable, even in the absence of the data, because it contains an explicit reference to the IRI of the data.
   
 \\
 
@@ -1200,7 +1200,7 @@ It is not possible to unambiguously interpret metadata represented as simple key
 What must be provided? &  
 
 
-UUIDs representing the vocabularies used for (meta)data 
+IRIs representing the vocabularies used for (meta)data 
 
 
 \\
@@ -1443,7 +1443,7 @@ A core aspect of data reusability is the ability to determine, unambiguously and
 What must be provided? &  
 
 
-GUID of the license (e.g. its URL) for the data license and for the metadata license
+IRI of the license (e.g. its URL) for the data license and for the metadata license
 
 \\
 
@@ -1452,7 +1452,7 @@ GUID of the license (e.g. its URL) for the data license and for the metadata lic
 \hline
 How do we measure it? &  
 
-Resolve the GUID(s) using its associated resolution protocol
+Resolve the IRI(s) using its associated resolution protocol
 
 
 
@@ -1559,7 +1559,7 @@ Reusability is not only a technical issue; data can be discovered, retrieved, an
 What must be provided? &  
 
 
-Two URLs (GUIDs).  One of these URLs points to one of the vocabularies used to describe citational provenance (e.g. dublin core).  The second points to one of the vocabularies (likely domain-specific) that is used to describe contextual provenance (e.g. EDAM)
+Two URLs (IRIs).  One of these URLs points to one of the vocabularies used to describe citational provenance (e.g. dublin core).  The second points to one of the vocabularies (likely domain-specific) that is used to describe contextual provenance (e.g. EDAM)
 
 
 \\
@@ -1570,7 +1570,7 @@ Two URLs (GUIDs).  One of these URLs points to one of the vocabularies used to d
 How do we measure it? &  
 
 
-We resolve the URLs/GUIDs according to their associated protocols. 
+We resolve the URLs/IRIs according to their associated protocols. 
 
 
 \\
@@ -1581,9 +1581,9 @@ We resolve the URLs/GUIDs according to their associated protocols.
 What is a valid result? &  
 
 
-GUID 1 should resolve to a recognized citation provenance standard such as Dublin Core.\newline 
+IRI 1 should resolve to a recognized citation provenance standard such as Dublin Core.\newline 
 
-GUID 2 should resolve to some vocabulary that itself passes basic tests of FAIRness\newline
+IRI 2 should resolve to some vocabulary that itself passes basic tests of FAIRness\newline
 
 
 \\
