@@ -147,7 +147,7 @@ Use an HTTP GET on URL provided. \newline
 
 \hline
 What is a valid result? &  
-Present (HTTP 200) or Absent (any other HTTP code)
+Present (a 200,202,203 or 206 HTTP response after resolving all and any prior redirects. e.g. 301 -> 302 -> 200 OK.) or Absent (any other HTTP code)
 \\
 
 
@@ -231,7 +231,7 @@ A URL to a document that contains machine-readable metadata for the digital reso
 
 \hline
 How do we measure it? &  
-HTTP GET on the metadata URL. A response of HTTP 200 indicates that there is indeed a document. The second URL should resolve to the record of a registered file format (e.g. DCAT, DICOM, schema.org etc.) in a registry like FAIRsharing. \newline
+HTTP GET on the metadata URL. A response of [a 200,202,203 or 206 HTTP response after resolving all and any prior redirects. e.g. 301 -> 302 -> 200 OK.] indicates that there is indeed a document. The second URL should resolve to the record of a registered file format (e.g. DCAT, DICOM, schema.org etc.) in a registry like FAIRsharing. \newline
 \\
 
 
@@ -628,7 +628,7 @@ What is a valid result? &
 
 
 
-The HTTP GET on the URL should return HTTP 200. The other two should be true/false.
+The HTTP GET on the URL should return a 200,202,203 or 206 HTTP response after resolving all and any prior redirects. e.g. 301 -> 302 -> 200 OK. The other two should be false
 
 
 \\
