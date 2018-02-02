@@ -1,0 +1,36 @@
+<p id="notice"><%= notice %></p>
+<h1>Metrics Collection:</h1>
+<p>
+  <strong>Name:</strong>
+  <%= @collection.name %>
+</p>
+
+<p>
+  <strong>Contact:</strong>
+  <%= @collection.contact %>
+</p>
+
+<p>
+  <strong>Organization:</strong>
+  <%= @collection.organization %>
+</p>
+
+</form>
+
+<p>
+  <strong>Please select the appropriate metrics from the list below</strong>
+
+<% array = @metrics.map {|m| [m.name,m.id]} %>
+<% lid = @collection.id %>
+
+
+<h1><%= array %></h1>
+<%= form_with(url: "/collect_metrics/#{lid}", local: true) do |form| %>
+
+<%= form.select("metrics", array,{:include_hidden => false, :include_blank => false}, { :multiple => true, :size => 5 }) %> -->
+
+<%= form.submit %>
+<% end %> 
+
+<p/>
+<%= link_to 'Back', collections_path %>

@@ -1,0 +1,42 @@
+<%= form_with(model: metric, local: true) do |form| %>
+  <% if metric.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(metric.errors.count, "error") %> prohibited this metric from being saved:</h2>
+
+      <ul>
+      <% metric.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name, id: :metric_name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :creator %>
+    <%= form.text_field :creator, id: :metric_creator %>
+  </div>
+
+  <div class="field">
+    <%= form.label :email %>
+    <%= form.text_field :email, id: :metric_email %>
+  </div>
+
+  <div class="field">
+    <%= form.label :principle %>
+    <%= form.text_field :principle, id: :metric_principle %>
+  </div>
+
+  <div class="field">
+    <%= form.label :smarturl %>
+    <%= form.text_field :smarturl, id: :metric_smarturl %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

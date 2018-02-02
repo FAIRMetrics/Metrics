@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Collection:</strong>
+  <%= @evaluation.collection %>
+</p>
+
+<p>
+  <strong>Resource:</strong>
+  <%= @evaluation.resource %>
+</p>
+
+<p>
+  <strong>Body:</strong>
+  <%= @evaluation.body %>
+</p>
+
+<p>
+  <strong>Result:</strong>
+  <%= @evaluation.result %>
+</p>
+
+<p>
+  <strong>Executor:</strong>
+  <%= @evaluation.executor %>
+</p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @evaluation.title %>
+</p>
+
+<%= link_to 'Edit', edit_evaluation_path(@evaluation) %> |
+<%= link_to 'Back', evaluations_path %>
