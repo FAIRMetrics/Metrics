@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  get 'static_pages/home'
+
+  get 'static_pages/help'
+
+  get 'static_pages/about'
+
   resources :evaluations
   resources :collections   # the "resources" command auto-creates the default routes, including POST going to #create
   resources :metrics
