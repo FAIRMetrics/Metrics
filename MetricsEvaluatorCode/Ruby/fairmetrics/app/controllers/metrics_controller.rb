@@ -30,7 +30,6 @@ class MetricsController < ApplicationController
     url = @metric[:smarturl]
     resp = fetch(url)
     if resp
-#      yaml = Net::HTTP.get_response(resp.body) 
       yaml = YAML.load(resp.body)
       if yaml
 #        flash[:success] = "Metric Created " + yaml["info"]["title"]

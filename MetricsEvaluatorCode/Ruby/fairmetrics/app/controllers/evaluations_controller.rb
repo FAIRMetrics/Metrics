@@ -1,5 +1,5 @@
 class EvaluationsController < ApplicationController
-  before_action :set_evaluation, only: [:show, :edit, :update, :destroy]
+  before_action :set_evaluation, only: [:show, :edit, :update, :destroy, :execute_evaluation]
 
   # GET /evaluations
   # GET /evaluations.json
@@ -10,6 +10,7 @@ class EvaluationsController < ApplicationController
   # GET /evaluations/1
   # GET /evaluations/1.json
   def show
+    @collection = Collection.find(@evaluation.collection)
   end
 
   # GET /evaluations/new
@@ -27,10 +28,12 @@ class EvaluationsController < ApplicationController
   # POST /evaluations.json
   def create
     @evaluation = Evaluation.new(evaluation_params)
+    @evaluation.collection = evaluation_params[:collection]
+    
 
     respond_to do |format|
       if @evaluation.save
-        format.html { redirect_to @evaluation, notice: 'Evaluation was successfully created.' }
+        format.html { redirect_to @evaluation, notice: "Evaluation was successfully created.}" }
         format.json { render :show, status: :created, location: @evaluation }
       else
         format.html { render :new }
@@ -44,7 +47,7 @@ class EvaluationsController < ApplicationController
   def update
     respond_to do |format|
       if @evaluation.update(evaluation_params)
-        format.html { redirect_to @evaluation, notice: 'Evaluation was successfully updated.' }
+        format.html { redirect_to @evaluation, notice: "Evaluation was successfully updated." }
         format.json { render :show, status: :ok, location: @evaluation }
       else
         format.html { render :edit }
@@ -62,6 +65,20 @@ class EvaluationsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+
+
+  def execute_evaluation()
+    resource = @evaluation.resource
+    @metrics
+  end
+
+
+
+
+
+
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

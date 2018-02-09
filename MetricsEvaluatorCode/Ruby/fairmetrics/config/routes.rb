@@ -22,6 +22,8 @@ Rails.application.routes.draw do
   get 'collect_metrics/:id', to: 'collections#collect_metrics'
   post 'collect_metrics/:id', to: 'collections#register_metrics'
  
-  get 'evaluation', to: 'evaluations#start_evaluation'
+  get 'evaluations/:id/result', to: 'evaluations#execute_evaluation'
+  post 'evaluations/:id/result', to: 'evaluations#display_evaluation_result'
+  
   
 end

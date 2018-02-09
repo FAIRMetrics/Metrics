@@ -1,8 +1,10 @@
 <p id="notice"><%= notice %></p>
 
+<div>
+<div style="float:left; width: 300px;vertical-align:middle;display:inline-block;">
 <p>
   <strong>Collection:</strong>
-  <%= @evaluation.collection %>
+  <%= @collection.name %>
 </p>
 
 <p>
@@ -32,3 +34,9 @@
 
 <%= link_to 'Edit', edit_evaluation_path(@evaluation) %> |
 <%= link_to 'Back', evaluations_path %>
+</div>
+<div style="float: left; width: 50px; vertical-align:middle;display:inline-block;">
+  <%= link_to 'EXECUTE', "/evaluations/#{@evaluation.id}/execute" %> 
+</div>
+
+</div>

@@ -26,7 +26,7 @@
 <% array = @collections.map {|c| [c.name,c.id]} %>
 <!-- <%= form.label :collection %> -->
 <%= form.label "Using which metrics collection?" %>
-<%= form.select(:evaluation_collection, array,{:include_hidden => false, :include_blank => false}, { :multiple => false, :size => 5 }) %>
+<%= form.select(:collection, array,{:include_hidden => false, :include_blank => false}, { :multiple => false, :size => 5 }) %>
 
 
   <div class="field">
