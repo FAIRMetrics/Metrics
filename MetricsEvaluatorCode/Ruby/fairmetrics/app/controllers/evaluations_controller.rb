@@ -1,6 +1,10 @@
-class EvaluationsController < ApplicationController
-  before_action :set_evaluation, only: [:show, :edit, :update, :destroy, :execute_evaluation]
+require 'safe_yaml'
+require 'open_api_parser'
+SafeYAML::OPTIONS[:default_mode] = :safe
 
+class EvaluationsController < ApplicationController
+  before_action :set_evaluation, only: [:show, :edit, :update, :destroy, :execute]
+  include SharedFunctions
   # GET /evaluations
   # GET /evaluations.json
   def index
@@ -41,7 +45,8 @@ class EvaluationsController < ApplicationController
       end
     end
   end
-
+  
+  
   # PATCH/PUT /evaluations/1
   # PATCH/PUT /evaluations/1.json
   def update
@@ -66,12 +71,72 @@ class EvaluationsController < ApplicationController
     end
   end
 
-
-
-  def execute_evaluation()
-    resource = @evaluation.resource
-    @metrics
+  def error
   end
+  
+
+  def execute()
+
+    if @evaluation.body   #evaluation has been done
+      show()
+      return
+    end
+    
+    
+    iri = @evaluation.resource
+    
+    respond_to do |format|
+
+      unless (@evaluate_me = fetch(iri))
+          format.html { redirect_to "/evaluations/#{params[:id]}/error", notice: "the resource at #{iri} could not be retrieved. Please chck and edit evaluation if necessary"}
+          return
+      end
+      
+      collectionid = @evaluation.collection
+      @collection = Collection.find(collectionid)
+      unless (@collection)
+        format.html { redirect_to "/evaluations/#{params[:id]}/error", notice: "no collection found for #{collectionid}"}
+        return
+      end
+      
+      @metrics = @collection.metrics
+      unless (@metrics)
+        format.html { redirect_to "/evaluations/#{params[:id]}/error", notice: "no metrics found for #{collectionid}"}
+        return
+      end
+      @specs = Array.new()
+      @metrics.each do |metric|
+        
+        @smartapi = metric.smarturl
+        unless (@smartapi)
+          format.html { redirect_to "/evaluations/#{params[:id]}/error", notice: "no smartAPI found for #{metric.to_s}"}
+          return
+        end
+        next unless @smartapi.match(/http/)
+        unless (@interface = fetch(@smartapi))
+          format.html { redirect_to "/evaluations/#{params[:id]}/error", notice: "the SmartAPI definition at #{smartapi} could not be retrieved. Please chck and edit evaluation if necessary"}
+          return
+        end
+        
+        tfile = Tempfile.new('smartapi')
+        tfile.write(@interface.body)
+        tfile.rewind
+        specification = OpenApiParser::Specification.resolve(tfile, validate_meta_schema: false)
+        unless (specification)
+          format.html { redirect_to "/evaluations/#{params[:id]}/error", notice: "the SmartAPI definition in #{@interface.body} could not be retrieved. Please chck and edit evaluation if necessary"}
+          return
+        end
+        @specs << specification
+        #yaml = YAML.load(smartapi)
+        #unless (yaml)
+        #  format.html { redirect_to "/evaluations/#{params[:id]}/error", notice: "no yaml found for #{smartapi}"}
+        #  return
+        #end
+      end  # end of DO
+      #format.html {redirect_to "/evaluations/#{params[:id]}/error", notice: "an undefined error has occurred. Bummer for you!"}
+    end
+  end
+
 
 
 

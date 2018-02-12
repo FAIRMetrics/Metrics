@@ -1,4 +1,5 @@
 require 'safe_yaml'
+require 'open_api_parser'
 SafeYAML::OPTIONS[:default_mode] = :safe
 
 y = <<'EOF'

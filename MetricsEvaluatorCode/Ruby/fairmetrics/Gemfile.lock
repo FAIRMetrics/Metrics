@@ -83,6 +83,8 @@ GEM
     jbuilder (2.7.0)
       activesupport (>= 4.2.0)
       multi_json (>= 1.2)
+    json-schema (2.8.0)
+      addressable (>= 2.4)
     link_header (0.0.8)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
@@ -103,6 +105,9 @@ GEM
     nio4r (2.2.0)
     nokogiri (1.8.2)
       mini_portile2 (~> 2.3.0)
+    open_api_parser (1.3.0)
+      addressable (~> 2.3)
+      json-schema (~> 2.8)
     public_suffix (3.0.1)
     puma (3.11.2)
     rack (2.0.3)
@@ -218,6 +223,7 @@ DEPENDENCIES
   jbuilder (~> 2.5)
   listen (>= 3.0.5, < 3.2)
   nokogiri
+  open_api_parser
   puma (~> 3.7)
   rails (~> 5.1.4)
   safe_yaml

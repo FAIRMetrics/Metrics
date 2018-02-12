@@ -1,0 +1,11 @@
+<h1>Editing Evaluation</h1>
+
+<% @specs.each do |spec| %>
+	<% spec.raw['paths'].keys.each do |path| %>
+	
+	<h2> <%= path.to_s %></h2>
+	<% end %>
+<% end %>
+
+<%= link_to 'Show', @evaluation %> |
+<%= link_to 'Back', evaluations_path %>
