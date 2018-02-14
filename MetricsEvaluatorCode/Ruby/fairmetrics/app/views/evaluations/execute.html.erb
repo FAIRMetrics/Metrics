@@ -1,11 +1,54 @@
-<h1>Editing Evaluation</h1>
 
-<% @specs.each do |spec| %>
+<h1>Beginning Evaluation of the resource located at:</h1>
+<h2><%= @iri %></h2>
+
+<br/><br/><br/>
+
+<%= form_with(url: "/evaluations/#{@evaluationid}/result", local: true, method: "post") do |form| %>
+
+
+<% @specs.each do |idspec| %>
+	<% id, spec = idspec %>
 	<% spec.raw['paths'].keys.each do |path| %>
+		<% spec.raw['paths'][path].keys.each do |method| %>
 	
-	<h2> <%= path.to_s %></h2>
+			<h4><%= id %>: <%= spec.raw['info']['title'] %> </h4>
+			<div style="text-indent: 40px">
+			<b> <%= method.to_s %> <%= path.to_s %> </b>
+			<p/>
+			<% endpoint = spec.endpoint(path.to_s, method.to_s) %>
+			<% endpoint.body_schema['properties'].keys.each do |param| %>
+				<% desc = endpoint.body_schema['properties'][param.to_s]['description'] %>
+				<% type = endpoint.body_schema['properties'][param.to_s]["type"] %>
+				<p></p>
+				<%= label_tag(:in, desc) %><p/>
+				<% case type %>
+					<% when "string" %>
+						<input type="text" name="metrics[Metric_<%= id %>_<%= param.to_s %>]" size="50"/>
+					<% else %>
+						<p>"Input Type Unknown"</p>
+				<% end %>
+				<p></p><p></p>
+
+			<% end %>
+			</div>
+			
+	
+		<% end %>
 	<% end %>
 <% end %>
 
-<%= link_to 'Show', @evaluation %> |
+
+<br/><br/><br/><br/><br/><br/><br/>
+
+<%= submit_tag("Execute Metrics Test") %>
+
+
+
+<% end %>
+
+
+<br/><br/><br/><br/><br/><br/><br/>
+
+<!-- <%= link_to 'Show', @evaluation %> | -->
 <%= link_to 'Back', evaluations_path %>

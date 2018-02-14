@@ -108,6 +108,7 @@ GEM
     open_api_parser (1.3.0)
       addressable (~> 2.3)
       json-schema (~> 2.8)
+    openssl (2.0.3)
     public_suffix (3.0.1)
     puma (3.11.2)
     rack (2.0.3)
@@ -224,6 +225,7 @@ DEPENDENCIES
   listen (>= 3.0.5, < 3.2)
   nokogiri
   open_api_parser
+  openssl
   puma (~> 3.7)
   rails (~> 5.1.4)
   safe_yaml

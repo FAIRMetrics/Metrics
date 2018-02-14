@@ -82,13 +82,14 @@ class EvaluationsController < ApplicationController
       return
     end
     
-    
-    iri = @evaluation.resource
-    
+    @evaluationid = params[:id]
+    @iri = @evaluation.resource
     respond_to do |format|
+    #$stderr.puts "\n\nFormat#{format.class}\n\n"
 
-      unless (@evaluate_me = fetch(iri))
-          format.html { redirect_to "/evaluations/#{params[:id]}/error", notice: "the resource at #{iri} could not be retrieved. Please chck and edit evaluation if necessary"}
+      @iri = resolve(@iri)
+      unless (@evaluate_me = fetch(@iri))
+          format.html { redirect_to "/evaluations/#{params[:id]}/error", notice: "the resource at #{@iri} could not be retrieved. Please chck and edit evaluation if necessary"}
           return
       end
       
@@ -112,34 +113,43 @@ class EvaluationsController < ApplicationController
           format.html { redirect_to "/evaluations/#{params[:id]}/error", notice: "no smartAPI found for #{metric.to_s}"}
           return
         end
-        next unless @smartapi.match(/http/)
+        @smartapi = resolve(@smartapi)
+#        next unless @smartapi.match(/http/)
         unless (@interface = fetch(@smartapi))
           format.html { redirect_to "/evaluations/#{params[:id]}/error", notice: "the SmartAPI definition at #{smartapi} could not be retrieved. Please chck and edit evaluation if necessary"}
           return
         end
         
+        smartyaml = @interface.body
+        #$stderr.puts "\n\nInterface#{smartyaml}\n\n"
+        
         tfile = Tempfile.new('smartapi')
-        tfile.write(@interface.body)
+        tfile.write(smartyaml)
         tfile.rewind
         specification = OpenApiParser::Specification.resolve(tfile, validate_meta_schema: false)
         unless (specification)
-          format.html { redirect_to "/evaluations/#{params[:id]}/error", notice: "the SmartAPI definition in #{@interface.body} could not be retrieved. Please chck and edit evaluation if necessary"}
+          format.html { redirect_to "/evaluations/#{params[:id]}/error", notice: "the SmartAPI definition in #{smartyaml} could not be retrieved. Please chck and edit evaluation if necessary"}
           return
         end
-        @specs << specification
+        @specs << [metric.id, specification]
         #yaml = YAML.load(smartapi)
         #unless (yaml)
         #  format.html { redirect_to "/evaluations/#{params[:id]}/error", notice: "no yaml found for #{smartapi}"}
         #  return
         #end
-      end  # end of DO
+        format.html{}
+      end  # end of DO FORMAT
+      
       #format.html {redirect_to "/evaluations/#{params[:id]}/error", notice: "an undefined error has occurred. Bummer for you!"}
     end
   end
 
 
 
-
+  def result
+    params[:metrics].each {|met| $stderr.puts "Metric found #{met}\n"}
+  
+  end
 
 
 
@@ -153,6 +163,6 @@ class EvaluationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def evaluation_params
-      params.require(:evaluation).permit(:collection, :resource, :body, :result, :executor, :title)
+      params.require(:evaluation).permit(:collection, :resource, :body, :result, :executor, :title, :metrics)
     end
 end
