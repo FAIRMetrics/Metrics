@@ -82,10 +82,43 @@ class EvaluationsController < ApplicationController
       return
     end
     
+    metrics = get_metrics_for_id
+    @metric_interfaces = get_metrics_interfaces(metrics)
+    
+    #respond_to do |format|
+      
+      #format.html {redirect_to "/evaluations/#{params[:id]}/error", notice: "an undefined error has occurred. Bummer for you!"}
+    #end
+  end
+
+
+
+  def result
+#    $stderr.write params.inspect
+    metricshash = params[:metrics]
+    subject = params[:subject]
+    puts subject
+    metricshash.each do |(met, val)|
+      $stderr.puts "Metric found #{met} #{val}\n"
+      if !(met.match(/Metric_(\d+)_\w+/)) then
+        $stderr.puts "#{met} didn't match regexp for metric name"
+      else 
+        metricid = $1
+        metricparam = $2
+        paramvalue = val
+        puts metricid + metricparam + paramvalue
+        @metrics = get_metrics_for_id
+        
+      end
+    end
+  end
+
+
+  def get_metrics_for_id(id = params[:id])
     @evaluationid = params[:id]
     @iri = @evaluation.resource
     respond_to do |format|
-    #$stderr.puts "\n\nFormat#{format.class}\n\n"
+      #$stderr.puts "\n\nFormat#{format.class}\n\n"
 
       @iri = resolve(@iri)
       unless (@evaluate_me = fetch(@iri))
@@ -105,22 +138,33 @@ class EvaluationsController < ApplicationController
         format.html { redirect_to "/evaluations/#{params[:id]}/error", notice: "no metrics found for #{collectionid}"}
         return
       end
-      @specs = Array.new()
-      @metrics.each do |metric|
-        
-        @smartapi = metric.smarturl
-        unless (@smartapi)
+    format.html{"all good so far!"}
+      
+    end
+    return @metrics
+  end
+    
+
+
+  def get_metrics_interfaces(metrics)
+    specs = Array.new()
+    
+    respond_to do |format|
+      metrics.each do |metric|
+      
+        smartapi = metric.smarturl
+        unless (smartapi)
           format.html { redirect_to "/evaluations/#{params[:id]}/error", notice: "no smartAPI found for #{metric.to_s}"}
           return
         end
-        @smartapi = resolve(@smartapi)
-#        next unless @smartapi.match(/http/)
-        unless (@interface = fetch(@smartapi))
+        smartapi = resolve(smartapi)
+  
+        unless (interface = fetch(smartapi))
           format.html { redirect_to "/evaluations/#{params[:id]}/error", notice: "the SmartAPI definition at #{smartapi} could not be retrieved. Please chck and edit evaluation if necessary"}
           return
         end
         
-        smartyaml = @interface.body
+        smartyaml = interface.body
         #$stderr.puts "\n\nInterface#{smartyaml}\n\n"
         
         tfile = Tempfile.new('smartapi')
@@ -131,27 +175,18 @@ class EvaluationsController < ApplicationController
           format.html { redirect_to "/evaluations/#{params[:id]}/error", notice: "the SmartAPI definition in #{smartyaml} could not be retrieved. Please chck and edit evaluation if necessary"}
           return
         end
-        @specs << [metric.id, specification]
+        specs << [metric, specification]
         #yaml = YAML.load(smartapi)
         #unless (yaml)
         #  format.html { redirect_to "/evaluations/#{params[:id]}/error", notice: "no yaml found for #{smartapi}"}
         #  return
         #end
-        format.html{}
-      end  # end of DO FORMAT
-      
-      #format.html {redirect_to "/evaluations/#{params[:id]}/error", notice: "an undefined error has occurred. Bummer for you!"}
-    end
+      end
+      format.html{"all good"}
+    end  # end of DO FORMAT
+    
+    return specs
   end
-
-
-
-  def result
-    params[:metrics].each {|met| $stderr.puts "Metric found #{met}\n"}
-  
-  end
-
-
 
 
 
@@ -163,6 +198,6 @@ class EvaluationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def evaluation_params
-      params.require(:evaluation).permit(:collection, :resource, :body, :result, :executor, :title, :metrics)
+      params.require(:evaluation).permit(:collection, :resource, :body, :result, :executor, :title, :metrics, :subject)
     end
 end

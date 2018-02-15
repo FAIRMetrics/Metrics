@@ -5,10 +5,11 @@
 <br/><br/><br/>
 
 <%= form_with(url: "/evaluations/#{@evaluationid}/result", local: true, method: "post") do |form| %>
+<input type='hidden' name='subject' value='<%= @iri %>'>
 
-
-<% @specs.each do |idspec| %>
-	<% id, spec = idspec %>
+<% @metric_interfaces.each do |idspec| %>
+	<% metric, spec = idspec %>
+	<% id = metric.id %>
 	<% spec.raw['paths'].keys.each do |path| %>
 		<% spec.raw['paths'][path].keys.each do |method| %>
 	
@@ -18,6 +19,7 @@
 			<p/>
 			<% endpoint = spec.endpoint(path.to_s, method.to_s) %>
 			<% endpoint.body_schema['properties'].keys.each do |param| %>
+				<% next if param == "subject" %>
 				<% desc = endpoint.body_schema['properties'][param.to_s]['description'] %>
 				<% type = endpoint.body_schema['properties'][param.to_s]["type"] %>
 				<p></p>
