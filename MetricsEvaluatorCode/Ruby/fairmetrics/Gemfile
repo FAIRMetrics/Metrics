@@ -41,6 +41,7 @@ gem 'safe_yaml'
 gem 'equivalent-xml'
 gem 'open_api_parser'
 gem 'openssl'
+gem 'rdf-json'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

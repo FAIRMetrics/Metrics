@@ -1,9 +1,13 @@
 require 'safe_yaml'
 require 'open_api_parser'
+require 'rdf'
+#$LOAD_PATH.unshift "/home/markw/.rvm/gems/ruby-2.4.1/gems/rdf-json-2.2.0/lib"
+require 'rdf/json'
+
 SafeYAML::OPTIONS[:default_mode] = :safe
 
 class EvaluationsController < ApplicationController
-  before_action :set_evaluation, only: [:show, :edit, :update, :destroy, :execute]
+  before_action :set_evaluation, only: [:show, :edit, :update, :destroy, :execute, :result]
   include SharedFunctions
   # GET /evaluations
   # GET /evaluations.json
@@ -82,39 +86,111 @@ class EvaluationsController < ApplicationController
       return
     end
     
-    metrics = get_metrics_for_id
+    metrics = get_metrics_for_evaluation
     @metric_interfaces = get_metrics_interfaces(metrics)
+    # pass this hash to the View
     
-    #respond_to do |format|
-      
-      #format.html {redirect_to "/evaluations/#{params[:id]}/error", notice: "an undefined error has occurred. Bummer for you!"}
-    #end
   end
 
 
 
   def result
-#    $stderr.write params.inspect
+    #$stderr.write params.inspect
     metricshash = params[:metrics]
     subject = params[:subject]
-    puts subject
-    metricshash.each do |(met, val)|
-      $stderr.puts "Metric found #{met} #{val}\n"
-      if !(met.match(/Metric_(\d+)_\w+/)) then
+    #$stderr.puts "SUBJECT #{subject}"
+    #$stderr.puts "METRICSHASH #{metricshash}"
+    data_to_pass = Hash.new()
+
+    metricshash.each do |met, val|
+      #$stderr.puts "Metric found #{met} #{val}\n"
+      
+      if !(met.match(/Metric_(\d+)_(\w+)/)) then
         $stderr.puts "#{met} didn't match regexp for metric name"
       else 
         metricid = $1
         metricparam = $2
-        paramvalue = val
-        puts metricid + metricparam + paramvalue
-        @metrics = get_metrics_for_id
+        #$stderr.puts "id #{metricid.to_s}  param #{metricparam.to_s}  val #{val.to_s}"
         
+        data_to_pass[metricid.to_i] ||= {"subject" => subject}  # maybe duplicate calls, but just easier this way and does no harm
+        data_to_pass[metricid.to_i].merge!({metricparam.to_s => val})
+        #$stderr.puts "\n\nDATA: #{data_to_pass}\n\n"
       end
     end
+    
+    # data_to_pass is now a hash of each metric, with each of the data payloads
+    
+    @result = Array.new()
+    data_to_pass.keys.each  do |metricid|
+      @metric = Metric.find(metricid)
+      specs = get_metrics_interfaces([@metric])  # specs is an array of specs << [metric, specification]
+                                                # metric is the ActiveRecord Metric object, specification is a OpenApiParser::Specification
+      (@metric, spec) = specs.first # there should only be one...
+
+      spec.raw['paths'].keys.each do |path|
+        spec.raw['paths'][path].keys.each do |method|
+          
+          #   FOR THE MOMENT, ASSUME ONLY POST AND ONLY ONE INTERFACE
+          next unless method.downcase == "post"
+          json_to_pass = "{}"  # empty json
+          
+          endpoint = spec.endpoint(path.to_s, method.to_s)
+          endpoint.body_schema['properties'].keys.each do |param|
+            next if param == "subject"
+            json_to_pass = endpoint.query_json(data_to_pass[metricid])  # this call will auto-format the JSON according to teh schema in the YAML
+            #$stderr.puts json_to_pass
+          end
+          
+          http = spec.raw['schemes'].first
+          domain = spec.raw['host']
+          basepath = spec.raw['basePath']
+          
+          
+          $stderr.puts "ADDRESS " + http.to_s + "://" + domain.to_s + basepath.to_s  + path.to_s
+          uri = URI.parse(http.to_s + "://" + domain.to_s + basepath.to_s + path.to_s)
+
+          header = {'Content-Type': 'text/json'}
+          
+          # Create the HTTP objects
+          http = Net::HTTP.new(uri.host, uri.port)
+          request = Net::HTTP::Post.new(uri.request_uri, header)
+          request.body = json_to_pass.to_json
+          @jsonin = JSON.parse(json_to_pass.to_json)
+          # Send the request
+          response = http.request(request)
+          #$stderr.puts "\n\n" + response.body.to_s + "\n\n"
+          reader = RDF::JSON::Reader.new(response.body.to_s)
+          
+          @outgraph = RDF::Graph.new()
+          reader.each_statement do |statement|
+            @outgraph << statement
+          end
+
+          @iri = @evaluation.resource
+          @result << [@metric, @jsonin, @outgraph]
+          
+        end
+      end
+    end
+    
   end
 
 
-  def get_metrics_for_id(id = params[:id])
+
+
+  private
+    # Use callbacks to share common setup or constraints between actions.
+    def set_evaluation
+      @evaluation = Evaluation.find(params[:id])
+    end
+
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def evaluation_params
+      params.require(:evaluation).permit(:collection, :resource, :body, :result, :executor, :title, :metrics, :subject)
+    end
+    
+    
+  def get_metrics_for_evaluation(id = params[:id])
     @evaluationid = params[:id]
     @iri = @evaluation.resource
     respond_to do |format|
@@ -146,7 +222,7 @@ class EvaluationsController < ApplicationController
     
 
 
-  def get_metrics_interfaces(metrics)
+  def get_metrics_interfaces(metrics = [])
     specs = Array.new()
     
     respond_to do |format|
@@ -189,15 +265,4 @@ class EvaluationsController < ApplicationController
   end
 
 
-
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_evaluation
-      @evaluation = Evaluation.find(params[:id])
-    end
-
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def evaluation_params
-      params.require(:evaluation).permit(:collection, :resource, :body, :result, :executor, :title, :metrics, :subject)
-    end
 end

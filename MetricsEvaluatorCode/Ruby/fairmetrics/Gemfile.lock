@@ -146,6 +146,8 @@ GEM
       link_header (~> 0.0, >= 0.0.8)
     rdf-aggregate-repo (2.2.1)
       rdf (>= 2.2, < 4.0)
+    rdf-json (2.2.0)
+      rdf (>= 2.2, < 4.0)
     rdf-xsd (3.0.0)
       rdf (~> 3.0)
     ruby_dep (1.5.0)
@@ -228,6 +230,7 @@ DEPENDENCIES
   openssl
   puma (~> 3.7)
   rails (~> 5.1.4)
+  rdf-json
   safe_yaml
   sass-rails (~> 5.0)
   selenium-webdriver

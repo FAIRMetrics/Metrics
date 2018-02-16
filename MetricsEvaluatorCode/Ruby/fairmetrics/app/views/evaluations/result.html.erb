@@ -1,5 +1,26 @@
 
-<h1>Completed Evaluation of:</h1>
+<h1>Completed Evaluation of <%= @iri %>:</h1>
+
+<% @result.each  do |res|  %>
+
+	<% (metric, injson, outgraph) = res %>
+
+	<h2> Metric: <%= metric.name %></h2>
+	<% q = SPARQL.parse('select * where
+			    {?iri <http://semanticscience.org/resource/SIO_000629> ?result .
+			    ?result <http://semanticscience.org/resource/SIO_000300> ?score .
+			    ?result <http://purl.obolibrary.org/obo/date> ?date }') %>
+	<% solutions = q.execute(outgraph) %>
+	<!-- <h4>IRI Tested:  <%= solutions.first[:iri].value %></h4> -->
+	
+	<%= for sol in 0..(solutions.count - 1) do %>
+		<% sol = solutions[sol] %>
+		Date: <%= sol[:date].value %><br/>
+		Score: <%= sol[:score].value %><br/>
+	<%  end; nil %>
+	
+
+<% end %>
 
 <!-- <%= link_to 'Show', @evaluation %> | -->
 <%= link_to 'Back', evaluations_path %>
