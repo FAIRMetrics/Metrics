@@ -13,7 +13,7 @@
 	<% solutions = q.execute(outgraph) %>
 	<!-- <h4>IRI Tested:  <%= solutions.first[:iri].value %></h4> -->
 	
-	<%= for sol in 0..(solutions.count - 1) do %>
+	<% for sol in 0..(solutions.count - 1) do %>
 		<% sol = solutions[sol] %>
 		Date: <%= sol[:date].value %><br/>
 		Score: <%= sol[:score].value %><br/>
