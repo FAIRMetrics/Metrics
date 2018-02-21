@@ -93,7 +93,7 @@ class EvaluationsController < ApplicationController
   end
 
   def result
-    resulthash = @evaluation.result;
+    resulthash = @evaluation.result.to_;
     
     
     $stderr.puts "resulthash class #{resulthash.class}\n\n"
