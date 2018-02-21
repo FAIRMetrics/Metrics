@@ -4,9 +4,11 @@
 
 <h2>About the FAIR Metrics Evaluation Tool</h2>
 
-  <p>Give some info here one day.</p>
-  <% links = @result.map {|p| "click here <a href='#{p}'>#{p}</a><br/>"} %>
+  <p>Below are all of the valid RESTful entry points for the Metrics tester.  </p>
+<!--   <% links = @result.map {|p| "click here <a href='#{p}'>#{p}</a><br/>"} %> -->
   <% @result.each do |e| %>
+  <% next if e.match(/static_pages/) %>
+  <% next if e =~ /\:id/ %>
    <a href='<%= e %>'><%= e %></a><br/>
 <% end %>
 

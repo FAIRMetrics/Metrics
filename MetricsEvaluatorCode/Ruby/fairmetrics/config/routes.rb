@@ -15,8 +15,8 @@ Rails.application.routes.draw do
   get '/about', to: 'static_pages#show'
   
     
-  get 'metric', to: 'metrics#index'
-  get 'metric/new', to: 'metrics#new'
+  #get 'metric', to: 'metrics#index'
+  #get 'metric/new', to: 'metrics#new'
   
 
   get 'collect_metrics/:id', to: 'collections#collect_metrics'

@@ -1,42 +1,48 @@
 <p id="notice"><%= notice %></p>
 
 <div>
-<div style="float:left; width: 300px;vertical-align:middle;display:inline-block;">
+<div style="float:left; width: 700px; vertical-align:middle;display:inline-block;">
+
 <p>
-  <strong>Collection:</strong>
-  <%= @collection.name %>
+  <strong>Evaluation Title:</strong>
+  <%= @evaluation.title %>
 </p>
 
 <p>
-  <strong>Resource:</strong>
+  <strong>Evaluated Resource:</strong>
   <%= @evaluation.resource %>
 </p>
 
 <p>
-  <strong>Body:</strong>
+  <strong>Metrics Collection:</strong>
+  <%= @collection.name %>
+</p>
+
+<p>
+  <strong>Executed Data: (this will one day carry the JSON that you POST to the evaluation URL to re-run the same eval)</strong>
   <%= @evaluation.body %>
 </p>
 
 <p>
-  <strong>Result:</strong>
+  <strong>Result: (this will one day carry some kind of indication of the last result of this evaluation...)</strong>
   <%= @evaluation.result %>
 </p>
 
 <p>
-  <strong>Executor:</strong>
+  <strong>Name of Executor:</strong>
   <%= @evaluation.executor %>
 </p>
 
-<p>
-  <strong>Title:</strong>
-  <%= @evaluation.title %>
-</p>
 
-<%= link_to 'Edit', edit_evaluation_path(@evaluation) %> |
+<%= link_to 'Edit', edit_evaluation_path(@evaluation) %>
 <%= link_to 'Back', evaluations_path %>
+<%= link_to 'Home', about_path %>
+
 </div>
-<div style="float: left; width: 50px; vertical-align:middle;display:inline-block;">
-  <%= link_to 'EXECUTE', "/evaluations/#{@evaluation.id}/execute" %> 
+<div style="float: left; padding-left: 50px;">
+<%=  link_to image_tag("eval_button.jpg"), "/evaluations/#{@evaluation.id}/execute" %>
+  
 </div>
 
 </div>
+

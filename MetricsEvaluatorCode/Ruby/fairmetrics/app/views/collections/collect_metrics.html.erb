@@ -24,7 +24,7 @@
 <% lid = @collection.id %>
 
 
-<h1><%= array %></h1>
+<h1></h1>
 <%= form_with(url: "/collect_metrics/#{lid}", local: true) do |form| %>
 
 <%= form.select("metrics", array,{:include_hidden => false, :include_blank => false}, { :multiple => true, :size => 5 }) %> -->
@@ -34,3 +34,4 @@
 
 <p/>
 <%= link_to 'Back', collections_path %>
+<%= link_to 'Home', about_path %> 

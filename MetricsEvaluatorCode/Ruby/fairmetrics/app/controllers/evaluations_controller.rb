@@ -41,7 +41,7 @@ class EvaluationsController < ApplicationController
 
     respond_to do |format|
       if @evaluation.save
-        format.html { redirect_to @evaluation, notice: "Evaluation was successfully created.}" }
+        format.html { redirect_to @evaluation, notice: "Evaluation was successfully created." }
         format.json { render :show, status: :created, location: @evaluation }
       else
         format.html { render :new }
@@ -193,6 +193,7 @@ class EvaluationsController < ApplicationController
   def get_metrics_for_evaluation(id = params[:id])
     @evaluationid = params[:id]
     @iri = @evaluation.resource
+    @iri.strip!
     respond_to do |format|
       #$stderr.puts "\n\nFormat#{format.class}\n\n"
 
@@ -229,19 +230,21 @@ class EvaluationsController < ApplicationController
       metrics.each do |metric|
       
         smartapi = metric.smarturl
+        smartapi.strip!
         unless (smartapi)
           format.html { redirect_to "/evaluations/#{params[:id]}/error", notice: "no smartAPI found for #{metric.to_s}"}
           return
         end
         smartapi = resolve(smartapi)
-  
+#$stderr.puts "SMARTAPI #{smartapi.to_s}"
+
         unless (interface = fetch(smartapi))
           format.html { redirect_to "/evaluations/#{params[:id]}/error", notice: "the SmartAPI definition at #{smartapi} could not be retrieved. Please chck and edit evaluation if necessary"}
           return
         end
         
         smartyaml = interface.body
-        #$stderr.puts "\n\nInterface#{smartyaml}\n\n"
+#$stderr.puts "\n\nInterface#{smartyaml}\n\n"
         
         tfile = Tempfile.new('smartapi')
         tfile.write(smartyaml)

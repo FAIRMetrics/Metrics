@@ -28,6 +28,8 @@ class MetricsController < ApplicationController
 
     @metric = Metric.new(metric_params)
     url = @metric[:smarturl]
+    url.strip!
+    
     resp = fetch(url)
     if resp
       yaml = YAML.load(resp.body)

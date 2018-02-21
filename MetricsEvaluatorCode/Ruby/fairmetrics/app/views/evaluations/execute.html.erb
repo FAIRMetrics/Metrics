@@ -7,6 +7,7 @@
 <%= form_with(url: "/evaluations/#{@evaluationid}/result", local: true, method: "post") do |form| %>
 <input type='hidden' name='subject' value='<%= @iri %>'>
 
+
 <% @metric_interfaces.each do |idspec| %>
 	<% metric, spec = idspec %>
 	<% id = metric.id %>
@@ -52,5 +53,6 @@
 
 <br/><br/><br/><br/><br/><br/><br/>
 
-<!-- <%= link_to 'Show', @evaluation %> | -->
+<!-- <%= link_to 'Show', @evaluation %> -->
 <%= link_to 'Back', evaluations_path %>
+<%= link_to 'Home', about_path %> 
