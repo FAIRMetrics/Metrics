@@ -7,7 +7,7 @@ require 'rdf/json'
 SafeYAML::OPTIONS[:default_mode] = :safe
 
 class EvaluationsController < ApplicationController
-  before_action :set_evaluation, only: [:show, :edit, :update, :destroy, :execute, :result]
+  before_action :set_evaluation, only: [:show, :edit, :update, :destroy, :execute, :result, :redisplay_result, :execute_analysis]
   include SharedFunctions
   # GET /evaluations
   # GET /evaluations.json
@@ -81,10 +81,10 @@ class EvaluationsController < ApplicationController
 
   def execute()
 
-    if @evaluation.body   #evaluation has been done
-      show()
-      return
-    end
+#    if @evaluation.body   #evaluation has been done
+#      show()
+#      return
+#    end
     
     metrics = get_metrics_for_evaluation
     @metric_interfaces = get_metrics_interfaces(metrics)
@@ -92,9 +92,30 @@ class EvaluationsController < ApplicationController
     
   end
 
-
-
   def result
+    resulthash = @evaluation.result;
+    
+    
+    $stderr.puts "resulthash class #{resulthash.class}\n\n"
+    @result = []
+    @iri = @evaluation.resource
+
+    resulthash.keys.each  do |metricid|
+      thisresultjson = resulthash[metricid]
+      #thisresulthash = JSON.parse(thisresultjson)
+      reader = RDF::JSON::Reader.new(thisresultjson)    
+      @outgraph = RDF::Graph.new()
+      reader.each_statement do |statement|
+        @outgraph << statement
+      end
+
+      @result << [metricid, @outgraph]      
+    end
+
+  end
+
+
+  def execute_analysis
     #$stderr.write params.inspect
     metricshash = params[:metrics]
     subject = params[:subject]
@@ -118,9 +139,17 @@ class EvaluationsController < ApplicationController
       end
     end
     
+    @evaluation.body = data_to_pass
+    unless @evaluation.save 
+        $stderr.puts "wasn't able to save the record #{data_to_pass} for #{@evaluation.id}"
+    end
+    
+    
+    
     # data_to_pass is now a hash of each metric, with each of the data payloads
     
     @result = Array.new()
+    result_for_db = {}
     data_to_pass.keys.each  do |metricid|
       @metric = Metric.find(metricid)
       specs = get_metrics_interfaces([@metric])  # specs is an array of specs << [metric, specification]
@@ -155,7 +184,7 @@ class EvaluationsController < ApplicationController
           http = Net::HTTP.new(uri.host, uri.port)
           request = Net::HTTP::Post.new(uri.request_uri, header)
           request.body = json_to_pass.to_json
-          @jsonin = JSON.parse(json_to_pass.to_json)
+          #@jsonin = JSON.parse(json_to_pass.to_json)
           # Send the request
           response = http.request(request)
           #$stderr.puts "\n\n" + response.body.to_s + "\n\n"
@@ -167,11 +196,26 @@ class EvaluationsController < ApplicationController
           end
 
           @iri = @evaluation.resource
-          @result << [@metric, @jsonin, @outgraph]
-          
+          @result << [@metric, @outgraph]
+          result_for_db[@metric.id] = response.body
         end
       end
     end
+    @evaluation[:result] = result_for_db
+    unless @evaluation.save
+      $stderr.puts "couldn't save the result #{result_for_db} for evaluation #{@evaluation.id}"  
+    end
+    
+    respond_to do |format|
+#      if @evaluation.update(evaluation_params)
+        format.html { redirect_to "/evaluations/#{@evaluation.id}/result", notice: "" }
+        format.json { render :show, status: :ok, location: @evaluation }
+      #else
+      #  format.html { render :edit }
+      #  format.json { render json: @evaluation.errors, status: :unprocessable_entity }
+      #end
+    end
+
     
   end
 

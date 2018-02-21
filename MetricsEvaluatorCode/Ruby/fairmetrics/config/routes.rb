@@ -24,7 +24,9 @@ Rails.application.routes.draw do
  
   #get 'evaluations/:id/result', to: 'evaluations#execute'
   get 'evaluations/:id/execute', to: 'evaluations#execute'
-  post 'evaluations/:id/result', to: 'evaluations#result'
+  post 'evaluations/:id/execute', to: 'evaluations#execute_analysis'
+  get 'evaluations/:id/result', to: 'evaluations#result'
+  #post 'evaluations/:id/result', to: 'evaluations#result'
   get 'evaluations/:id/error', to: 'evaluations#error'
   
   

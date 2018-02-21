@@ -4,8 +4,8 @@
 
 <% @result.each  do |res|  %>
 
-	<% (metric, injson, outgraph) = res %>
-	<% injson = injson %> <!-- silence your complaining! -->
+	<% (metric, outgraph) = res %>
+
 	<h3> Metric: <%= metric.name %></h3>
 	<% q = SPARQL.parse('select * where
 			    {?iri <http://semanticscience.org/resource/SIO_000629> ?result .
