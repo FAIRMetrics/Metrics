@@ -88,54 +88,51 @@ class EvaluationsController < ApplicationController
     
     metrics = get_metrics_for_evaluation
     @metric_interfaces = get_metrics_interfaces(metrics)
-    # pass this hash to the View
-    
+    # pass this hash to the View    
   end
 
+
+
   def result
-    resulthash = @evaluation.result.to_;
+    result_json_string = @evaluation.result;
     
-    
-    $stderr.puts "resulthash class #{resulthash.class}\n\n"
     @result = []
     @iri = @evaluation.resource
+    
+    resulthash = JSON.parse(result_json_string)
 
     resulthash.keys.each  do |metricid|
-      thisresultjson = resulthash[metricid]
+      thisresulthash = resulthash[metricid]
       #thisresulthash = JSON.parse(thisresultjson)
-      reader = RDF::JSON::Reader.new(thisresultjson)    
+      reader = RDF::JSON::Reader.new(thisresulthash.to_json)    
       @outgraph = RDF::Graph.new()
       reader.each_statement do |statement|
         @outgraph << statement
       end
-
-      @result << [metricid, @outgraph]      
+      metric = Metric.find(metricid)
+      @result << [metric, @outgraph]      
     end
 
   end
 
 
   def execute_analysis
-    #$stderr.write params.inspect
+
     metricshash = params[:metrics]
     subject = params[:subject]
-    #$stderr.puts "SUBJECT #{subject}"
-    #$stderr.puts "METRICSHASH #{metricshash}"
+
     data_to_pass = Hash.new()
 
     metricshash.each do |met, val|
-      #$stderr.puts "Metric found #{met} #{val}\n"
       
       if !(met.match(/Metric_(\d+)_(\w+)/)) then
         $stderr.puts "#{met} didn't match regexp for metric name"
       else 
         metricid = $1
         metricparam = $2
-        #$stderr.puts "id #{metricid.to_s}  param #{metricparam.to_s}  val #{val.to_s}"
         
         data_to_pass[metricid.to_i] ||= {"subject" => subject}  # maybe duplicate calls, but just easier this way and does no harm
         data_to_pass[metricid.to_i].merge!({metricparam.to_s => val})
-        #$stderr.puts "\n\nDATA: #{data_to_pass}\n\n"
       end
     end
     
@@ -145,8 +142,6 @@ class EvaluationsController < ApplicationController
     end
     
     
-    
-    # data_to_pass is now a hash of each metric, with each of the data payloads
     
     @result = Array.new()
     result_for_db = {}
@@ -167,7 +162,6 @@ class EvaluationsController < ApplicationController
           endpoint.body_schema['properties'].keys.each do |param|
             next if param == "subject"
             json_to_pass = endpoint.query_json(data_to_pass[metricid])  # this call will auto-format the JSON according to teh schema in the YAML
-            #$stderr.puts json_to_pass
           end
           
           http = spec.raw['schemes'].first
@@ -184,26 +178,18 @@ class EvaluationsController < ApplicationController
           http = Net::HTTP.new(uri.host, uri.port)
           request = Net::HTTP::Post.new(uri.request_uri, header)
           request.body = json_to_pass.to_json
-          #@jsonin = JSON.parse(json_to_pass.to_json)
-          # Send the request
           response = http.request(request)
-          #$stderr.puts "\n\n" + response.body.to_s + "\n\n"
-          reader = RDF::JSON::Reader.new(response.body.to_s)
-          
-          @outgraph = RDF::Graph.new()
-          reader.each_statement do |statement|
-            @outgraph << statement
-          end
+#          $stderr.puts "\n\n\nresponse body #{JSON.parse(response.body)}\n\n\n"
 
-          @iri = @evaluation.resource
-          @result << [@metric, @outgraph]
-          result_for_db[@metric.id] = response.body
+          body = JSON.parse(response.body)  # create a hash
+          result_for_db[@metric.id] = body   # this is a has of the metric id and the hash of the JSON string from the evaluation service
         end
       end
     end
-    @evaluation[:result] = result_for_db
+
+    @evaluation[:result] = result_for_db.to_json   #  A HASH converted to JSON for storage in the database
     unless @evaluation.save
-      $stderr.puts "couldn't save the result #{result_for_db} for evaluation #{@evaluation.id}"  
+      $stderr.puts "couldn't save the result #{result_for_db.to_json} for evaluation #{@evaluation.id}"  
     end
     
     respond_to do |format|
