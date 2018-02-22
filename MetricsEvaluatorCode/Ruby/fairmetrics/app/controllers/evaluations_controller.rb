@@ -136,7 +136,7 @@ class EvaluationsController < ApplicationController
       end
     end
     
-    @evaluation.body = data_to_pass
+    @evaluation.body = data_to_pass.to_json   # save it as json so it can be parsed
     unless @evaluation.save 
         $stderr.puts "wasn't able to save the record #{data_to_pass} for #{@evaluation.id}"
     end

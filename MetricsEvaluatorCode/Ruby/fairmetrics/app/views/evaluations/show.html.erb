@@ -9,6 +9,11 @@
 </p>
 
 <p>
+  <strong>Name of Executor:</strong>
+  <%= @evaluation.executor %>
+</p>
+
+<p>
   <strong>Evaluated Resource:</strong>
   <%= @evaluation.resource %>
 </p>
@@ -19,18 +24,27 @@
 </p>
 
 <p>
-  <strong>Executed Data:</strong>
-  <%= @evaluation.body %>
+  <strong>Executed Data:</strong><br/>
+  <div style="padding-left: 40px;">
+  <% hash = JSON.parse(@evaluation.body) %>
+  <% hash.each do |metricid, body| %>
+    <% metric = Metric.find(metricid) %>
+    <div style="font-size: +1.5em;  padding-top: 20px;"><%= metric.name %></div>
+  <div style="padding-left: 60px;">
+    
+    <% body.each do |key| %>
+      <i><%= key %> : <%= body[key] %></i><br/>
+    <% end %>
+  </div>
+  <% end %>
+</div>
+  
+
 </p>
 
 <p>
-  <strong>Result:</strong>
-  <%= @evaluation.result %>
-</p>
-
-<p>
-  <strong>Name of Executor:</strong>
-  <%= @evaluation.executor %>
+  <strong><%= link_to 'Result: ...', "/evaluations/#{@evaluation.id}/result", style: "font-size: +1em; color: blue;" %></strong>
+<!--  <%= @evaluation.result %> -->
 </p>
 
 
