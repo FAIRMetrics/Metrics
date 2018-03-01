@@ -1,18 +1,19 @@
 @prefix this: <https://purl.org/fair-metrics/FM_A2> .  # canonical URI for the metric
 @prefix sub: <https://purl.org/fair-metrics/FM_A2#> .
- @prefix dcterms: <http://purl.org/dc/terms/> .
- @prefix dcelem: <http://purl.org/dc/elements/1.1/> .
- @prefix np: <http://www.nanopub.org/nschema#> .
- @prefix nx: <http://www.nextprot.org/db/search#> .
- @prefix pav: <http://swan.mindinformatics.org/ontologies/1.2/pav/> .
- @prefix prov: <http://www.w3.org/ns/prov#> .
- @prefix prv: <http://purl.org/net/provenance/ns#> .
- @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
- @prefix ro: <http://purl.org/obo/owl/OBO_REL#> .
- @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
- @prefix fair: <http://purl.org/fair-ontology#> . 
- @prefix foaf: <http://xmlns.com/foaf/0.1/> .
- @prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix dcelem: <http://purl.org/dc/elements/1.1/> .
+@prefix np: <http://www.nanopub.org/nschema#> .
+@prefix nx: <http://www.nextprot.org/db/search#> .
+@prefix pav: <http://swan.mindinformatics.org/ontologies/1.2/pav/> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix prv: <http://purl.org/net/provenance/ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ro: <http://purl.org/obo/owl/OBO_REL#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix fair: <http://purl.org/fair-ontology#> . 
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 
 sub:Head {
   sub:nanopub np:hasAssertion sub:assertion ;
