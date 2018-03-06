@@ -1,5 +1,5 @@
 **TO DOWNLOAD ALL OF THE METRICS IN ONE PDF:  https://github.com/FAIRMetrics/Metrics/raw/master/ALL.pdf**
-**TO VIEW THE METRICS IN YOUR BROWSER:  https://github.com/FAIRMetrics/Metrics/raw/master/ALL.html**
+**TO VIEW THE METRICS IN YOUR BROWSER:  http://htmlpreview.github.com/?https://github.com/FAIRMetrics/Metrics/raw/master/ALL.html**
 
 ---------------
 
