@@ -44,6 +44,7 @@ GEM
     addressable (2.5.2)
       public_suffix (>= 2.0.2, < 4.0)
     arel (8.0.0)
+    bcrypt (3.1.11)
     bindex (0.5.0)
     builder (3.2.3)
     byebug (10.0.0)
@@ -85,6 +86,7 @@ GEM
       multi_json (>= 1.2)
     json-schema (2.8.0)
       addressable (>= 2.4)
+    jwt (2.1.0)
     link_header (0.0.8)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
@@ -112,6 +114,7 @@ GEM
     public_suffix (3.0.1)
     puma (3.11.2)
     rack (2.0.3)
+    rack-cors (1.0.2)
     rack-test (0.8.2)
       rack (>= 1.0, < 3)
     rails (5.1.4)
@@ -167,6 +170,7 @@ GEM
     selenium-webdriver (3.8.0)
       childprocess (~> 0.5)
       rubyzip (~> 1.0)
+    simple_command (0.0.9)
     sparql (3.0.0)
       builder (~> 3.2)
       ebnf (~> 1.1)
@@ -219,21 +223,25 @@ PLATFORMS
 
 DEPENDENCIES
   active_attr
+  bcrypt (~> 3.1.7)
   byebug
   capybara (~> 2.13)
   coffee-rails (~> 4.2)
   equivalent-xml
   jbuilder (~> 2.5)
+  jwt
   listen (>= 3.0.5, < 3.2)
   nokogiri
   open_api_parser
   openssl
   puma (~> 3.7)
+  rack-cors
   rails (~> 5.1.4)
   rdf-json
   safe_yaml
   sass-rails (~> 5.0)
   selenium-webdriver
+  simple_command
   sparql
   sparql-client
   spring

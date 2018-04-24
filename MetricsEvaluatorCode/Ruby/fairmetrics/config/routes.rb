@@ -8,26 +8,31 @@ Rails.application.routes.draw do
   resources :evaluations
   resources :collections   # the "resources" command auto-creates the default routes, including POST going to #create
   resources :metrics
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
    
   root 'static_pages#show'
   get '/about', to: 'static_pages#show'
   
-    
-  #get 'metric', to: 'metrics#index'
-  #get 'metric/new', to: 'metrics#new'
-  
 
   get 'collect_metrics/:id', to: 'collections#collect_metrics'
   post 'collect_metrics/:id', to: 'collections#register_metrics'
  
-  #get 'evaluations/:id/result', to: 'evaluations#execute'
   get 'evaluations/:id/execute', to: 'evaluations#execute'
   post 'evaluations/:id/execute', to: 'evaluations#execute_analysis'
   get 'evaluations/:id/result', to: 'evaluations#result'
   #post 'evaluations/:id/result', to: 'evaluations#result'
   get 'evaluations/:id/error', to: 'evaluations#error'
+  
+  
+  # API methods
+  namespace :v1, defaults: {format: 'json'} do
+    scope '/users' do
+      post "register" => 'users#register'
+      post "auth/login", to: 'users#login'
+      get "test", to: 'users#test'  # a way to test authentication without payload - are you still logged-in?
+    end
+  end
+  
   
   
 end

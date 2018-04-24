@@ -25,8 +25,8 @@
         <td><%= evaluation.executor %></td>
         <td><%= evaluation.title %></td>
         <td><%= link_to 'Show', evaluation %></td>
-        <td><%= link_to 'Edit', edit_evaluation_path(evaluation) %></td>
-        <td><%= link_to 'Destroy', evaluation, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+<!--        <td><%= link_to 'Edit', edit_evaluation_path(evaluation) %></td>
+        <td><%= link_to 'Destroy', evaluation, method: :delete, data: { confirm: 'Are you sure?' } %></td> -->
         <td><%= link_to image_tag("eval_button.jpg"), "/evaluations/#{evaluation.id}/execute" %></td>
       </tr>
     <% end %>

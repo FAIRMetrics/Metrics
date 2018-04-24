@@ -7,7 +7,9 @@ require 'rdf/json'
 SafeYAML::OPTIONS[:default_mode] = :safe
 
 class EvaluationsController < ApplicationController
-  before_action :set_evaluation, only: [:show, :edit, :update, :destroy, :execute, :result, :redisplay_result, :execute_analysis]
+  
+  #before_action :set_evaluation, only: [:show, :edit, :update, :destroy, :execute, :result, :redisplay_result, :execute_analysis]
+  before_action :set_evaluation, only: [:show, :execute, :result, :redisplay_result, :execute_analysis]
   include SharedFunctions
   # GET /evaluations
   # GET /evaluations.json

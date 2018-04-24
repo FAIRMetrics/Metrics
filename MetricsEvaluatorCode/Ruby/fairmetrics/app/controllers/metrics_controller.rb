@@ -1,5 +1,7 @@
 class MetricsController < ApplicationController
-  before_action :set_metric, only: [ :show, :edit, :update, :destroy]
+  
+#  before_action :set_metric, only: [ :show, :edit, :update, :destroy]
+  before_action :set_metric, only: [ :show, ]
 
   # GET /metrics
   # GET /metrics.json

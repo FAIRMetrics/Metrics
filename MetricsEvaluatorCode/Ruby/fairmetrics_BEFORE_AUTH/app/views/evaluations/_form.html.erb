@@ -1,0 +1,57 @@
+<%= form_with(model: evaluation, local: true) do |form| %>
+  <% if evaluation.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(evaluation.errors.count, "error") %> prohibited this evaluation from being saved:</h2>
+
+      <ul>
+      <% evaluation.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+<!--    <%= form.label :title %> -->
+    <%= form.label "Evaluation Title/Name" %>
+    <%= form.text_field :title, id: :evaluation_title %>
+  </div>
+
+<!--  <div class="field">
+    <%= form.label :collection %>
+    <%= form.text_field :collection, id: :evaluation_collection %>
+  </div> -->
+  
+  
+<% array = @collections.map {|c| [c.name,c.id]} %>
+<!-- <%= form.label :collection %> -->
+<%= form.label "Using which metrics collection?" %>
+<%= form.select(:collection, array,{:include_hidden => false, :include_blank => false}, { :multiple => false, :size => 5 }) %>
+
+
+  <div class="field">
+<!--    <%= form.label :resource %> -->
+    <%= form.label "Resource (IRI) to be Evaluated" %>
+    <%= form.text_field :resource, id: :evaluation_resource %>
+  </div>
+
+<!--  <div class="field">
+    <%= form.label :body %>
+    <%= form.text_field :body, id: :evaluation_body %>
+  </div> -->
+
+<!--   <div class="field">
+    <%= form.label :result %>
+    <%= form.text_field :result, id: :evaluation_result %>
+  </div> -->
+  
+  <div class="field">
+    <%= form.label "Evaluation executed by" %>
+    <%= form.text_field :executor, id: :evaluation_executor %>
+  </div>
+
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
