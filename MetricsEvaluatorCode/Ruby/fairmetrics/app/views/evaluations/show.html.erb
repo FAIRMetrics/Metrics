@@ -1,4 +1,3 @@
-<p id="notice"><%= notice %></p>
 
 <div>
 <div style="float:left; width: 700px; vertical-align:middle;display:inline-block;">
@@ -27,8 +26,18 @@
   <strong>Executed Data:</strong><br/>
   <div style="padding-left: 40px;">
 <% if @evaluation.body %>
+  <script>
+  function showJSON() {
+   var jsonPretty = JSON.stringify(JSON.parse(document.getElementById('RAW').innerHTML),null,2);
+   document.getElementById('RAW').innerHTML = "<pre><code>" + jsonPretty + "</code></pre>";
+   document.getElementById('RAW').style.display = "block";
+  }
+  </script>
+  <div id="RAW"  style="display:none;" class="raw_json" > <%= @evaluation.body %> </div>
+  <input type="button" name="showraw" value="Show JSON" onclick="showJSON()" />
   <% hash = JSON.parse(@evaluation.body) %>
-  <% hash.each do |metricid, body| %>
+  <% hash.each do |metricuri, body| %>
+    <% metricuri =~ /.*?(\d+)$/ ; metricid = $1 %>
     <% metric = Metric.find(metricid) %>
     <div style="font-size: +1.5em;  padding-top: 20px;"><%= metric.name %></div>
     <div style="padding-left: 60px;">
@@ -46,9 +55,9 @@
 
 <p>
 <% if @evaluation.body %>
+  <!--  TODO replace this with a rails-generated URL... one day -->
   <strong><%= link_to 'Result: ...', "/evaluations/#{@evaluation.id}/result", style: "font-size: +1em; color: blue;" %></strong>
 <% end %>
-<!--  <%= @evaluation.result %> -->
 </p>
 
 
@@ -58,7 +67,7 @@
 
 </div>
 <div style="float: left; padding-left: 50px;">
-<%=  link_to image_tag("eval_button.jpg"), "/evaluations/#{@evaluation.id}/execute" %>
+<%=  link_to image_tag("eval_button.jpg"), template_path(@evaluation) %>
   
 </div>
 

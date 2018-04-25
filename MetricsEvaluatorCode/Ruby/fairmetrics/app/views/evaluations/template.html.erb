@@ -4,7 +4,7 @@
 
 <br/><br/><br/>
 
-<%= form_with(url: "/evaluations/#{@evaluationid}/execute", local: true, method: "post") do |form| %>
+<%= form_with(url: result_path(@evaluationid), local: true, method: "post") do |form| %>
 <input type='hidden' name='subject' value='<%= @iri %>'>
 
 
