@@ -1,7 +1,6 @@
 require 'safe_yaml'
 require 'open_api_parser'
 require 'rdf'
-#$LOAD_PATH.unshift "/home/markw/.rvm/gems/ruby-2.4.1/gems/rdf-json-2.2.0/lib"
 require 'rdf/json'
 
 SafeYAML::OPTIONS[:default_mode] = :safe
@@ -9,16 +8,14 @@ SafeYAML::OPTIONS[:default_mode] = :safe
 #class EvaluationsController < ApplicationController
 class EvaluationsController < ApiController
   
-  #before_action :set_evaluation, only: [:show, :edit, :update, :destroy, :template, :result, :redisplay_result, :execute_analysis]
   before_action :set_evaluation, only: [:show, :template, :result, :redisplay_result, :execute_analysis]
-  skip_before_action :authenticate_request, only: %i[template show execute_analysis create result]
+  skip_before_action :authenticate_request, only: %i[new index template show execute_analysis create result]
 
   include SharedFunctions
+
+  
   # GET /evaluations
   # GET /evaluations.json
-  
-    
-  
   def index
     @evaluations = Evaluation.all
   end
@@ -79,6 +76,9 @@ class EvaluationsController < ApiController
     end
   end
 
+  
+  
+  
   # DELETE /evaluations/1
   # DELETE /evaluations/1.json
   def destroy
@@ -234,13 +234,8 @@ class EvaluationsController < ApiController
     end
     
     respond_to do |format|
-#      if @evaluation.update(evaluation_params)
-        format.html { redirect_to "/evaluations/#{@evaluation.id}/result", notice: "" }
-        format.json { render :show, status: :ok, location: @evaluation }
-      #else
-      #  format.html { render :edit }
-      #  format.json { render json: @evaluation.errors, status: :unprocessable_entity }
-      #end
+        format.html { redirect_to   result_url(@evaluation), notice: "" }
+        format.json { redirect_to result_url(@evaluation) }
     end
 
     
