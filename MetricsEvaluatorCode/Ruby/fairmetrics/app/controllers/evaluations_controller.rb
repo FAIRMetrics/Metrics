@@ -126,6 +126,13 @@ class EvaluationsController < ApiController
       @result << [metric, @outgraph]      
     end
 
+
+    respond_to do |format|
+#        format.html { redirect_to @evaluation, notice: "Evaluation was successfully updated." }
+        format.html { redirect_to @result }
+        format.json { render :show, status: :ok, location: @result }
+    end
+
   end
 
 
