@@ -267,8 +267,8 @@ class EvaluationsController < ApiController
     respond_to do |format|
       #$stderr.puts "\n\nFormat#{format.class}\n\n"
 
-      @iri = resolve(@iri)
-      unless (@evaluate_me = fetch(@iri))
+      resolvediri = resolve(@iri)
+      unless (@evaluate_me = fetch(resolvediri))
           format.html { redirect_to "/evaluations/#{params[:id]}/error", notice: "the resource at #{@iri} could not be retrieved. Please chck and edit evaluation if necessary"}
           return
       end
