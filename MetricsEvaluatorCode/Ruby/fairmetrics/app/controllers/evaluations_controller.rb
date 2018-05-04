@@ -51,7 +51,7 @@ class EvaluationsController < ApiController
     @evaluation.collection = evaluation_params[:collection]
     resource = @evaluation.resource
     if (resource =~ /doi:/ or resource =~ /dx\.doi\.org/)
-      canonicalizedDOI = resource.match(/(10.\d{4,9}\/[-\._;()\/:A-Z0-9]+$)/i).first
+      canonicalizedDOI = resource.match(/(10.\d{4,9}\/[-\._;()\/:A-Z0-9]+$)/i)[1]
       @evaluation.resource = canonicalizedDOI
     end
     
@@ -275,6 +275,7 @@ class EvaluationsController < ApiController
     @evaluationid = params[:id]
     @iri = @evaluation.resource
     @iri.strip!
+    
     respond_to do |format|
       #$stderr.puts "\n\nFormat#{format.class}\n\n"
 
