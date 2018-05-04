@@ -49,6 +49,11 @@ class EvaluationsController < ApiController
   def create
     @evaluation = Evaluation.new(evaluation_params)
     @evaluation.collection = evaluation_params[:collection]
+    resource = @evaluation.resource
+    if (resource =~ /doi:/ or resource =~ /dx\.doi\.org/)
+      canonicalizedDOI = resource.match(/(10.\d{4,9}\/[-\._;()\/:A-Z0-9]+$)/i).first
+      @evaluation.resource = canonicalizedDOI
+    end
     
 
     respond_to do |format|
