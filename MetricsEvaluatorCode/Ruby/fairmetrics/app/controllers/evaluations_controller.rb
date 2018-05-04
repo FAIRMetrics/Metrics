@@ -11,7 +11,7 @@ class EvaluationsController < ApiController
   
   #before_action :set_evaluation, only: [:show, :edit, :update, :destroy, :template, :result, :redisplay_result, :execute_analysis]
   before_action :set_evaluation, only: [:show, :template, :result, :redisplay_result, :execute_analysis]
-  skip_before_action :authenticate_request, only: %i[template show execute_analysis create result]
+  skip_before_action :authenticate_request, only: %i[new index template show execute_analysis create result]
 
   include SharedFunctions
   # GET /evaluations
@@ -126,6 +126,18 @@ class EvaluationsController < ApiController
       @result << [metric, @outgraph]      
     end
 
+#    respond_to do |format|
+#      if @result
+#        format.html { }
+#        format.json { render :show, status: :ok }
+#      else
+#        format.html { render :show }
+#        format.json { render json: @evaluation.errors, status: :unprocessable_entity }
+#      end
+#    end
+
+
+
   end
 
 
@@ -235,8 +247,10 @@ class EvaluationsController < ApiController
     
     respond_to do |format|
 #      if @evaluation.update(evaluation_params)
-        format.html { redirect_to "/evaluations/#{@evaluation.id}/result", notice: "" }
-        format.json { render :show, status: :ok, location: @evaluation }
+#        format.html { redirect_to "/evaluations/#{@evaluation.id}/result", notice: "" }
+#        format.json { render :show, status: :ok, location: @evaluation }
+        format.html { redirect_to result_url(@evaluation), notice: "" }
+        format.json { redirect_to result_url(@evaluation) }
       #else
       #  format.html { render :edit }
       #  format.json { render json: @evaluation.errors, status: :unprocessable_entity }

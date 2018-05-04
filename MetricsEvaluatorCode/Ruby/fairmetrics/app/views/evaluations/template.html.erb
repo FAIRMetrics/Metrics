@@ -14,9 +14,9 @@
 	<% spec.raw['paths'].keys.each do |path| %>
 		<% spec.raw['paths'][path].keys.each do |method| %>
 	
-			<h4><%= id %>: <%= spec.raw['info']['title'] %> </h4>
+			<h4><%= spec.raw['info']['title'] %> </h4>
 			<div style="text-indent: 40px">
-			<b> <%= method.to_s %> <%= path.to_s %> </b>
+			<!-- <b> <%= method.to_s %> <%= path.to_s %> </b> -->
 			<p/>
 			<% endpoint = spec.endpoint(path.to_s, method.to_s) %>
 			<% endpoint.body_schema['properties'].keys.each do |param| %>
