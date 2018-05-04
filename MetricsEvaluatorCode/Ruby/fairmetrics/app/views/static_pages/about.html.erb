@@ -7,11 +7,10 @@
   <p>Below are all of the valid RESTful entry points for the Metrics tester.  </p>
 <!--   <% links = @result.map {|p| "click here <a href='#{p}'>#{p}</a><br/>"} %> -->
   <% @result.each do |e| %>
-  <% next if e.match(/static_pages/) %>
-  <% next if e =~ /\:id/ %>
-  <% next if e =~ /v1/ %>
-
-   <a href='<%= e %>'><%= e %></a><br/>
-<% end %>
+  	<% next if e.match(/static_pages/) %>
+  	<% next if e =~ /\:id/ %>
+  	<% next if e =~ /v1/ %>
+  	<a href='<%= e %>'><%= e %></a><br/>
+  <% end %>
 
 

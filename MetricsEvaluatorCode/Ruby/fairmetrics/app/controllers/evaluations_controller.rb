@@ -1,24 +1,22 @@
 require 'safe_yaml'
 require 'open_api_parser'
 require 'rdf'
-#$LOAD_PATH.unshift "/home/markw/.rvm/gems/ruby-2.4.1/gems/rdf-json-2.2.0/lib"
 require 'rdf/json'
 
 SafeYAML::OPTIONS[:default_mode] = :safe
 
 #class EvaluationsController < ApplicationController
 class EvaluationsController < ApiController
-  
-  #before_action :set_evaluation, only: [:show, :edit, :update, :destroy, :template, :result, :redisplay_result, :execute_analysis]
+
+    #before_action :set_evaluation, only: [:show, :edit, :update, :destroy, :template, :result, :redisplay_result, :execute_analysis]
   before_action :set_evaluation, only: [:show, :template, :result, :redisplay_result, :execute_analysis]
   skip_before_action :authenticate_request, only: %i[new index template show execute_analysis create result]
 
   include SharedFunctions
+
+  
   # GET /evaluations
   # GET /evaluations.json
-  
-    
-  
   def index
     @evaluations = Evaluation.all
   end
@@ -70,15 +68,18 @@ class EvaluationsController < ApiController
   def update
     respond_to do |format|
       if @evaluation.update(evaluation_params)
-        format.html { redirect_to @evaluation, notice: "Evaluation was successfully updated." }
-        format.json { render :show, status: :ok, location: @evaluation }
-      else
-        format.html { render :edit }
-        format.json { render json: @evaluation.errors, status: :unprocessable_entity }
+        format.html { redirect_to result_url(@evaluation), notice: "" }
+        format.json { redirect_to result_url(@evaluation) }
+      #else
+      #  format.html { render :edit }
+      #  format.json { render json: @evaluation.errors, status: :unprocessable_entity }
       end
     end
   end
 
+  
+  
+  
   # DELETE /evaluations/1
   # DELETE /evaluations/1.json
   def destroy
@@ -246,15 +247,8 @@ class EvaluationsController < ApiController
     end
     
     respond_to do |format|
-#      if @evaluation.update(evaluation_params)
-#        format.html { redirect_to "/evaluations/#{@evaluation.id}/result", notice: "" }
-#        format.json { render :show, status: :ok, location: @evaluation }
         format.html { redirect_to result_url(@evaluation), notice: "" }
         format.json { redirect_to result_url(@evaluation) }
-      #else
-      #  format.html { render :edit }
-      #  format.json { render json: @evaluation.errors, status: :unprocessable_entity }
-      #end
     end
 
     
@@ -279,8 +273,8 @@ class EvaluationsController < ApiController
     respond_to do |format|
       #$stderr.puts "\n\nFormat#{format.class}\n\n"
 
-      @iri = resolve(@iri)
-      unless (@evaluate_me = fetch(@iri))
+      resolvediri = resolve(@iri)
+      unless (@evaluate_me = fetch(resolvediri))
           format.html { redirect_to "/evaluations/#{params[:id]}/error", notice: "the resource at #{@iri} could not be retrieved. Please chck and edit evaluation if necessary"}
           return
       end

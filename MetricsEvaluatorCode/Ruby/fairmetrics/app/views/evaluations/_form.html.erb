@@ -31,7 +31,7 @@
 
   <div class="field">
 <!--    <%= form.label :resource %> -->
-    <%= form.label "Resource (IRI) to be Evaluated" %>
+    <%= form.label "Globally Unique Identifier of Resource to be Evaluated" %>
     <%= form.text_field :resource, id: :evaluation_resource %>
   </div>
 
@@ -46,7 +46,7 @@
   </div> -->
   
   <div class="field">
-    <%= form.label "Evaluation executed by" %>
+    <%= form.label "Evaluation executed by (ORCID Identifier)" %>
     <%= form.text_field :executor, id: :evaluation_executor %>
   </div>
 
