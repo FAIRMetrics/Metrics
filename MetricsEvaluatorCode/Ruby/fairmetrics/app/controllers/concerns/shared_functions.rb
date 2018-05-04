@@ -33,7 +33,14 @@ require 'openssl'
    # this returns the URI that results from all redirects, etc.
   def resolve(uri_str, agent = 'curl/7.43.0', max_attempts = 10, timeout = 10)
     attempts = 0
+    max_attempts = 5
     cookie = nil
+
+    # is it a DOI?
+    if (uri_str.match(/(10.\d{4,9}\/[-\._;()\/:A-Z0-9]+$)/i))
+      @iri = "http://dx.doi.org/#{uri_str}"  # convert to resolvable DOI URL
+    end
+
 
     until attempts >= max_attempts
       attempts += 1
