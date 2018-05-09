@@ -24,6 +24,7 @@
 
   <tbody>
     <% @collections.each do |collection| %>
+    <% next if collection.name =~ /__ALL/ %>
       <tr>
         <td><%= collection.name %></td>
         <td><%= collection.contact %></td>
