@@ -1,8 +1,10 @@
-class CollectionsController < ApplicationController
+class CollectionsController < ApiController
+#class CollectionsController < ApplicationController
 
 #  before_action :set_collection, only: [:show, :edit, :update, :destroy]
   before_action :set_collection, only: [:show, ]
 
+  skip_before_action :authenticate_request, only: %i[index show]
 
 
   def collect_metrics
