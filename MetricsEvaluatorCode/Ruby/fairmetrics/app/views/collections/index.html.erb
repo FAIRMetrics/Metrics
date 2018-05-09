@@ -1,3 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Fairmetrics</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    
 <h1>Collections</h1>
 
 <table>
@@ -28,3 +40,6 @@
 
 <%= link_to 'New Collection', new_collection_path %>
 <%= link_to 'Home', about_path %> 
+
+  </body>
+</html>
