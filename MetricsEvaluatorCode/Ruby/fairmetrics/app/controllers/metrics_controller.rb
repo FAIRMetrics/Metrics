@@ -44,7 +44,8 @@ class MetricsController < ApplicationController
         @metric[:creator] = yaml["info"]["contact"]["responsibleDeveloper"] or yaml["info"]["contact"]["responsibleDeveloper"] or "Unidentified"
         @collection = Collection.where("name = ?", "__ALL__METRICS")
         collect = @collection.first
-        @metric[:collection_id] = collect.id
+        #@metric[:collection_id] = collect.id
+        
         respond_to do |format|
           if @metric.save
             collect.metrics << @metric
