@@ -1,3 +1,14 @@
+<% @notice ||= "" %>
+<p id="notice"><%= @notice %></p>
+
+<% if @collection.errors.any? %>
+	<div class='error error-success note-shadow'>
+		<% @collection.errors.full_messages.each do |msg| %>
+			<p><%= msg %></p>
+		<% end %>
+	</div>
+<% end %>
+
 <h1>New Collection</h1>
 
 <%= render 'form', collection: @collection %>

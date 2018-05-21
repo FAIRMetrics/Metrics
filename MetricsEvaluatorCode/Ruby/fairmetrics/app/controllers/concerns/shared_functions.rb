@@ -20,11 +20,11 @@ require 'openssl'
 	    # successful retrieval of web page\n",
 	    return response  # return that response object to the main code\n",
 	  else
-	    raise Exception, "Something went wrong... the call to #{uri_str} failed; type #{response.class}"
+	    #raise Exception, "Something went wrong... the call to #{uri_str} failed; type #{response.class}"
 	    # note - if you want to learn more about Exceptions, and error-handling\n",
 	    # read this page:  http://rubylearning.com/satishtalim/ruby_exceptions.html  \n",
 	    # you can capture the Exception and do something useful with it!\n",
-	    response = False
+	    response = false
 	    return response  # now we are returning 'False', and we will check that with an \"if\" statement in our main code
     end
   end

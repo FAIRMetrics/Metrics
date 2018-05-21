@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Fairmetrics</title>
+    <title>Fairmetrics Collections List</title>
     <%= csrf_meta_tags %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
@@ -9,6 +9,9 @@
   </head>
 
   <body>
+<% @notice ||= "" %>
+<p id="notice"><%= @notice %></p>
+
 
     <%= yield %>
   </body>

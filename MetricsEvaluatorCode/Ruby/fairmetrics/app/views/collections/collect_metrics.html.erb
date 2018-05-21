@@ -1,17 +1,20 @@
+<% notice ||= "" %>
 <p id="notice"><%= notice %></p>
+
+
 <h1>Metrics Collection:</h1>
 <p>
-  <strong>Name:</strong>
+  <strong>Collection Name:</strong>
   <%= @collection.name %>
 </p>
 
 <p>
-  <strong>Contact:</strong>
+  <strong>Contact ORCiD:</strong>
   <%= @collection.contact %>
 </p>
 
 <p>
-  <strong>Organization:</strong>
+  <strong>Creating Organization:</strong>
   <%= @collection.organization %>
 </p>
 
@@ -27,7 +30,7 @@
 <h1></h1>
 <%= form_with(url: "/collect_metrics/#{lid}", local: true) do |form| %>
 
-<%= form.select("metrics", array,{:include_hidden => false, :include_blank => false}, { :multiple => true, :size => 5 }) %> -->
+<%= form.select("metrics", array,{:include_hidden => false, :include_blank => false}, { :multiple => true, :size => 5 }) %> 
 
 <%= form.submit %>
 <% end %> 
