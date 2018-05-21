@@ -17,7 +17,7 @@
     <% @metrics.each do |metric| %>
       <tr>
         <td><%= metric.name %></td>
-        <td><%= metric.creator %></td>
+        <td><a href="https://orcid.org/<%= @metric.creator %>"><%= @metric.creator %></a></td>
         <td><%= metric.email %></td>
         <td><%= metric.principle %></td>
         <td><a href='<%= metric.smarturl %>'><%= metric.smarturl %></a></td>
