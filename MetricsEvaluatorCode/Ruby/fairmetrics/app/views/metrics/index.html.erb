@@ -1,4 +1,3 @@
-<p id="notice"><%= notice %></p>
 
 <h1>Metrics</h1>
 
@@ -21,7 +20,7 @@
         <td><%= metric.creator %></td>
         <td><%= metric.email %></td>
         <td><%= metric.principle %></td>
-        <td><%= metric.smarturl %></td>
+        <td><a href="<%= metric.smarturl %>"><%= metric.smarturl %></a></td>
         <td><%= link_to 'Show', metric %></td>
 <!--         <td><%= link_to 'Edit', edit_metric_path(metric) %></td>
         <td><%= link_to 'Destroy', metric, method: :delete, data: { confirm: 'Are you sure?' } %></td> -->

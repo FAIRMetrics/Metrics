@@ -4,7 +4,7 @@ class CollectionsController < ApiController
 #  before_action :set_collection, only: [:show, :edit, :update, :destroy]
   before_action :set_collection, only: [:show, ]
 
-  skip_before_action :authenticate_request, only: %i[index show]
+  skip_before_action :authenticate_request, only: %i[index show new collect_metrics register_metrics create]
 
 
   def collect_metrics
@@ -15,13 +15,31 @@ class CollectionsController < ApiController
 
   def register_metrics
     @collection = Collection.find(params[:id])
+    
+    @collection.metrics.each do |m|
+      @collection.metrics.delete(m)
+      @collection.save!
+    end
+    @collection.metrics.each do |m|  # why do I need to do this twice?!!??   If I don't, there's one left over!
+      @collection.metrics.delete(m)
+      @collection.save!
+    end
+
     metrics = params[:metrics]
     metrics.each do |m|
       metric = Metric.find(m)
       @collection.metrics << metric
     end
-    
-    @collection
+
+    respond_to do |format|
+      if @collection.save
+        format.html { redirect_to action: "show", id: @collection.id }   # url_for{@collection}
+        format.json { render :show, status: :created, location: @collection }
+      else
+        format.html { render :new }
+        format.json { render json: @collection.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
 
@@ -49,22 +67,25 @@ class CollectionsController < ApiController
   # POST /collections.json
   def create
     @collection = Collection.new(collection_params)
-
+       
     respond_to do |format|
-      if @collection.save
-        @metrics = Metric.where("name LIKE ?", "%")
-        # a = "#{url_for(@collection)}"
-        format.html { redirect_to action: "collect_metrics", id: @collection.id }   # url_for{@collection}
-#        format.html { redirect_to @collection, notice:  a + " Collection was successfully created." }   # url_for{@collection}
-        format.json { render :show, status: :created, location: @collection }
+      if validate 
+        if @collection.save
+          format.html { redirect_to action: "collect_metrics", id: @collection.id }   # url_for{@collection}
+          format.json { render :show, status: :created, location: @collection }
+        else
+          @collection.errors[:unknown] << "failed to save for an unknown reason"
+          format.html { render :new }
+          format.json { render json: @collection.errors, status: :unprocessable_entity }
+        end
       else
         format.html { render :new }
         format.json { render json: @collection.errors, status: :unprocessable_entity }
-      end
-    
-
+      end    
     end
   end
+
+
 
   # PATCH/PUT /collections/1
   # PATCH/PUT /collections/1.json
@@ -90,6 +111,20 @@ class CollectionsController < ApiController
       format.json { head :no_content }
     end
   end
+  
+  
+  def validate
+    orcid = @collection.contact
+    page = fetch("http://orcid.org/#{orcid}")
+    if page and !(page.body.downcase =~ /sign\sin/)
+      return true
+    else
+      @collection.errors[:orcid] << "That was not a valid ORCiD"
+      return false
+    end
+  end
+  
+  
 
   private
     # Use callbacks to share common setup or constraints between actions.
