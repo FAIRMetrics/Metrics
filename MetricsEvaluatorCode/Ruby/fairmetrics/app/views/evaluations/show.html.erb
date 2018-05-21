@@ -9,18 +9,18 @@
 </p>
 
 <p>
-  <strong>Name of Executor:</strong>
-  <%= @evaluation.executor %>
-</p>
-
-<p>
   <strong>Evaluated Resource:</strong>
   <%= @evaluation.resource %>
 </p>
 
 <p>
+  <strong>Name of Executor:</strong>
+    <a href="https://orcid.org/<%= @evaluation.executor %>"><%= @evaluation.executor %></a>"
+</p>
+
+<p>
   <strong>Metrics Collection:</strong>
-  <%= @collection.name %>
+  <a href="<%= url_for @collection %>"> <%= @collection.name %></a>
 </p>
 
 <p>
