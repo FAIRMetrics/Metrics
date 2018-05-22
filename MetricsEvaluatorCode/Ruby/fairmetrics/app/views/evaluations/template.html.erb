@@ -4,17 +4,44 @@
 
 <br/><br/><br/>
 
+<%  @ms = Array.new %>
+<%  @f = Array.new %>
+<%  @a = Array.new %>
+<%  @i = Array.new %>
+<%  @r = Array.new %>
+
+<% @metric_interfaces.sort {|m1, m2| met1,spec1 = *m1; met2, spec2 = *m2; met2.principle <=> met1.principle}.each do |m| %>
+  <% case m.first.principle.upcase
+      when /F/
+        @f << m
+      when /A/
+        @a << m
+      when /I/
+        @i << m
+      when/R/
+        @r << m
+     end  %>
+ <% end %>
+<% @f.sort_by! {|mm| mm.first.principle} %>
+<% @a.sort_by! {|mm| mm.first.principle} %>
+<% @i.sort_by! {|mm| mm.first.principle} %>
+<% @r.sort_by! {|mm| mm.first.principle} %>
+<% @ms.push(*@f) %>
+<% @ms.push(*@a) %>
+<% @ms.push(*@i) %>
+<% @ms.push(*@r) %>
+
 <%= form_with(url: result_path(@evaluationid), local: true, method: "post") do |form| %>
 <input type='hidden' name='subject' value='<%= @iri %>'>
 
 
-<% @metric_interfaces.each do |idspec| %>
+<% @ms.each do |idspec| %>
 	<% metric, spec = idspec %>
 	<% id = metric.id %>
 	<% spec.raw['paths'].keys.each do |path| %>
 		<% spec.raw['paths'][path].keys.each do |method| %>
 	
-			<h4><%= spec.raw['info']['title'] %> </h4>
+			<h4><%= metric.principle %>: <%= spec.raw['info']['title'] %> </h4>
 			<div style="text-indent: 40px">
 			<!-- <b> <%= method.to_s %> <%= path.to_s %> </b> -->
 			<p/>

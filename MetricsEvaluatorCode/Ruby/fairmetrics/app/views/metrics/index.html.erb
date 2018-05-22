@@ -1,5 +1,31 @@
 
 <h1>Metrics</h1>
+<%  @ms = Array.new %>
+<%  @f = Array.new %>
+<%  @a = Array.new %>
+<%  @i = Array.new %>
+<%  @r = Array.new %>
+
+<% @metrics.each do |m| %>
+  <% case m.principle.upcase
+      when /F/
+        @f << m
+      when /A/
+        @a << m
+      when /I/
+        @i << m
+      when/R/
+        @r << m
+     end  %>
+ <% end %>
+<% @f.sort_by! {|mm| mm.principle} %>
+<% @a.sort_by! {|mm| mm.principle} %>
+<% @i.sort_by! {|mm| mm.principle} %>
+<% @r.sort_by! {|mm| mm.principle} %>
+<% @ms.push(*@f) %>
+<% @ms.push(*@a) %>
+<% @ms.push(*@i) %>
+<% @ms.push(*@r) %>
 
 <table>
   <thead>
@@ -14,7 +40,8 @@
   </thead>
 
   <tbody>
-    <% @metrics.each do |metric| %>
+    <% @ms.each do |metric| %> 
+
       <tr>
         <td><%= metric.name %></td>
         <td><a href="https://orcid.org/<%= metric.creator %>"><%= metric.creator %></a></td>
