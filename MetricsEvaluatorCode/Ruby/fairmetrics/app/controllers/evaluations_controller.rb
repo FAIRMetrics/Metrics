@@ -48,16 +48,20 @@ class EvaluationsController < ApiController
   # POST /evaluations.json
   def create
     @evaluation = Evaluation.new(evaluation_params)
-    @evaluation.collection = evaluation_params[:collection]
+    if Evaluation.where('title=?', @evaluation.title).first
+      @evaluation.errors[:nameexists] << "An evaluation by that title already exists"
+    end
+
     resource = @evaluation.resource
     if (resource =~ /doi:/ or resource =~ /dx\.doi\.org/)
       canonicalizedDOI = resource.match(/(10.\d{4,9}\/[-\._;()\/:A-Z0-9]+$)/i)[1]
       @evaluation.resource = canonicalizedDOI
     end
     
-
+    validate_orcid(@evaluation, @evaluation.executor)  # sets an error if there was a problem
+    
     respond_to do |format|
-      if @evaluation.save
+      if !@evaluation.errors.any? && @evaluation.save
         format.html { redirect_to @evaluation, notice: "Evaluation was successfully created." }
         format.json { render :show, status: :created, location: @evaluation }
       else

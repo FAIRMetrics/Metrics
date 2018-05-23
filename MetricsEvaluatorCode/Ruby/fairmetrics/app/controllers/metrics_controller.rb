@@ -32,6 +32,20 @@ class MetricsController < ApiController
   def create
 
     @metric = Metric.new(metric_params)  # this will convert API (JSON) calls into application calls v.v. params
+    unless @metric
+      case request.format.to_s
+      when "application/json"
+        render json: "Failed", status: :unprocessable_entity
+        return
+      when "text/html"
+        render :new
+        return
+      else 
+        render json: "Failed", status: :unprocessable_entity
+        return
+      end
+    end
+    
     url = @metric[:smarturl]
     url.strip!
     
@@ -39,13 +53,13 @@ class MetricsController < ApiController
       @metric.errors[:smarturl_known] << "This metric (by smartURL) already exists - creation failed"
       case request.format.to_s
       when "application/json"
-        render json: @collection.errors, status: :unprocessable_entity
+        render json: @metric.errors, status: :unprocessable_entity
         return
       when "text/html"
         render :new
         return
       else 
-        render json: @collection.errors, status: :unprocessable_entity
+        render json: @metric.errors, status: :unprocessable_entity
         return
       end
 
@@ -67,16 +81,12 @@ class MetricsController < ApiController
         @metric.errors[:no_response_from_endpoint] << "The testing endpoint did not respond"
       end
       
-      if validate then
-          # do nothign here for teh moment        
-      else
-        @metric.errors[:failed_validation] << "Information failed validation - see other errors for details"
-      end
-      
+      #validate_orcid(@metric, @metric.creator)  # one day this should be an orcid
+
       if @metric.errors.any?
         respond_to do |format|
           format.html { render :new }
-          format.json { render json: @collection.errors, status: :unprocessable_entity }
+          format.json { render json: @metric.errors, status: :unprocessable_entity }
           return
         end
       end
@@ -89,7 +99,7 @@ class MetricsController < ApiController
           format.html { redirect_to @metric, notice: 'Metric was successfully created.' }
           format.json { render :show, status: :created, location: @metric }
         else
-          @metric.errors[:unknown] << "failed to save for an unknown reason"
+          @metric.errors[:other] << "failed to save for an unknown reason"
           format.html { render :new }
           format.json { render :json => {status: :unprocessable_entity, errors: @notice}}
         end
@@ -127,16 +137,6 @@ class MetricsController < ApiController
   end
 
 
-  def validate
-    orcid = @metric.creator
-    page = fetch("http://orcid.org/#{orcid}")
-    if page and !(page.body.downcase =~ /sign\sin/)
-      return true
-    else
-      @metric.errors[:orcid] << "That was not a valid ORCiD"
-      return false
-    end
-  end
  
 
   private
