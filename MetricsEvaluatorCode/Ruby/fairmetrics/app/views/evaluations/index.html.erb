@@ -14,7 +14,7 @@
   </thead>
 
   <tbody>
-    <% @evaluations.each do |evaluation| %>
+    <% @evaluations.sort {|e| e.resource}.each do |evaluation| %>
       <tr>
         <td><%= evaluation.collection %></td>
         <td><%= evaluation.resource %></td>
