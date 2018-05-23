@@ -67,21 +67,22 @@ class CollectionsController < ApiController
   # POST /collections.json
   def create
     @collection = Collection.new(collection_params)
-       
+    
+    if Collection.where('name=?', @collection.name).first
+      @collection.errors[:nameexists] << "A collection by that name already exists"
+    end
+    
+    validate_orcid(@collection, @collection.contact)  # this adds an error if it fails
+
     respond_to do |format|
-      if validate 
-        if @collection.save
-          format.html { redirect_to action: "collect_metrics", id: @collection.id }   # url_for{@collection}
-          format.json { render :show, status: :created, location: @collection }
-        else
-          @collection.errors[:unknown] << "failed to save for an unknown reason"
-          format.html { render :new }
-          format.json { render json: @collection.errors, status: :unprocessable_entity }
-        end
+      if  !@collection.errors.any? && @collection.save
+        format.html { redirect_to action: "collect_metrics", id: @collection.id }   # url_for{@collection}
+        format.json { render :show, status: :created, location: @collection }
       else
+        @collection.errors[:other] << "failed to save"
         format.html { render :new }
         format.json { render json: @collection.errors, status: :unprocessable_entity }
-      end    
+      end
     end
   end
 
@@ -109,18 +110,6 @@ class CollectionsController < ApiController
     respond_to do |format|
       format.html { redirect_to collections_url, notice: 'Collection was successfully destroyed.' }
       format.json { head :no_content }
-    end
-  end
-  
-  
-  def validate
-    orcid = @collection.contact
-    page = fetch("http://orcid.org/#{orcid}")
-    if page and !(page.body.downcase =~ /sign\sin/)
-      return true
-    else
-      @collection.errors[:orcid] << "That was not a valid ORCiD"
-      return false
     end
   end
   

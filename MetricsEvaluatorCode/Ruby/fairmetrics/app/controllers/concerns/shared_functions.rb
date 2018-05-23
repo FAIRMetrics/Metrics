@@ -2,15 +2,31 @@ module SharedFunctions
   extend ActiveSupport::Concern
 
   included do
-    helper_method :fetch, :resolve
+    helper_method :fetch, :resolve, :validate_orcid
   end
 
 require 'uri'
 require 'net/http'
 require 'openssl'
 
+  def validate_orcid(obj, orcid)
+    orcid.gsub!(/\s/, "+")
+    page = fetch("http://orcid.org/#{orcid}")
+    #logger.debug("\n\n\n\n\n\n\nPAGE: #{page.class}\n\n\n\n\n\n\n") 
+    if page and !(page.body.downcase =~ /sign\sin/)
+      return true
+    else
+      #logger.debug("\n\n\n\n\n\n\nADDING ERROR\n\n\n\n\n\n\n") 
+      obj.errors[:orcid] << "That was not a valid ORCiD"
+      return false
+    end
+  end
+
+
 
   def fetch(uri_str)  # we create a \"fetch\" routine that does some basic error-handling.  \n",
+   str = URI::encode(uri_str)
+   str = resolve(str)
    address = URI(uri_str)  # create a \"URI\" object (Uniform Resource Identifier: https://en.wikipedia.org/wiki/Uniform_Resource_Identifier)\n",
    response = Net::HTTP.get_response(address)  # use the Net::HTTP object \"get_response\" method\n",
 											     # to call that address\n,
