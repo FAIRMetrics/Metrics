@@ -35,14 +35,47 @@
   }
   </script>
   <div id="RAW"  style="display:none;" class="raw_json" > <%= @evaluation.body %> </div>
-  <input type="button" name="showraw" value="Show JSON" onclick="showJSON()" />
-  <% hash = JSON.parse(@evaluation.body) %>
-  <% hash.each do |metricuri, body| %>
-    <% metricuri =~ /.*?(\d+)$/ ; metricid = $1 %>
-    <% metric = Metric.find(metricid) %>
-    <div style="font-size: +1.5em;  padding-top: 20px;"><%= metric.name %></div>
+  <input type="button" name="showraw" value="Show JSON" onclick="showJSON();" />
+  
+    <% hash = JSON.parse(@evaluation.body) %>
+        <%      kz = hash.keys
+                @mets = []
+                kz.each do |k|
+                        k =~ /.*?(\d+)$/ ; metricid = $1
+                        metric = Metric.find(metricid)
+                        @mets << metric
+                end
+                @ms = Array.new
+                @f = Array.new 
+                @a = Array.new 
+                @i = Array.new 
+                @r = Array.new 
+                @mets.each do |m| 
+                        case m.principle.upcase
+                              when /F/
+                                @f << m
+                              when /A/
+                                @a << m
+                              when /I/
+                                @i << m
+                              when/R/
+                                  @r << m
+                        end
+                end
+                @f.sort_by! {|mm| mm.principle}
+                @a.sort_by! {|mm| mm.principle}
+                @i.sort_by! {|mm| mm.principle}
+                @r.sort_by! {|mm| mm.principle}
+                @ms.push(*@f)
+                @ms.push(*@a)
+                @ms.push(*@i)
+                @ms.push(*@r)
+                %>
+  <% @ms.each do |metric|
+        body = hash["http://linkeddata.systems:3000/metrics/#{metric.id}"]  # this is awful!!  Put the URI into the database!
+        %>
+    <div style="font-size: +1.5em;  padding-top: 20px;"><%= metric.principle %>: <%= metric.name %></div>
     <div style="padding-left: 60px;">
-      
       <% body.each do |key| %>
         <i><%= key %> : <%= body[key] %></i><br/>
       <% end %>
