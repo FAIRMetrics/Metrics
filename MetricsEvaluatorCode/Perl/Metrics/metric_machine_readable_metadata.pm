@@ -1,6 +1,6 @@
 #!/usr/bin/perl -w
 use strict;
-package Metrics::metric_unique_identifier;
+package Metrics::metric_machine_readable_metadata;
 
 use LWP::Simple;
 use RDF::Trine;
@@ -11,7 +11,7 @@ use vars ('@ISA', '@EXPORT');
 @ISA = qw(Exporter);
 @EXPORT = qw(execute_metric_test);
   
-my $metric = "metric_unique_identifier";
+my $metric = "metric_machine_readable_metadata";
   
 sub execute_metric_test {
 	my ($self, $body) = @_;
@@ -21,20 +21,15 @@ sub execute_metric_test {
 #exit 1;
 
 	my $json = parse_json($body);
-	my $check = $json->{'spec'};
+	my $meta = $json->{'metadata'};
+	my $format = $json->{'format'};
 	my $IRI = $json->{'subject'};
 
-        my $valid = get_valid_schemas();
-print STDERR "valid @$valid\n\n";
+        my $value = check_document($meta) && check_format($format);
+        
 	my $store = RDF::Trine::Store::Memory->new();
 	my $model = RDF::Trine::Model->new($store);
 
-	my $value;
-	if( grep { $check eq $_ }  @$valid) {
-    		$value = RDF::Trine::Node::Literal->new("1");
-	} else {
-	    	$value = RDF::Trine::Node::Literal->new("0");    
-	}
 
 	my $dt = DateTime->now(time_zone=>'local');
 	my $dts = $dt->datetime();
@@ -58,54 +53,19 @@ print STDERR "valid @$valid\n\n";
 	exit 1;
 }
 
+sub check_document {
+        my ($check) = @_;
+        my $result = get($check);
+#print STDERR "MARK:  Result is $result";
+        return 1 if $result;
+        return 0;
 
-sub get_valid_schemas {
+}
+
+
+sub check_format {
     # this will one day lookup at fairsharing.org
-# curl -X GET --header 'Accept: application/json' --header 'Api-Key: cb892c4261a01b6842c4787ae6cba21a826b0bce' 
-#'https://fairsharing.org/api/standard/summary/?type=identifier%20schema'    
-
-	use LWP::UserAgent;
-	my $browser = LWP::UserAgent->new;
-	my $url = 'https://fairsharing.org/api/standard/summary/?type=identifier%20schema';	
-	my @ns_headers = (
-  		'User-Agent' => 'Mozilla/4.76 [en] (Win98; U)', 
-  		'Accept' => 'application/json',
-  		'Api-Key' => 'cb892c4261a01b6842c4787ae6cba21a826b0bce');
-	my $res = $browser->get($url, @ns_headers);
-
-	unless ($res->is_success) {
-		return [];
-	} else {
-		my @response;
-		my $resp = $res->decoded_content;
-		my $hash = parse_json ($resp);
-
-		foreach my $result(@{$hash->{results}}) {
-			 push @response, 'https://fairsharing.org/' . $result->{bsg_id};
-			 push @response, $result->{doi};
-		}
-		# need to deal with "next page" one day!
-		return \@response;
-	}
-# return [
-#"https://sourceforge.net/p/identifiers-org",
-#"http://www.obofoundry.org",
-#"http://bioportal.bioontology.org",
-#"http://lov.okfn.org",
-#"https://github.com/geneontology/go-site",
-#"http://prefix.cc",
-#"https://scicrunch.org/resources",
-#"http://datahub.io",
-#"https://www.biosharing.org/",
-#"http://tinyurl.com/lsregistry",
-#"http://eelst.cs.unibo.it/apps/LODE/source?url=http://purl.org/spar/datacite",
-#"http://biocol.org",
-#"http://dx.doi.org",
-#"http://doi.org",
-#"http://handle.org",
-#"http://www.ebi.ac.uk/miriam",
-#"https://tools.ietf.org/html/rfc1738",
-#];
+    return 1;
 }
 
 
@@ -158,11 +118,12 @@ if (!$cgi->request_method() || $cgi->request_method() eq "GET") {
 swagger: '2.0'
 info:
   version: '0.1'
-  title: FAIR Metrics - Metric Unique Identifier
-  tests_metric: 'https://purl.org/fair-metrics/FM_A1.1'
+  title: FAIR Metrics - Metric Machine Readable Metadata
+  tests_metric: 'https://purl.org/fair-metrics/FM_F2'
   description: >-
-    Metric to test if the resource uses a registered identifier scheme that guarantees global uniqueness.  The metric uses the FAIRSharing registry to check the response, so the schema used must be included in the registry.
-  applies_to_principle: F1
+    Metric to test if the resource has (or is) metadata in machine readable format.  This metric should be applied to the Metadata, if a data record is being tested, or 
+    to the record itself if a metadata record is being tested
+  applies_to_principle: F2
   contact:
     responsibleOrganization: CBGP UPM/INIA
     url: 'http://fairdata.systems'
@@ -177,7 +138,7 @@ produces:
 consumes:
   - application/json
 paths:
-  /fair_metrics/Metrics/metric_unique_identifier:
+  /fair_metrics/Metrics/metric_machine_readable_metadata:
     post:
       parameters:
         - name: content
@@ -188,21 +149,28 @@ paths:
       responses:
         '200':
           description: >-
-            The response is a binary (1/0), success or failure
+            The response is a binary (1/0) indicating whether the schema you
+            claim to follow is registered in the FAIRsharing repository
 definitions:
   schemas:
       required:
-        - spec
+        - metadata
+        - format
         - subject
       properties:
-        spec:
+        metadata:
           type: string
           description: >-
-            The unique ID of the identifier schema definition in FAIRSharing (i.e. its FAIR Sharing URL or DOI - see 'https://fairsharing.org/standards/?q=&selected_facets=type_exact:identifier%20schema')
+              The URL to the metadata document being tested.  (in the case where the primary IRI being tested represents a metadata document, please use that IRI here)
+        format:
+          type: string
+          description: >-
+              The URI of a registered file format in FAIRSharing (for example, https://fairsharing.org/FAIRsharing.tn873z if your data follows the INSD Sequence XML format)
         subject:
           type: string
           description: >-
-            The IRI of the resource being tested against this Metric    
+              The URL being tested against this Metric
+    
 EOF
 
 
