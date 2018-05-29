@@ -147,63 +147,36 @@ sub statement {
 	return $statement;
 }
 
+
+
 use CGI;
 my $cgi = CGI->new();
 if (!$cgi->request_method() || $cgi->request_method() eq "GET") {
+	my $schemas = {'schema' => ['spec', "The unique ID of the identifier schema definition in FAIRSharing (i.e. its FAIR Sharing URL or DOI - see 'https://fairsharing.org/standards/?q=&selected_facets=type_exact:identifier%20schema')"],
+		       'subject' => ['string', "the GUID being tested"]};
+	
+	
+	my $yaml = Metric::smartAPI->new(
+					 title => "FAIR Metrics - Metric Unique Identifier",
+					 description => "Metric to test if the resource uses a registered identifier scheme that guarantees global uniqueness.  The metric uses the FAIRSharing registry to check the response, so the schema used must be included in the registry.",
+					 tests_metric => 'https://purl.org/fair-metrics/FM_A1.1',
+					 applies_to_principle => "F1",
+					 organization => 'CBGP UPM/INIA',
+					 org_url => 'http://fairdata.systems',
+					 responsible_developer => "Mark D Wilkinson",
+					 email => 'markw@illuminae.com',
+					 developerORCiD => '0000-0001-6960-357X',
+					 host => 'linkeddata.systems',
+					 basePath => '/cgi-bin',
+					 path => '/fair_metrics/Metrics/metric_unique_identifier',
+					 response_description => 'The response is a binary (1/0), success or failure',
+					 schema => $schemas
+					);
+				 
+				 
+	print "Content-type: application/openapi+yaml;version=3.0\n\n";
 
-  print "Content-type: application/openapi+yaml;version=3.0\n\n";
-
-
-  print <<'EOF'
-swagger: '2.0'
-info:
-  version: '0.1'
-  title: FAIR Metrics - Metric Unique Identifier
-  tests_metric: 'https://purl.org/fair-metrics/FM_A1.1'
-  description: >-
-    Metric to test if the resource uses a registered identifier scheme that guarantees global uniqueness.  The metric uses the FAIRSharing registry to check the response, so the schema used must be included in the registry.
-  applies_to_principle: F1
-  contact:
-    responsibleOrganization: CBGP UPM/INIA
-    url: 'http://fairdata.systems'
-    responsibleDeveloper: Mark D Wilkinson
-    email: markw@illuminae.com
-host: linkeddata.systems
-basePath: /cgi-bin
-schemes:
-  - http
-produces:  
-- application/json
-consumes:
-  - application/json
-paths:
-  /fair_metrics/Metrics/metric_unique_identifier:
-    post:
-      parameters:
-        - name: content
-          in: body
-          required: true
-          schema:
-            $ref: '#/definitions/schemas'
-      responses:
-        '200':
-          description: >-
-            The response is a binary (1/0), success or failure
-definitions:
-  schemas:
-      required:
-        - spec
-        - subject
-      properties:
-        spec:
-          type: string
-          description: >-
-            The unique ID of the identifier schema definition in FAIRSharing (i.e. its FAIR Sharing URL or DOI - see 'https://fairsharing.org/standards/?q=&selected_facets=type_exact:identifier%20schema')
-        subject:
-          type: string
-          description: >-
-            The IRI of the resource being tested against this Metric    
-EOF
+	print $yaml->getSwagger();
 
 
   } else {

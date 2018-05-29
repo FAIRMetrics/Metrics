@@ -1,12 +1,14 @@
-This is the beginning of a set of FAIR Metrics tests.  The script in this folder is called "fair_metrics".  
-It uses the PATH_INFO on the Web call to find the name of the metric that should be tested 
+The subfolder FAIRMetrics contains Perl libraries that make it easier to write metrics tests.
+
+The subfolder Metrics contains perl modules that execute tests.
+
+The script in this folder called "fair_metrics" uses the PATH_INFO on the Web call 
+to find the name of the metric that should be tested 
 using the BODY of the HTTP call (usually a piece of JSON).  It attempts to autoload that package.
 The package should export a function called "execute_metric_test", which does the metric test
 on the content of $body (the only value passed to that subroutine), and returns a string of
-RDF in Turtle format with the results of the test.
+JSON that contains the result of the test.  TODO:  Content negotiation to get RDF Turtle instead of JSON.
 
-So far, we haven't defined how to represent success or failure of a test, so the value is passed
-at the end of the predicate "result", as a 1 or a 0... for the moment.
 
 e.g. http://fairdata.systems/cgi-bin/fair_metrics/Metrics/metric_unique_identifier
 
@@ -14,11 +16,9 @@ is the endpoint for the test that the URI scheme is registered somewhere.
 
 so:
 
-echo  '{ "spec" : "https://doi.org" }' | curl -H "Content-Type: application/json" -d @-  http://fairdata.systems/cgi-bin/fair_metrics/Metrics/metric_unique_identifier
-
+curl -H "Content-Type: application/json" -i -X POST -d '{"subject": "10.5061/dryad.gn219","spec": "https://fairsharing.org/bsg-s001182"}'  http://linkeddata.systems/cgi-bin/fair_metrics/Metrics/metric_unique_identifier_test
 
 will execute the test of whether DOIs are valid identifier schemas (they are... we hope!)
 
 
-The SmartAPI definition for this service is at:  http://smart-api.info/editor/#/?import=http://smart-api.info/api/metadata/RkFJUiBNZXRyaWNzIC1JZGVudGlmaWVyIFVuaXF1ZW5lc3N8MC4xfE1hcmsgRCBXaWxraW5zb24=
 
