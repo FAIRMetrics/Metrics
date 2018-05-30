@@ -1,14 +1,17 @@
-#!/usr/local/bin/perl -w
+#!/usr/bin/perl -w
 use strict;
 package Metrics::metric_unique_identifier;
 
+use LWP::Simple;
 use RDF::Trine;
 use JSON::Parse 'parse_json';
+use DateTime;
 require Exporter;
 use vars ('@ISA', '@EXPORT');
 @ISA = qw(Exporter);
 @EXPORT = qw(execute_metric_test);
   
+my $metric = "metric_unique_identifier";
   
 sub execute_metric_test {
 	my ($self, $body) = @_;
@@ -19,9 +22,10 @@ sub execute_metric_test {
 
 	my $json = parse_json($body);
 	my $check = $json->{'spec'};
+	my $IRI = $json->{'subject'};
 
         my $valid = get_valid_schemas();
-        
+print STDERR "valid @$valid\n\n";
 	my $store = RDF::Trine::Store::Memory->new();
 	my $model = RDF::Trine::Model->new($store);
 
@@ -32,36 +36,76 @@ sub execute_metric_test {
 	    	$value = RDF::Trine::Node::Literal->new("0");    
 	}
 
+	my $dt = DateTime->now(time_zone=>'local');
+	my $dts = $dt->datetime();
+#print STDERR "datetime $dts\n\n";
+	$dts = RDF::Trine::Node::Literal->new( $dts,"", "xsd:dateTime");
+#print STDERR "datetime $dts\n\n";
 	my $time = time;
-	my $statement = statement("http://fairdata.metrics/result#$time", "http://fairdata.metrics/result#result", $value );
+
+
+	my $statement = statement("http://linkeddata.systems/cgi-bin/fair_metrics/Metrics/$metric/result#$time", "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "http://fairmetrics.org/resources/metric_evaluation_result" );
+	$model->add_statement($statement);
+	$statement = statement("http://linkeddata.systems/cgi-bin/fair_metrics/Metrics/$metric/result#$time", "http://semanticscience.org/resource/SIO_000300", $value );
+	$model->add_statement($statement);
+	$statement = statement("http://linkeddata.systems/cgi-bin/fair_metrics/Metrics/$metric/result#$time", "http://purl.obolibrary.org/obo/date", $dts );
+	$model->add_statement($statement);
+	$statement = statement($IRI,"http://semanticscience.org/resource/SIO_000629", "http://linkeddata.systems/cgi-bin/fair_metrics/Metrics/$metric/result#$time");
 	$model->add_statement($statement);
 
-	print "Content-type: text/turtle\n\n";
+	print "Content-type: application/json\n\n";
 	print ser($model);
 	exit 1;
 }
 
+
 sub get_valid_schemas {
     # this will one day lookup at fairsharing.org
-    
- return [
-"https://sourceforge.net/p/identifiers-org",
-"http://www.obofoundry.org",
-"http://bioportal.bioontology.org",
-"http://lov.okfn.org",
-"https://github.com/geneontology/go-site",
-"http://prefix.cc",
-"https://scicrunch.org/resources",
-"http://datahub.io",
-"https://www.biosharing.org/",
-"http://tinyurl.com/lsregistry",
-"http://eelst.cs.unibo.it/apps/LODE/source?url=http://purl.org/spar/datacite",
-"http://biocol.org",
-"http://dx.doi.org",
-"http://doi.org",
-"http://handle.org",
-"http://www.ebi.ac.uk/miriam",
-];
+# curl -X GET --header 'Accept: application/json' --header 'Api-Key: cb892c4261a01b6842c4787ae6cba21a826b0bce' 
+#'https://fairsharing.org/api/standard/summary/?type=identifier%20schema'    
+
+	use LWP::UserAgent;
+	my $browser = LWP::UserAgent->new;
+	my $url = 'https://fairsharing.org/api/standard/summary/?type=identifier%20schema';	
+	my @ns_headers = (
+  		'User-Agent' => 'Mozilla/4.76 [en] (Win98; U)', 
+  		'Accept' => 'application/json',
+  		'Api-Key' => 'cb892c4261a01b6842c4787ae6cba21a826b0bce');
+	my $res = $browser->get($url, @ns_headers);
+
+	unless ($res->is_success) {
+		return [];
+	} else {
+		my @response;
+		my $resp = $res->decoded_content;
+		my $hash = parse_json ($resp);
+
+		foreach my $result(@{$hash->{results}}) {
+			 push @response, 'https://fairsharing.org/' . $result->{bsg_id};
+			 push @response, $result->{doi};
+		}
+		# need to deal with "next page" one day!
+		return \@response;
+	}
+# return [
+#"https://sourceforge.net/p/identifiers-org",
+#"http://www.obofoundry.org",
+#"http://bioportal.bioontology.org",
+#"http://lov.okfn.org",
+#"https://github.com/geneontology/go-site",
+#"http://prefix.cc",
+#"https://scicrunch.org/resources",
+#"http://datahub.io",
+#"https://www.biosharing.org/",
+#"http://tinyurl.com/lsregistry",
+#"http://eelst.cs.unibo.it/apps/LODE/source?url=http://purl.org/spar/datacite",
+#"http://biocol.org",
+#"http://dx.doi.org",
+#"http://doi.org",
+#"http://handle.org",
+#"http://www.ebi.ac.uk/miriam",
+#"https://tools.ietf.org/html/rfc1738",
+#];
 }
 
 
@@ -80,6 +124,7 @@ sub ser {
 
 sub statement {
 	my ($s, $p, $o) = @_;
+#print STDERR "$s -- $p -- $o\n\n";
 	unless (ref($s) =~ /Trine/){
 		$s =~ s/[\<\>]//g;
 		$s = RDF::Trine::Node::Resource->new($s);
@@ -102,63 +147,36 @@ sub statement {
 	return $statement;
 }
 
+
+
 use CGI;
 my $cgi = CGI->new();
 if (!$cgi->request_method() || $cgi->request_method() eq "GET") {
+	my $schemas = {'schema' => ['spec', "The unique ID of the identifier schema definition in FAIRSharing (i.e. its FAIR Sharing URL or DOI - see 'https://fairsharing.org/standards/?q=&selected_facets=type_exact:identifier%20schema')"],
+		       'subject' => ['string', "the GUID being tested"]};
+	
+	
+	my $yaml = Metric::smartAPI->new(
+					 title => "FAIR Metrics - Metric Unique Identifier",
+					 description => "Metric to test if the resource uses a registered identifier scheme that guarantees global uniqueness.  The metric uses the FAIRSharing registry to check the response, so the schema used must be included in the registry.",
+					 tests_metric => 'https://purl.org/fair-metrics/FM_A1.1',
+					 applies_to_principle => "F1",
+					 organization => 'CBGP UPM/INIA',
+					 org_url => 'http://fairdata.systems',
+					 responsible_developer => "Mark D Wilkinson",
+					 email => 'markw@illuminae.com',
+					 developerORCiD => '0000-0001-6960-357X',
+					 host => 'linkeddata.systems',
+					 basePath => '/cgi-bin',
+					 path => '/fair_metrics/Metrics/metric_unique_identifier',
+					 response_description => 'The response is a binary (1/0), success or failure',
+					 schema => $schemas
+					);
+				 
+				 
+	print "Content-type: application/openapi+yaml;version=3.0\n\n";
 
-  print "Content-type: application/json\n\n";
-
-
-  print <<'EOF'
-swagger: '2.0'
-info:
-  version: '0.1'
-  title: FAIR Metrics -Identifier Uniqueness
-  description: >-
-    Metric to test if the resource uses a recognized identifier scheme (e.g.
-    doi, identifiers.org, etc.).  It consumes a URI as the value of the "spec"
-    parameter.  This URI should be a registered identifier schema at
-    fairsharing.org.
-  contact:
-    responsibleOrganization: CBGP UPM/INIA
-    url: 'http://faidata.systems'
-    responsibleDeveloper: Mark D Wilkinson
-    email: markw@illuminae.com
-host: fairdata.systems
-basePath: /cgi-bin
-schemes:
-  - http
-produces:
-  - application/json
-consumes:
-  - application/json
-paths:
-  /fair_metrics/Metrics/metric_unique_identifier:
-    post:
-      parameters:
-        - name: spec
-          in: body
-          description: >-
-            The identifier schema specification you claim to follow, referenced
-            by its URI (must be registered in FAIRsharing)
-          required: true
-          parameterType: InputParameter
-          schema:
-            $ref: '#/definitions/Spec'
-      responses:
-        '200':
-          description: >-
-            The response is a binary (1/0) indicating whether the schema you
-            claim to follow is registered in the FAIRsharing repository
-definitions:
-  Spec:
-    properties:
-      spec:
-        type: string
-    type: object
-  
-  
-EOF
+	print $yaml->getSwagger();
 
 
   } else {
