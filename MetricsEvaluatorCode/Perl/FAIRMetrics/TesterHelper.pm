@@ -1,6 +1,9 @@
 #!/usr/bin/perl -w
 package FAIRMetrics::TesterHelper;
 use Moose;
+use DateTime;
+use RDF::Trine;
+
 require Exporter;
 use vars ('@ISA', '@EXPORT');
 @ISA = qw(Exporter);

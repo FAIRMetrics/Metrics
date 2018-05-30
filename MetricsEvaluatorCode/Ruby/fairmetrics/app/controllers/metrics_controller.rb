@@ -70,10 +70,32 @@ class MetricsController < ApiController
         yaml = YAML.load(resp.body)
         if yaml
           @metric[:name] = yaml["info"]["title"]
+
           @metric[:description] = yaml["info"]["description"]
-          @metric[:principle] = yaml["info"]["applies_to_principle"]
+
+          if yaml["info"].has_key?"applies_to_principle"
+                  @metric[:principle] = yaml["info"]["applies_to_principle"]
+          elsif yaml["info"].has_key?"x-applies_to_principle"
+                  @metric[:principle] = yaml["info"]["x-applies_to_principle"]
+          else
+                  @metric.errors[:notyaml] << "the x-applies_to_principle property was not found"
+          end
+
           @metric[:email] = yaml["info"]["contact"]["email"]
-          @metric[:creator] = yaml["info"]["contact"]["responsibleDeveloper"] or yaml["info"]["contact"]["responsibleDeveloper"] or "Unidentified"
+
+          if yaml["info"]["contact"].has_key?"responsibleDeveloper"
+                  @metric[:creator] = yaml["info"]["contact"]["responsibleDeveloper"]
+          elsif yaml["info"]["contact"].has_key?"name"
+                  @metric[:creator] = yaml["info"]["contact"]["name"]
+          else
+                  @metric.errors[:notyaml] << "Contact name is a required property in the YAML"
+          end
+          if yaml["info"]["contact"].has_key?"x-id"
+            @metric[:orcid] = yaml["info"]["contact"]["x-id"]
+          else
+            @metric.errors[:notyaml] << "The testing endpoint did not return YAML with an info/contact/x-id, which should contain the authors ORCiD"
+          end
+
         else
           @metric.errors[:notyaml] << "The testing endpoint did not return YAML #{resp.body}"
         end

@@ -49,7 +49,7 @@ sub execute_metric_test {
 	my ($self, $body) = @_;
 
 	my $json = parse_json($body);
-	my $check = $json->{'spec'};
+	my $check = $json->{'schema'};
 	my $IRI = $json->{'subject'};
 
         my $valid = get_valid_schemas();
