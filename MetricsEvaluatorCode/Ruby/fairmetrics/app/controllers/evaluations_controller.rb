@@ -65,6 +65,7 @@ class EvaluationsController < ApiController
         format.html { redirect_to @evaluation, notice: "Evaluation was successfully created." }
         format.json { render :show, status: :created, location: @evaluation }
       else
+        @collections = Collection.all
         format.html { render :new }
         format.json { render json: @evaluation.errors, status: :unprocessable_entity }
       end

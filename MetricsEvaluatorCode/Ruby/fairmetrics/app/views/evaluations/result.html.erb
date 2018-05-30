@@ -6,7 +6,7 @@
 
 	<% (metric, outgraph) = res %>
 
-	<h3> Metric: <%= metric.name %></h3>
+	<h3> <%= metric.principle %>: <%= metric.name %></h3>
 	<% q = SPARQL.parse('select * where
 			    {?iri <http://semanticscience.org/resource/SIO_000629> ?result .
 			    ?result <http://semanticscience.org/resource/SIO_000300> ?score .
