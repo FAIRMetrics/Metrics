@@ -94,7 +94,6 @@ require 'openssl'
         else
           logger.debug "\n\nUnexpected response from #{url.inspect}: " + response.inspect + "\n\n"
       end
-
     end
     logger.debug "\n\nToo many http redirects from  #{url.inspect}:\n\n" if attempts == max_attempts
 

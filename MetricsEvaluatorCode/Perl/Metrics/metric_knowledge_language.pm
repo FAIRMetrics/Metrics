@@ -40,7 +40,10 @@ if (!$cgi->request_method() || $cgi->request_method() eq "GET") {
         print "Content-type: application/openapi+yaml;version=3.0\n\n";
         print $helper->getSwagger();
 	
+} else {
+	return 1;  # this is returning 1 for the "require" statement in fair_metrics!!!!
 }
+
 
 
 sub execute_metric_test {
