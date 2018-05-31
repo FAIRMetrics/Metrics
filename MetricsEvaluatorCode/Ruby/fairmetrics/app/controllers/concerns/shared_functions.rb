@@ -92,11 +92,11 @@ require 'openssl'
                       new_uri.to_s
                     end
         else
-          raise 'Unexpected response: ' + response.inspect
+          logger.debug '\n\nUnexpected response: ' + response.inspect + "\n\n"
       end
 
     end
-    raise 'Too many http redirects' if attempts == max_attempts
+    logger.debug '\n\nToo many http redirects\n\n' if attempts == max_attempts
 
     uri_str
     # response.body
