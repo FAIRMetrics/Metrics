@@ -14,7 +14,7 @@ use vars ('@ISA', '@EXPORT');
 @EXPORT = qw(execute_metric_test);
 
 
-my %schemas = ('prov_vocab_uri'  => ['string', "The URL that points to the VoID Linkset describing the connectivity of the resource"],
+my %schemas = ('protocol_uri'  => ['string', "The URL that points to the VoID Linkset describing the connectivity of the resource"],
 	       'subject' => ['string', "the GUID being tested"]);
 
 my $helper = FAIRMetrics::TesterHelper->new(
