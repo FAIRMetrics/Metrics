@@ -1,6 +1,5 @@
 \documentclass[english]{article}
 \usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
 \usepackage{babel}
 \usepackage{color}
 %\usepackage{amsmath}
@@ -70,8 +69,9 @@ Why should we measure it? &
 
 
 
-The discovery of digital object should be possible from its metadata. For this to happen, the metadata must explicitly contain the identifier for the digital resource it describes. 
-A metadata document should also not result in ambiguity about the digital object it is describing. This can be assured if the metadata document explicitly refers to the digital object by its IRI.
+The discovery of digital object should be possible from its metadata. For this to happen, the metadata must explicitly contain the identifier for the digital resource it describes, and this should be present in the form of a qualified reference, indicating some manner of "about" relationship, to distinguish this identifier from the numerous others that will be present in the metadata.
+
+In addition, since many digital objects cannot be arbitrarily extended to include references to their metadata, in many cases the only means to discover the metadata related to a digital object will be to search based on the GUID of the digital object itself.
 
   
 \\
@@ -82,7 +82,7 @@ A metadata document should also not result in ambiguity about the digital object
 What must be provided? &  
 
 
-The URL of the metadata and the IRI of the digital resource it describes.
+The GUID of the metadata and the GUID of the digital resource it describes.
 
 
  \\
@@ -92,7 +92,7 @@ The URL of the metadata and the IRI of the digital resource it describes.
 \hline
 How do we measure it? &  
 
-Parsing the metadata for the given digital resource IRI.
+Parsing the metadata for the given digital resource GUID.
 
 \\
 
@@ -129,7 +129,7 @@ None
 Comments & 
 
 
-None
+In practice there are issues related to the format of the metadata document that might make a simple string search impossible.  For example, relative URLs in HTML and qnames in XML/RDF.  We should engage in some community discussion about exactly how to execute this Metric.
 
  \\ 
 \hline

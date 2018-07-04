@@ -1,6 +1,7 @@
  
 /* start css.sty */
-h1{padding-top: 30px; margin-left: 25%}
+h1{padding-top: 30px;}
+table {padding: 50px; width: 1000px; margin-left: auto; margin-right: auto;}
 .ecrm-1728{font-size:170%;}
 .ecrm-1200{font-size:120%;}
 .ectt-1000{ font-family: monospace;}
@@ -59,7 +60,7 @@ span.thank-mark{ vertical-align: super }
 span.footnote-mark sup.textsuperscript, span.footnote-mark a sup.textsuperscript{ font-size:80%; }
 div.tabular, div.center div.tabular {text-align: center; margin-top:0.5em; margin-bottom:0.5em; }
 table.tabular td p{margin-top:0em;}
-table.tabular {margin-left: auto; margin-right: auto;}
+table.tabular {width: 800px; margin-left: auto; margin-right: auto;}
 td p:first-child{ margin-top:0em; }
 td p:last-child{ margin-bottom:0em; }
 div.td00{ margin-left:0pt; margin-right:0pt; }

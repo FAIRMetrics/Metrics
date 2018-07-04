@@ -1,6 +1,5 @@
 \documentclass[english]{article}
 \usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
 \usepackage{babel}
 \usepackage{color}
 %\usepackage{amsmath}
@@ -86,7 +85,7 @@ What must be provided? &
 
 
 i) true/false concerning whether authorization is needed\newline 
-ii) a description of the process to obtain access to restricted content.\newline 
+ii) a URL that resolves to a description of the process to obtain access to restricted content.\newline 
 
 
 
@@ -113,7 +112,7 @@ What is a valid result? &
 
 
 
-a valid answer contains a true or false for the first question. if true, a non-empty textual description for the process is provided.
+a valid answer contains a true or false for the first question. if true, an HTTP GET on the URL provided should return a 200, 202, 203, or 206 HTTP Response after resolving all redirects.
 
 
 \\

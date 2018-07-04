@@ -1,6 +1,5 @@
 \documentclass[english]{article}
 \usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
 \usepackage{babel}
 \usepackage{color}
 %\usepackage{amsmath}
@@ -59,7 +58,7 @@ The availability of machine-readable metadata that describes a digital resource.
 Why should we measure it? & 
 
 
-Richness of metadata can refer to many different aspects. One aspect is that the machine readability of metadata makes it possible to optimize their discovery. For instance, Web search engines suggest the use of particular structured metadata elements to optimize search. Thus, the machine-readability aspect can help people and machines find a digital resource of interest. Here, we focus on metadata being sufficiently rich in this sense - that the metadata document and the metadata elements are machine readable.  Otherwise, it will also be difficult to understand what the digital resource is and what information is being provided about it.
+This metric \textit{does not} attempt to measure (or even define) "Richness" - this will be defined in a future Metric.  This metric is intended to test the format of the metadata - machine readability of metadata makes it possible to optimize discovery. For instance, Web search engines suggest the use of particular structured metadata elements to optimize search. Thus, the machine-readability aspect can help people and machines find a digital resource of interest. 
 
   
 \\
@@ -77,7 +76,7 @@ A URL to a document that contains machine-readable metadata for the digital reso
 
 \hline
 How do we measure it? &  
-HTTP GET on the metadata URL. A response of [a 200,202,203 or 206 HTTP response after resolving all and any prior redirects. e.g. 301 -> 302 -> 200 OK] indicates that there is indeed a document. The second URL should resolve to the record of a registered file format (e.g. DCAT, DICOM, schema.org etc.) in a registry like FAIRsharing. \newline
+HTTP GET on the metadata URL. A response of [a 200,202,203 or 206 HTTP response after resolving all and any prior redirects. e.g. 301 -> 302 -> 200 OK] indicates that there is indeed a document. The second URL should resolve to the record of a registered file format (e.g. DCAT, DICOM, schema.org etc.) in a registry like FAIRsharing.  Future ehnancements to FAIRSharing may include tags that indicate whether or not a given file format is generally-agreed to be machine-readable \newline
 \\
 
 
@@ -111,7 +110,8 @@ Semanticscience Integrated Ontology :
 Example of a DANS metadata-record of an archived dataset: 
 https://easy.dans.knaw.nl/ui/datasets/id/easy-dataset:67859/tab/1 
 
-smartAPI’s API metadata: https://raw.githubusercontent.com/WebsmartAPI/smartAPI/master/docs/iodocs/smartapi.json 
+smartAPI’s API metadata: https://raw.githubusercontent.com/WebsmartAPI/
+smartAPI/master/docs/iodocs/smartapi.json 
 
 Metadata record of a database: 
 - GEO https://fairsharing.org/biodbcore-000441  
@@ -122,10 +122,10 @@ Metadata record of a standard:
 Non-article Published Work
 - my Zenodo Deposit for polyA (https://doi.org/10.5281/zenodo.47641)
 - myExperiment Workflow (http://www.myexperiment.org/workflows/2999.html)
-- Jupyter notebook on GitHub (https://github.com/VidhyasreeRamu/GlobalClimateChange/blob/master/GlobalWarmingAnalysis.ipynb)
+- Jupyter notebook on GitHub (https://github.com/VidhyasreeRamu/\\
+GlobalClimateChange/blob/master/GlobalWarmingAnalysis.ipynb)
 
-//
-
+\\
 
 
 \hline
