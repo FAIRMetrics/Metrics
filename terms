@@ -15,7 +15,7 @@ fm:measuring
     rdfs:comment "A description of what is being measured by the metric."@en ;
     rdfs:label "What is being measured?"@en .
 
-fm:reason
+fm:rationale
     a rdf:Property ;
     dcterms:issued "2018-04-04"^^<http://www.w3.org/2001/XMLSchema#date> ;
     rdfs:isDefinedBy <https://purl.org/fair-metrics/terms/> ;
