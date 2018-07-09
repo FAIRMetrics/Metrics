@@ -10,10 +10,11 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix ro: <http://purl.org/obo/owl/OBO_REL#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@prefix fair: <http://purl.org/fair-ontology#> . 
+@prefix fair: <http://purl.org/fair-ontology#> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix dcat: <http://www.w3.org/ns/dcat#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix fm: <https://purl.org/fair-metrics/terms/> .
 
 sub:Head {
   sub:nanopub np:hasAssertion sub:assertion ;
@@ -21,20 +22,29 @@ sub:Head {
        np:hasPublicationInfo sub:pubinfo ;
        a np:Nanopublication .
  }
- 
+
 sub:assertion {
  this: a fair:FAIR-Metric ;
   foaf:primaryTopic fair:A2 .
 
  }
- 
+
 sub:provenance {
  sub:assertion dcterms:author  "Michel Dumontier", "Mark Wilkinson" , "Susanna Sansone", "Peter Doorn", "Luiz Bonino", "Erik Schultes" ;
+ dcterms:title "Metadata Longevity"^^xsd:string ;
  rdfs:comment "FAIR Metric for Fair Principle A2"^^xsd:string ;
+ fm:measuring "The existence of metadata even in the absence/removal of data"^^xsd:string ;
+ fm:rationale "Cross-references to data from third-party's FAIR data and metadata will naturally degrade over time, and become 'stale links'.  In such cases, it is important for FAIR providers to continue to provide descriptors of what the data was to assist in the continued interpretation of those third-party data.  As per FAIR Principle F3, this metadata remains discoverable, even in the absence of the data, because it contains an explicit reference to the IRI of the data."^^xsd:string ;
+ fm:requirements "URL to a formal metadata longevity plan"^^xsd:string ;
+ fm:procedure "Resolve the URL"^^xsd:string ;
+ fm:validation "- Successful resolution\n - Returns a document that represents a plan or policy of some kind\n - Preferably certified (e.g. DSA)\n"^^xsd:string ;
+ fm:relevance "All metadata"^^xsd:string ;
+ fm:examples "None"^^xsd:string ;
+ fm:comments "None"^^xsd:string ;
  dcat:distribution _:dist1 ;
- dcat:distribution _:dist2 ; 
+ dcat:distribution _:dist2 ;
  prov:wasGeneratedBy "FAIR Metrics Working Group" .
- 
+
  _:dist1 dcelem:format "application/x-texinfo" ;
 	rdf:type <http://rdfs.org/ns/void#Dataset> ;
 	rdf:type <http://www.w3.org/ns/dcat#Distribution> ;
@@ -47,7 +57,7 @@ sub:provenance {
 
 }
 
- 
+
 sub:pubinfo {
  this: dcterms:created "2017-11-21T00:00:00.0Z"^^xsd:dateTime ;
  dcterms:rights <https://creativecommons.org/publicdomain/zero/1.0> ;
