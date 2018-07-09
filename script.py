@@ -6,10 +6,6 @@ from rdflib import ConjunctiveGraph, URIRef
 from rdflib.namespace import DCTERMS, RDFS, FOAF
 from rdflib.namespace import Namespace
 
-args = sys.argv
-if len(args)!=2:
-    raise Exception('Expected metric IRI as input')
-
 FM = Namespace('https://purl.org/fair-metrics/terms/')
 
 fairGraph = ConjunctiveGraph()
@@ -24,7 +20,7 @@ class FairMetricData():
         self.id = URIRef(id)
         self.assertion = URIRef(id+'#assertion')
 
-        id = id.replace(self.base, '')  # HACK -- remove this line before merging commit
+        # id = id.replace(self.base, '')  # HACK -- remove this line before merging commit
         self.g = ConjunctiveGraph()
         self.g.parse(id, format='trig')
 
@@ -65,9 +61,9 @@ class FairMetricData():
         # return fm:measuring
         return self.getFMPropertyValue(FM.measuring)
 
-    def getReason(self):
-        # return fm:reason
-        return self.getFMPropertyValue(FM.reason)
+    def getRationale(self):
+        # return fm:rationale
+        return self.getFMPropertyValue(FM.rationale)
 
     def getRequirements(self):
         # return fm:requirements
@@ -100,71 +96,74 @@ class FairMetricData():
         return ', '.join([o.toPython() for o in self.g.objects(subject=self.assertion, predicate=property)])
 
 
-# The idea is that we could fill the table http://fairmetrics.org/fairmetricform.html
-# from a given metric IRI
-# id = 'https://purl.org/fair-metrics/FM_A1.1'
-metricFile = args[1]
-id = 'https://purl.org/fair-metrics/' + metricFile
+if __name__=='__main__':
+    args = sys.argv
+    if len(args)!=2:
+        raise Exception('Expected metric IRI as input')
 
-fm = FairMetricData(id)
+    # The idea is that we could fill the table http://fairmetrics.org/fairmetricform.html
+    # from a given metric IRI
+    # id = 'https://purl.org/fair-metrics/FM_A1.1'
+    metricFile = args[1]
+    id = 'https://purl.org/fair-metrics/' + metricFile
 
-latex_jinja_env = jinja2.Environment(
-	variable_start_string = '\VAR{',
-	variable_end_string = '}',
-	trim_blocks = True,
-	autoescape = False,
-	loader = jinja2.FileSystemLoader(os.path.abspath('.'))
-)
-template = latex_jinja_env.get_template('template.tex')
+    fm = FairMetricData(id)
 
+    latex_jinja_env = jinja2.Environment(
+    	variable_start_string = '\VAR{',
+    	variable_end_string = '}',
+    	trim_blocks = True,
+    	autoescape = False,
+    	loader = jinja2.FileSystemLoader(os.path.abspath('.'))
+    )
+    template = latex_jinja_env.get_template('template.tex')
 
-title=fm.getTitle()
-authors=fm.getAuthors()
-metricId=fm.getShortID().replace('_','-')   # Avoid _ in latex template
-metricIdVerb=fm.getID()
-shortTitle=fm.getShortTitle()
-topicTitle=fm.getTopicTitle()
-topicDesription=fm.getTopicDescription()
-measuring=fm.getMeasuring()
-reason=fm.getReason()
-requirements=fm.getRequirements().replace('\n','\\newline\n')
-procedure=fm.getProcedure()
-validation=fm.getValidation()
-relevance=fm.getRelevance()
-examples=fm.getExamples()
-comments=fm.getComments()
-measuringLabel=fm.getFMPropertyLabel('measuring')
-reasonLabel=fm.getFMPropertyLabel('reason')
-requirementsLabel=fm.getFMPropertyLabel('requirements')
-procedureLabel=fm.getFMPropertyLabel('procedure')
-validationLabel=fm.getFMPropertyLabel('validation')
-relevanceLabel=fm.getFMPropertyLabel('relevance')
-examplesLabel=fm.getFMPropertyLabel('examples')
-commentsLabel=fm.getFMPropertyLabel('comments')
+    title=fm.getTitle()
+    authors=fm.getAuthors()
+    metricId=fm.getShortID().replace('_','-')   # Avoid _ in latex template
+    metricIdVerb=fm.getID()
+    shortTitle=fm.getShortTitle()
+    topicTitle=fm.getTopicTitle()
+    topicDesription=fm.getTopicDescription().replace('\n','\\newline\n')
+    measuring=fm.getMeasuring().replace('\n','\\newline\n')
+    rationale=fm.getRationale().replace('\n','\\newline\n')
+    requirements=fm.getRequirements().replace('\n','\\newline\n')
+    procedure=fm.getProcedure().replace('\n','\\newline\n')
+    validation=fm.getValidation().replace('\n','\\newline\n')
+    relevance=fm.getRelevance().replace('\n','\\newline\n')
+    examples=fm.getExamples().replace('\n','\\newline\n')
+    comments=fm.getComments().replace('\n','\\newline\n')
+    measuringLabel=fm.getFMPropertyLabel('measuring')
+    rationaleLabel=fm.getFMPropertyLabel('rationale')
+    requirementsLabel=fm.getFMPropertyLabel('requirements')
+    procedureLabel=fm.getFMPropertyLabel('procedure')
+    validationLabel=fm.getFMPropertyLabel('validation')
+    relevanceLabel=fm.getFMPropertyLabel('relevance')
+    examplesLabel=fm.getFMPropertyLabel('examples')
+    commentsLabel=fm.getFMPropertyLabel('comments')
 
-
-print(template.render(
-    title=title,
-    authors=authors,
-    metricId=metricId,
-    metricIdVerb=metricIdVerb,
-    shortTitle=shortTitle,
-    topicTitle=topicTitle,
-    topicDesription=topicDesription,
-    measuring=measuring,
-    reason=reason,
-    requirements=requirements,
-    procedure=procedure,
-    validation=validation,
-    relevance=relevance,
-    examples=examples,
-    comments=comments,
-    measuringLabel=measuringLabel,
-    reasonLabel=reasonLabel,
-    requirementsLabel=requirementsLabel,
-    procedureLabel=procedureLabel,
-    validationLabel=validationLabel,
-    relevanceLabel=relevanceLabel,
-    examplesLabel=examplesLabel,
-    commentsLabel=commentsLabel,
-))
+    print(template.render(
+        title=title,
+        authors=authors,
+        metricId=metricId,
+        metricIdVerb=metricIdVerb,
+        shortTitle=shortTitle,
+        topicTitle=topicTitle,
+        topicDesription=topicDesription,
+        measuring=measuring,
+        rationale=rationale,
+        requirements=requirements,
+        procedure=procedure,
+        validation=validation,
+        relevance=relevance,
+        examples=examples,
+        comments=comments,
+        measuringLabel=measuringLabel,
+        rationaleLabel=rationaleLabel,
+        requirementsLabel=requirementsLabel,
+        procedureLabel=procedureLabel,
+        validationLabel=validationLabel,
+        relevanceLabel=relevanceLabel,
+        examplesLabel=examplesLabel,
+        commentsLabel=commentsLabel,
+    ))
