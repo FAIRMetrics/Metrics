@@ -16,7 +16,7 @@ use vars ('@ISA', '@EXPORT');
 @EXPORT = qw(execute_metric_test);
 
 
-my %schemas = ('spec'  => ['string', "The URL, including GET string parameters, that will return a successful search for the subject resource"],
+my %schemas = ('spec'  => ['string', "The URI of the Identifier Schema in the FAIRSharing Registry (see https://fairsharing.org/standards/?q=&selected_facets=type_exact:identifier%20schema)"],
 	       'subject' => ['string', "the GUID being tested"]);
 
 
@@ -49,7 +49,6 @@ if (!$cgi->request_method() || $cgi->request_method() eq "GET") {
 
 sub execute_metric_test {
 	my ($self, $body) = @_;
-
 	my $json = parse_json($body);
 	my $check = $json->{'spec'};
 	my $IRI = $json->{'subject'};
@@ -58,11 +57,11 @@ sub execute_metric_test {
         
         my $value;
         if( $valid) {
-                $value = "1";
+		$value = "1";
                 $helper->addComment("All OK!");
         } else {
                 $value = "0";
-                $helper->addComment("Failed to find the UUID in the output from  '$check'");
+                $helper->addComment("Failed to find the UUID '$check' in the FAIRSharing registry of Identifier Schemas");
         }
 
 	my $response = $helper->createEvaluationResponse($IRI, $value);
@@ -74,7 +73,7 @@ sub execute_metric_test {
 
 
 sub get_valid_schemas {
-
+	my($check, $IRI) = @_;
 	use LWP::UserAgent;
 	my $browser = LWP::UserAgent->new;
 	my $url = 'https://fairsharing.org/api/standard/summary/?type=identifier%20schema';	
@@ -85,6 +84,7 @@ sub get_valid_schemas {
 	my $res = $browser->get($url, @ns_headers);
 
 	unless ($res->is_success) {
+#print STDERR "CALL FAILED ".($res->decoded_content)."\n\n";
 		return [];
 	} else {
 		my @response;
@@ -95,8 +95,15 @@ sub get_valid_schemas {
 			 push @response, 'https://fairsharing.org/' . $result->{bsg_id};
 			 push @response, $result->{doi};
 		}
+#print STDERR "RESPONSE WAS @response\n\n";
+
+
+		foreach my $res(@response){
+			chomp $res;
+			return 1 if $res eq $check;
+		}
 		# need to deal with "next page" one day!
-		return \@response;
+		return 0;
 	}
 
 }
