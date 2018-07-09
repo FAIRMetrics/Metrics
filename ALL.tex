@@ -1,6 +1,5 @@
 \documentclass[english]{article}
 \usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
 \usepackage{babel}
 \usepackage{color}
 %\usepackage{amsmath}
@@ -30,14 +29,28 @@ Luiz Olavo Bonino da Silva Santos, Michel Dumontier}
 
 \centering
 
-\begin{longtable}{|p{5cm}|p{9cm}|}
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\begin{longtable}{|p{5cm}|p{9cm}|}
 \hline
 \emph{FIELD} & \emph{DESCRIPTION} \\
-
 \hline
 Metric Identifier &   FM-F1A: \verb"https://purl.org/fair-metrics/FM_F1A"
-\\
+ \\
 
 
 \hline
@@ -69,7 +82,8 @@ What must be provided? &  URL to a registered identifier scheme. \\
 
 \hline
 How do we measure it? &  
-An identifier scheme is valid if and only if it is described in a repository that can register and present such identifier schemes (e.g. fairsharing.org). 
+An identifier scheme is valid if and only if it is described in a repository that can register and present such identifier schemes (e.g. fairsharing.org). \newline
+\newline
 
 Information about the identifier scheme must be presented with a machine-readable document containing the FM1 attribute with the URL to where the scheme is described.  see specification for implementation.
 \\
@@ -88,16 +102,58 @@ For which digital resource(s) is this relevant? &  All\\
 
 
 
+\hline
+Examples of their application across types of digital resource &  
+
+Ontology \newline
+- Gene Ontology: http://www.ebi.ac.uk/miriam/main/\newline datatypes/MIR:00000022   
+\newline
+- HISCO: [link]\newline
+This resource has not described or registered their identifier scheme. A recommended course of action would be to XXX.
+\newline
+Model/format 
+- RDFS: https://fairsharing.org/bsg-s000283 
+\newline
+Repository \newline
+- JWS Online: https://www.ebi.ac.uk/miriam/main\newline /collections/MIR:00000130 \newline
+- DANS EASY: \newline
+\newline
+Database \newline
+- ArrayExpress: https://fairsharing.org/biodbcore-000305  \newline
+ -> FAIRsharing will implement the FAIR Metric specification to provide a machine-readable link to the MIRIAM repository (for life science content)
+\newline
+API \newline
+- smartAPI’s API\newline
+https://raw.githubusercontent.com/WebsmartAPI\newline /smartAPI/master/docs/iodocs/smartapi.json  \newline
+--> the smartAPI repository will provide accessible specification of the identifier scheme that is embedded in that metadata document.
+\newline
+Journal\newline
+http://www.nature.com/developers/documentation/\newline metadata-resources/doi  \newline
+--> the web site will have to provide a machine-readable pointer to the official DOI specification.
+\newline
+
+\\
+
+
+
+\hline
+
+Comments & 
+
+A first version of this metric would focus on just checking a URL that resolves to a document. We can’t verify that document. \newline
+A second version would indicate how to structure the data policy document with a particular section (similar to how the CC licenses now have a formal structure in RDF).\newline
+A third version would insist that that document and section is signed by an approved organization and made available in an appropriate repository. \\ 
+\hline
+
+
 \end{longtable}
 
 
 
-
-\newpage
-
+%\begin{table}
 \centering
 
-\begin{longtable}{|p{5cm}|p{9cm}|}
+\begin{tabular}{|p{5cm}|p{9cm}|}
 \hline
 \emph{FIELD} & \emph{DESCRIPTION} \\
 \hline
@@ -147,7 +203,7 @@ Use an HTTP GET on URL provided. \newline
 
 \hline
 What is a valid result? &  
-Present (a 200,202,203 or 206 HTTP response after resolving all and any prior redirects. e.g. 301 -> 302 -> 200 OK.) or Absent (any other HTTP code)
+Present (a 200,202,203 or 206 HTTP response after resolving all and any prior redirects. e.g. 301 -> 302 -> 200 OK) or Absent (any other HTTP code)
 \\
 
 
@@ -156,6 +212,32 @@ Present (a 200,202,203 or 206 HTTP response after resolving all and any prior re
 For which digital resource(s) is this relevant? &  All\\
 
 
+
+\hline
+Examples of their application across types of digital resource &  
+for each of the ‘canonical’ data types, examples, if available.
+\newline @todo
+\newline
+\newline
+FAIR principles (scholarly publication in Nature Scientific Data)\newline
+\verb|https://www.doi.org/overview/DOI_article_ELIS3.pdf|
+\newline
+http://www.nature.com/developers/\newline
+documentation/metadata-resources/doi/ \newline
+\newline
+FAIR Principles (computable representation): 
+\newline
+https://github.com/FAIRDataInitiative/\newline
+\verb|FAIR-principles#fair-principles|
+\newline
+For DSA-certified repositories (example below of 3TU-Datacentre at Delft) the identifier persistence policy is described in the self assessment:\newline
+https://assessment.datasealofapproval.org/\newline
+\verb|assessment_187/seal/pdf/| \newline
+\newline
+DOI Handbook - ensuring persistence:\newline 
+\verb|http://www.doi.org/doi_handbook/| \newline
+\verb|6_Policies.html#6.5}|
+\\
 
 
 
@@ -166,13 +248,21 @@ Comments &
 A first version of this metric would focus on just checking a URL that resolves to a document. We can’t verify that document. \newline
 A second version would indicate how to structure the data policy document with a particular section (similar to how the CC licenses now have a formal structure in RDF).\newline
 A third version would insist that that document and section is signed by an approved organization and made available in an appropriate repository. \\ 
-
 \hline
-\\
-
-\end{longtable}
+\end{tabular}
 % \caption{The template for creating FAIR Metrics}
 %\end{table}
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -181,7 +271,11 @@ A third version would insist that that document and section is signed by an appr
 
 \centering
 
-\begin{longtable}{|p{5cm}|p{9cm}|}
+
+
+
+
+\begin{tabular}{|p{5cm}|p{9cm}|}
 \hline
 \emph{FIELD} & \emph{DESCRIPTION} \\
 \hline
@@ -213,7 +307,7 @@ The availability of machine-readable metadata that describes a digital resource.
 Why should we measure it? & 
 
 
-Richness of metadata can refer to many different aspects. One aspect is that the machine readability of metadata makes it possible to optimize their discovery. For instance, Web search engines suggest the use of particular structured metadata elements to optimize search. Thus, the machine-readability aspect can help people and machines find a digital resource of interest. Here, we focus on metadata being sufficiently rich in this sense - that the metadata document and the metadata elements are machine readable.  Otherwise, it will also be difficult to understand what the digital resource is and what information is being provided about it.
+This metric \textit{does not} attempt to measure (or even define) "Richness" - this will be defined in a future Metric.  This metric is intended to test the format of the metadata - machine readability of metadata makes it possible to optimize discovery. For instance, Web search engines suggest the use of particular structured metadata elements to optimize search. Thus, the machine-readability aspect can help people and machines find a digital resource of interest. 
 
   
 \\
@@ -231,7 +325,7 @@ A URL to a document that contains machine-readable metadata for the digital reso
 
 \hline
 How do we measure it? &  
-HTTP GET on the metadata URL. A response of [a 200,202,203 or 206 HTTP response after resolving all and any prior redirects. e.g. 301 -> 302 -> 200 OK.] indicates that there is indeed a document. The second URL should resolve to the record of a registered file format (e.g. DCAT, DICOM, schema.org etc.) in a registry like FAIRsharing. \newline
+HTTP GET on the metadata URL. A response of [a 200,202,203 or 206 HTTP response after resolving all and any prior redirects. e.g. 301 -> 302 -> 200 OK] indicates that there is indeed a document. The second URL should resolve to the record of a registered file format (e.g. DCAT, DICOM, schema.org etc.) in a registry like FAIRsharing.  Future ehnancements to FAIRSharing may include tags that indicate whether or not a given file format is generally-agreed to be machine-readable \newline
 \\
 
 
@@ -251,22 +345,53 @@ For which digital resource(s) is this relevant? &  All\\
 
 
 \hline
+Examples of their application across types of digital resource &  
+This URL can resolve to:
+
+- A record in a metadata registry relevant to your digital object (e.g. FAIRsharing.org, FAIR Data Point, smartAPI editor)
+- Your metadata on an HTML web page using schema.org
+- A FAIR Accessor………...
+
+Semanticscience Integrated Ontology : 
+ http://semanticscience.org/ontology/sio.owl 
+ https://biosharing.org/bsg-s002686
+
+Example of a DANS metadata-record of an archived dataset: 
+https://easy.dans.knaw.nl/ui/datasets/id/easy-dataset:67859/tab/1 
+
+smartAPI’s API metadata: https://raw.githubusercontent.com/WebsmartAPI/
+smartAPI/master/docs/iodocs/smartapi.json 
+
+Metadata record of a database: 
+- GEO https://fairsharing.org/biodbcore-000441  
+
+Metadata record of a standard: 
+- RDF https://fairsharing.org/bsg-s000559 
+
+Non-article Published Work
+- my Zenodo Deposit for polyA (https://doi.org/10.5281/zenodo.47641)
+- myExperiment Workflow (http://www.myexperiment.org/workflows/2999.html)
+- Jupyter notebook on GitHub (https://github.com/VidhyasreeRamu/\\
+GlobalClimateChange/blob/master/GlobalWarmingAnalysis.ipynb)
 
 \\
-
 
 
 \hline
 
 Comments & 
 
-A first version of this metric would focus on just checking a URL that resolves to a document. We can’t verify that document. \newline
-A second version would indicate how to structure the data policy document with a particular section (similar to how the CC licenses now have a formal structure in RDF).\newline
-A third version would insist that that document and section is signed by an approved organization and made available in an appropriate repository. \\ 
+none \\ 
 \hline
-\end{longtable}
+\end{tabular}
 % \caption{The template for creating FAIR Metrics}
 %\end{table}
+
+
+
+
+
+
 
 
 \newpage
@@ -317,8 +442,9 @@ Why should we measure it? &
 
 
 
-The discovery of digital object should be possible from its metadata. For this to happen, the metadata must explicitly contain the identifier for the digital resource it describes. 
-A metadata document should also not result in ambiguity about the digital object it is describing. This can be assured if the metadata document explicitly refers to the digital object by its IRI.
+The discovery of digital object should be possible from its metadata. For this to happen, the metadata must explicitly contain the identifier for the digital resource it describes, and this should be present in the form of a qualified reference, indicating some manner of "about" relationship, to distinguish this identifier from the numerous others that will be present in the metadata.
+
+In addition, since many digital objects cannot be arbitrarily extended to include references to their metadata, in many cases the only means to discover the metadata related to a digital object will be to search based on the GUID of the digital object itself.
 
   
 \\
@@ -329,7 +455,7 @@ A metadata document should also not result in ambiguity about the digital object
 What must be provided? &  
 
 
-The URL of the metadata and the IRI of the digital resource it describes.
+The GUID of the metadata and the GUID of the digital resource it describes.
 
 
  \\
@@ -339,7 +465,7 @@ The URL of the metadata and the IRI of the digital resource it describes.
 \hline
 How do we measure it? &  
 
-Parsing the metadata for the given digital resource IRI.
+Parsing the metadata for the given digital resource GUID.
 
 \\
 
@@ -376,7 +502,7 @@ None
 Comments & 
 
 
-None
+In practice there are issues related to the format of the metadata document that might make a simple string search impossible.  For example, relative URLs in HTML and qnames in XML/RDF.  We should engage in some community discussion about exactly how to execute this Metric.
 
  \\ 
 \hline
@@ -384,7 +510,12 @@ None
 \end{longtable}
 
 
+
+
+
+
 \newpage
+
 
 
 
@@ -463,7 +594,7 @@ The persistent identifier of the resource and one or more URLs that give search 
 How do we measure it? &  
 
 
-We perform an HTTP GET on the URLs provided and attempt to to find the persistent identifier in the page that is returned. A second step is to follow each of the top 10 hits and examine the resulting documents for presence of the identifier. 
+We perform an HTTP GET on the URLs provided and attempt to to find the persistent identifier in the page that is returned. A second step might include following each of the top XX hits and examine the resulting documents for presence of the identifier. 
 
 
 \\
@@ -474,7 +605,7 @@ We perform an HTTP GET on the URLs provided and attempt to to find the persisten
 What is a valid result? &  
 
 
-true -> the persistent identifier was found in the search results.
+true - the persistent identifier was found in the search results.
 
 
 \\
@@ -518,6 +649,7 @@ Comments & None
 \hline
 
 \end{longtable}
+
 
 
 
@@ -616,7 +748,7 @@ iii) true/false as to whether the protocol is (royalty) free\newline
 \hline
 How do we measure it? &  
 
-Do an HTTP get on the URL to see if it returns a valid document. Ideally, we would have a universal database of communication protocols from which we can check this URL. We also check whether questions 2 and 3 are true or false.  
+Do an HTTP get on the URL to see if it returns a valid document. Ideally, we would have a universal database of communication protocols from which we can check this URL (this is now being created in FAIRSharing). We also check whether questions 2 and 3 are true or false.  
 
 
 \\
@@ -628,7 +760,7 @@ What is a valid result? &
 
 
 
-The HTTP GET on the URL should return a 200,202,203 or 206 HTTP response after resolving all and any prior redirects. e.g. 301 -> 302 -> 200 OK. The other two should be false
+The HTTP GET on the URL should return a 200,202,203 or 206 HTTP response after resolving all and any prior redirects. e.g. 301 - 302 - 200 OK. The other two should return true/false ("true" is success)
 
 
 \\
@@ -655,6 +787,7 @@ Comments & None
 \hline
 
 \end{longtable}
+
 
 
 
@@ -722,7 +855,7 @@ What must be provided? &
 
 
 i) true/false concerning whether authorization is needed\newline 
-ii) a description of the process to obtain access to restricted content.\newline 
+ii) a URL that resolves to a description of the process to obtain access to restricted content.\newline 
 
 
 
@@ -749,7 +882,7 @@ What is a valid result? &
 
 
 
-a valid answer contains a true or false for the first question. if true, a non-empty textual description for the process is provided.
+a valid answer contains a true or false for the first question. if true, an HTTP GET on the URL provided should return a 200, 202, 203, or 206 HTTP Response after resolving all redirects.
 
 
 \\
@@ -776,6 +909,8 @@ Comments & None
 \hline
 
 \end{longtable}
+
+
 
 
 \newpage
@@ -984,7 +1119,9 @@ How do we measure it? &
 What is a valid result? &  
 
 
-BNF found
+BNF (or other?) found, Media-type of the document is registered in FAIRSharing. 
+
+Future:  FAIRSharing has tags to indicate constrained vs. extendable languages?
 
 
 
@@ -1124,7 +1261,7 @@ IRIs representing the vocabularies used for (meta)data
 How do we measure it? &  
 
 
-Resolve UUIDs, check FAIRness of the returned document(s)
+Resolve IRIs, check FAIRness of the returned document(s).
 
 
 \\
@@ -1136,7 +1273,7 @@ What is a valid result? &
 
 
 
-Successful resolution; document is amenable to machine-parsing and identification of terms within it.
+Successful resolution; document is amenable to machine-parsing and identification of terms within it.  It may be possible to use FAIRSharing to validate these vocabularies.
 
 
 
@@ -1158,7 +1295,36 @@ Examples of their application across types of digital resource &  None
 
 \hline
 
-Comments &  None 
+Comments & 
+
+michel: there must be a syntax and associated semantics for that language.  This is sufficient \newline 
+mark: there needs to be some identity or denotation in the language; (‘vanilla’) xml and json are not FAIR, so should fail this test\newline 
+\newline 
+*** can you (i) identify elements and (ii) make statements about them, and iii) is there a formally defined interpretation for that 
+ -> HTML fails; PDF fails
+\newline 
+shared\newline 
+-> that there are many users of the language\newline 
+. acknowledged within your community\newline 
+ -> hard to prove.\newline 
+. could we use google to query for your filetype (can’t discriminate between different models)\newline 
+-> has a media type\newline 
+
+--> This SHOULD be stated as a IANA code [IANA-MT]\newline 
+
+
+standardization of at least this listing process is a good measure of “sharedness”\newline 
+
+broadly applicable\newline 
+. that the language is extensible to a domain of interest\newline 
+. you can define your own elements in accordance with the semantics of the language\newline 
+\newline 
+gff3 is not in the IANA list -> what steps would the community need to execute to be listed here?
+cases like GFF, PDB are not broadly applicable \newline 
+biopax -> is defined vnd.biopax.rdf+xml and built on rdf -> allows users to create new elements and relate them \newline 
+jpg -> widely used, registered, but primarily for image content\newline 
+pdf -> registered, enables users to create their own dictionary.\newline 
+ 
 
 \\
 \hline
@@ -1221,7 +1387,7 @@ Why should we measure it? &
 
 One of the reasons that HTML is not suitable for machine-readable knowledge representation is that the hyperlinks between one document and another do not explain the nature of the relationship - it is “unqualified”.  For Interoperability, the relationships within and between data must be more semantically rich than “is (somehow) related to”.\newline 
 \newline 
-Numerous ontologies include richer relationships that can be used for this purpose, at various levels of domain-specificity.  For example, the use of skos for terminologies (e.g. exact matches), or the use of SIO for genomics (e.g. “has phenotype” for the relationship between a variant and its phenotypic consequences).\newline 
+Numerous ontologies include richer relationships that can be used for this purpose, at various levels of domain-specificity.  For example, the use of skos for terminologies (e.g. exact matches), or the use of SIO for genomics (e.g. “has phenotype” for the relationship between a variant and its phenotypic consequences).  The semantics of the relationship do not need to be "strong" - for example, "objectX  wasFoundInTheSameBoxAs objectY" is an acceptable qualified reference\newline 
 \newline 
 Similarly, dbxrefs must be predicated with a meaningful relationship  what is the nature of the cross-reference?\newline 
 \newline 
@@ -1292,6 +1458,7 @@ Comments &
 \hline
 
 \end{longtable}
+
 
 
 \newpage
@@ -1406,6 +1573,9 @@ Comments &
 \end{longtable}
 
 
+
+
+
 \newpage
 
 
@@ -1472,7 +1642,7 @@ Reusability is not only a technical issue; data can be discovered, retrieved, an
 What must be provided? &  
 
 
-Two URLs (IRIs).  One of these URLs points to one of the vocabularies used to describe citational provenance (e.g. dublin core).  The second points to one of the vocabularies (likely domain-specific) that is used to describe contextual provenance (e.g. EDAM)
+Several IRIs -  at least one of these points to one of the vocabularies used to describe citational provenance (e.g. dublin core).  At least one points to one of the vocabularies (likely domain-specific) that is used to describe contextual provenance (e.g. EDAM)
 
 
 \\
@@ -1483,7 +1653,9 @@ Two URLs (IRIs).  One of these URLs points to one of the vocabularies used to de
 How do we measure it? &  
 
 
-We resolve the URLs/IRIs according to their associated protocols. 
+We resolve the IRI according to their associated protocols.  
+
+In the future, we may be able to cross-reference these with FAIRSharing to confirm that they are "standard", and perhaps even distinguish citation vs. domain specific.
 
 
 \\
@@ -1531,6 +1703,7 @@ Some formats do not have these fields.  For example, although gff can have arbit
 \hline
 
 \end{longtable}
+
 
 
 

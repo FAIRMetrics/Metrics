@@ -10,10 +10,11 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix ro: <http://purl.org/obo/owl/OBO_REL#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@prefix fair: <http://purl.org/fair-ontology#> . 
+@prefix fair: <http://purl.org/fair-ontology#> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix dcat: <http://www.w3.org/ns/dcat#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix fm: <https://purl.org/fair-metrics/terms/> .
 
 sub:Head {
   sub:nanopub np:hasAssertion sub:assertion ;
@@ -21,20 +22,29 @@ sub:Head {
        np:hasPublicationInfo sub:pubinfo ;
        a np:Nanopublication .
  }
- 
+
 sub:assertion {
  this: a fair:FAIR-Metric ;
   foaf:primaryTopic fair:F3 .
 
  }
- 
+
 sub:provenance {
  sub:assertion dcterms:author  "Michel Dumontier", "Mark Wilkinson" , "Susanna Sansone", "Peter Doorn", "Luiz Bonino", "Erik Schultes" ;
+ dcterms:title "Resource Identifier in Metadata"^^xsd:string ;
  rdfs:comment "FAIR Metric for Fair Principle F3"^^xsd:string ;
+ fm:measuring "Whether the metadata document contains the globally unique and persistent identifier for the digital resource."^^xsd:string ;
+ fm:rationale "The discovery of digital object should be possible from its metadata. For this to happen, the metadata must explicitly contain the identifier for the digital resource it describes, and this should be present in the form of a qualified reference, indicating some manner of 'about' relationship, to distinguish this identifier from the numerous others that will be present in the metadata.\n\n In addition, since many digital objects cannot be arbitrarily extended to include references to their metadata, in many cases the only means to discover the metadata related to a digital object will be to search based on the GUID of the digital object itself."^^xsd:string ;
+ fm:requirements "The GUID of the metadata and the GUID of the digital resource it describes."^^xsd:string ;
+ fm:procedure "Parsing the metadata for the given digital resource GUID."^^xsd:string ;
+ fm:validation "Present or absent"^^xsd:string ;
+ fm:relevance "All"^^xsd:string ;
+ fm:examples "None"^^xsd:string ;
+ fm:comments "In practice there are issues related to the format of the metadata document that might make a simple string search impossible.  For example, relative URLs in HTML and qnames in XML/RDF.  We should engage in some community discussion about exactly how to execute this Metric."^^xsd:string ;
  dcat:distribution _:dist1 ;
- dcat:distribution _:dist2 ; 
+ dcat:distribution _:dist2 ;
  prov:wasGeneratedBy "FAIR Metrics Working Group" .
- 
+
  _:dist1 dcelem:format "application/x-texinfo" ;
 	rdf:type <http://rdfs.org/ns/void#Dataset> ;
 	rdf:type <http://www.w3.org/ns/dcat#Distribution> ;
@@ -47,7 +57,7 @@ sub:provenance {
 
 }
 
- 
+
 sub:pubinfo {
  this: dcterms:created "2017-11-21T00:00:00.0Z"^^xsd:dateTime ;
  dcterms:rights <https://creativecommons.org/publicdomain/zero/1.0> ;

@@ -10,10 +10,11 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix ro: <http://purl.org/obo/owl/OBO_REL#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@prefix fair: <http://purl.org/fair-ontology#> . 
+@prefix fair: <http://purl.org/fair-ontology#> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix dcat: <http://www.w3.org/ns/dcat#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix fm: <https://purl.org/fair-metrics/terms/> .
 
 sub:Head {
   sub:nanopub np:hasAssertion sub:assertion ;
@@ -21,20 +22,29 @@ sub:Head {
        np:hasPublicationInfo sub:pubinfo ;
        a np:Nanopublication .
  }
- 
+
 sub:assertion {
  this: a fair:FAIR-Metric ;
   foaf:primaryTopic fair:F2 .
 
  }
- 
+
 sub:provenance {
  sub:assertion dcterms:author  "Michel Dumontier", "Mark Wilkinson" , "Susanna Sansone", "Peter Doorn", "Luiz Bonino", "Erik Schultes" ;
+ dcterms:title "Machine-readability of metadata"^^xsd:string ;
  rdfs:comment "FAIR Metric for Fair Principle F2"^^xsd:string ;
+ fm:measuring "The availability of machine-readable metadata that describes a digital resource."^^xsd:string ;
+ fm:rationale "This metric \textit{does not} attempt to measure (or even define) 'Richness' - this will be defined in a future Metric.  This metric is intended to test the format of the metadata - machine readability of metadata makes it possible to optimize discovery. For instance, Web search engines suggest the use of particular structured metadata elements to optimize search. Thus, the machine-readability aspect can help people and machines find a digital resource of interest."^^xsd:string ;
+ fm:requirements "A URL to a document that contains machine-readable metadata for the digital resource. Furthermore, the file format must be specified."^^xsd:string ;
+ fm:procedure "HTTP GET on the metadata URL. A response of [a 200,202,203 or 206 HTTP response after resolving all and any prior redirects. e.g. 301 -> 302 -> 200 OK] indicates that there is indeed a document. The second URL should resolve to the record of a registered file format (e.g. DCAT, DICOM, schema.org etc.) in a registry like FAIRsharing.  Future ehnancements to FAIRSharing may include tags that indicate whether or not a given file format is generally-agreed to be machine-readable"^^xsd:string ;
+ fm:validation "Machine-readable or Machine-not-readable"^^xsd:string ;
+ fm:relevance "All"^^xsd:string ;
+ fm:examples "This URL can resolve to:\n - A record in a metadata registry relevant to your digital object (e.g. FAIRsharing.org, FAIR Data Point, smartAPI editor)\n - Your metadata on an HTML web page using schema.org\n - A FAIR Accessor...\n \n Semanticscience Integrated Ontology :   http://semanticscience.org/ontology/sio.owl   https://biosharing.org/bsg-s002686 \n Example of a DANS metadata-record of an archived dataset:  https://easy.dans.knaw.nl/ui/datasets/id/easy-dataset:67859/tab/1  \n smartAPI's API metadata: https://raw.githubusercontent.com/WebsmartAPI/smartAPI/master/docs/iodocs/smartapi.json  \n Metadata record of a database:  - GEO https://fairsharing.org/biodbcore-000441   \n Metadata record of a standard:  - RDF https://fairsharing.org/bsg-s000559  \n Non-article Published Work\n - my Zenodo Deposit for polyA (https://doi.org/10.5281/zenodo.47641)\n - myExperiment Workflow (http://www.myexperiment.org/workflows/2999.html)\n - Jupyter notebook on GitHub (https://github.com/VidhyasreeRamu/GlobalClimateChange/blob/master/GlobalWarmingAnalysis.ipynb)"^^xsd:string ;
+ fm:comments "None"^^xsd:string ;
  dcat:distribution _:dist1 ;
- dcat:distribution _:dist2 ; 
+ dcat:distribution _:dist2 ;
  prov:wasGeneratedBy "FAIR Metrics Working Group" .
- 
+
  _:dist1 dcelem:format "application/x-texinfo" ;
 	rdf:type <http://rdfs.org/ns/void#Dataset> ;
 	rdf:type <http://www.w3.org/ns/dcat#Distribution> ;
@@ -47,7 +57,7 @@ sub:provenance {
 
 }
 
- 
+
 sub:pubinfo {
  this: dcterms:created "2017-11-20T00:00:00.0Z"^^xsd:dateTime ;
  dcterms:rights <https://creativecommons.org/publicdomain/zero/1.0> ;

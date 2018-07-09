@@ -1,6 +1,5 @@
 \documentclass[english]{article}
 \usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
 \usepackage{babel}
 \usepackage{color}
 %\usepackage{amsmath}
@@ -88,7 +87,7 @@ Reusability is not only a technical issue; data can be discovered, retrieved, an
 What must be provided? &  
 
 
-Two URLs (IRIs).  One of these URLs points to one of the vocabularies used to describe citational provenance (e.g. dublin core).  The second points to one of the vocabularies (likely domain-specific) that is used to describe contextual provenance (e.g. EDAM)
+Several IRIs -  at least one of these points to one of the vocabularies used to describe citational provenance (e.g. dublin core).  At least one points to one of the vocabularies (likely domain-specific) that is used to describe contextual provenance (e.g. EDAM)
 
 
 \\
@@ -99,7 +98,9 @@ Two URLs (IRIs).  One of these URLs points to one of the vocabularies used to de
 How do we measure it? &  
 
 
-We resolve the URLs/IRIs according to their associated protocols. 
+We resolve the IRI according to their associated protocols.  
+
+In the future, we may be able to cross-reference these with FAIRSharing to confirm that they are "standard", and perhaps even distinguish citation vs. domain specific.
 
 
 \\

@@ -1,6 +1,5 @@
 \documentclass[english]{article}
 \usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
 \usepackage{babel}
 \usepackage{color}
 %\usepackage{amsmath}
@@ -101,7 +100,7 @@ The persistent identifier of the resource and one or more URLs that give search 
 How do we measure it? &  
 
 
-We perform an HTTP GET on the URLs provided and attempt to to find the persistent identifier in the page that is returned. A second step is to follow each of the top 10 hits and examine the resulting documents for presence of the identifier. 
+We perform an HTTP GET on the URLs provided and attempt to to find the persistent identifier in the page that is returned. A second step might include following each of the top XX hits and examine the resulting documents for presence of the identifier. 
 
 
 \\
@@ -112,7 +111,7 @@ We perform an HTTP GET on the URLs provided and attempt to to find the persisten
 What is a valid result? &  
 
 
-true -> the persistent identifier was found in the search results.
+true - the persistent identifier was found in the search results.
 
 
 \\

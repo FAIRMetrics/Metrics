@@ -10,10 +10,11 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix ro: <http://purl.org/obo/owl/OBO_REL#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@prefix fair: <http://purl.org/fair-ontology#> . 
+@prefix fair: <http://purl.org/fair-ontology#> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix dcat: <http://www.w3.org/ns/dcat#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix fm: <https://purl.org/fair-metrics/terms/> .
 
 sub:Head {
   sub:nanopub np:hasAssertion sub:assertion ;
@@ -21,20 +22,29 @@ sub:Head {
        np:hasPublicationInfo sub:pubinfo ;
        a np:Nanopublication .
  }
- 
+
 sub:assertion {
  this: a fair:FAIR-Metric ;
   foaf:primaryTopic fair:A1.2 .
 
  }
- 
+
 sub:provenance {
  sub:assertion dcterms:author  "Michel Dumontier", "Mark Wilkinson" , "Susanna Sansone", "Peter Doorn", "Luiz Bonino", "Erik Schultes" ;
+ dcterms:title "Access authorization"^^xsd:string ;
  rdfs:comment "FAIR Metric for Fair Principle A1.2"^^xsd:string ;
+ fm:measuring "Specification of a protocol to access restricted content."^^xsd:string ;
+ fm:rationale "Not all content can be made available without restriction. For instance, access and distribution of personal health data may be restricted by law or by organizational policy. In such cases, it is important that the protocol by which such content can be accessed is fully specified. Ideally, electronic content can be obtained first by applying for access. Once the requester is formally authorized to access the content, they may receive it in some electronic means, for instance by obtaining an download URL, or through a more sophisticated transaction mechanism (e.g. authenticate, authorize), or by any other means. The goal should be to reduce the time it takes for valid requests to be fulfilled."^^xsd:string ;
+ fm:requirements "i) true/false concerning whether authorization is needed\nii) a URL that resolves to a description of the process to obtain access to restricted content.\n"^^xsd:string ;
+ fm:procedure "Computational validation of the data provided"^^xsd:string ;
+ fm:validation "A valid answer contains a true or false for the first question. if true, an HTTP GET on the URL provided should return a 200, 202, 203, or 206 HTTP Response after resolving all redirects."^^xsd:string ;
+ fm:relevance "All"^^xsd:string ;
+ fm:examples "None"^^xsd:string ;
+ fm:comments "None"^^xsd:string ;
  dcat:distribution _:dist1 ;
- dcat:distribution _:dist2 ; 
+ dcat:distribution _:dist2 ;
  prov:wasGeneratedBy "FAIR Metrics Working Group" .
- 
+
  _:dist1 dcelem:format "application/x-texinfo" ;
 	rdf:type <http://rdfs.org/ns/void#Dataset> ;
 	rdf:type <http://www.w3.org/ns/dcat#Distribution> ;
@@ -47,7 +57,7 @@ sub:provenance {
 
 }
 
- 
+
 sub:pubinfo {
  this: dcterms:created "2017-11-21T00:00:00.0Z"^^xsd:dateTime ;
  dcterms:rights <https://creativecommons.org/publicdomain/zero/1.0> ;

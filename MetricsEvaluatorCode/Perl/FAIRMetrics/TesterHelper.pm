@@ -55,7 +55,7 @@ sub addComment {
       my ($self, $newcomment) = @_;
       my $comment = $self->comments;
       $comment .= $newcomment;
-      $self->comment($comment);
+      $self->comments($comment);
       return 1
 }
 
@@ -83,8 +83,8 @@ sub createEvaluationResponse {
       $model->add_statement($statement);
 
       
-        if ($self->comment ne "") {
-                $statement = statement("$uri/result#$time", "http://schema.org/comment", $self->comment);
+        if ($self->comments ne "") {
+                $statement = statement("$uri/result#$time", "http://schema.org/comment", $self->comments);
                 $model->add_statement($statement);
         }
 

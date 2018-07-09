@@ -1,12 +1,13 @@
 \documentclass[english]{article}
 \usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
+%\usepackage[T1]{fontenc}
 \usepackage{babel}
 \usepackage{color}
 %\usepackage{amsmath}
 \usepackage{graphicx}
 \usepackage{fancyhdr}
 \usepackage{longtable}
+\usepackage{textcomp}
 %\usepackage{makecell}  % $ sudo tlmgr install makecell
 %\pagestyle{fancy}
 %\fancyhf{}
@@ -101,7 +102,7 @@ iii) true/false as to whether the protocol is (royalty) free\newline
 \hline
 How do we measure it? &  
 
-Do an HTTP get on the URL to see if it returns a valid document. Ideally, we would have a universal database of communication protocols from which we can check this URL. We also check whether questions 2 and 3 are true or false.  
+Do an HTTP get on the URL to see if it returns a valid document. Ideally, we would have a universal database of communication protocols from which we can check this URL (this is now being created in FAIRSharing). We also check whether questions 2 and 3 are true or false.  
 
 
 \\
@@ -113,7 +114,7 @@ What is a valid result? &
 
 
 
-The HTTP GET on the URL should return a 200,202,203 or 206 HTTP response after resolving all and any prior redirects. e.g. 301 -> 302 -> 200 OK. The other two should be true/false.
+The HTTP GET on the URL should return a 200,202,203 or 206 HTTP response after resolving all and any prior redirects. e.g. 301 - 302 - 200 OK. The other two should return true/false ("true" is success)
 
 
 \\

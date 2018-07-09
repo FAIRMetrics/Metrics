@@ -1,6 +1,6 @@
 #!/usr/bin/perl -w
 use strict;
-package Metrics::metric_searchable_index;
+package Metrics::metric_unique_identifier;
 
 use LWP::Simple;
 use RDF::Trine;

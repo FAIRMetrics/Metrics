@@ -14,7 +14,7 @@ use vars ('@ISA', '@EXPORT');
 @EXPORT = qw(execute_metric_test);
 
 
-my %schemas = ('bnf_uri'  => ['string', "The URL that points to the BNF for the knowledge representation language used by the Resource"],
+my %schemas = ('persistence_doc'  => ['string', "The URL that points to the BNF for the knowledge representation language used by the Resource"],
 	       'subject' => ['string', "the GUID being tested"]);
 
 my $helper = FAIRMetrics::TesterHelper->new(

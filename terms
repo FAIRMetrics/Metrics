@@ -1,0 +1,72 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix fm: <https://purl.org/fair-metrics/terms/> .
+
+<https://purl.org/fair-metrics/terms/>
+    dcterms:modified "2018-04-04"^^<http://www.w3.org/2001/XMLSchema#date> ;
+    dcterms:title "FAIRMetrics Terms"@en .
+
+fm:measuring
+    a rdf:Property ;
+    dcterms:issued "2018-04-04"^^<http://www.w3.org/2001/XMLSchema#date> ;
+    rdfs:isDefinedBy <https://purl.org/fair-metrics/terms/> ;
+    rdfs:range rdfs:Literal ;
+    rdfs:comment "A description of what is being measured by the metric."@en ;
+    rdfs:label "What is being measured?"@en .
+
+fm:rationale
+    a rdf:Property ;
+    dcterms:issued "2018-04-04"^^<http://www.w3.org/2001/XMLSchema#date> ;
+    rdfs:isDefinedBy <https://purl.org/fair-metrics/terms/> ;
+    rdfs:range rdfs:Literal ;
+    rdfs:comment "A description of why this is being measured."@en ;
+    rdfs:label "Why should we measure it?"@en .
+
+fm:requirements
+    a rdf:Property ;
+    dcterms:issued "2018-04-04"^^<http://www.w3.org/2001/XMLSchema#date> ;
+    rdfs:isDefinedBy <https://purl.org/fair-metrics/terms/> ;
+    rdfs:range rdfs:Literal ;
+    rdfs:comment "A description of what requirements need to be met for the measure to be considered successful."@en ;
+    rdfs:label "What must be provided?"@en .
+
+fm:procedure
+    a rdf:Property ;
+    dcterms:issued "2018-04-04"^^<http://www.w3.org/2001/XMLSchema#date> ;
+    rdfs:isDefinedBy <https://purl.org/fair-metrics/terms/> ;
+    rdfs:range rdfs:Literal ;
+    rdfs:comment "A description of how the requirements are to be measured."@en ;
+    rdfs:label "How do we measure it?"@en .
+
+fm:validation
+    a rdf:Property ;
+    dcterms:issued "2018-04-04"^^<http://www.w3.org/2001/XMLSchema#date> ;
+    rdfs:isDefinedBy <https://purl.org/fair-metrics/terms/> ;
+    rdfs:range rdfs:Literal ;
+    rdfs:comment "A description of what constitutes a valid result."@en ;
+    rdfs:label "What is a valid result?"@en .
+
+fm:relevance
+    a rdf:Property ;
+    dcterms:issued "2018-04-04"^^<http://www.w3.org/2001/XMLSchema#date> ;
+    rdfs:isDefinedBy <https://purl.org/fair-metrics/terms/> ;
+    rdfs:range rdfs:Literal ;
+    rdfs:comment "A description of digital resources for which this measure is relevant."@en ;
+    rdfs:label "For which digital resource(s) is this relevant?"@en .
+
+fm:examples
+    a rdf:Property ;
+    dcterms:issued "2018-04-04"^^<http://www.w3.org/2001/XMLSchema#date> ;
+    rdfs:isDefinedBy <https://purl.org/fair-metrics/terms/> ;
+    rdfs:range rdfs:Literal ;
+    rdfs:comment "A description of applications across different types of digital resources."@en ;
+    rdfs:label "Examples of their application across types of digital resource"@en .
+
+fm:comments
+    a rdf:Property ;
+    dcterms:issued "2018-04-04"^^<http://www.w3.org/2001/XMLSchema#date> ;
+    rdfs:isDefinedBy <https://purl.org/fair-metrics/terms/> ;
+    rdfs:range rdfs:Literal ;
+    rdfs:comment "Additional comments on the described metric."@en ;
+    rdfs:label "Comments"@en .
