@@ -4,9 +4,16 @@ package Metrics::metric_identifier_in_metadata;
 use strict;
 use LWP::Simple;
 use JSON::Parse 'parse_json';
+use LWP::UserAgent;
+use HTML::LinkExtor;
+use URI::URL;
 use CGI;
 use lib '../';
 use FAIRMetrics::TesterHelper;
+
+use v5.10;
+no warnings "experimental::smartmatch";
+
 
 require Exporter;
 use vars ('@ISA', '@EXPORT');
@@ -74,13 +81,27 @@ sub execute_metric_test {
 
 sub check_identifier {
 	my ($meta, $id) = @_;
+	
+	my ($content_type, $response) = check_content_type($meta);
+	
+	my $FULL_URIs;
+	if ($content_type =~ /text\/html/) {
+		my $base_URL = $response->base;
+		$FULL_URIs = exract_links($response->content, $base_URL)
+	}
+	
         my $result = get($meta);
 
 	require URI::Encode;
 	my $uriencode = URI::Encode->new();
-	my $encoded = $uriencode->encode($id);
+	my $encoded_identifier = $uriencode->encode($id);
+	
+	
+	
 	return 1 if $result =~ /$id/;
-	return 1 if $result =~ /$encoded/;
+	return 1 if $result =~ /$encoded_identifier/;
+	return 1 if $id ~~ @$FULL_URIs;
+	return 1 if $encoded_identifier ~~ @$FULL_URIs;
 	return 0;
 }
 
@@ -89,6 +110,32 @@ sub check_document {
         my $result = get($check);
         return 1 if $result;
         return 0;
+
+}
+
+sub check_content_type {
+	my ($meta) = @_;
+	my $ua = new LWP::UserAgent;
+	my $response = $ua->get($meta);
+
+	#print $response->headers()->as_string;
+	return ($response->header('content-type'), $response);
+}
+
+sub extract_links {
+	my ($body, $baseURI) = @_;
+	my @urls;
+	# Make the parser.  Unfortunately, we don't know the base yet
+	# (it might be different from $url)
+	my $p = HTML::LinkExtor->new();
+	my $links = $p->parse($body);
+ 
+	# Expand all image URLs to absolute ones
+	my @links = $links->links;
+	
+	@urls = map { $_ = url($_->[2], $baseURI)->abs; } @links;
+
+	return \@urls; 
 
 }
 
