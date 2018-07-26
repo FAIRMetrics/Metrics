@@ -1,6 +1,6 @@
 
 <h1>Completed Evaluation of <%= @iri %>:</h1>
-<p/><br/>
+<br/>
 
 <% @result.each  do |res|  %>
 
@@ -10,15 +10,21 @@
 	<% q = SPARQL.parse('select * where
 			    {?iri <http://semanticscience.org/resource/SIO_000629> ?result .
 			    ?result <http://semanticscience.org/resource/SIO_000300> ?score .
-			    ?result <http://purl.obolibrary.org/obo/date> ?date }') %>
+			    ?result <http://purl.obolibrary.org/obo/date> ?date . 
+			    OPTIONAL{?result <http://schema.org/comment> ?comment . } 
+				}') 
+        %>
 	<% solutions = q.execute(outgraph) %>
-	<!-- <h4>IRI Tested:  <%= solutions.first[:iri].value %></h4> -->
+	<!-- <h4>IRI Tested:  <    %= solutions.first[:iri].value %   ></h4> -->
 	
 	<% solutions.each do |sol| %>
 	<div style="position:relative; height:50px;clear:both; display: table;">
 	<div style="float:left; height: 50px; display: table-cell; vertical-align: middle">
 		Date: <%= sol[:date].value %><br/>
 		Score: <%= sol[:score].value %><br/>
+
+		<% sol[:comment] ||= "no comments available" %>  <!-- legacy problem - some evals don't have a comment -->
+		Comment: <%= sol[:comment].value %><br/>
 	</div>
 	<div style="padding-left: 40px; float:left; height: 50px; display: table-cell; vertical-align: middle">
 		<% star = sol[:score].value.to_f * 5; star = star.to_i %>
