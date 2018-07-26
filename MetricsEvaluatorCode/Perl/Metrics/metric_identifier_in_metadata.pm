@@ -10,6 +10,10 @@ use URI::URL;
 use CGI;
 use lib '../';
 use FAIRMetrics::TesterHelper;
+use Mojo::DOM;
+use JSON qw( decode_json );     # From CPAN
+use Data::Dumper;
+
 
 use v5.10;
 no warnings "experimental::smartmatch";
@@ -137,6 +141,53 @@ sub extract_links {
 
 	return \@urls; 
 
+}
+
+sub extract_jsonld {
+	my ($body) = @_;
+#my $c = '<script id="data" type="application/json">
+#    {
+#        "foo" : "bar"
+#    }
+#</script> 
+#';
+
+
+	my $dom = Mojo::DOM->new;
+	$dom->parse($body);
+	my $skip;
+	for my $dd ($dom->find('script[type*="application\/ld+json"]')->each) {
+		my $x = $dd->content;#print $dd;    
+		print "$x\n";
+		my $decoded_json = decode_json( $dd->content );
+		
+		# you'll get this (it'll print out); comment this when done.
+		print Dumper $decoded_json;
+	}
+		
+}
+sub extract_json {
+	my ($body) = @_;
+#my $c = '<script id="data" type="application/json">
+#    {
+#        "foo" : "bar"
+#    }
+#</script> 
+#';
+
+
+	my $dom = Mojo::DOM->new;
+	$dom->parse($body);
+	my $skip;
+	for my $dd ($dom->find('script[type*="application\/json"]')->each) {
+		my $x = $dd->content;#print $dd;    
+		print "$x\n";
+		my $decoded_json = decode_json( $dd->content );
+		
+		# you'll get this (it'll print out); comment this when done.
+		print Dumper $decoded_json;
+	}
+		
 }
 
 1; #
