@@ -1,67 +1,71 @@
-@prefix this: <https://purl.org/fair-metrics/FM_F4> .  # canonical URI for the metric
-@prefix sub: <https://purl.org/fair-metrics/FM_F4#> .
+@prefix this: <https://purl.org/fair-metrics/FM_F4#nanopub.RApFSf-6RYbJF9O2oqDiGD1nteWav5y-ndFEmsUgIzK6c> .
+@prefix sub: <https://purl.org/fair-metrics/FM_F4#nanopub.RApFSf-6RYbJF9O2oqDiGD1nteWav5y-ndFEmsUgIzK6c.> .
+@prefix metrics: <https://purl.org/fair-metrics/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix dcelem: <http://purl.org/dc/elements/1.1/> .
 @prefix np: <http://www.nanopub.org/nschema#> .
-@prefix nx: <http://www.nextprot.org/db/search#> .
 @prefix pav: <http://swan.mindinformatics.org/ontologies/1.2/pav/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
-@prefix prv: <http://purl.org/net/provenance/ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix ro: <http://purl.org/obo/owl/OBO_REL#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix fair: <http://purl.org/fair-ontology#> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix dcat: <http://www.w3.org/ns/dcat#> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix fm: <https://purl.org/fair-metrics/terms/> .
 
 sub:Head {
-  sub:nanopub np:hasAssertion sub:assertion ;
-       np:hasProvenance sub:provenance ;
-       np:hasPublicationInfo sub:pubinfo ;
-       a np:Nanopublication .
- }
-
-sub:assertion {
- this: a fair:FAIR-Metric ;
-  foaf:primaryTopic fair:F4 .
-
- }
-
-sub:provenance {
- sub:assertion dcterms:author  "Michel Dumontier", "Mark Wilkinson" , "Susanna Sansone", "Peter Doorn", "Luiz Bonino", "Erik Schultes" ;
- dcterms:title "Indexed in a searchable resource"^^xsd:string ;
- rdfs:comment "FAIR Metric for Fair Principle F4"^^xsd:string ;
- fm:measuring "The degree to which the digital resource can be found using  web-based search engines."^^xsd:string ;
- fm:rationale "Most people use a search engine to initiate a search for a particular digital resource of interest. If the resource or its metadata are not indexed by web search engines, then this would substantially diminish an individual's ability to find and reuse it. Thus, the ability to discover the resource should be tested using i) its identifier, ii) other text-based metadata."^^xsd:string ;
- fm:requirements "The persistent identifier of the resource and one or more URLs that give search results of different search engines."^^xsd:string ;
- fm:procedure "We perform an HTTP GET on the URLs provided and attempt to to find the persistent identifier in the page that is returned. A second step might include following each of the top XX hits and examine the resulting documents for presence of the identifier."^^xsd:string ;
- fm:validation "true - the persistent identifier was found in the search results."^^xsd:string ;
- fm:relevance "All"^^xsd:string ;
- fm:examples "- my Zenodo Deposit for polyA \n  (https://doi.org/10.5281/zenodo.47641)\n  Test Query:  10.5281/zenodo.47641  orthology\n  GOOGLE: Pass (\\verb|#1| hit);  BING:  Fail (no hits); Yahoo: Fail (no hits); Baidu: Pass (\\verb|#1| hit)  \n  Test Query: 'protein domain orthology RNA Processing'\n  Google:  ~Pass (Hit \\verb|#13| ); BING:  Fail (not in top 40); Yahoo:  Fail:  (Not in top 40); Baidu: Pass (\\verb|#1| Hit)\n  - myExperiment Workflow (http://www.myexperiment.org/workflows/2969.html)\n  Test Query: 'workflow common identifiers EMC ontology'\n  GOOGLE:  Pass (\\verb|#2| and \\verb|#5| hit); BING: Fail (not in top 40, though OTHER workflows were found in top 10!); Yahoo: Fail (not in top 40, though other workflows found in top 10); Baidu: ~Pass (5/10 pages contained a link to the workflow, but the workflow itself was not discovered)\n  - Jupyter notebook on GitHub (https://github.com/\n VidhyasreeRamu/GlobalClimateChange/blob\n /master/GlobalWarmingAnalysis.ipynb)\n  Test Query:  'github python climate change earth surface temperature'\n  Google:  Fail (not in top 40; other similar Jupyter notebooks found in github); Bing: Fail (not in top 40... but MANY links to Microsoft Surface! LOL!); Yahoo:  Fail (not in top 40); Baidu: Fail (not even a github hit in top 40!)"^^xsd:string ;
- fm:comments "None"^^xsd:string ;
- dcat:distribution _:dist1 ;
- dcat:distribution _:dist2 ;
- prov:wasGeneratedBy "FAIR Metrics Working Group" .
-
- _:dist1 dcelem:format "application/x-texinfo" ;
-	rdf:type <http://rdfs.org/ns/void#Dataset> ;
-	rdf:type <http://www.w3.org/ns/dcat#Distribution> ;
-	dcat:downloadURL <https://raw.githubusercontent.com/FAIRMetrics/Metrics/master/Distributions/FM_F4.tex> .
-
- _:dist2 dcelem:format "application/pdf" ;
-	rdf:type <http://rdfs.org/ns/void#Dataset> ;
-	rdf:type <http://www.w3.org/ns/dcat#Distribution> ;
-	dcat:downloadURL <https://raw.githubusercontent.com/FAIRMetrics/Metrics/master/Distributions/FM_F4.pdf> .
-
+	this: np:hasAssertion sub:assertion ;
+		np:hasProvenance sub:provenance ;
+		np:hasPublicationInfo sub:pubinfo ;
+		a np:Nanopublication .
 }
 
+sub:assertion {
+	metrics:FM_F4 a fair:FAIR-Metric ;
+		foaf:primaryTopic fair:F4 .
+}
+
+sub:provenance {
+	sub:_1 dcelem:format "application/x-texinfo" ;
+		a <http://rdfs.org/ns/void#Dataset> , dcat:Distribution ;
+		dcat:downloadURL <https://raw.githubusercontent.com/FAIRMetrics/Metrics/master/Distributions/FM_F4.tex> .
+	
+	sub:_2 dcelem:format "application/pdf" ;
+		a <http://rdfs.org/ns/void#Dataset> , dcat:Distribution ;
+		dcat:downloadURL <https://raw.githubusercontent.com/FAIRMetrics/Metrics/master/Distributions/FM_F4.pdf> .
+	
+	sub:assertion dcterms:author "Erik Schultes" , "Luiz Bonino" , "Mark Wilkinson" , "Michel Dumontier" , "Peter Doorn" , "Susanna Sansone" ;
+		dcterms:title "Indexed in a searchable resource" ;
+		rdfs:comment "FAIR Metric for Fair Principle F4" ;
+		dcat:distribution sub:_1 , sub:_2 ;
+		prov:wasGeneratedBy "FAIR Metrics Working Group" ;
+		fm:comments "None" ;
+		fm:examples """- my Zenodo Deposit for polyA 
+  (https://doi.org/10.5281/zenodo.47641)
+  Test Query:  10.5281/zenodo.47641  orthology
+  GOOGLE: Pass (\\verb|#1| hit);  BING:  Fail (no hits); Yahoo: Fail (no hits); Baidu: Pass (\\verb|#1| hit)  
+  Test Query: 'protein domain orthology RNA Processing'
+  Google:  ~Pass (Hit \\verb|#13| ); BING:  Fail (not in top 40); Yahoo:  Fail:  (Not in top 40); Baidu: Pass (\\verb|#1| Hit)
+  - myExperiment Workflow (http://www.myexperiment.org/workflows/2969.html)
+  Test Query: 'workflow common identifiers EMC ontology'
+  GOOGLE:  Pass (\\verb|#2| and \\verb|#5| hit); BING: Fail (not in top 40, though OTHER workflows were found in top 10!); Yahoo: Fail (not in top 40, though other workflows found in top 10); Baidu: ~Pass (5/10 pages contained a link to the workflow, but the workflow itself was not discovered)
+  - Jupyter notebook on GitHub (https://github.com/
+ VidhyasreeRamu/GlobalClimateChange/blob
+ /master/GlobalWarmingAnalysis.ipynb)
+  Test Query:  'github python climate change earth surface temperature'
+  Google:  Fail (not in top 40; other similar Jupyter notebooks found in github); Bing: Fail (not in top 40... but MANY links to Microsoft Surface! LOL!); Yahoo:  Fail (not in top 40); Baidu: Fail (not even a github hit in top 40!)""" ;
+		fm:measuring "The degree to which the digital resource can be found using  web-based search engines." ;
+		fm:procedure "We perform an HTTP GET on the URLs provided and attempt to to find the persistent identifier in the page that is returned. A second step might include following each of the top XX hits and examine the resulting documents for presence of the identifier." ;
+		fm:rationale "Most people use a search engine to initiate a search for a particular digital resource of interest. If the resource or its metadata are not indexed by web search engines, then this would substantially diminish an individual's ability to find and reuse it. Thus, the ability to discover the resource should be tested using i) its identifier, ii) other text-based metadata." ;
+		fm:relevance "All" ;
+		fm:requirements "The persistent identifier of the resource and one or more URLs that give search results of different search engines." ;
+		fm:validation "true - the persistent identifier was found in the search results." .
+}
 
 sub:pubinfo {
- this: dcterms:created "2017-11-21T00:00:00.0Z"^^xsd:dateTime ;
- dcterms:rights <https://creativecommons.org/publicdomain/zero/1.0> ;
- dcterms:rightsHolder <http://go-fair.org> ;
- pav:authoredBy "Mark Wilkinson" , <https://orcid.org/0000-0001-6960-357X> ;
- pav:versionNumber "1" ;
+	this: dcterms:created "2017-11-21T00:00:00.0Z"^^xsd:dateTime ;
+		dcterms:rights <https://creativecommons.org/publicdomain/zero/1.0> ;
+		dcterms:rightsHolder <http://go-fair.org> ;
+		pav:authoredBy "Mark Wilkinson" , <https://orcid.org/0000-0001-6960-357X> ;
+		pav:versionNumber "1" .
 }

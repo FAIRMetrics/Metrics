@@ -1,67 +1,66 @@
-@prefix this: <https://purl.org/fair-metrics/FM_R1.2> .  # canonical URI for the metric
-@prefix sub: <https://purl.org/fair-metrics/FM_R1.2#> .
+@prefix this: <https://purl.org/fair-metrics/FM_R1.2#nanopub.RAP8dgLk5LLzgA5pylBs1jCjYeWVxVX9-m2QuZntyq1Ts> .
+@prefix sub: <https://purl.org/fair-metrics/FM_R1.2#nanopub.RAP8dgLk5LLzgA5pylBs1jCjYeWVxVX9-m2QuZntyq1Ts.> .
+@prefix metrics: <https://purl.org/fair-metrics/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix dcelem: <http://purl.org/dc/elements/1.1/> .
 @prefix np: <http://www.nanopub.org/nschema#> .
-@prefix nx: <http://www.nextprot.org/db/search#> .
 @prefix pav: <http://swan.mindinformatics.org/ontologies/1.2/pav/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
-@prefix prv: <http://purl.org/net/provenance/ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix ro: <http://purl.org/obo/owl/OBO_REL#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix fair: <http://purl.org/fair-ontology#> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix dcat: <http://www.w3.org/ns/dcat#> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix fm: <https://purl.org/fair-metrics/terms/> .
 
 sub:Head {
-  sub:nanopub np:hasAssertion sub:assertion ;
-       np:hasProvenance sub:provenance ;
-       np:hasPublicationInfo sub:pubinfo ;
-       a np:Nanopublication .
- }
-
-sub:assertion {
- this: a fair:FAIR-Metric ;
-  foaf:primaryTopic fair:R1.2 .
-
- }
-
-sub:provenance {
- sub:assertion dcterms:author  "Michel Dumontier", "Mark Wilkinson" , "Susanna Sansone", "Peter Doorn", "Luiz Bonino", "Erik Schultes" ;
- dcterms:title "Detailed Provenance"^^xsd:string ;
- rdfs:comment "FAIR Metric for Fair Principle R1.2"^^xsd:string ;
- fm:measuring "That there is provenance information associated with the data, covering at least two primary types of provenance information:\n  \n  - Who/what/When produced the data (i.e. for citation)\n  - Why/How was the data produced (i.e. to understand context and relevance of the data)"^^xsd:string ;
- fm:rationale "Reusability is not only a technical issue; data can be discovered, retrieved, and even be machine-readable, but still not be reusable in any rational way.  Reusability goes beyond 'can I reuse this data?' to other important questions such as 'may I reuse this data?', 'should I reuse this data', and 'who should I credit if I decide to use it?'"^^xsd:string ;
- fm:requirements "Several IRIs -  at least one of these points to one of the vocabularies used to describe citational provenance (e.g. dublin core).  At least one points to one of the vocabularies (likely domain-specific) that is used to describe contextual provenance (e.g. EDAM)"^^xsd:string ;
- fm:procedure "We resolve the IRI according to their associated protocols.\n\nIn the future, we may be able to cross-reference these with FAIRSharing to confirm that they are 'standard', and perhaps even distinguish citation vs. domain specific."^^xsd:string ;
- fm:validation "IRI 1 should resolve to a recognized citation provenance standard such as Dublin Core.\n  IRI 2 should resolve to some vocabulary that itself passes basic tests of FAIRness\n"^^xsd:string ;
- fm:relevance "All"^^xsd:string ;
- fm:examples "None"^^xsd:string ;
- fm:comments "Many data formats have fields specifically for Provenance information.  -> could fairsharing curate these 4 fields? for every format and vocabulary? \n Some formats do not have these fields.  For example, although gff can have arbitrary headers, the standard itself does not provide specific fields to capture detailed provenance. It therefore would"^^xsd:string ;
- dcat:distribution _:dist1 ;
- dcat:distribution _:dist2 ;
- prov:wasGeneratedBy "FAIR Metrics Working Group" .
-
- _:dist1 dcelem:format "application/x-texinfo" ;
-	rdf:type <http://rdfs.org/ns/void#Dataset> ;
-	rdf:type <http://www.w3.org/ns/dcat#Distribution> ;
-	dcat:downloadURL <https://raw.githubusercontent.com/FAIRMetrics/Metrics/master/Distributions/FM_R1.2.tex> .
-
- _:dist2 dcelem:format "application/pdf" ;
-	rdf:type <http://rdfs.org/ns/void#Dataset> ;
-	rdf:type <http://www.w3.org/ns/dcat#Distribution> ;
-	dcat:downloadURL <https://raw.githubusercontent.com/FAIRMetrics/Metrics/master/Distributions/FM_R1.2.pdf> .
-
+	this: np:hasAssertion sub:assertion ;
+		np:hasProvenance sub:provenance ;
+		np:hasPublicationInfo sub:pubinfo ;
+		a np:Nanopublication .
 }
 
+sub:assertion {
+	metrics:FM_R1.2 a fair:FAIR-Metric ;
+		foaf:primaryTopic fair:R1.2 .
+}
+
+sub:provenance {
+	sub:_1 dcelem:format "application/x-texinfo" ;
+		a <http://rdfs.org/ns/void#Dataset> , dcat:Distribution ;
+		dcat:downloadURL <https://raw.githubusercontent.com/FAIRMetrics/Metrics/master/Distributions/FM_R1.2.tex> .
+	
+	sub:_2 dcelem:format "application/pdf" ;
+		a <http://rdfs.org/ns/void#Dataset> , dcat:Distribution ;
+		dcat:downloadURL <https://raw.githubusercontent.com/FAIRMetrics/Metrics/master/Distributions/FM_R1.2.pdf> .
+	
+	sub:assertion dcterms:author "Erik Schultes" , "Luiz Bonino" , "Mark Wilkinson" , "Michel Dumontier" , "Peter Doorn" , "Susanna Sansone" ;
+		dcterms:title "Detailed Provenance" ;
+		rdfs:comment "FAIR Metric for Fair Principle R1.2" ;
+		dcat:distribution sub:_1 , sub:_2 ;
+		prov:wasGeneratedBy "FAIR Metrics Working Group" ;
+		fm:comments """Many data formats have fields specifically for Provenance information.  -> could fairsharing curate these 4 fields? for every format and vocabulary? 
+ Some formats do not have these fields.  For example, although gff can have arbitrary headers, the standard itself does not provide specific fields to capture detailed provenance. It therefore would""" ;
+		fm:examples "None" ;
+		fm:measuring """That there is provenance information associated with the data, covering at least two primary types of provenance information:
+  
+  - Who/what/When produced the data (i.e. for citation)
+  - Why/How was the data produced (i.e. to understand context and relevance of the data)""" ;
+		fm:procedure """We resolve the IRI according to their associated protocols.
+
+In the future, we may be able to cross-reference these with FAIRSharing to confirm that they are 'standard', and perhaps even distinguish citation vs. domain specific.""" ;
+		fm:rationale "Reusability is not only a technical issue; data can be discovered, retrieved, and even be machine-readable, but still not be reusable in any rational way.  Reusability goes beyond 'can I reuse this data?' to other important questions such as 'may I reuse this data?', 'should I reuse this data', and 'who should I credit if I decide to use it?'" ;
+		fm:relevance "All" ;
+		fm:requirements "Several IRIs -  at least one of these points to one of the vocabularies used to describe citational provenance (e.g. dublin core).  At least one points to one of the vocabularies (likely domain-specific) that is used to describe contextual provenance (e.g. EDAM)" ;
+		fm:validation """IRI 1 should resolve to a recognized citation provenance standard such as Dublin Core.
+  IRI 2 should resolve to some vocabulary that itself passes basic tests of FAIRness
+""" .
+}
 
 sub:pubinfo {
- this: dcterms:created "2017-11-21T00:00:00.0Z"^^xsd:dateTime ;
- dcterms:rights <https://creativecommons.org/publicdomain/zero/1.0> ;
- dcterms:rightsHolder <http://go-fair.org> ;
- pav:authoredBy "Mark Wilkinson" , <https://orcid.org/0000-0001-6960-357X> ;
- pav:versionNumber "1" ;
+	this: dcterms:created "2017-11-21T00:00:00.0Z"^^xsd:dateTime ;
+		dcterms:rights <https://creativecommons.org/publicdomain/zero/1.0> ;
+		dcterms:rightsHolder <http://go-fair.org> ;
+		pav:authoredBy "Mark Wilkinson" , <https://orcid.org/0000-0001-6960-357X> ;
+		pav:versionNumber "1" .
 }

@@ -1,67 +1,84 @@
-@prefix this: <https://purl.org/fair-metrics/FM_F1A> .  # canonical URI for the metric
-@prefix sub: <https://purl.org/fair-metrics/FM_F1A#> .
+@prefix this: <https://purl.org/fair-metrics/FM_F1A#nanopub.RA1iFcLGiR5mCbyx6JqBmAMZm_zm4yjogQAJvBwEi7hkU> .
+@prefix sub: <https://purl.org/fair-metrics/FM_F1A#nanopub.RA1iFcLGiR5mCbyx6JqBmAMZm_zm4yjogQAJvBwEi7hkU.> .
+@prefix metrics: <https://purl.org/fair-metrics/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix dcelem: <http://purl.org/dc/elements/1.1/> .
 @prefix np: <http://www.nanopub.org/nschema#> .
-@prefix nx: <http://www.nextprot.org/db/search#> .
 @prefix pav: <http://swan.mindinformatics.org/ontologies/1.2/pav/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
-@prefix prv: <http://purl.org/net/provenance/ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix ro: <http://purl.org/obo/owl/OBO_REL#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix fair: <http://purl.org/fair-ontology#> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix dcat: <http://www.w3.org/ns/dcat#> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix fm: <https://purl.org/fair-metrics/terms/> .
 
 sub:Head {
-  sub:nanopub np:hasAssertion sub:assertion ;
-       np:hasProvenance sub:provenance ;
-       np:hasPublicationInfo sub:pubinfo ;
-       a np:Nanopublication .
- }
-
-sub:assertion {
- this: a fair:FAIR-Metric ;
-  foaf:primaryTopic fair:F1 .
-
- }
-
-sub:provenance {
- sub:assertion dcterms:author  "Michel Dumontier", "Mark Wilkinson" , "Susanna Sansone", "Peter Doorn", "Luiz Bonino", "Erik Schultes" ;
- dcterms:title "Identifier Uniqueness"^^xsd:string ;
- rdfs:comment "FAIR Metric for Fair Principle F1"^^xsd:string ;
- fm:measuring "Whether there is a scheme to uniquely identify the digital resource."^^xsd:string ;
- fm:rationale "The uniqueness of an identifier is a necessary condition to unambiguously refer that resource, and that resource alone. Otherwise, an identifier shared by multiple resources will confound efforts to describe that resource, or to use the identifier to retrieve it. Examples of identifier schemes include, but are not limited to URN, IRI, DOI, Handle, trustyURI, LSID, etc. For an in-depth understanding of the issues around identifiers, please see http://dx.plos.org/10.1371/journal.pbio.2001414"^^xsd:string ;
- fm:requirements "URL to a registered identifier scheme."^^xsd:string ;
- fm:procedure "An identifier scheme is valid if and only if it is described in a repository that can register and present such identifier schemes (e.g. fairsharing.org).\n\nInformation about the identifier scheme must be presented with a machine-readable document containing the FM1 attribute with the URL to where the scheme is described.  see specification for implementation."^^xsd:string ;
- fm:validation "Present or Absent"^^xsd:string ;
- fm:relevance "All"^^xsd:string ;
- fm:examples "Ontology \n - Gene Ontology: http://www.ebi.ac.uk/miriam/main/ datatypes/MIR:00000022    \n - HISCO: [link]\n This resource has not described or registered their identifier scheme. A recommended course of action would be to XXX. \n Model/format  - RDFS: https://fairsharing.org/bsg-s000283  \n Repository \n - JWS Online: https://www.ebi.ac.uk/miriam/main\n /collections/MIR:00000130 \n - DANS EASY: \n \n Database \n - ArrayExpress: https://fairsharing.org/biodbcore-000305  \n  -> FAIRsharing will implement the FAIR Metric specification to provide a machine-readable link to the MIRIAM repository (for life science content) \n API \n - smartAPI's API\n https://raw.githubusercontent.com/WebsmartAPI\n /smartAPI/master/docs/iodocs/smartapi.json  \n --> the smartAPI repository will provide accessible specification of the identifier scheme that is embedded in that metadata document. \n Journal\n http://www.nature.com/developers/documentation/\n metadata-resources/doi  \n --> the web site will have to provide a machine-readable pointer to the official DOI specification. \n"^^xsd:string ;
- fm:comments "A first version of this metric would focus on just checking a URL that resolves to a document. We can't verify that document. \n A second version would indicate how to structure the data policy document with a particular section (similar to how the CC licenses now have a formal structure in RDF).\n A third version would insist that that document and section is signed by an approved organization and made available in an appropriate repository."^^xsd:string ;
- dcat:distribution _:dist1 ;
- dcat:distribution _:dist2 ;
- prov:wasGeneratedBy "FAIR Metrics Working Group" .
-
- _:dist1 dcelem:format "application/x-texinfo" ;
-	rdf:type <http://rdfs.org/ns/void#Dataset> ;
-	rdf:type <http://www.w3.org/ns/dcat#Distribution> ;
-	dcat:downloadURL <https://raw.githubusercontent.com/FAIRMetrics/Metrics/master/Distributions/FM_F1A.tex> .
-
- _:dist2 dcelem:format "application/pdf" ;
-	rdf:type <http://rdfs.org/ns/void#Dataset> ;
-	rdf:type <http://www.w3.org/ns/dcat#Distribution> ;
-	dcat:downloadURL <https://raw.githubusercontent.com/FAIRMetrics/Metrics/master/Distributions/FM_F1A.pdf> .
-
+	this: np:hasAssertion sub:assertion ;
+		np:hasProvenance sub:provenance ;
+		np:hasPublicationInfo sub:pubinfo ;
+		a np:Nanopublication .
 }
 
+sub:assertion {
+	metrics:FM_F1A a fair:FAIR-Metric ;
+		foaf:primaryTopic fair:F1 .
+}
+
+sub:provenance {
+	sub:_1 dcelem:format "application/x-texinfo" ;
+		a <http://rdfs.org/ns/void#Dataset> , dcat:Distribution ;
+		dcat:downloadURL <https://raw.githubusercontent.com/FAIRMetrics/Metrics/master/Distributions/FM_F1A.tex> .
+	
+	sub:_2 dcelem:format "application/pdf" ;
+		a <http://rdfs.org/ns/void#Dataset> , dcat:Distribution ;
+		dcat:downloadURL <https://raw.githubusercontent.com/FAIRMetrics/Metrics/master/Distributions/FM_F1A.pdf> .
+	
+	sub:assertion dcterms:author "Erik Schultes" , "Luiz Bonino" , "Mark Wilkinson" , "Michel Dumontier" , "Peter Doorn" , "Susanna Sansone" ;
+		dcterms:title "Identifier Uniqueness" ;
+		rdfs:comment "FAIR Metric for Fair Principle F1" ;
+		dcat:distribution sub:_1 , sub:_2 ;
+		prov:wasGeneratedBy "FAIR Metrics Working Group" ;
+		fm:comments """A first version of this metric would focus on just checking a URL that resolves to a document. We can't verify that document. 
+ A second version would indicate how to structure the data policy document with a particular section (similar to how the CC licenses now have a formal structure in RDF).
+ A third version would insist that that document and section is signed by an approved organization and made available in an appropriate repository.""" ;
+		fm:examples """Ontology 
+ - Gene Ontology: http://www.ebi.ac.uk/miriam/main/ datatypes/MIR:00000022    
+ - HISCO: [link]
+ This resource has not described or registered their identifier scheme. A recommended course of action would be to XXX. 
+ Model/format  - RDFS: https://fairsharing.org/bsg-s000283  
+ Repository 
+ - JWS Online: https://www.ebi.ac.uk/miriam/main
+ /collections/MIR:00000130 
+ - DANS EASY: 
+ 
+ Database 
+ - ArrayExpress: https://fairsharing.org/biodbcore-000305  
+  -> FAIRsharing will implement the FAIR Metric specification to provide a machine-readable link to the MIRIAM repository (for life science content) 
+ API 
+ - smartAPI's API
+ https://raw.githubusercontent.com/WebsmartAPI
+ /smartAPI/master/docs/iodocs/smartapi.json  
+ --> the smartAPI repository will provide accessible specification of the identifier scheme that is embedded in that metadata document. 
+ Journal
+ http://www.nature.com/developers/documentation/
+ metadata-resources/doi  
+ --> the web site will have to provide a machine-readable pointer to the official DOI specification. 
+""" ;
+		fm:measuring "Whether there is a scheme to uniquely identify the digital resource." ;
+		fm:procedure """An identifier scheme is valid if and only if it is described in a repository that can register and present such identifier schemes (e.g. fairsharing.org).
+
+Information about the identifier scheme must be presented with a machine-readable document containing the FM1 attribute with the URL to where the scheme is described.  see specification for implementation.""" ;
+		fm:rationale "The uniqueness of an identifier is a necessary condition to unambiguously refer that resource, and that resource alone. Otherwise, an identifier shared by multiple resources will confound efforts to describe that resource, or to use the identifier to retrieve it. Examples of identifier schemes include, but are not limited to URN, IRI, DOI, Handle, trustyURI, LSID, etc. For an in-depth understanding of the issues around identifiers, please see http://dx.plos.org/10.1371/journal.pbio.2001414" ;
+		fm:relevance "All" ;
+		fm:requirements "URL to a registered identifier scheme." ;
+		fm:validation "Present or Absent" .
+}
 
 sub:pubinfo {
- this: dcterms:created "2017-11-20T00:00:00.0Z"^^xsd:dateTime ;
- dcterms:rights <https://creativecommons.org/publicdomain/zero/1.0> ;
- dcterms:rightsHolder <http://go-fair.org> ;
- pav:authoredBy "Mark Wilkinson" , <https://orcid.org/0000-0001-6960-357X> ;
- pav:versionNumber "1" ;
+	this: dcterms:created "2017-11-20T00:00:00.0Z"^^xsd:dateTime ;
+		dcterms:rights <https://creativecommons.org/publicdomain/zero/1.0> ;
+		dcterms:rightsHolder <http://go-fair.org> ;
+		pav:authoredBy "Mark Wilkinson" , <https://orcid.org/0000-0001-6960-357X> ;
+		pav:versionNumber "1" .
 }

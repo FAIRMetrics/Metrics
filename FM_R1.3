@@ -1,67 +1,60 @@
-@prefix this: <https://purl.org/fair-metrics/FM_R1.3> .  # canonical URI for the metric
-@prefix sub: <https://purl.org/fair-metrics/FM_R1.3#> .
+@prefix this: <https://purl.org/fair-metrics/FM_R1.3#nanopub.RASu1_MVbqSBVkWrYeSxoTt0WGQZek7-LGfk6O3131IZA> .
+@prefix sub: <https://purl.org/fair-metrics/FM_R1.3#nanopub.RASu1_MVbqSBVkWrYeSxoTt0WGQZek7-LGfk6O3131IZA.> .
+@prefix metrics: <https://purl.org/fair-metrics/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix dcelem: <http://purl.org/dc/elements/1.1/> .
 @prefix np: <http://www.nanopub.org/nschema#> .
-@prefix nx: <http://www.nextprot.org/db/search#> .
 @prefix pav: <http://swan.mindinformatics.org/ontologies/1.2/pav/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
-@prefix prv: <http://purl.org/net/provenance/ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix ro: <http://purl.org/obo/owl/OBO_REL#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix fair: <http://purl.org/fair-ontology#> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix dcat: <http://www.w3.org/ns/dcat#> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix fm: <https://purl.org/fair-metrics/terms/> .
 
 sub:Head {
-  sub:nanopub np:hasAssertion sub:assertion ;
-       np:hasProvenance sub:provenance ;
-       np:hasPublicationInfo sub:pubinfo ;
-       a np:Nanopublication .
- }
-
-sub:assertion {
- this: a fair:FAIR-Metric ;
-  foaf:primaryTopic fair:R1.3 .
-
- }
-
-sub:provenance {
- sub:assertion dcterms:author  "Michel Dumontier", "Mark Wilkinson" , "Susanna Sansone", "Peter Doorn", "Luiz Bonino", "Erik Schultes" ;
- dcterms:title "Meets Community Standards"^^xsd:string ;
- rdfs:comment "FAIR Metric for Fair Principle R1.3"^^xsd:string ;
- fm:measuring "Certification, from a recognized body, of the resource meeting community standards."^^xsd:string ;
- fm:rationale "Various communities have recognized that maximizing the usability of their data requires them to adopt a set of guidelines for metadata (often in the form of 'minimal information about...' models).  Non-compliance with these standards will often render a dataset 'reuseless' because critical information about its context or provenance is missing.  However, adherence to community standards does more than just improve reusability of the data. The software used by the community for analysis and visualization often depends on the (meta)data having certain fields; thus, non-compliance with standards may result in the data being unreadable by its associated tools.  As such, data should be (individually) certified as being compliant, likely through some automated process (e.g. submitting the data to the community's online validation service)"^^xsd:string ;
- fm:requirements "A certification saying that the resource is compliant"^^xsd:string ;
- fm:procedure "Validate the electronic signature as coming from a community authority (e.g. a verisign signature)"^^xsd:string ;
- fm:validation "Successful signature validation"^^xsd:string ;
- fm:relevance "All"^^xsd:string ;
- fm:examples "None"^^xsd:string ;
- fm:comments "Such certification services may not exist, but this principle serves to encourage the community to create both the standard(s) and the verification services for those standards.  \n\n A potentially useful side-effect of this is that it might provide an opportunity for content-verification - e.g. the certification service provides a hash of the data, which can be used to validate that it has not been edited at a later date."^^xsd:string ;
- dcat:distribution _:dist1 ;
- dcat:distribution _:dist2 ;
- prov:wasGeneratedBy "FAIR Metrics Working Group" .
-
- _:dist1 dcelem:format "application/x-texinfo" ;
-	rdf:type <http://rdfs.org/ns/void#Dataset> ;
-	rdf:type <http://www.w3.org/ns/dcat#Distribution> ;
-	dcat:downloadURL <https://raw.githubusercontent.com/FAIRMetrics/Metrics/master/Distributions/FM_R1.3.tex> .
-
- _:dist2 dcelem:format "application/pdf" ;
-	rdf:type <http://rdfs.org/ns/void#Dataset> ;
-	rdf:type <http://www.w3.org/ns/dcat#Distribution> ;
-	dcat:downloadURL <https://raw.githubusercontent.com/FAIRMetrics/Metrics/master/Distributions/FM_R1.3.pdf> .
-
+	this: np:hasAssertion sub:assertion ;
+		np:hasProvenance sub:provenance ;
+		np:hasPublicationInfo sub:pubinfo ;
+		a np:Nanopublication .
 }
 
+sub:assertion {
+	metrics:FM_R1.3 a fair:FAIR-Metric ;
+		foaf:primaryTopic fair:R1.3 .
+}
+
+sub:provenance {
+	sub:_1 dcelem:format "application/x-texinfo" ;
+		a <http://rdfs.org/ns/void#Dataset> , dcat:Distribution ;
+		dcat:downloadURL <https://raw.githubusercontent.com/FAIRMetrics/Metrics/master/Distributions/FM_R1.3.tex> .
+	
+	sub:_2 dcelem:format "application/pdf" ;
+		a <http://rdfs.org/ns/void#Dataset> , dcat:Distribution ;
+		dcat:downloadURL <https://raw.githubusercontent.com/FAIRMetrics/Metrics/master/Distributions/FM_R1.3.pdf> .
+	
+	sub:assertion dcterms:author "Erik Schultes" , "Luiz Bonino" , "Mark Wilkinson" , "Michel Dumontier" , "Peter Doorn" , "Susanna Sansone" ;
+		dcterms:title "Meets Community Standards" ;
+		rdfs:comment "FAIR Metric for Fair Principle R1.3" ;
+		dcat:distribution sub:_1 , sub:_2 ;
+		prov:wasGeneratedBy "FAIR Metrics Working Group" ;
+		fm:comments """Such certification services may not exist, but this principle serves to encourage the community to create both the standard(s) and the verification services for those standards.  
+
+ A potentially useful side-effect of this is that it might provide an opportunity for content-verification - e.g. the certification service provides a hash of the data, which can be used to validate that it has not been edited at a later date.""" ;
+		fm:examples "None" ;
+		fm:measuring "Certification, from a recognized body, of the resource meeting community standards." ;
+		fm:procedure "Validate the electronic signature as coming from a community authority (e.g. a verisign signature)" ;
+		fm:rationale "Various communities have recognized that maximizing the usability of their data requires them to adopt a set of guidelines for metadata (often in the form of 'minimal information about...' models).  Non-compliance with these standards will often render a dataset 'reuseless' because critical information about its context or provenance is missing.  However, adherence to community standards does more than just improve reusability of the data. The software used by the community for analysis and visualization often depends on the (meta)data having certain fields; thus, non-compliance with standards may result in the data being unreadable by its associated tools.  As such, data should be (individually) certified as being compliant, likely through some automated process (e.g. submitting the data to the community's online validation service)" ;
+		fm:relevance "All" ;
+		fm:requirements "A certification saying that the resource is compliant" ;
+		fm:validation "Successful signature validation" .
+}
 
 sub:pubinfo {
- this: dcterms:created "2017-11-21T00:00:00.0Z"^^xsd:dateTime ;
- dcterms:rights <https://creativecommons.org/publicdomain/zero/1.0> ;
- dcterms:rightsHolder <http://go-fair.org> ;
- pav:authoredBy "Mark Wilkinson" , <https://orcid.org/0000-0001-6960-357X> ;
- pav:versionNumber "1" ;
+	this: dcterms:created "2017-11-21T00:00:00.0Z"^^xsd:dateTime ;
+		dcterms:rights <https://creativecommons.org/publicdomain/zero/1.0> ;
+		dcterms:rightsHolder <http://go-fair.org> ;
+		pav:authoredBy "Mark Wilkinson" , <https://orcid.org/0000-0001-6960-357X> ;
+		pav:versionNumber "1" .
 }
