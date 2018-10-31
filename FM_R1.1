@@ -1,67 +1,58 @@
-@prefix this: <https://purl.org/fair-metrics/FM_R1.1> .  # canonical URI for the metric
-@prefix sub: <https://purl.org/fair-metrics/FM_R1.1#> .
+@prefix this: <https://purl.org/fair-metrics/FM_R1.1#nanopub.RAz0Y_itpUvxUdpntsyUAvkc3wzbDKxZvV0s9v0st_no0> .
+@prefix sub: <https://purl.org/fair-metrics/FM_R1.1#nanopub.RAz0Y_itpUvxUdpntsyUAvkc3wzbDKxZvV0s9v0st_no0.> .
+@prefix metrics: <https://purl.org/fair-metrics/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix dcelem: <http://purl.org/dc/elements/1.1/> .
 @prefix np: <http://www.nanopub.org/nschema#> .
-@prefix nx: <http://www.nextprot.org/db/search#> .
 @prefix pav: <http://swan.mindinformatics.org/ontologies/1.2/pav/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
-@prefix prv: <http://purl.org/net/provenance/ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix ro: <http://purl.org/obo/owl/OBO_REL#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix fair: <http://purl.org/fair-ontology#> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix dcat: <http://www.w3.org/ns/dcat#> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix fm: <https://purl.org/fair-metrics/terms/> .
 
 sub:Head {
-  sub:nanopub np:hasAssertion sub:assertion ;
-       np:hasProvenance sub:provenance ;
-       np:hasPublicationInfo sub:pubinfo ;
-       a np:Nanopublication .
- }
-
-sub:assertion {
- this: a fair:FAIR-Metric ;
-  foaf:primaryTopic fair:R1.1 .
-
- }
-
-sub:provenance {
- sub:assertion dcterms:author  "Michel Dumontier", "Mark Wilkinson" , "Susanna Sansone", "Peter Doorn", "Luiz Bonino", "Erik Schultes" ;
- dcterms:title "Accessible Usage License"^^xsd:string ;
- rdfs:comment "FAIR Metric for Fair Principle R1.1"^^xsd:string ;
- fm:measuring "The existence of a license document, for BOTH (independently) the data and its associated metadata, and the ability to retrieve those documents"^^xsd:string ;
- fm:rationale "A core aspect of data reusability is the ability to determine, unambiguously and with relative ease, the conditions under which you are allowed to reuse the (meta)data.  Thus, FAIR data providers must make these terms openly available.  This applies both to data (e.g. for the purpose of third-party integration with other data) and for metadata (e.g. for the purpose of third-party indexing or other administrative metrics)"^^xsd:string ;
- fm:requirements "IRI of the license (e.g. its URL) for the data license and for the metadata license"^^xsd:string ;
- fm:procedure "Resolve the IRI(s) using its associated resolution protocol"^^xsd:string ;
- fm:validation "A document containing the license information"^^xsd:string ;
- fm:relevance "All"^^xsd:string ;
- fm:examples "None"^^xsd:string ;
- fm:comments "None"^^xsd:string ;
- dcat:distribution _:dist1 ;
- dcat:distribution _:dist2 ;
- prov:wasGeneratedBy "FAIR Metrics Working Group" .
-
- _:dist1 dcelem:format "application/x-texinfo" ;
-	rdf:type <http://rdfs.org/ns/void#Dataset> ;
-	rdf:type <http://www.w3.org/ns/dcat#Distribution> ;
-	dcat:downloadURL <https://raw.githubusercontent.com/FAIRMetrics/Metrics/master/Distributions/FM_R1.1.tex> .
-
- _:dist2 dcelem:format "application/pdf" ;
-	rdf:type <http://rdfs.org/ns/void#Dataset> ;
-	rdf:type <http://www.w3.org/ns/dcat#Distribution> ;
-	dcat:downloadURL <https://raw.githubusercontent.com/FAIRMetrics/Metrics/master/Distributions/FM_R1.1.pdf> .
-
+	this: np:hasAssertion sub:assertion ;
+		np:hasProvenance sub:provenance ;
+		np:hasPublicationInfo sub:pubinfo ;
+		a np:Nanopublication .
 }
 
+sub:assertion {
+	metrics:FM_R1.1 a fair:FAIR-Metric ;
+		foaf:primaryTopic fair:R1.1 .
+}
+
+sub:provenance {
+	sub:_1 dcelem:format "application/x-texinfo" ;
+		a <http://rdfs.org/ns/void#Dataset> , dcat:Distribution ;
+		dcat:downloadURL <https://raw.githubusercontent.com/FAIRMetrics/Metrics/master/Distributions/FM_R1.1.tex> .
+	
+	sub:_2 dcelem:format "application/pdf" ;
+		a <http://rdfs.org/ns/void#Dataset> , dcat:Distribution ;
+		dcat:downloadURL <https://raw.githubusercontent.com/FAIRMetrics/Metrics/master/Distributions/FM_R1.1.pdf> .
+	
+	sub:assertion dcterms:author "Erik Schultes" , "Luiz Bonino" , "Mark Wilkinson" , "Michel Dumontier" , "Peter Doorn" , "Susanna Sansone" ;
+		dcterms:title "Accessible Usage License" ;
+		rdfs:comment "FAIR Metric for Fair Principle R1.1" ;
+		dcat:distribution sub:_1 , sub:_2 ;
+		prov:wasGeneratedBy "FAIR Metrics Working Group" ;
+		fm:comments "None" ;
+		fm:examples "None" ;
+		fm:measuring "The existence of a license document, for BOTH (independently) the data and its associated metadata, and the ability to retrieve those documents" ;
+		fm:procedure "Resolve the IRI(s) using its associated resolution protocol" ;
+		fm:rationale "A core aspect of data reusability is the ability to determine, unambiguously and with relative ease, the conditions under which you are allowed to reuse the (meta)data.  Thus, FAIR data providers must make these terms openly available.  This applies both to data (e.g. for the purpose of third-party integration with other data) and for metadata (e.g. for the purpose of third-party indexing or other administrative metrics)" ;
+		fm:relevance "All" ;
+		fm:requirements "IRI of the license (e.g. its URL) for the data license and for the metadata license" ;
+		fm:validation "A document containing the license information" .
+}
 
 sub:pubinfo {
- this: dcterms:created "2017-11-21T00:00:00.0Z"^^xsd:dateTime ;
- dcterms:rights <https://creativecommons.org/publicdomain/zero/1.0> ;
- dcterms:rightsHolder <http://go-fair.org> ;
- pav:authoredBy "Mark Wilkinson" , <https://orcid.org/0000-0001-6960-357X> ;
- pav:versionNumber "1" ;
+	this: dcterms:created "2017-11-21T00:00:00.0Z"^^xsd:dateTime ;
+		dcterms:rights <https://creativecommons.org/publicdomain/zero/1.0> ;
+		dcterms:rightsHolder <http://go-fair.org> ;
+		pav:authoredBy "Mark Wilkinson" , <https://orcid.org/0000-0001-6960-357X> ;
+		pav:versionNumber "1" .
 }

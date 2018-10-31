@@ -1,0 +1,74 @@
+# Use this file (with '.pre' extension) for editing. The respective files
+# without that extension are automatically generated from the '.pre' files by
+# running make-trusty.sh.
+
+@prefix : <https://purl.org/fair-metrics/FM_A1.1#nanopub> .
+@prefix metrics: <https://purl.org/fair-metrics/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix dcelem: <http://purl.org/dc/elements/1.1/> .
+@prefix np: <http://www.nanopub.org/nschema#> .
+@prefix nx: <http://www.nextprot.org/db/search#> .
+@prefix pav: <http://swan.mindinformatics.org/ontologies/1.2/pav/> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix prv: <http://purl.org/net/provenance/ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ro: <http://purl.org/obo/owl/OBO_REL#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix fair: <http://purl.org/fair-ontology#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix fm: <https://purl.org/fair-metrics/terms/> .
+
+:Head {
+  : np:hasAssertion :assertion ;
+       np:hasProvenance :provenance ;
+       np:hasPublicationInfo :pubinfo ;
+       a np:Nanopublication .
+ }
+
+:assertion {
+ metrics:FM_A1.1 a fair:FAIR-Metric ;
+  foaf:primaryTopic fair:A1.1 .
+
+ }
+
+:provenance {
+ :assertion dcterms:author  "Michel Dumontier", "Mark Wilkinson" , "Susanna Sansone", "Peter Doorn", "Luiz Bonino", "Erik Schultes" ;
+ dcterms:title "Access Protocol"^^xsd:string ;
+ rdfs:comment "FAIR Metric for Fair Principle A1.1"^^xsd:string ;
+
+ fm:measuring "The nature and use limitations of the access protocol"^^xsd:string ;
+ fm:rationale "Access to a resource may be limited by the specified communication protocol. In particular, we are worried about access to technical specifications and any costs associated with implementing the protocol. Protocols that are closed source or that have royalties associated with them could prevent users from being able to obtain the resource"^^xsd:string ;
+ fm:requirements "i) A URL to the description of the protocol\nii) true/false as to whether the protocol is open source\niii) true/false as to whether the protocol is (royalty) free"^^xsd:string ;
+ fm:procedure "Do an HTTP get on the URL to see if it returns a valid document. Ideally, we would have a universal database of communication protocols from which we can check this URL. We also check whether questions 2 and 3 are true or false."^^xsd:string ;
+ fm:validation "The HTTP GET on the URL should return a 200,202,203 or 206 HTTP response after resolving all and any prior redirects. e.g. 301 -> 302 -> 200 OK. The other two should be true/false."^^xsd:string ;
+ fm:relevance "All"^^xsd:string ;
+ fm:examples "None"^^xsd:string ;
+ fm:comments "None"^^xsd:string ;
+
+ dcat:distribution _:dist1 ;
+ dcat:distribution _:dist2 ;
+ prov:wasGeneratedBy "FAIR Metrics Working Group" .
+
+
+ _:dist1 dcelem:format "application/x-texinfo" ;
+	rdf:type <http://rdfs.org/ns/void#Dataset> ;
+	rdf:type <http://www.w3.org/ns/dcat#Distribution> ;
+	dcat:downloadURL <https://raw.githubusercontent.com/FAIRMetrics/Metrics/master/Distributions/FM_A1.1.tex> .
+
+ _:dist2 dcelem:format "application/pdf" ;
+	rdf:type <http://rdfs.org/ns/void#Dataset> ;
+	rdf:type <http://www.w3.org/ns/dcat#Distribution> ;
+	dcat:downloadURL <https://raw.githubusercontent.com/FAIRMetrics/Metrics/master/Distributions/FM_A1.1.pdf> .
+
+}
+
+
+:pubinfo {
+ : dcterms:created "2017-11-21T00:00:00.0Z"^^xsd:dateTime ;
+ dcterms:rights <https://creativecommons.org/publicdomain/zero/1.0> ;
+ dcterms:rightsHolder <http://go-fair.org> ;
+ pav:authoredBy "Mark Wilkinson" , <https://orcid.org/0000-0001-6960-357X> ;
+ pav:versionNumber "1" ;
+}

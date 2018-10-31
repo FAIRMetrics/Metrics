@@ -1,67 +1,78 @@
-@prefix this: <https://purl.org/fair-metrics/FM_I2> .  # canonical URI for the metric
-@prefix sub: <https://purl.org/fair-metrics/FM_I2#> .
+@prefix this: <https://purl.org/fair-metrics/FM_I2#nanopub.RAVhLRWG-6ka_E58kiB9dgpWcsnzDdcDIa4YWrOwAYKGU> .
+@prefix sub: <https://purl.org/fair-metrics/FM_I2#nanopub.RAVhLRWG-6ka_E58kiB9dgpWcsnzDdcDIa4YWrOwAYKGU.> .
+@prefix metrics: <https://purl.org/fair-metrics/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix dcelem: <http://purl.org/dc/elements/1.1/> .
 @prefix np: <http://www.nanopub.org/nschema#> .
-@prefix nx: <http://www.nextprot.org/db/search#> .
 @prefix pav: <http://swan.mindinformatics.org/ontologies/1.2/pav/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
-@prefix prv: <http://purl.org/net/provenance/ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix ro: <http://purl.org/obo/owl/OBO_REL#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix fair: <http://purl.org/fair-ontology#> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix dcat: <http://www.w3.org/ns/dcat#> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix fm: <https://purl.org/fair-metrics/terms/> .
 
 sub:Head {
-  sub:nanopub np:hasAssertion sub:assertion ;
-       np:hasProvenance sub:provenance ;
-       np:hasPublicationInfo sub:pubinfo ;
-       a np:Nanopublication .
- }
-
-sub:assertion {
- this: a fair:FAIR-Metric ;
-  foaf:primaryTopic fair:I2 .
-
- }
-
-sub:provenance {
- sub:assertion dcterms:author  "Michel Dumontier", "Mark Wilkinson" , "Susanna Sansone", "Peter Doorn", "Luiz Bonino", "Erik Schultes" ;
- dcterms:title "Use FAIR Vocabularies"^^xsd:string ;
- rdfs:comment "FAIR Metric for Fair Principle I2"^^xsd:string ;
- fm:measuring "The metadata values and qualified relations should themselves be FAIR, for example, terms from open, community-accepted vocabularies published in an appropriate knowledge-exchange format."^^xsd:string ;
- fm:rationale "It is not possible to unambiguously interpret metadata represented as simple keywords or other non-qualified symbols.  For interoperability, it must be possible to identify data that can be integrated like-with-like.  This requires that the data, and the provenance descriptors of the data, should (where reasonable) use vocabularies and terminologies that are, themselves, FAIR."^^xsd:string ;
- fm:requirements "IRIs representing the vocabularies used for (meta)data "^^xsd:string ;
- fm:procedure "Resolve IRIs, check FAIRness of the returned document(s)."^^xsd:string ;
- fm:validation "Successful resolution; document is amenable to machine-parsing and identification of terms within it.  It may be possible to use FAIRSharing to validate these vocabularies."^^xsd:string ;
- fm:relevance "All"^^xsd:string ;
- fm:examples "None"^^xsd:string ;
- fm:comments "michel: there must be a syntax and associated semantics for that language.  This is sufficient \n  mark: there needs to be some identity or denotation in the language; ('vanilla') xml and json are not FAIR, so should fail this test\n  \n  *** can you (i) identify elements and (ii) make statements about them, and iii) is there a formally defined interpretation for that   -> HTML fails; PDF fails \n  shared\n  -> that there are many users of the language\n  . acknowledged within your community\n   -> hard to prove.\n  . could we use google to query for your filetype (can't discriminate between different models)\n  -> has a media type\n  --> This SHOULD be stated as a IANA code [IANA-MT]\n  standardization of at least this listing process is a good measure of 'sharedness'\n  broadly applicable\n  . that the language is extensible to a domain of interest\n  . you can define your own elements in accordance with the semantics of the language\n  \n  gff3 is not in the IANA list -> what steps would the community need to execute to be listed here? cases like GFF, PDB are not broadly applicable \n  biopax -> is defined vnd.biopax.rdf+xml and built on rdf -> allows users to create new elements and relate them \n  jpg -> widely used, registered, but primarily for image content\n  pdf -> registered, enables users to create their own dictionary.\n "^^xsd:string ;
- dcat:distribution _:dist1 ;
- dcat:distribution _:dist2 ;
- prov:wasGeneratedBy "FAIR Metrics Working Group" .
-
- _:dist1 dcelem:format "application/x-texinfo" ;
-	rdf:type <http://rdfs.org/ns/void#Dataset> ;
-	rdf:type <http://www.w3.org/ns/dcat#Distribution> ;
-	dcat:downloadURL <https://raw.githubusercontent.com/FAIRMetrics/Metrics/master/Distributions/FM_I2.tex> .
-
- _:dist2 dcelem:format "application/pdf" ;
-	rdf:type <http://rdfs.org/ns/void#Dataset> ;
-	rdf:type <http://www.w3.org/ns/dcat#Distribution> ;
-	dcat:downloadURL <https://raw.githubusercontent.com/FAIRMetrics/Metrics/master/Distributions/FM_I2.pdf> .
-
+	this: np:hasAssertion sub:assertion ;
+		np:hasProvenance sub:provenance ;
+		np:hasPublicationInfo sub:pubinfo ;
+		a np:Nanopublication .
 }
 
+sub:assertion {
+	metrics:FM_I2 a fair:FAIR-Metric ;
+		foaf:primaryTopic fair:I2 .
+}
+
+sub:provenance {
+	sub:_1 dcelem:format "application/x-texinfo" ;
+		a <http://rdfs.org/ns/void#Dataset> , dcat:Distribution ;
+		dcat:downloadURL <https://raw.githubusercontent.com/FAIRMetrics/Metrics/master/Distributions/FM_I2.tex> .
+	
+	sub:_2 dcelem:format "application/pdf" ;
+		a <http://rdfs.org/ns/void#Dataset> , dcat:Distribution ;
+		dcat:downloadURL <https://raw.githubusercontent.com/FAIRMetrics/Metrics/master/Distributions/FM_I2.pdf> .
+	
+	sub:assertion dcterms:author "Erik Schultes" , "Luiz Bonino" , "Mark Wilkinson" , "Michel Dumontier" , "Peter Doorn" , "Susanna Sansone" ;
+		dcterms:title "Use FAIR Vocabularies" ;
+		rdfs:comment "FAIR Metric for Fair Principle I2" ;
+		dcat:distribution sub:_1 , sub:_2 ;
+		prov:wasGeneratedBy "FAIR Metrics Working Group" ;
+		fm:comments """michel: there must be a syntax and associated semantics for that language.  This is sufficient 
+  mark: there needs to be some identity or denotation in the language; ('vanilla') xml and json are not FAIR, so should fail this test
+  
+  *** can you (i) identify elements and (ii) make statements about them, and iii) is there a formally defined interpretation for that   -> HTML fails; PDF fails 
+  shared
+  -> that there are many users of the language
+  . acknowledged within your community
+   -> hard to prove.
+  . could we use google to query for your filetype (can't discriminate between different models)
+  -> has a media type
+  --> This SHOULD be stated as a IANA code [IANA-MT]
+  standardization of at least this listing process is a good measure of 'sharedness'
+  broadly applicable
+  . that the language is extensible to a domain of interest
+  . you can define your own elements in accordance with the semantics of the language
+  
+  gff3 is not in the IANA list -> what steps would the community need to execute to be listed here? cases like GFF, PDB are not broadly applicable 
+  biopax -> is defined vnd.biopax.rdf+xml and built on rdf -> allows users to create new elements and relate them 
+  jpg -> widely used, registered, but primarily for image content
+  pdf -> registered, enables users to create their own dictionary.
+ """ ;
+		fm:examples "None" ;
+		fm:measuring "The metadata values and qualified relations should themselves be FAIR, for example, terms from open, community-accepted vocabularies published in an appropriate knowledge-exchange format." ;
+		fm:procedure "Resolve IRIs, check FAIRness of the returned document(s)." ;
+		fm:rationale "It is not possible to unambiguously interpret metadata represented as simple keywords or other non-qualified symbols.  For interoperability, it must be possible to identify data that can be integrated like-with-like.  This requires that the data, and the provenance descriptors of the data, should (where reasonable) use vocabularies and terminologies that are, themselves, FAIR." ;
+		fm:relevance "All" ;
+		fm:requirements "IRIs representing the vocabularies used for (meta)data " ;
+		fm:validation "Successful resolution; document is amenable to machine-parsing and identification of terms within it.  It may be possible to use FAIRSharing to validate these vocabularies." .
+}
 
 sub:pubinfo {
- this: dcterms:created "2017-11-21T00:00:00.0Z"^^xsd:dateTime ;
- dcterms:rights <https://creativecommons.org/publicdomain/zero/1.0> ;
- dcterms:rightsHolder <http://go-fair.org> ;
- pav:authoredBy "Mark Wilkinson" , <https://orcid.org/0000-0001-6960-357X> ;
- pav:versionNumber "1" ;
+	this: dcterms:created "2017-11-21T00:00:00.0Z"^^xsd:dateTime ;
+		dcterms:rights <https://creativecommons.org/publicdomain/zero/1.0> ;
+		dcterms:rightsHolder <http://go-fair.org> ;
+		pav:authoredBy "Mark Wilkinson" , <https://orcid.org/0000-0001-6960-357X> ;
+		pav:versionNumber "1" .
 }
