@@ -1,6 +1,6 @@
 
 <p>
-  <strong>Name:</strong>
+  <strong>Metric Test Name:</strong>
   <%= @metric.name %>
 </p>
 
@@ -17,12 +17,17 @@
 </p>
 
 <p>
-  <strong>Principle:</strong>
+  <strong>Tests Principle:</strong>
   <a href="https://purl.org/fair-metrics/<%= @metric.principle %>"><%= @metric.principle %></a>
 </p>
 
 <p>
-  <strong>Smarturl:</strong>
+  <strong>Tests Metric:</strong>
+  <a href="<%= @metric.test_of_metric %>"><%= @metric.test_of_metric %></a>
+</p>
+
+<p>
+  <strong>Test Interface URL (SmartAPI):</strong>
   <a href='<%= @metric.smarturl %>'><%= @metric.smarturl %></a>
 </p>
 
