@@ -18,12 +18,10 @@ Rails.application.routes.draw do
   post 'collect_metrics/:id', to: 'collections#register_metrics'
  
   get 'evaluations/:id/template', to: 'evaluations#template', as: 'template'
-#  post 'evaluations/:id/execute', to: 'evaluations#execute_analysis'
   post 'evaluations/:id/execute', to: 'evaluations#execute_analysis'  # accepts FORM data, or JSON
   post 'evaluations/:id/result', to: 'evaluations#execute_analysis', as: 'result'  # I think this is more REST-like...??  posting to Result to update the state of Result?  
   get 'evaluations/:id/result', to: 'evaluations#result'
   post 'evaluations/:id/result', to: 'evaluations#result'
-  #post 'evaluations/:id/result', to: 'evaluations#result'
   get 'evaluations/:id/error', to: 'evaluations#error'
   
   
