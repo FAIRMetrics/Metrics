@@ -115,9 +115,9 @@ class MetricsController < ApiController
   
       respond_to do |format|
         if @metric.save
-          @collection = Collection.where("name = ?", "__ALL__METRICS")
-          collect_all = @collection.first
-          collect_all.metrics << @metric
+          #@collection = Collection.where("name = ?", "__ALL__METRICS")
+          #collect_all = @collection.first
+          #collect_all.metrics << @metric
           format.html { redirect_to @metric, notice: 'Metric was successfully created.' }
           format.json { render :show, status: :created, location: @metric }
         else
