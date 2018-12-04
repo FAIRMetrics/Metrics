@@ -9,7 +9,7 @@ require 'uri'
 require 'net/http'
 require 'openssl'
 
-  def validate_orcid(obj, orcid)
+  def validate_orcid(orcid)
     orcid.gsub!(/\s/, "+")
     page = fetch("http://orcid.org/#{orcid}")
     #logger.debug("\n\n\n\n\n\n\nPAGE: #{page.class}\n\n\n\n\n\n\n") 
@@ -17,7 +17,6 @@ require 'openssl'
       return true
     else
       #logger.debug("\n\n\n\n\n\n\nADDING ERROR\n\n\n\n\n\n\n") 
-      obj.errors[:orcid] << "That was not a valid ORCiD"
       return false
     end
   end

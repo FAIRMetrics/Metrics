@@ -30,111 +30,103 @@ class MetricsController < ApiController
   # POST /metrics
   # POST /metrics.json
   def create
+    $stderr.puts metric_params['smarturl']
 
-    @metric = Metric.new(metric_params)  # this will convert API (JSON) calls into application calls v.v. params
-    unless @metric
-      case request.format.to_s
-      when "application/json"
-        render json: "Failed", status: :unprocessable_entity
-        return
-      when "text/html"
-        render :new
-        return
-      else 
-        render json: "Failed", status: :unprocessable_entity
-        return
-      end
+    errors = []
+    smarturl = metric_params['smarturl'].strip
+    $stderr.puts "smarturl is #{smarturl}"
+    
+    if known_metricuri(smarturl)
+      errors << "This metric #{smartURL} already exists - creation failed"
     end
-    
-    url = @metric[:smarturl]
-    url.strip!
-    
-    if known_metricuri(url)
-      @metric.errors[:smarturl_known] << "This metric (by smartURL) already exists - creation failed"
-      case request.format.to_s
-      when "application/json"
-        render json: @metric.errors, status: :unprocessable_entity
-        return
-      when "text/html"
-        render :new
-        return
-      else 
-        render json: @metric.errors, status: :unprocessable_entity
-        return
-      end
 
-    else
+#    @metric = Metric.new(metric_params)  # this will convert API (JSON) calls into application calls v.v. params
+
   
-      resp = fetch(url)
-      if resp
-        yaml = YAML.load(resp.body)
-        if yaml
-          @metric[:name] = yaml["info"]["title"]
+    resp = fetch(smarturl)
 
-          @metric[:description] = yaml["info"]["description"]
+    name = ''
+    description = ''
+    principle = ''
+    test_of_metric = ''
+    email = ''
+    creator = ''
+    orcid = ''
+    
+    if resp
+      yaml = YAML.load(resp.body)
+      if yaml
+        name = yaml["info"]["title"]
 
-          if yaml["info"].has_key?"applies_to_principle"
-                  @metric[:principle] = yaml["info"]["applies_to_principle"]
-          elsif yaml["info"].has_key?"x-applies_to_principle"
-                  @metric[:principle] = yaml["info"]["x-applies_to_principle"]
-          else
-                  @metric.errors[:notyaml] << "the x-applies_to_principle property was not found"
-          end
-          if yaml["info"].has_key?"x-tests-metric"
-                  @metric[:test_of_metric] = yaml["info"]["x-tests-metric"]
-          elsif yaml["info"].has_key?"tests-metric"
-                  @metric[:test_of_metric] = yaml["info"]["tests-metric"]
-          else
-                  @metric.errors[:notyaml] << "the x-tests-metric property was not found"
-          end
+        description = yaml["info"]["description"]
 
-          @metric[:email] = yaml["info"]["contact"]["email"]
-
-          if yaml["info"]["contact"].has_key?"responsibleDeveloper"
-                  @metric[:creator] = yaml["info"]["contact"]["responsibleDeveloper"]
-          elsif yaml["info"]["contact"].has_key?"name"
-                  @metric[:creator] = yaml["info"]["contact"]["name"]
-          else
-                  @metric.errors[:notyaml] << "Contact name is a required property in the YAML"
-          end
-          if yaml["info"]["contact"].has_key?"x-id"
-            @metric[:orcid] = yaml["info"]["contact"]["x-id"]
-          else
-            @metric.errors[:notyaml] << "The testing endpoint did not return YAML with an info/contact/x-id, which should contain the authors ORCiD"
-          end
-
+        if yaml["info"].has_key?"applies_to_principle"
+                principle = yaml["info"]["applies_to_principle"]
+        elsif yaml["info"].has_key?"x-applies_to_principle"
+                principle = yaml["info"]["x-applies_to_principle"]
         else
-          @metric.errors[:notyaml] << "The testing endpoint did not return YAML #{resp.body}"
+                errors << "the x-applies_to_principle property was not found"
+        end
+        
+        if yaml["info"].has_key?"x-tests-metric"
+                test_of_metric = yaml["info"]["x-tests-metric"]  # TODO  undersco4e x-tests_metric
+        elsif yaml["info"].has_key?"tests-metric"
+                test_of_metric = yaml["info"]["tests-metric"]
+        else
+                errors << "the x-tests-metric property was not found"  # TODO errors could perhaps be a hash?
+        end
+
+        email = yaml["info"]["contact"]["email"]
+
+        if yaml["info"]["contact"].has_key?"responsibleDeveloper"
+                creator = yaml["info"]["contact"]["responsibleDeveloper"]
+        elsif yaml["info"]["contact"].has_key?"name"
+                creator = yaml["info"]["contact"]["name"]
+        else
+                errors << "Contact name or responsibleDeveloper is a required property in the YAML"
+        end
+
+        if yaml["info"]["contact"].has_key?"x-id"
+          orcid = yaml["info"]["contact"]["x-id"]
+          if validate_orcid(orcid)  # one day this should be an orcid
+            $stderr.puts "Validated orcid"
+          else
+            errors << "'#{orcid}' is not a valid orcid."
+          end
+        else
+          errors << "The testing endpoint did not return YAML with an info/contact/x-id, which should contain the authors ORCiD"
         end
       else
-        @metric.errors[:no_response_from_endpoint] << "The testing endpoint did not respond"
+        errors << "The testing endpoint did not return YAML #{resp.body}"
       end
-      
-      validate_orcid(@metric, @metric.orcid)  # one day this should be an orcid
+    else
+      errors << "The testing endpoint did not respond"
+    end
+    
+    @metric = Metric.new(metric_params)
+    @metric[:smarturl] = smarturl
+    @metric[:name] = name
+    @metric[:description] = description
+    @metric[:principle] = principle
+    @metric[:test_of_metric] = test_of_metric
+    @metric[:email] = email
+    @metric[:creator] = creator
+    @metric[:orcid] = orcid
+    
+    respond_to do |format|
+      if errors.length == 0 and @metric.save
+        #@collection = Collection.where("name = ?", "__ALL__METRICS")
+        #collect_all = @collection.first
+        #collect_all.metrics << @metric
+        format.html { redirect_to @metric, notice: 'Metric was successfully created.' }
+        format.json { render :show, status: :created, location: @metric }
+      else
+        @metric.errors[:other].push(errors)
+        format.html { render :new }
+        format.json { render :json => {status: :unprocessable_entity, errors: @metric.errors}}
+      end
+    end
 
-      if @metric.errors.any?
-        respond_to do |format|
-          format.html { render :new }
-          format.json { render json: @metric.errors, status: :unprocessable_entity }
-          return
-        end
-      end
-  
-      respond_to do |format|
-        if @metric.save
-          #@collection = Collection.where("name = ?", "__ALL__METRICS")
-          #collect_all = @collection.first
-          #collect_all.metrics << @metric
-          format.html { redirect_to @metric, notice: 'Metric was successfully created.' }
-          format.json { render :show, status: :created, location: @metric }
-        else
-          @metric.errors[:other] << "failed to save for an unknown reason"
-          format.html { render :new }
-          format.json { render :json => {status: :unprocessable_entity, errors: @notice}}
-        end
-      end
-
-    end    
   end
   
   

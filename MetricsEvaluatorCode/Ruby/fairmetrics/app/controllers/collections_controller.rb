@@ -72,6 +72,7 @@ class CollectionsController < ApiController
       @collection.errors[:nameexists] << "A collection by that name already exists"
     end
     
+    # TODO   # no longer send the object = validate returns true or false
     validate_orcid(@collection, @collection.contact)  # this adds an error if it fails
 
     respond_to do |format|
