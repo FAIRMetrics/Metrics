@@ -1,0 +1,84 @@
+#!ruby
+require './fair_metris_utilities.rb'
+require 'cgi'
+
+
+schemas = {'subject' => ['string', "the GUID being tested"]}
+
+@swagger = Swagger.new({
+				 :title => "FAIR Metrics Gen2- Unique Identifier",
+				 :description => "Metric to test if the resource has a unique identifier.  This is done by comparing the GUID to the patterns (by regexp) of known GUID schemas such as URLs and DOIs.  Known schema are registered in FAIRSharing (https://fairsharing.org/standards/?q=&selected_facets=type_exact:identifier%20schema)",
+				 :tests_metric => 'https://purl.org/fair-metrics/FM_F1',
+				 :applies_to_principle => "F1",
+				 :organization => 'FAIR Metrics Authoring Group',
+				 :org_url => 'http://fairmetrics.org',
+				 :responsible_developer => "Mark D Wilkinson",
+				 :email => 'markw@illuminae.com',
+				 :developer_ORCiD => '0000-0001-6960-357X',
+				 :host => 'linkeddata.systems',
+				 :basePath => '/cgi-bin',
+				 :path => '/FAIRMetrics/gen2_unique_identifier',
+				 :response_description => 'The response is a binary (1/0), success or failure',
+				 :schemas => schemas,
+				 :fairsharing_key_location => '../fairsharing.key',
+				 
+				 :testedURI => "http://example.org",
+				 :score => 0.6,
+				 :comments => "this works nicely",
+				 
+})
+
+cgi = CGI.new
+
+#if (!cgi.request_method or cgi.request_method == "GET")
+if false
+	puts "Content-type: application/openapi+yaml;version=3.0\n\n"
+	puts @swagger.getSwagger
+	
+#elsif cgi.request_method == "POST"
+elsif true
+
+
+	guid = cgi['subject']
+	@swagger.testedURI = guid
+	response = testGUID	
+	puts response
+end
+
+def testGUID
+	
+	# TODO - switch these to a CASE clause and have only one return statement
+	inchi = Regexp.new(/\w{14}\-\w{8}\-\w{1}/)
+	if guid.match(inchi)
+		@swagger.addComment("Found an InChI Key - pass")
+		@swagger.score = 1
+		return @swagger.createEvaluationResponse
+	end
+	
+	doi = Regexp.new(/^10.\d{4,9}\/[-._;()\/:A-Z0-9]+$/i)
+	if guid.match(doi)
+		@swagger.addComment("Found a Crossref DOI - pass")
+		@swagger.score = 1
+		return @swagger.createEvaluationResponse
+	end
+
+	handle = Regexp.new(/^[2-9]0.\d{4,9}\/[-._;()\/:A-Z0-9]+$/i)
+	if guid.match(handle)
+		@swagger.addComment("Found a non-crossref DOI or other Handle - pass")
+		@swagger.score = 1
+		return @swagger.createEvaluationResponse
+	end
+	
+	uri = Regexp.new(/\w+:\/?\/?[^\s]+/)
+	if guid.match(uri)
+		@swagger.addComment("Found a URI - pass")
+		@swagger.score = 1
+		return @swagger.createEvaluationResponse
+	end
+
+	@swagger.addComment("the identifier #{guid} did not match any known identification system (tested inchi, doi, handle, uri) and therefore did not pass this metric.  If you think this is an error, please contact the FAIR Metrics group (http://fairmetrics.org).")
+	@swagger.score = 0
+	return @swagger.createEvaluationResponse
+
+	
+end

@@ -9,18 +9,16 @@ SafeYAML::OPTIONS[:default_mode] = :safe
 class EvaluationsController < ApiController
 
     #before_action :set_evaluation, only: [:show, :edit, :update, :destroy, :template, :result, :redisplay_result, :execute_analysis]
-  before_action :set_evaluation, only: [:show, :template, :result, :redisplay_result, :execute_analysis]
-  skip_before_action :authenticate_request, only: %i[new index template show execute_analysis create result]
+  before_action :set_evaluation, only: [:show, :template, :result, :redisplay_result, :deprecate, :execute_analysis]
+  skip_before_action :authenticate_request, only: %i[new index template show deprecate execute_analysis create result]
 
   include SharedFunctions
 
-  
   # GET /evaluations
   # GET /evaluations.json
   def index
     @evaluations = Evaluation.all
   end
-
 
 
   # GET /evaluations/1
@@ -58,7 +56,9 @@ class EvaluationsController < ApiController
       @evaluation.resource = canonicalizedDOI
     end
     
-    validate_orcid(@evaluation, @evaluation.executor)  # sets an error if there was a problem
+    unless validate_orcid(@evaluation.executor)  # sets an error if there was a problem
+      @evaluation.errors[:orcid_invalid] << "ORCiD #{@evaluation.executor} failed lookup"
+    end
     
     respond_to do |format|
       if !@evaluation.errors.any? && @evaluation.save
@@ -76,18 +76,32 @@ class EvaluationsController < ApiController
   # PATCH/PUT /evaluations/1
   # PATCH/PUT /evaluations/1.json
   def update
-    respond_to do |format|
-      if @evaluation.update(evaluation_params)
-        format.html { redirect_to result_url(@evaluation), notice: "" }
-        format.json { redirect_to result_url(@evaluation) }
+#    respond_to do |format|
+#      if @evaluation.update(evaluation_params)
+#        format.html { redirect_to result_url(@evaluation), notice: "" }
+#        format.json { redirect_to result_url(@evaluation) }
       #else
       #  format.html { render :edit }
       #  format.json { render json: @evaluation.errors, status: :unprocessable_entity }
-      end
-    end
+ #     end
+ #   end
   end
 
+
+  def deprecate
+    @evaluation.deprecated = true
+    @evaluation.save
+    respond_to do |format|
+        format.html { redirect_to evaluations_url, notice: "Evaluation deprecated" }
+        format.json { head :no_content }
+    end
+
+  end
   
+  def deprecate_and_return
+    @evaluation.deprecated = true
+    @evaluation.save
+  end
   
   
   # DELETE /evaluations/1
@@ -154,19 +168,21 @@ class EvaluationsController < ApiController
 
   def execute_analysis
 
+    errors = Hash.new
+    deprecate_and_return()  # deprecate the old
+    @evaluation  = Evaluation.new(collection: @evaluation.collection, resource: @evaluation.resource, title: @evaluation.title, executor: @evaluation.executor )  # create the new
 
     @uriprefix = "http://linkeddata.systems:3000/metrics/"
-
-
 
     data_to_pass = Hash.new()  # this will contain the hash that will be used to create the JSON formatted request
 
     if (params[:metrics])  # this is coming from the Web interface
 
-      
       metricshash = params[:metrics]
       subject = params[:subject]
-  
+      if (params[:executor])
+        @evaluation.executor = params[:executor]
+      end
   
       metricshash.each do |met, val|
         
@@ -176,10 +192,8 @@ class EvaluationsController < ApiController
           metricid = $1
           metricparam = $2
           metricuri = "#{@uriprefix}#{metricid}"
-          $stderr.puts "\n\n\nprefix is #{@uriprefix}\n\n\n"
+          #$stderr.puts "\n\n\nprefix is #{@uriprefix}\n\n\n"
           
-#          data_to_pass[metricid.to_i] ||= {"subject" => subject}  # add the subject node; maybe duplicate calls, but just easier this way and does no harm
-#          data_to_pass[metricid.to_i].merge!({metricparam.to_s => val})  # push each of the metric parameters and their values to the data
           data_to_pass[metricuri] ||= {"subject" => subject}  # add the subject node; maybe duplicate calls, but just easier this way and does no harm
           data_to_pass[metricuri].merge!({metricparam.to_s => val})  # push each of the metric parameters and their values to the data
         end
@@ -189,11 +203,7 @@ class EvaluationsController < ApiController
       begin
         data_to_pass = JSON.parse(request.body.read)  # if it isn't JSON, then this will fail
       rescue
-        respond_to do |format|   # ifr it fails, just send nothing
-          format.html { redirect_to evaluations_url, notice: 'Message body undeciperable.' }
-          format.json { head :no_content }
-          format.any { head :no_content }
-        end
+        errors[:json_undecipherable] << "The JSON passed to the Evaluator was not readable"
       end
     end
     
@@ -210,10 +220,10 @@ class EvaluationsController < ApiController
     data_to_pass.keys.each  do |metricuri|
       metricuri =~ /.*?(\d+)$/
       metricid = $1
-      @metric = Metric.find(metricid)
-      specs = get_metrics_interfaces([@metric])  # specs is an array of specs << [metric, specification]
+      metric = Metric.find(metricid)
+      specs = get_metrics_interfaces([metric])  # specs is an array of specs << [metric, specification]
                                                 # metric is the ActiveRecord Metric object, specification is a OpenApiParser::Specification
-      (@metric, spec) = specs.first # there should only be one...
+      (metric, spec) = specs.first # there should only be one...
 
       spec.raw['paths'].keys.each do |path|
         spec.raw['paths'][path].keys.each do |method|
@@ -236,17 +246,17 @@ class EvaluationsController < ApiController
           $stderr.puts "ADDRESS " + http.to_s + "://" + domain.to_s + basepath.to_s  + path.to_s
           uri = URI.parse(http.to_s + "://" + domain.to_s + basepath.to_s + path.to_s)
 
-          header = {'Content-Type': 'text/json'}
+          header = {'Content-Type': 'application/json'}
           
           # Create the HTTP objects
           http = Net::HTTP.new(uri.host, uri.port)
           request = Net::HTTP::Post.new(uri.request_uri, header)
           request.body = json_to_pass.to_json
           response = http.request(request)
-#          $stderr.puts "\n\n\nresponse body #{JSON.parse(response.body)}\n\n\n"
+          $stderr.puts "\n\n\n#{uri.request_uri} gave response body #{JSON.parse(response.body)}\n\n\n"
 
           body = JSON.parse(response.body)  # create a hash
-          result_for_db["#{@uriprefix}" + @metric.id.to_s] = body   # this is a has of the metric id and the hash of the JSON string from the evaluation service
+          result_for_db["#{@uriprefix}" + metric.id.to_s] = body   # this is a has of the metric id and the hash of the JSON string from the evaluation service
         end
       end
     end
@@ -264,16 +274,22 @@ class EvaluationsController < ApiController
     
   end
 
+  def deprecate
+    
+  end
+  
 
-    # Use callbacks to share common setup or constraints between actions.
-    def set_evaluation
-      @evaluation = Evaluation.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def evaluation_params
-      params.require(:evaluation).permit(:collection, :resource, :body, :result, :executor, :title, :metrics, :subject)
-    end
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_evaluation
+    @evaluation = Evaluation.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def evaluation_params
+    params.require(:evaluation).permit(:collection, :resource, :body, :result, :executor, :title, :metrics, :subject)
+  end
     
     
   def get_metrics_for_evaluation(id = params[:id])

@@ -73,14 +73,16 @@ class CollectionsController < ApiController
     end
     
     # TODO   # no longer send the object = validate returns true or false
-    validate_orcid(@collection, @collection.contact)  # this adds an error if it fails
-
+    unless validate_orcid(@collection.contact)  # this adds an error if it fails
+      @collection.errors[:orcid_invalid] << "The ORCiD #{@collection.contact} failed lookup"
+    end
+    
     respond_to do |format|
       if  !@collection.errors.any? && @collection.save
         format.html { redirect_to action: "collect_metrics", id: @collection.id }   # url_for{@collection}
         format.json { render :show, status: :created, location: @collection }
       else
-        @collection.errors[:other] << "failed to save"
+        @collection.errors[:other] << "failed to save for an unknown reason"
         format.html { render :new }
         format.json { render json: @collection.errors, status: :unprocessable_entity }
       end
@@ -91,26 +93,37 @@ class CollectionsController < ApiController
 
   # PATCH/PUT /collections/1
   # PATCH/PUT /collections/1.json
+  # THIS IS NOT ALLOWED
   def update
-    respond_to do |format|
-      if @collection.update(collection_params)
-        # a = "#{url_for(@collection)}"
-        format.html { redirect_to @collection, notice: a + " Collection was successfully updated." }
-        format.json { render :show, status: :ok, location: @collection }
-      else
-        format.html { render :edit }
-        format.json { render json: @collection.errors, status: :unprocessable_entity }
-      end
-    end
+  #  respond_to do |format|
+  #    if @collection.update(collection_params)
+  #      # a = "#{url_for(@collection)}"
+  #      format.html { redirect_to @collection, notice: a + " Collection was successfully updated." }
+  #      format.json { render :show, status: :ok, location: @collection }
+  #    else
+  #      format.html { render :edit }
+  #      format.json { render json: @collection.errors, status: :unprocessable_entity }
+  #    end
+  #  end
   end
 
   # DELETE /collections/1
   # DELETE /collections/1.json
   def destroy
-    @collection.destroy
+    @eval = Evaluation.find_by(collection: @collection.id)
+    if @eval.length > 0
+      @collection.errors(:collection_in_use) << "This collection is being used by one or more Evaluations, therefore it cannot be deleted.  Try deprecation instead."
+    end
+    
     respond_to do |format|
-      format.html { redirect_to collections_url, notice: 'Collection was successfully destroyed.' }
-      format.json { head :no_content }
+      if @collection.errors.any?
+        format.html { redirect_to @collections, notice: 'Collection could not be deleted.' }
+        format.json { render json: @collection.errors, status: :unprocessable_entity }
+      else  
+        @collection.destroy
+        format.html { redirect_to collections_url, notice: 'Collection was successfully destroyed.' }
+        format.json { head :no_content }
+      end
     end
   end
   

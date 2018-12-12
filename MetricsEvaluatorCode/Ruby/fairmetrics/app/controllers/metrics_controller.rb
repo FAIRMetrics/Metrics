@@ -68,10 +68,10 @@ class MetricsController < ApiController
                 errors << "the x-applies_to_principle property was not found"
         end
         
-        if yaml["info"].has_key?"x-tests-metric"
-                test_of_metric = yaml["info"]["x-tests-metric"]  # TODO  undersco4e x-tests_metric
+        if yaml["info"].has_key?"x-tests_metric"
+                test_of_metric = yaml["info"]["x-tests_metric"]  # TODO  undersco4e x-tests_metric
         elsif yaml["info"].has_key?"tests-metric"
-                test_of_metric = yaml["info"]["tests-metric"]
+                test_of_metric = yaml["info"]["tests_metric"]
         else
                 errors << "the x-tests-metric property was not found"  # TODO errors could perhaps be a hash?
         end

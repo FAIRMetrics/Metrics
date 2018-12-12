@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181128133334) do
+ActiveRecord::Schema.define(version: 20181210070949) do
 
   create_table "collections", force: :cascade do |t|
     t.string "name"
@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(version: 20181128133334) do
     t.string "organization"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "deprecated", default: false
   end
 
   create_table "collections_metrics", id: false, force: :cascade do |t|
@@ -34,6 +35,7 @@ ActiveRecord::Schema.define(version: 20181128133334) do
     t.string "title"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "deprecated", default: false
   end
 
   create_table "metrics", force: :cascade do |t|
@@ -48,6 +50,7 @@ ActiveRecord::Schema.define(version: 20181128133334) do
     t.string "description"
     t.string "orcid"
     t.string "test_of_metric"
+    t.boolean "deprecated", default: false
   end
 
   create_table "users", force: :cascade do |t|
