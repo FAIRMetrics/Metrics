@@ -225,6 +225,7 @@ class EvaluationsController < ApiController
         end
         
       rescue
+        $stderr.puts "\n\n\n\n\n\nUNDECIPHAERABLE JSON\n\n#{request.body.read}\n\n\n\n\n"
         errors[:json_undecipherable] << "The JSON passed to the Evaluator was not readable"
       end
     end
