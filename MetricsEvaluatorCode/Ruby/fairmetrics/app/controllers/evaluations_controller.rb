@@ -251,7 +251,7 @@ class EvaluationsController < ApiController
       specs = get_metrics_interfaces([metric])  # specs is an array of specs << [metric, specification]
                                                 # metric is the ActiveRecord Metric object, specification is a OpenApiParser::Specification
       (metric, spec) = specs.first # there should only be one...
-    $stderr.puts spec.to_s
+      #$stderr.puts spec.to_s
       spec.raw['paths'].keys.each do |path|
         spec.raw['paths'][path].keys.each do |method|
           
@@ -295,7 +295,7 @@ class EvaluationsController < ApiController
     
     respond_to do |format|
         format.html { redirect_to result_url(@evaluation), notice: "" }
-        format.json { redirect_to result_url(@evaluation) }
+        format.json { render :show }
     end
 
     
@@ -305,8 +305,6 @@ class EvaluationsController < ApiController
     
   end
   
-
-
 
   # Use callbacks to share common setup or constraints between actions.
   def set_evaluation
@@ -370,7 +368,6 @@ class EvaluationsController < ApiController
       end
       
       smartyaml = interface.body
-      $stderr.puts "\n\nYAML is here #{smartyaml} #{interface} BLA B:A"
       
       tfile = Tempfile.new('smartapi')
       tfile.write(smartyaml)
@@ -378,8 +375,8 @@ class EvaluationsController < ApiController
       specification = OpenApiParser::Specification.resolve(tfile, validate_meta_schema: false)
       
       unless (specification)
-        format.html { redirect_to "/evaluations/#{params[:id]}/error", notice: "the SmartAPI definition in #{smartyaml} could not be retrieved. Please chck and edit evaluation if necessary"}
-        return
+#        format.html { redirect_to "/evaluations/#{params[:id]}/error", notice: "the SmartAPI definition in #{smartyaml} could not be retrieved. Please chck and edit evaluation if necessary"}
+#        return
       end
       $stderr.puts "\n\n#{metric} with #{specification.raw}\n\n"
       specs << [metric, specification]

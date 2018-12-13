@@ -6,7 +6,6 @@ require 'uri'
 require 'rdf'
 require 'rdf/turtle'
 require 'sparql'
-require 'rdf/raptor'
 
 debug = false
 
@@ -18,36 +17,38 @@ def testGUID
 	# BSYNRYMUTXBXSQ-UHFFFAOYSA-N
 	inchi = Regexp.new(/\w{14}\-\w{10}\-\w/)
 	if guid.match(inchi)
-		@swagger.addComment("Found an InChI Key - pass")
+		@swagger.addComment("Found an InChI Key GUID")
 		step1 = %x{curl -H "Accept: application/rdf+xml" https://pubchem.ncbi.nlm.nih.gov/rest/rdf/inchikey/#{guid} 2>/dev/null}
 		$stderr.puts step1
 		reader = RDF::Reader.for(:ntriples).new(step1) 
 		g = RDF::Graph.new << reader
-
-		query = SPARQL.parse("select ?s ?p ?o where {?s ?p ?o . FILTER(CONTAINS(str(?o), 'BSYNRYMUTXBXSQ-UHFFFAOYSA-N'))}")
+		query = SPARQL.parse("select ?s ?p ?o where {?s ?p ?o . FILTER(CONTAINS(str(?o), '#{guid}'))}")
 		results = query.execute(g)
 		if results.any?
-			f = results.first
-			@swagger.addComment("found matching metadata #{f[:s]} #{f[:p]} #{f[:o]}")		
-			@swagger.score = 1
-			return @swagger.createEvaluationResponse
+				f = results.first
+				@swagger.addComment("found matching metadata #{f[:s]} #{f[:p]} #{f[:o]}")
+				@swagger.score = 1
+				return @swagger.createEvaluationResponse
 		end
-		
 		query = SPARQL.parse("select ?o where {?s <http://semanticscience.org/resource/is-attribute-of> ?o}")
 		results = query.execute(g)
 		cpd = results.first[:o]
 		cpd = cpd.to_s
 		cpd = cpd.gsub(/\/$/, "")
-		cpd = cpd + ".rdf"
+#               cpd = cpd + ".rdf"
 		#https://pubchem.ncbi.nlm.nih.gov/rest/rdf/compound/CID2244/.rdf/ ->  2244.rdf
-		step2 = %x{curl -L -H "Accept: application/rdf+xml" #{cpd}  2>/dev/null}
-		$stderr.puts step2
-		reader = RDF::Reader.for(:rdfxml).new(step2) 
-		g2 = RDF::Graph.new << reader
+		step2 = %x{curl -L -H "Accept:text/turtle" #{cpd}  2>/dev/null}
+#               $stderr.puts step2
+		reader = RDF::Reader.for(:turtle).new(step2) 
 		query = SPARQL.parse("select ?s ?p ?o where {?s ?p '#{guid}'}")
 		results = query.execute(g2)
+		unless results.any?
+				@swagger.score = 0
+				@swagger.addComment("Failed to find #{guid} in output of #{cpd}")
+				return @swagger.createEvaluationResponse
+		end
 		f = results.first
-		@swagger.addComment("found matching metadata #{f[:s]} #{f[:p]} #{f[:o]}")		
+		@swagger.addComment("found matching metadata #{f[:s]} #{f[:p]} #{f[:o]}")
 		@swagger.score = 1
 		return @swagger.createEvaluationResponse
 	end
