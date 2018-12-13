@@ -10,17 +10,14 @@ SafeYAML::OPTIONS[:default_mode] = :safe
 #class EvaluationsController < ApplicationController
 class EvaluationsController < ApiController
 
-    #before_action :set_evaluation, only: [:show, :edit, :update, :destroy, :template, :result, :redisplay_result, :execute_analysis]
+    #before_action :set_evaluation, only: [:show, :edit, :update, :destroy, :template, :result, :redisplay_result, :execute_analysis :execute_analysis_json]
   before_action :set_evaluation, only: [:show, :template, :result, :redisplay_result, :deprecate, :execute_analysis]
   skip_before_action :authenticate_request, only: %i[new index template show deprecate execute_analysis create result]
 
   include SharedFunctions
 
 
-  
-  
-  
-  
+ 
   # GET /evaluations
   # GET /evaluations.json
   def index
@@ -160,6 +157,10 @@ class EvaluationsController < ApiController
 
   end
 
+  def execute_analysis_json
+    
+  end
+  
 
   def execute_analysis
 
@@ -171,7 +172,7 @@ class EvaluationsController < ApiController
 
     errors = Hash.new([])
     httpheader = Hash.new()
-    
+    @subject = ""
     #deprecate_and_return()  # deprecate the old
     #@evaluation  = Evaluation.new(collection: @evaluation.collection, resource: @evaluation.resource, title: @evaluation.title, executor: @evaluation.executor )  # create the new
 
@@ -186,7 +187,7 @@ class EvaluationsController < ApiController
         metricuri = @uriprefix + metricid
         
         metricshash = params[:metrics].select {|m| m.match(/Metric_#{metricid}/)}  # select only the parameters for this metric ID
-        subject = params[:subject]  # this should now be redundant, but we will do it anyway LOL!
+        @subject = params[:subject]  # this should now be redundant, but we will do it anyway LOL!
         if (params[:executor])
           @evaluation.executor = params[:executor]
         end
@@ -198,7 +199,7 @@ class EvaluationsController < ApiController
           else 
             metricid = $1
             metricparam = $2
-            data_to_pass[metricuri] ||= {"subject" => subject}  # add the subject node; maybe duplicate calls, but just easier this way and does no harm
+            data_to_pass[metricuri] ||= {"subject" => @subject}  # add the subject node; maybe duplicate calls, but just easier this way and does no harm
             data_to_pass[metricuri].merge!({metricparam.to_s => val})  # push each of the metric parameters and their values to the data
           end
         end
@@ -207,8 +208,20 @@ class EvaluationsController < ApiController
     else   #  WE SHOULD CAREFULLY TEST THE INCOMING JSON....  ONE DAY!!!
       httpheader["Accept"] = "application/json"
       begin
-        data_to_pass = JSON.parse(request.body.read)  # if it isn't JSON, then this will fail
-        $stderr.puts "\n\nDATA PASSED IN: " + data_to_pass.to_s
+        
+        incoming_hash = JSON.parse(request.body.read)  # if it isn't JSON, then this will fail
+        $stderr.puts "\n\nDATA PASSED IN: " + incoming_hash.to_s
+        collection = incoming_hash.keys.first
+        matches = collection.match(/(\d+)\/?$/)
+        collection_id = matches[1]
+        metrics = incoming_hash[collection_id].metrics
+        metrics.each do |m|
+          metricid = m.id.to_s
+          metricuri = @uriprefix + metricid
+
+          data_to_pass[metricuri].merge!({"subject" =>  @subject})
+        end
+        
       rescue
         errors[:json_undecipherable] << "The JSON passed to the Evaluator was not readable"
       end
