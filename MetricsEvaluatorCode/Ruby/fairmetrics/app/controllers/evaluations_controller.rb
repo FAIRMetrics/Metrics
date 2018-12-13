@@ -172,8 +172,8 @@ class EvaluationsController < ApiController
     errors = Hash.new([])
     httpheader = Hash.new()
     
-    deprecate_and_return()  # deprecate the old
-    @evaluation  = Evaluation.new(collection: @evaluation.collection, resource: @evaluation.resource, title: @evaluation.title, executor: @evaluation.executor )  # create the new
+    #deprecate_and_return()  # deprecate the old
+    #@evaluation  = Evaluation.new(collection: @evaluation.collection, resource: @evaluation.resource, title: @evaluation.title, executor: @evaluation.executor )  # create the new
 
     data_to_pass = Hash.new()  # this will contain the hash that will be used to create the JSON formatted request
 

@@ -37,7 +37,7 @@ class MetricsController < ApiController
     $stderr.puts "smarturl is #{smarturl}"
     
     if known_metricuri(smarturl)
-      errors << "This metric #{smartURL} already exists - creation failed"
+      errors << "This metric #{smarturl} already exists - creation failed"
     end
 
 #    @metric = Metric.new(metric_params)  # this will convert API (JSON) calls into application calls v.v. params

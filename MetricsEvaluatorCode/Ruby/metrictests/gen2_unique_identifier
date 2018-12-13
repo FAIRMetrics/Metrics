@@ -10,7 +10,7 @@ def testGUID
 	guid = @swagger.testedURI
 
 	# TODO - switch these to a CASE clause and have only one return statement
-	inchi = Regexp.new(/\w{14}\-\w{8}\-\w{1}/)
+	inchi = Regexp.new(/\w{14}\-\w{10}\-\w{1}/)
 	if guid.match(inchi)
 		@swagger.addComment("Found an InChI Key - pass")
 		@swagger.score = 1

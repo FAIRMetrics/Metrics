@@ -1,0 +1,12 @@
+HTTP/1.1 302 
+Date: Thu, 13 Dec 2018 06:32:25 GMT
+Content-Type: text/html;charset=utf-8
+Content-Length: 187
+Connection: keep-alive
+Set-Cookie: __cfduid=d1c3753a37fdd700596786d77bbc33cf41544682745; expires=Fri, 13-Dec-19 06:32:25 GMT; path=/; domain=.doi.org; HttpOnly
+Expires: Thu, 13 Dec 2018 07:07:24 GMT
+Location: https://data.crossref.org/10.1126%2Fscience.1157784
+Vary: Accept
+Server: cloudflare
+CF-RAY: 488664b5d31daeb7-KIX
+
