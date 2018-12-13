@@ -165,10 +165,10 @@ class EvaluationsController < ApiController
 
   def execute_analysis
 
-  #  THIS IS BAD!!!!!!!!!!!!!!!!!  VERY VERY BAD!!!
-  @uriprefix = "http://linkeddata.systems:3000/metrics/"  #  THIS IS BAD!!!!!!!!!!!!!!!!!  VERY VERY BAD!!!
-  #  THIS IS BAD!!!!!!!!!!!!!!!!!  VERY VERY BAD!!!
-  #  THIS IS BAD!!!!!!!!!!!!!!!!!  VERY VERY BAD!!!
+    #  THIS IS BAD!!!!!!!!!!!!!!!!!  VERY VERY BAD!!!
+    @uriprefix = "http://linkeddata.systems:3000/metrics/"  #  THIS IS BAD!!!!!!!!!!!!!!!!!  VERY VERY BAD!!!
+    #  THIS IS BAD!!!!!!!!!!!!!!!!!  VERY VERY BAD!!!
+    #  THIS IS BAD!!!!!!!!!!!!!!!!!  VERY VERY BAD!!!
 
 
     errors = Hash.new([])
@@ -226,8 +226,7 @@ class EvaluationsController < ApiController
       metrics.each do |m|
         metricid = m.id.to_s
         metricuri = @uriprefix + metricid
-
-        data_to_pass[metricuri].merge!({"subject" =>  @subject})
+        data_to_pass[metricuri] ||= {"subject" =>  @subject}
       end
   
     end
