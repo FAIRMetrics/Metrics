@@ -1,0 +1,129 @@
+#!/home/mark_moby_wilkinson/.rvm/rubies/ruby-2.5.1/bin/ruby
+require_relative 'fair_metrics_utilities'
+require 'cgi'
+require 'json'
+require 'uri'
+require 'rdf'
+require 'rdf/turtle'
+
+
+def testGUID
+	
+	guid = @swagger.testedURI
+
+	# TODO - switch these to a CASE clause and have only one return statement
+	inchi = Regexp.new(/\w{14}\-\w{8}\-\w{1}/)
+	if guid.match(inchi)
+		@swagger.addComment("Found an InChI Key - pass")
+		step1 = %x{extruct https://pubchem.ncbi.nlm.nih.gov/rest/rdf/inchikey/#{guid}.rdf}
+		# is attribute of https://pubchem.ncbi.nlm.nih.gov/rest/rdf/compound/CID2244.rdf
+		@swagger.score = 1
+		return @swagger.createEvaluationResponse
+	end
+	
+	doi = Regexp.new(/^10.\d{4,9}\/[-._;()\/:A-Z0-9]+$/i)
+	if guid.match(doi)
+		@swagger.addComment("Found a Crossref DOI - pass")
+		rdf = %x{curl -s -L -H   "Accept:text/turtle" "http://dx.doi.org/10.1126/science.1157784"}
+		reader = RDF::Reader.for(:turtle).new(rdf) 
+		g = RDF::Graph.new << reader
+		query = SPARQL.parse("select ?s ?p ?o where {?s ?p ?o . FILTER(?o = #{guid}}")
+		results = query.execute(g)
+		f = results.first
+		@swagger.addComment("found metadata #{f[:s]} #{f[:p]} #{f[:o]}")		
+		@swagger.score = 1
+		return @swagger.createEvaluationResponse
+	end
+
+	handle = Regexp.new(/^[2-9]0.\d{4,9}\/[-._;()\/:A-Z0-9]+$/i)
+	if guid.match(handle)
+		result = manageHandle(guid)
+		@swagger.addComment("Found a non-crossref DOI or other Handle")
+		@swagger.score = result
+		return @swagger.createEvaluationResponse
+	end
+	
+	uri = Regexp.new(/\w+:\/?\/?[^\s]+/)
+	if guid.match(uri)
+		@swagger.addComment("Found a URI")
+		result = %x{extruct #{guid} 2>&1}
+		hash = JSON.parse(result)
+		vals = deep_dive(nil, hash)
+		if vals.contain?guid
+			@swagger.addComment "found #{guid} in metadata"
+			@swagger.score = 1
+		else
+			@swagger.addComment "DID NOT find #{guid} in metadata"
+			@swagger.score = 0
+		end
+			
+		return @swagger.createEvaluationResponse
+	end
+
+	@swagger.addComment("the identifier #{guid} did not match any known identification system (tested inchi, doi, handle, uri) and therefore did not pass this metric.  If you think this is an error, please contact the FAIR Metrics group (http://fairmetrics.org).")
+	@swagger.score = 0
+	return @swagger.createEvaluationResponse
+
+	
+end
+
+def deep_dive(parent, myHash)
+	vals = []
+	myHash.each {|key, value| value.is_a?(Hash) ? deep_dive(key, value) : vals << value}
+	return vals
+end
+
+
+def manageHandle(guid)
+	head =  %x{curl -I -L  "http://hdl.handle.net/#{guid}"}
+	if (head.match(/content-type:(.*)/i))
+		@swagger.addComment("  Found #{$1} type of file")
+		return 1
+	else
+		@swagger.addComment("  Found no file type resolved by handle")
+		return 0
+	end
+end
+
+
+@input = $stdin.read
+#@input = '{"subject": "10.5281/zenodo.1147435"}'
+cgi = CGI.new
+
+schemas = {'subject' => ['string', "the GUID being tested"]}
+
+@swagger = Swagger.new({
+			:title => "FAIR Metrics Gen2- Identifier In Metadata",
+			:description => "Metric to test if the metadata contains the unique identifier to the data object.  This is done using a variety of 'scraping' tools, including DOI metadata resolution, the use of the 'extruct' Python tool, and others...",
+			:tests_metric => 'https://purl.org/fair-metrics/FM_F3',
+			:applies_to_principle => "F3",
+			:organization => 'FAIR Metrics Authoring Group',
+			:org_url => 'http://fairmetrics.org',
+			:responsible_developer => "Mark D Wilkinson",
+			:email => 'markw@illuminae.com',
+			:developer_ORCiD => '0000-0001-6960-357X',
+			:protocol => 'http',
+			:host => 'linkeddata.systems',
+			:basePath => '/cgi-bin',
+			:path => '/FAIR_Tests/gen2_identifier_in_metadata',
+			:response_description => 'The response is a binary (1/0), success or failure',
+			:schemas => schemas,
+			:fairsharing_key_location => '../fairsharing.key',
+				 				 
+})
+
+
+if (!cgi.request_method or cgi.request_method == "GET")
+#if false
+	puts "Content-type: application/openapi+yaml;version=3.0\n\n"
+	puts @swagger.getSwagger
+	
+elsif cgi.request_method == "POST"
+#elsif true
+	input_json = JSON.parse(@input)
+	guid = input_json["subject"]
+	@swagger.testedURI = guid
+	response = testGUID
+	puts "Content-type: application/json+ld\n\n"
+	puts response
+end
