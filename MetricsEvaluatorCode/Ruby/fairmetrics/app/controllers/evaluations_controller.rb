@@ -220,6 +220,8 @@ class EvaluationsController < ApiController
       
       $stderr.puts "\n\nDATA PASSED IN: " + incoming_hash.to_s
       collection = incoming_hash.keys.first
+      @subject = incoming_hash[collection]
+
       matches = collection.match(/(\d+)\/?$/)
       collection_id = matches[1]
       metrics = Collection.find(collection_id).metrics
