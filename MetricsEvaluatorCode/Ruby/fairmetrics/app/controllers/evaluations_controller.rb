@@ -3,6 +3,7 @@ require 'open_api_parser'
 require 'rdf'
 require 'rdf/json'
 require 'json/ld'
+require 'json'
 
 SafeYAML::OPTIONS[:default_mode] = :safe
   
@@ -206,12 +207,12 @@ class EvaluationsController < ApiController
       end
 
     else   #  WE SHOULD CAREFULLY TEST THE INCOMING JSON....  ONE DAY!!!
-      
-      $stderr.puts "\n\n\n\n\n\nGOIN ITO JSON\n\n#{request.body.read}\n\n\n\n\n"
-      httpheader["Accept"] = "application/json"
+      json = request.body.read
+      $stderr.puts "\n\n\n\n\n\nGOIN ITO JSON\n\n#{json}\n\n\n\n\n"
+      #httpheader["Accept"] = "application/json"
       begin
         
-        incoming_hash = JSON.parse(request.body.read)  # if it isn't JSON, then this will fail
+        incoming_hash = JSON.parse(json)  # if it isn't JSON, then this will fail
         $stderr.puts "\n\nDATA PASSED IN: " + incoming_hash.to_s
         collection = incoming_hash.keys.first
         matches = collection.match(/(\d+)\/?$/)
