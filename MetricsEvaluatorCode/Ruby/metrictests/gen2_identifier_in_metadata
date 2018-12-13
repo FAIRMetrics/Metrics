@@ -5,32 +5,63 @@ require 'json'
 require 'uri'
 require 'rdf'
 require 'rdf/turtle'
+require 'sparql'
+require 'rdf/raptor'
 
+debug = false
 
 def testGUID
 	
 	guid = @swagger.testedURI
 
 	# TODO - switch these to a CASE clause and have only one return statement
-	inchi = Regexp.new(/\w{14}\-\w{8}\-\w{1}/)
+	# BSYNRYMUTXBXSQ-UHFFFAOYSA-N
+	inchi = Regexp.new(/\w{14}\-\w{10}\-\w/)
 	if guid.match(inchi)
 		@swagger.addComment("Found an InChI Key - pass")
-		step1 = %x{extruct https://pubchem.ncbi.nlm.nih.gov/rest/rdf/inchikey/#{guid}.rdf}
-		# is attribute of https://pubchem.ncbi.nlm.nih.gov/rest/rdf/compound/CID2244.rdf
+		step1 = %x{curl -H "Accept: application/rdf+xml" https://pubchem.ncbi.nlm.nih.gov/rest/rdf/inchikey/#{guid} 2>/dev/null}
+		$stderr.puts step1
+		reader = RDF::Reader.for(:ntriples).new(step1) 
+		g = RDF::Graph.new << reader
+
+		query = SPARQL.parse("select ?s ?p ?o where {?s ?p ?o . FILTER(CONTAINS(str(?o), 'BSYNRYMUTXBXSQ-UHFFFAOYSA-N'))}")
+		results = query.execute(g)
+		if results.any?
+			f = results.first
+			@swagger.addComment("found matching metadata #{f[:s]} #{f[:p]} #{f[:o]}")		
+			@swagger.score = 1
+			return @swagger.createEvaluationResponse
+		end
+		
+		query = SPARQL.parse("select ?o where {?s <http://semanticscience.org/resource/is-attribute-of> ?o}")
+		results = query.execute(g)
+		cpd = results.first[:o]
+		cpd = cpd.to_s
+		cpd = cpd.gsub(/\/$/, "")
+		cpd = cpd + ".rdf"
+		#https://pubchem.ncbi.nlm.nih.gov/rest/rdf/compound/CID2244/.rdf/ ->  2244.rdf
+		step2 = %x{curl -L -H "Accept: application/rdf+xml" #{cpd}  2>/dev/null}
+		$stderr.puts step2
+		reader = RDF::Reader.for(:rdfxml).new(step2) 
+		g2 = RDF::Graph.new << reader
+		query = SPARQL.parse("select ?s ?p ?o where {?s ?p '#{guid}'}")
+		results = query.execute(g2)
+		f = results.first
+		@swagger.addComment("found matching metadata #{f[:s]} #{f[:p]} #{f[:o]}")		
 		@swagger.score = 1
 		return @swagger.createEvaluationResponse
 	end
 	
 	doi = Regexp.new(/^10.\d{4,9}\/[-._;()\/:A-Z0-9]+$/i)
 	if guid.match(doi)
-		@swagger.addComment("Found a Crossref DOI - pass")
-		rdf = %x{curl -s -L -H   "Accept:text/turtle" "http://dx.doi.org/10.1126/science.1157784"}
+		@swagger.addComment("Found a Crossref DOI - testing its metadata")
+		rdf = %x{curl -s -L -H   "Accept: text/turtle" "http://dx.doi.org/#{guid}" 2>/dev/null}
 		reader = RDF::Reader.for(:turtle).new(rdf) 
 		g = RDF::Graph.new << reader
-		query = SPARQL.parse("select ?s ?p ?o where {?s ?p ?o . FILTER(?o = #{guid}}")
+		query = SPARQL.parse("select ?s ?p ?o where {?s ?p '#{guid}'}")
 		results = query.execute(g)
 		f = results.first
-		@swagger.addComment("found metadata #{f[:s]} #{f[:p]} #{f[:o]}")		
+		@swagger.addComment("found matching metadata #{f[:s]} #{f[:p]} #{f[:o]}")		
 		@swagger.score = 1
 		return @swagger.createEvaluationResponse
 	end
@@ -85,9 +116,13 @@ def manageHandle(guid)
 	end
 end
 
+if debug
+	@input = '{"subject": "10.5281/zenodo.1147435"}'
+	@input = '{"subject": "BSYNRYMUTXBXSQ-UHFFFAOYSA-N"}'
+else 
+	@input = $stdin.read
+end
 
-@input = $stdin.read
-#@input = '{"subject": "10.5281/zenodo.1147435"}'
 cgi = CGI.new
 
 schemas = {'subject' => ['string', "the GUID being tested"]}
@@ -112,18 +147,14 @@ schemas = {'subject' => ['string', "the GUID being tested"]}
 				 				 
 })
 
-
-if (!cgi.request_method or cgi.request_method == "GET")
-#if false
-	puts "Content-type: application/openapi+yaml;version=3.0\n\n"
-	puts @swagger.getSwagger
-	
-elsif cgi.request_method == "POST"
-#elsif true
-	input_json = JSON.parse(@input)
-	guid = input_json["subject"]
-	@swagger.testedURI = guid
-	response = testGUID
-	puts "Content-type: application/json+ld\n\n"
-	puts response
+if (!cgi.request_method or cgi.request_method == "GET") and !debug
+        puts "Content-type: application/openapi+yaml;version=3.0\n\n"
+        puts @swagger.getSwagger
+elsif cgi.request_method == "POST" or debug
+        input_json = JSON.parse(@input)
+        guid = input_json["subject"]
+        @swagger.testedURI = guid
+        response = testGUID
+        puts "Content-type: application/json+ld\n\n"
+        puts response
 end
