@@ -370,7 +370,7 @@ class EvaluationsController < ApiController
       end
       
       smartyaml = interface.body
-      $stderr.puts "\n\nYAML is here #{smartyaml}"
+      $stderr.puts "\n\nYAML is here #{smartyaml} #{interface} BLA B:A"
       
       tfile = Tempfile.new('smartapi')
       tfile.write(smartyaml)
