@@ -359,14 +359,14 @@ class EvaluationsController < ApiController
       smartapi.strip!
       $stderr.puts "FOUND smartapi #{smartapi}"
       unless (smartapi)
-        format.html { redirect_to "/evaluations/#{params[:id]}/error", notice: "no smartAPI found for #{metric.to_s}"}
-        return
+#        format.html { redirect_to "/evaluations/#{params[:id]}/error", notice: "no smartAPI found for #{metric.to_s}"}
+#        return
       end
-#      smartapi = resolve(smartapi)
+      smartapi = resolve(smartapi)
       interface = fetch(smartapi)
       unless (interface)
-        format.html { redirect_to "/evaluations/#{params[:id]}/error", notice: "the SmartAPI definition at #{smartapi} could not be retrieved. Please chck and edit evaluation if necessary"}
-        return
+#        format.html { redirect_to "/evaluations/#{params[:id]}/error", notice: "the SmartAPI definition at #{smartapi} could not be retrieved. Please chck and edit evaluation if necessary"}
+#        return
       end
       
       smartyaml = interface.body
