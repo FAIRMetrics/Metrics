@@ -213,22 +213,23 @@ class EvaluationsController < ApiController
       begin
         
         incoming_hash = JSON.parse(json)  # if it isn't JSON, then this will fail
-        $stderr.puts "\n\nDATA PASSED IN: " + incoming_hash.to_s
-        collection = incoming_hash.keys.first
-        matches = collection.match(/(\d+)\/?$/)
-        collection_id = matches[1]
-        metrics = Collection.find(collection_id).metrics
-        metrics.each do |m|
-          metricid = m.id.to_s
-          metricuri = @uriprefix + metricid
-
-          data_to_pass[metricuri].merge!({"subject" =>  @subject})
-        end
-        
       rescue
         $stderr.puts "\n\n\n\n\n\nUNDECIPHAERABLE JSON\n\n#{request.body.read}\n\n\n\n\n"
         errors[:json_undecipherable] << "The JSON passed to the Evaluator was not readable"
       end
+      
+      $stderr.puts "\n\nDATA PASSED IN: " + incoming_hash.to_s
+      collection = incoming_hash.keys.first
+      matches = collection.match(/(\d+)\/?$/)
+      collection_id = matches[1]
+      metrics = Collection.find(collection_id).metrics
+      metrics.each do |m|
+        metricid = m.id.to_s
+        metricuri = @uriprefix + metricid
+
+        data_to_pass[metricuri].merge!({"subject" =>  @subject})
+      end
+  
     end
     
         
