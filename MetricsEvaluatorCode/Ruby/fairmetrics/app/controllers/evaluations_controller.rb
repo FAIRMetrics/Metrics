@@ -2,8 +2,10 @@ require 'safe_yaml'
 require 'open_api_parser'
 require 'rdf'
 require 'rdf/json'
+require 'json/ld'
 
 SafeYAML::OPTIONS[:default_mode] = :safe
+  
 
 #class EvaluationsController < ApplicationController
 class EvaluationsController < ApiController
@@ -14,6 +16,11 @@ class EvaluationsController < ApiController
 
   include SharedFunctions
 
+
+  
+  
+  
+  
   # GET /evaluations
   # GET /evaluations.json
   def index
@@ -118,18 +125,11 @@ class EvaluationsController < ApiController
   end
   
 
-  def template()  # template is what raises the Web form, as a prelude to execute_evaluation, which actually does the evaluation.  You can also POST the data to 'response' for the same outcome
-    
-    metrics = get_metrics_for_evaluation
-    @metric_interfaces = get_metrics_interfaces(metrics)
-    # pass this hash to the View
-    
-  end
-
 
 
   def result
     result_json_string = @evaluation.result;  # get the result from the database
+    $stderr.puts "#{result_json_string} FROM DATABASE\n\n"
     
     @result = []
     @iri = @evaluation.resource
@@ -137,13 +137,8 @@ class EvaluationsController < ApiController
     resulthash = JSON.parse(result_json_string)
 
     resulthash.keys.each  do |metricuri|
-      thisresulthash = resulthash[metricuri]
-      #thisresulthash = JSON.parse(thisresultjson)
-      reader = RDF::JSON::Reader.new(thisresulthash.to_json)    
-      @outgraph = RDF::Graph.new()
-      reader.each_statement do |statement|
-        @outgraph << statement
-      end
+      thisresulthash = resulthash[metricuri][0]
+      @outgraph = RDF::Graph.new << JSON::LD::API.toRdf(thisresulthash)
 
       metricuri =~ /.*?(\d+)$/
       metricid = $1
@@ -168,40 +163,52 @@ class EvaluationsController < ApiController
 
   def execute_analysis
 
-    errors = Hash.new
+  #  THIS IS BAD!!!!!!!!!!!!!!!!!  VERY VERY BAD!!!
+  @uriprefix = "http://linkeddata.systems:3000/metrics/"  #  THIS IS BAD!!!!!!!!!!!!!!!!!  VERY VERY BAD!!!
+  #  THIS IS BAD!!!!!!!!!!!!!!!!!  VERY VERY BAD!!!
+  #  THIS IS BAD!!!!!!!!!!!!!!!!!  VERY VERY BAD!!!
+
+
+    errors = Hash.new([])
+    httpheader = Hash.new()
+    
     deprecate_and_return()  # deprecate the old
     @evaluation  = Evaluation.new(collection: @evaluation.collection, resource: @evaluation.resource, title: @evaluation.title, executor: @evaluation.executor )  # create the new
 
-    @uriprefix = "http://linkeddata.systems:3000/metrics/"
-
     data_to_pass = Hash.new()  # this will contain the hash that will be used to create the JSON formatted request
 
-    if (params[:metrics])  # this is coming from the Web interface
+    if (params[:MetricIDs])  # this is coming from the Web interface
+      httpheader["Accept"] = "text/html"
+      metricids = params[:MetricIDs]
 
-      metricshash = params[:metrics]
-      subject = params[:subject]
-      if (params[:executor])
-        @evaluation.executor = params[:executor]
-      end
-  
-      metricshash.each do |met, val|
+      metricids.each do |metricid|
+        metricid = metricid.to_s
+        metricuri = @uriprefix + metricid
         
-        if !(met.match(/Metric_(\d+)_(\w+)/)) then
-          $stderr.puts "#{met} didn't match regexp for metric name"
-        else 
-          metricid = $1
-          metricparam = $2
-          metricuri = "#{@uriprefix}#{metricid}"
-          #$stderr.puts "\n\n\nprefix is #{@uriprefix}\n\n\n"
+        metricshash = params[:metrics].select {|m| m.match(/Metric_#{metricid}/)}  # select only the parameters for this metric ID
+        subject = params[:subject]  # this should now be redundant, but we will do it anyway LOL!
+        if (params[:executor])
+          @evaluation.executor = params[:executor]
+        end
+    
+        metricshash.each do |met, val|
           
-          data_to_pass[metricuri] ||= {"subject" => subject}  # add the subject node; maybe duplicate calls, but just easier this way and does no harm
-          data_to_pass[metricuri].merge!({metricparam.to_s => val})  # push each of the metric parameters and their values to the data
+          if !(met.match(/Metric_(\d+)_(\w+)/)) then
+            $stderr.puts "#{met} didn't match regexp for metric name"
+          else 
+            metricid = $1
+            metricparam = $2
+            data_to_pass[metricuri] ||= {"subject" => subject}  # add the subject node; maybe duplicate calls, but just easier this way and does no harm
+            data_to_pass[metricuri].merge!({metricparam.to_s => val})  # push each of the metric parameters and their values to the data
+          end
         end
       end
 
-    else
+    else   #  WE SHOULD CAREFULLY TEST THE INCOMING JSON....  ONE DAY!!!
+      httpheader["Accept"] = "application/json"
       begin
         data_to_pass = JSON.parse(request.body.read)  # if it isn't JSON, then this will fail
+        $stderr.puts "\n\nDATA PASSED IN: " + data_to_pass.to_s
       rescue
         errors[:json_undecipherable] << "The JSON passed to the Evaluator was not readable"
       end
@@ -213,18 +220,19 @@ class EvaluationsController < ApiController
         $stderr.puts "wasn't able to save the record #{data_to_pass} for #{@evaluation.id}"
     end
     
-    
-    
+      
     @result = Array.new()
     result_for_db = {}
     data_to_pass.keys.each  do |metricuri|
+      $stderr.puts "\n\nmetricuri #{metricuri}"
+      
       metricuri =~ /.*?(\d+)$/
       metricid = $1
       metric = Metric.find(metricid)
       specs = get_metrics_interfaces([metric])  # specs is an array of specs << [metric, specification]
                                                 # metric is the ActiveRecord Metric object, specification is a OpenApiParser::Specification
       (metric, spec) = specs.first # there should only be one...
-
+    $stderr.puts spec.to_s
       spec.raw['paths'].keys.each do |path|
         spec.raw['paths'][path].keys.each do |method|
           
@@ -234,7 +242,8 @@ class EvaluationsController < ApiController
           
           endpoint = spec.endpoint(path.to_s, method.to_s)
           endpoint.body_schema['properties'].keys.each do |param|
-            next if param == "subject"
+            $stderr.puts "found property #{param}"
+            #next if param == "subject"
             json_to_pass = endpoint.query_json(data_to_pass[metricuri])  # this call will auto-format the JSON according to teh schema in the YAML
           end
           
@@ -246,15 +255,14 @@ class EvaluationsController < ApiController
           $stderr.puts "ADDRESS " + http.to_s + "://" + domain.to_s + basepath.to_s  + path.to_s
           uri = URI.parse(http.to_s + "://" + domain.to_s + basepath.to_s + path.to_s)
 
-          header = {'Content-Type': 'application/json'}
+          httpheader["Content-Type"] = 'application/json'
           
-          # Create the HTTP objects
+          # Create the HTTP objects  -execute the test!!!!!!!!
           http = Net::HTTP.new(uri.host, uri.port)
-          request = Net::HTTP::Post.new(uri.request_uri, header)
+          request = Net::HTTP::Post.new(uri.request_uri, httpheader)
           request.body = json_to_pass.to_json
+          $stderr.puts json_to_pass.to_json
           response = http.request(request)
-          $stderr.puts "\n\n\n#{uri.request_uri} gave response body #{JSON.parse(response.body)}\n\n\n"
-
           body = JSON.parse(response.body)  # create a hash
           result_for_db["#{@uriprefix}" + metric.id.to_s] = body   # this is a has of the metric id and the hash of the JSON string from the evaluation service
         end
@@ -291,71 +299,72 @@ class EvaluationsController < ApiController
     params.require(:evaluation).permit(:collection, :resource, :body, :result, :executor, :title, :metrics, :subject)
   end
     
+
+
+  def template()  # template is what raises the Web form, as a prelude to execute_evaluation, which actually does the evaluation.  You can also POST the data to 'response' for the same outcome
+    
+    metrics = get_metrics_for_evaluation
+    @metric_interfaces = get_metrics_interfaces(metrics)
+    # pass this hash to the View
+    
+  end
     
   def get_metrics_for_evaluation(id = params[:id])
     @evaluationid = params[:id]
     @iri = @evaluation.resource
     @iri.strip!
     
-    respond_to do |format|
-      #$stderr.puts "\n\nFormat#{format.class}\n\n"
-
-      resolvediri = resolve(@iri)
-      unless (@evaluate_me = fetch(resolvediri))
-          format.html { redirect_to "/evaluations/#{params[:id]}/error", notice: "the resource at #{@iri} could not be retrieved. Please chck and edit evaluation if necessary"}
-          return
-      end
-      
-      collectionid = @evaluation.collection
-      @collection = Collection.find(collectionid)
-      unless (@collection)
-        format.html { redirect_to "/evaluations/#{params[:id]}/error", notice: "no collection found for #{collectionid}"}
-        return
-      end
-      
-      @metrics = @collection.metrics
-      unless (@metrics)
-        format.html { redirect_to "/evaluations/#{params[:id]}/error", notice: "no metrics found for #{collectionid}"}
-        return
-      end
-    format.html{"all good so far!"}
-      
+    collectionid = @evaluation.collection
+    @collection = Collection.find(collectionid)
+    unless (@collection)
+      @evaluation.errors[:no_collection] << "no collection found"
+      return []
     end
+    
+    @metrics = @collection.metrics
+    unless (@metrics and @metrics.count > 0)
+      @evaluation.errors[:no_metrics] << "no metrics found"
+      return []
+    end
+    $stderr.puts "\n\nMETRICS: #{@metrics}\n\n"
     return @metrics
   end
     
 
-
   def get_metrics_interfaces(metrics = [])
     specs = Array.new()
     
-      metrics.each do |metric|
+    metrics.each do |metric|
+    
+      smartapi = metric.smarturl
+      smartapi.strip!
+      $stderr.puts "FOUND smartapi #{smartapi}"
+      unless (smartapi)
+        format.html { redirect_to "/evaluations/#{params[:id]}/error", notice: "no smartAPI found for #{metric.to_s}"}
+        return
+      end
+#      smartapi = resolve(smartapi)
+      interface = fetch(smartapi)
+      unless (interface)
+        format.html { redirect_to "/evaluations/#{params[:id]}/error", notice: "the SmartAPI definition at #{smartapi} could not be retrieved. Please chck and edit evaluation if necessary"}
+        return
+      end
       
-        smartapi = metric.smarturl
-        smartapi.strip!
-        unless (smartapi)
-          format.html { redirect_to "/evaluations/#{params[:id]}/error", notice: "no smartAPI found for #{metric.to_s}"}
-          return
-        end
-        smartapi = resolve(smartapi)
-
-        unless (interface = fetch(smartapi))
-          format.html { redirect_to "/evaluations/#{params[:id]}/error", notice: "the SmartAPI definition at #{smartapi} could not be retrieved. Please chck and edit evaluation if necessary"}
-          return
-        end
-        
-        smartyaml = interface.body
-        
-        tfile = Tempfile.new('smartapi')
-        tfile.write(smartyaml)
-        tfile.rewind
-        specification = OpenApiParser::Specification.resolve(tfile, validate_meta_schema: false)
-        unless (specification)
-          format.html { redirect_to "/evaluations/#{params[:id]}/error", notice: "the SmartAPI definition in #{smartyaml} could not be retrieved. Please chck and edit evaluation if necessary"}
-          return
-        end
-        specs << [metric, specification]
-      end    
+      smartyaml = interface.body
+      $stderr.puts "\n\nYAML #{smartyaml}"
+      
+      tfile = Tempfile.new('smartapi')
+      tfile.write(smartyaml)
+      tfile.rewind
+      specification = OpenApiParser::Specification.resolve(tfile, validate_meta_schema: false)
+      
+      unless (specification)
+        format.html { redirect_to "/evaluations/#{params[:id]}/error", notice: "the SmartAPI definition in #{smartyaml} could not be retrieved. Please chck and edit evaluation if necessary"}
+        return
+      end
+      $stderr.puts "\n\n#{metric} with #{specification.raw}\n\n"
+      specs << [metric, specification]
+    end    
     return specs
   end
 

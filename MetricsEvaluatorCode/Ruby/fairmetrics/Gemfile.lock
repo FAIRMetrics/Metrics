@@ -84,6 +84,9 @@ GEM
     jbuilder (2.7.0)
       activesupport (>= 4.2.0)
       multi_json (>= 1.2)
+    json-ld (3.0.2)
+      multi_json (~> 1.12)
+      rdf (>= 2.2.8, < 4.0)
     json-schema (2.8.0)
       addressable (>= 2.4)
     jwt (2.1.0)
@@ -229,6 +232,7 @@ DEPENDENCIES
   coffee-rails (~> 4.2)
   equivalent-xml
   jbuilder (~> 2.5)
+  json-ld (~> 3.0.2)
   jwt
   listen (>= 3.0.5, < 3.2)
   nokogiri
@@ -253,4 +257,4 @@ DEPENDENCIES
   web-console (>= 3.3.0)
 
 BUNDLED WITH
-   1.16.1
+   1.17.1

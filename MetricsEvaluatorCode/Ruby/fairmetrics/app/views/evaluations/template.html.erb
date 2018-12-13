@@ -47,7 +47,11 @@
 			<p/>
 			<% endpoint = spec.endpoint(path.to_s, method.to_s) %>
 			<% endpoint.body_schema['properties'].keys.each do |param| %>
-				<% next if param == "subject" %>
+    <input type="hidden" name="MetricIDs[<%= id %>]"/>
+				<% if param == "subject" %>
+      <input type="hidden" name="metrics[Metric_<%= id %>_<%= param.to_s %>]" value="<%= @iri %>"/>
+      <% next %>
+    <% end %>
 				<% desc = endpoint.body_schema['properties'][param.to_s]['description'] %>
 				<% type = endpoint.body_schema['properties'][param.to_s]["type"] %>
 				<p></p>

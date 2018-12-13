@@ -15,6 +15,7 @@ class Swagger
   attr_accessor :responsible_developer
   attr_accessor :email
   attr_accessor :developer_ORCiD
+  attr_accessor :protocol
   attr_accessor :host
   attr_accessor :basePath
   attr_accessor :path
@@ -38,6 +39,7 @@ class Swagger
     @email = params.fetch(:email)
     @developer_ORCiD = params.fetch(:developer_ORCiD)
     @host = params.fetch(:host)
+    @protocol = params.fetch(:protocol, "https")
     @basePath = params.fetch(:basePath)
     @path = params.fetch(:path)
     @response_description = params.fetch(:response_description)
@@ -45,7 +47,7 @@ class Swagger
     @comments = params.fetch(:comments, [])
     @fairsharing_key_location = params.fetch(:fairsharing_key_location)
 	@score = params.fetch(:score, 0)
-	@testedURI = params.fetch(:testedURI)
+	@testedURI = params.fetch(:testedURI, "")
 	
   end
   
@@ -80,7 +82,7 @@ info:
 host: #{@host}
 basePath: #{@basePath}
 schemes:
-  - http
+  - #{@protocol}
 paths:
  #{@path}:
   post:
@@ -198,28 +200,31 @@ EOF_EOF
 		  return self.comments
 	end
 
-	def createEvaluationResponse
-      
-	  g = RDF::Graph.new
-	  
-      dt = Time.now.iso8601
-	  uri = self.testedURI
-      triplify("#{uri}/result##{dt}", "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "http://fairmetrics.org/resources/metric_evaluation_result", g );
-      triplify("#{uri}/result##{dt}", "http://semanticscience.org/resource/SIO_000300", self.score, g )
-      triplify("#{uri}/result##{dt}", "http://purl.obolibrary.org/obo/date", dt, g )
-      triplify(uri,"http://semanticscience.org/resource/SIO_000629", "#{uri}/result##{dt}", g)
+  def createEvaluationResponse
+    
+    g = RDF::Graph.new
 
-      
-	  if not self.comments.eql?("")
-		triplify("#{uri}/result##{dt}", "http://schema.org/comment", self.comments, g)
-	  else
-		triplify("#{uri}/result##{dt}", "http://schema.org/comment", "no comments", g)
-	  end
-      
-      #print "Content-type: application/json\n\n";
-      return g.dump(:jsonld)
-	end
+    dt = Time.now.iso8601
+    uri = self.testedURI
+
+    me = self.protocol + "://" + self.host + "/" + self.basePath + self.path
+    
+    meURI  ="#{me}##{URI.encode(uri)}/result-#{URI.encode(dt)}"
+
+    triplify(meURI, "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "http://fairmetrics.org/resources/metric_evaluation_result", g );
+    triplify(meURI, "http://semanticscience.org/resource/SIO_000300", self.score, g )
+    triplify(meURI, "http://purl.obolibrary.org/obo/date", dt, g )
+    triplify(meURI,"http://semanticscience.org/resource/SIO_000332", uri, g)
+    
+    
+    if not self.comments.eql?("")
+      triplify(meURI, "http://schema.org/comment", self.comments, g)
+    else
+      triplify(meURI, "http://schema.org/comment", "no comments", g)
+    end
+    
+    return g.dump(:jsonld)
+  end
 	
     
 end
-
