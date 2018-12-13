@@ -206,6 +206,8 @@ class EvaluationsController < ApiController
       end
 
     else   #  WE SHOULD CAREFULLY TEST THE INCOMING JSON....  ONE DAY!!!
+      
+      $stderr.puts "\n\n\n\n\n\nGOIN ITO JSON\n\n\n\n\n\n\n"
       httpheader["Accept"] = "application/json"
       begin
         
