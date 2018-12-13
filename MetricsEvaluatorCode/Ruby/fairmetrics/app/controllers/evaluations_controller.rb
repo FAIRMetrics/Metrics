@@ -217,7 +217,7 @@ class EvaluationsController < ApiController
         collection = incoming_hash.keys.first
         matches = collection.match(/(\d+)\/?$/)
         collection_id = matches[1]
-        metrics = incoming_hash[collection_id].metrics
+        metrics = Collection.find(collection_id).metrics
         metrics.each do |m|
           metricid = m.id.to_s
           metricuri = @uriprefix + metricid
