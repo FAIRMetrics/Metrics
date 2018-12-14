@@ -70,6 +70,17 @@ class CollectionsController < ApiController
         @collection.metrics << existing
       end
     end
+    
+    respond_to do |format|
+    if !@collection.errors.any? and @collection.save
+      format.html { redirect_to action: "show", id: @collection.id }   # url_for{@collection}
+      format.json { render :show, status: :created, location: @collection }
+    else
+      format.html { render :new }
+      format.json { render json: @collection.errors, status: :unprocessable_entity }
+    end
+  end
+      
   end
 
   # GET /collections/1/edit
