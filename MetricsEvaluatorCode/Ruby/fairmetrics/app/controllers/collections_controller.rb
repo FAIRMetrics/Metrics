@@ -57,28 +57,6 @@ class CollectionsController < ApiController
   # GET /collections/new
   def new
     @collection = Collection.new
-    if params[:metrics] # this is a JSON call
-      params[:metrics].each do |m|
-        existing = Metric.find_by({smarturl: m})
-        unless existing
-          @collection.errors << "metric #{m} doesn't exist in this registry"
-          next
-        end
-        if existing.deprecated
-          @collection.errors << "metric #{m} is deprecated and cannot be used"
-        end
-        @collection.metrics << existing
-      end
-    end
-    
-    respond_to do |format|
-    if !@collection.errors.any? and @collection.save
-      format.html { redirect_to action: "show", id: @collection.id }   # url_for{@collection}
-      format.json { render :show, status: :created, location: @collection }
-    else
-      format.html { render :new }
-      format.json { render json: @collection.errors, status: :unprocessable_entity }
-    end
   end
       
   end
@@ -100,6 +78,21 @@ class CollectionsController < ApiController
     unless validate_orcid(@collection.contact)  # this adds an error if it fails
       @collection.errors[:orcid_invalid] << "The ORCiD #{@collection.contact} failed lookup"
     end
+
+    if params[:metrics] # this is a JSON call
+      params[:metrics].each do |m|
+        existing = Metric.find_by({smarturl: m})
+        unless existing
+          @collection.errors << "metric #{m} doesn't exist in this registry"
+          next
+        end
+        if existing.deprecated
+          @collection.errors << "metric #{m} is deprecated and cannot be used"
+        end
+        @collection.metrics << existing
+      end
+    end
+  
     
     respond_to do |format|
       if  !@collection.errors.any? && @collection.save
