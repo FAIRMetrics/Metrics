@@ -77,8 +77,8 @@ class CollectionsController < ApiController
       @collection.errors[:orcid_invalid] << "The ORCiD #{@collection.contact} failed lookup"
     end
 
-    if params[:metrics] # this is a JSON call
-      params[:metrics].each do |m|
+    if params[:loadmetrics] # this is a JSON call
+      params[:loadmetrics].each do |m|
         existing = Metric.find_by({smarturl: m})
         unless existing
           @collection.errors << "metric #{m} doesn't exist in this registry"
@@ -152,6 +152,6 @@ class CollectionsController < ApiController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def collection_params
-      params.require(:collection).permit(:name, :contact, :organization, metrics: [])
+      params.require(:collection).permit(:name, :contact, :organization, loadmetrics: [])
     end
 end
