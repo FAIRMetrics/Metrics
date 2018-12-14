@@ -58,8 +58,6 @@ class CollectionsController < ApiController
   def new
     @collection = Collection.new
   end
-      
-  end
 
   # GET /collections/1/edit
   def edit
