@@ -152,6 +152,6 @@ class CollectionsController < ApiController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def collection_params
-      params.require(:collection).permit(:name, :contact, :organization, :metrics)
+      params.require(:collection).permit(:name, :contact, :organization, metrics: [])
     end
 end
