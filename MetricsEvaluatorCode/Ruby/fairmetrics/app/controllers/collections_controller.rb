@@ -57,6 +57,19 @@ class CollectionsController < ApiController
   # GET /collections/new
   def new
     @collection = Collection.new
+    if params[:metrics] # this is a JSON call
+      params[:metrics].each do |m|
+        existing = Metric.find_by({smarturl: m})
+        unless existing
+          @collection.errors << "metric #{m} doesn't exist in this registry"
+          next
+        end
+        if existing.deprecated
+          @collection.errors << "metric #{m} is deprecated and cannot be used"
+        end
+        @collection.metrics << existing
+      end
+    end
   end
 
   # GET /collections/1/edit
@@ -137,6 +150,6 @@ class CollectionsController < ApiController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def collection_params
-      params.require(:collection).permit(:name, :contact, :organization)
+      params.require(:collection).permit(:name, :contact, :organization, :metrics)
     end
 end
