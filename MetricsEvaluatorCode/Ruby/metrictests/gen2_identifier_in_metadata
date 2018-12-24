@@ -56,11 +56,23 @@ def testGUID
 	doi = Regexp.new(/^10.\d{4,9}\/[-._;()\/:A-Z0-9]+$/i)
 	if guid.match(doi)
 		@swagger.addComment("Found a Crossref DOI - testing its metadata")
-		rdf = %x{curl -s -L -H   "Accept: text/turtle" "http://dx.doi.org/#{guid}" 2>/dev/null}
+		rdf = %x{curl -s -L -H   "Accept: text/turtle" "http://doi.org/#{guid}" 2>/dev/null}
 		reader = RDF::Reader.for(:turtle).new(rdf) 
 		g = RDF::Graph.new << reader
 		query = SPARQL.parse("select ?s ?p ?o where {?s ?p '#{guid}'}")
 		results = query.execute(g)
+		unless results.any?
+			query = SPARQL.parse("select ?s ?p ?o where {?s ?p ?o . FILTER(REGEX(str(?o), '#{guid}'))}")
+			results = query.execute(g)
+				unless results.any?
+					@swagger.score = 0
+					@swagger.addComment("Failed to find precise or even pattern-match of #{guid} in output parsed from crossref metadata")
+					return @swagger.createEvaluationResponse
+				end
+			@swagger.score = 0.9
+			@swagger.addComment("Failed to find exact match of #{guid} in output parsed from crossref metadata")
+			return @swagger.createEvaluationResponse
+		end
 		f = results.first
 		@swagger.addComment("found matching metadata #{f[:s]} #{f[:p]} #{f[:o]}")		
 		@swagger.score = 1
@@ -129,8 +141,8 @@ cgi = CGI.new
 schemas = {'subject' => ['string', "the GUID being tested"]}
 
 @swagger = Swagger.new({
-			:title => "FAIR Metrics Gen2- Identifier In Metadata",
-			:description => "Metric to test if the metadata contains the unique identifier to the data object.  This is done using a variety of 'scraping' tools, including DOI metadata resolution, the use of the 'extruct' Python tool, and others...",
+			:title => "FAIR Metrics Gen2- Metadata Identifier Explicitly In Metadata",
+			:description => "Metric to test if the metadata contains the unique identifier to the metadata itself. This is done using a variety of 'scraping' tools, including DOI metadata resolution, the use of the 'extruct' Python tool, and others...",
 			:tests_metric => 'https://purl.org/fair-metrics/FM_F3',
 			:applies_to_principle => "F3",
 			:organization => 'FAIR Metrics Authoring Group',

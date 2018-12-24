@@ -1,0 +1,213 @@
+#!/home/mark_moby_wilkinson/.rvm/rubies/ruby-2.5.1/bin/ruby
+require_relative 'fair_metrics_utilities'
+require 'cgi'
+require 'json'
+require 'uri'
+require 'rdf'
+require 'rdf/turtle'
+require 'sparql'
+
+debug = true
+
+def testGUID
+	
+	guid = @swagger.testedURI
+	
+	# this is hash-based, until I can import into RDF
+	uri = Regexp.new(/\w+:\/?\/?[^\s]+/)
+	doi = Regexp.new(/^10.\d{4,9}\/[-._;()\/:A-Z0-9]+$/i)
+
+	if guid.match(uri) or guid.match(doi)
+		guidurl = ""
+		if guid.match(doi)
+			guidurl = "http://doi.org/#{guid}"
+		else
+			guidurl = guid
+		end
+			
+		@swagger.addComment("Found a URI or DOI.  ")
+		result = %x{extruct #{guidurl} 2>&1}
+		hash = JSON.parse(result)
+		properties = deep_dive_property(nil, hash)
+		if properties.include?"codeRepository"
+			@swagger.addComment "found 'codeRepository' in metadata.  "
+			@swagger.score = 1
+		elsif properties.include?"mainEntity"
+			@swagger.addComment "found schema 'mainEntity' in metadata.  "
+			@swagger.score = 1
+		elsif properties.include?"primaryTopic"
+			@swagger.addComment "found 'primaryTopic' in metadata.  "
+			@swagger.score = 1
+		elsif properties.include?"is-about" or properties.include?"0000136"
+			@swagger.addComment "found Information Artifact Ontology 'is-about' in metadata.  "
+			@swagger.score = 1
+		elsif properties.include?"000332"
+			@swagger.addComment "found SIO is about in metadata.  "
+			@swagger.score = 1
+		else
+			@swagger.addComment "DID NOT find #{guid} in metadata.  "
+			@swagger.score = 0
+		end			
+		return @swagger.createEvaluationResponse
+	end
+
+	#the rest are graph-based
+	g = RDF::Graph.new
+
+	inchi = Regexp.new(/\w{14}\-\w{10}\-\w/)
+	if guid.match(inchi)
+		@swagger.addComment("Found an InChI Key GUID.  ")
+		step1 = %x{curl -H "Accept: application/rdf+xml" https://pubchem.ncbi.nlm.nih.gov/rest/rdf/inchikey/#{guid} 2>/dev/null}
+		
+		reader = RDF::Reader.for(:ntriples).new(step1) 
+		g << reader
+		query = SPARQL.parse("select ?o where {?s <http://semanticscience.org/resource/is-attribute-of> ?o}")
+		results = query.execute(g)
+		if results.any?
+			cpd = results.first[:o]
+			cpd = cpd.to_s
+			cpd = cpd.gsub(/\/$/, "")
+			step2 = %x{curl -L -H "Accept:text/turtle" #{cpd}  2>/dev/null}
+			reader = RDF::Reader.for(:turtle).new(step2)
+			g << reader
+		end
+	end
+	
+	doi = Regexp.new(/^10.\d{4,9}\/[-._;()\/:A-Z0-9]+$/i)
+	if guid.match(doi)
+		@swagger.addComment("Found a Crossref DOI.  ")
+		rdf = %x{curl -s -L -H   "Accept: text/turtle" "http://doi.org/#{guid}" 2>/dev/null}
+		reader = RDF::Reader.for(:turtle).new(rdf) 
+		g << reader
+		
+		
+	end
+
+	if g.size > 0  # have we found anything yet?
+		query = SPARQL.parse("select ?o where {?s <http://semanticscience.org/resource/is-about> ?o}")
+		results = query.execute(g)
+		if results.any?
+			@swagger.score = 1
+			@swagger.addComment "found identifier #{results.first[:o]} using SIO. "
+		end
+
+		query = SPARQL.parse("select ?o where {?s <http://semanticscience.org/resource/SIO_000332> ?o}")
+		results = query.execute(g)
+		if  results.any?
+			@swagger.score = 1
+			@swagger.addComment "found identifier #{results.first[:o]} using SIO. "
+		end
+
+
+		query = SPARQL.parse("select ?o where {?s <http://schema.org/mainEntity> ?o}")
+		results = query.execute(g)
+		if  results.any?
+			@swagger.score = 1
+			@swagger.addComment "found identifier #{results.first[:o]} using Schema.org. "
+		end
+
+
+		query = SPARQL.parse("select ?o where {?s <http://purl.obolibrary.org/obo/IAO_0000136> ?o}")
+		results = query.execute(g)
+		if  results.any?
+			@swagger.score = 1
+			@swagger.addComment "found identifier #{results.first[:o]} using IAO. "
+		end
+
+		
+		query = SPARQL.parse("select ?o where {?s <http://schema.org/codeRepository> ?o}")
+		results = query.execute(g)
+		if  results.any?
+			@swagger.score = 1
+			@swagger.addComment "found identifier #{results.first[:o]} using schema.org. "
+		end
+		
+		if @swagger.score == 0
+			@swagger.addComment "Was unable to find the data identifier using any (common) predicate.  Sorry! "
+		end
+		return @swagger.createEvaluationResponse
+	
+	end
+	
+	handle = Regexp.new(/^[2-9]0.\d{4,9}\/[-._;()\/:A-Z0-9]+$/i)
+	if guid.match(handle)
+		result = manageHandle(guid)
+		@swagger.addComment("Found a non-crossref DOI or other Handle - this metric test currently cannot work with this metadata, therefore, failure on this metric does not indicate any fault of yours!")
+		@swagger.score = 0
+		return @swagger.createEvaluationResponse
+	end
+	
+	@swagger.addComment("the identifier #{guid} did not match any known identification system (tested inchi, doi, handle, uri) and therefore did not pass this metric.  If you think this is an error, please contact the FAIR Metrics group (http://fairmetrics.org).")
+	@swagger.score = 0
+	return @swagger.createEvaluationResponse
+end
+
+def deep_dive(parent, myHash)
+	vals = []
+	myHash.each {|key, value| value.is_a?(Hash) ? deep_dive(key, value) : vals << value}
+	return vals
+end
+
+def deep_dive_property(parent, myHash)
+	props = []
+	myHash.each {|key, value| value.is_a?(Hash) ? deep_dive(key, value) : props << key}
+	$stderr.puts "FOUND PROPERTIES:\n\n" + props.join("\n")
+	return props
+end
+
+
+def manageHandle(guid)
+	head =  %x{curl -I -L  "http://hdl.handle.net/#{guid}"}
+	if (head.match(/content-type:(.*)/i))
+		@swagger.addComment("  Found #{$1} type of file")
+		return 1
+	else
+		@swagger.addComment("  Found no file type resolved by handle")
+		return 0
+	end
+end
+
+if debug
+	@input = '{"subject": "10.5281/zenodo.1147435"}' # my deposit fails
+	@input = '{"subject": "10.5281/zenodo.2235452"}' # github export pass
+
+	#@input = '{"subject": "BSYNRYMUTXBXSQ-UHFFFAOYSA-N"}'
+else 
+	@input = $stdin.read
+end
+
+cgi = CGI.new
+
+schemas = {'subject' => ['string', "the GUID being tested"]}
+
+@swagger = Swagger.new({
+			:title => "FAIR Metrics Gen2- Data Identifier Explicitly In Metadata",
+			:description => "Metric to test if the metadata contains the unique identifier to the data. This is done by searching for a variety of properties, including foaf:primaryTopic, schema:mainEntity, sio:is-about, and iao:is-about. schema codeRepository is used for software releases.",
+			:tests_metric => 'https://purl.org/fair-metrics/FM_F3',
+			:applies_to_principle => "F3",
+			:organization => 'FAIR Metrics Authoring Group',
+			:org_url => 'http://fairmetrics.org',
+			:responsible_developer => "Mark D Wilkinson",
+			:email => 'markw@illuminae.com',
+			:developer_ORCiD => '0000-0001-6960-357X',
+			:protocol => 'http',
+			:host => 'linkeddata.systems',
+			:basePath => '/cgi-bin',
+			:path => '/FAIR_Tests/gen2_identifier_in_metadata',
+			:response_description => 'The response is a binary (1/0), success or failure',
+			:schemas => schemas,
+			:fairsharing_key_location => '../fairsharing.key',
+				 				 
+})
+
+if (!cgi.request_method or cgi.request_method == "GET") and !debug
+        puts "Content-type: application/openapi+yaml;version=3.0\n\n"
+        puts @swagger.getSwagger
+elsif cgi.request_method == "POST" or debug
+        input_json = JSON.parse(@input)
+        guid = input_json["subject"]
+        @swagger.testedURI = guid
+        response = testGUID
+        puts "Content-type: application/json+ld\n\n"
+        puts response
+end

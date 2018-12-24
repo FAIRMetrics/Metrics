@@ -12,10 +12,11 @@ Rails.application.routes.draw do
    
   root 'static_pages#show'
   get '/about', to: 'static_pages#show'
+  post 'collections/new', to: 'collections#create'
+  post 'collections', to: 'collections#create'
   
-
-  get 'collect_metrics/:id', to: 'collections#collect_metrics'
-  post 'collect_metrics/:id', to: 'collections#register_metrics'
+#  get 'collect_metrics/:id', to: 'collections#collect_metrics'
+#  post 'collect_metrics/:id', to: 'collections#register_metrics'
  
   get 'evaluations/:id/template', to: 'evaluations#template', as: 'template'
   post 'evaluations/:id/execute', to: 'evaluations#execute_analysis'  # accepts FORM data, or JSON

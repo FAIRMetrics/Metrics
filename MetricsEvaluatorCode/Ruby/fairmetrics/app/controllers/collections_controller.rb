@@ -56,6 +56,7 @@ class CollectionsController < ApiController
 
   # GET /collections/new
   def new
+    @metrics = Metric.where(deprecated: false)
     @collection = Collection.new
   end
 
@@ -64,9 +65,22 @@ class CollectionsController < ApiController
   end
 
   # POST /collections
+  # POST /collections/new
   # POST /collections.json
   def create
-    @collection = Collection.new(collection_params)
+    
+    #  TODO:  Can't allow the loadmetrics parameter to be sent to the COllection.new routine
+    # will have to do this myself by creating the Metrics objects and adding them...
+    @collection = Collection.new(name: params[:name],
+                                 contact: params[:contact],
+                                 organization: params[:organization])
+    metricurls = params[:include_metrics]  # note that these might not exist in the registry!  We will check in a moment
+$stderr.puts "params:"
+$stderr.puts params
+
+
+
+    @metrics = Metric.where(smarturl: metricurls)
     
     if Collection.where('name=?', @collection.name).first
       @collection.errors[:nameexists] << "A collection by that name already exists"
@@ -77,27 +91,26 @@ class CollectionsController < ApiController
       @collection.errors[:orcid_invalid] << "The ORCiD #{@collection.contact} failed lookup"
     end
 
-    if params[:loadmetrics] # this is a JSON call
-      params[:loadmetrics].each do |m|
-        existing = Metric.find_by({smarturl: m})
-        unless existing
-          @collection.errors << "metric #{m} doesn't exist in this registry"
-          next
-        end
-        if existing.deprecated
-          @collection.errors << "metric #{m} is deprecated and cannot be used"
-        end
-        @collection.metrics << existing
+    metricurls.each do |m|
+      existing = Metric.find_by({smarturl: m})
+      unless existing
+        @collection.errors << "metric #{m} doesn't exist in this registry"
+        next
       end
+      if existing.deprecated
+        @collection.errors << "metric #{m} is deprecated and cannot be used"
+      end
+#      @collection.metrics << existing
     end
-  
+ 
+    @metrics.each {|m| @collection.metrics << m}
     
     respond_to do |format|
       if  !@collection.errors.any? && @collection.save
-        format.html { redirect_to action: "collect_metrics", id: @collection.id }   # url_for{@collection}
+        format.html { redirect_to action: "show", id: @collection.id }   # url_for{@collection}
         format.json { render :show, status: :created, location: @collection }
       else
-        @collection.errors[:other] << "failed to save for an unknown reason"
+        @collection.errors[:other] << "failed to save new collection"
         format.html { render :new }
         format.json { render json: @collection.errors, status: :unprocessable_entity }
       end
@@ -125,21 +138,21 @@ class CollectionsController < ApiController
   # DELETE /collections/1
   # DELETE /collections/1.json
   def destroy
-    @eval = Evaluation.find_by(collection: @collection.id)
-    if @eval.length > 0
-      @collection.errors(:collection_in_use) << "This collection is being used by one or more Evaluations, therefore it cannot be deleted.  Try deprecation instead."
-    end
-    
-    respond_to do |format|
-      if @collection.errors.any?
-        format.html { redirect_to @collections, notice: 'Collection could not be deleted.' }
-        format.json { render json: @collection.errors, status: :unprocessable_entity }
-      else  
-        @collection.destroy
-        format.html { redirect_to collections_url, notice: 'Collection was successfully destroyed.' }
-        format.json { head :no_content }
-      end
-    end
+    #@eval = Evaluation.find_by(collection: @collection.id)
+    #if @eval.length > 0
+    #  @collection.errors(:collection_in_use) << "This collection is being used by one or more Evaluations, therefore it cannot be deleted.  Try deprecation instead."
+    #end
+    #
+    #respond_to do |format|
+    #  if @collection.errors.any?
+    #    format.html { redirect_to @collections, notice: 'Collection could not be deleted.' }
+    #    format.json { render json: @collection.errors, status: :unprocessable_entity }
+    #  else  
+    #    @collection.destroy
+    #    format.html { redirect_to collections_url, notice: 'Collection was successfully destroyed.' }
+    #    format.json { head :no_content }
+    #  end
+    #end
   end
   
   
@@ -152,6 +165,7 @@ class CollectionsController < ApiController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def collection_params
-      params.require(:collection).permit(:name, :contact, :organization, loadmetrics: [])
+      params.permit(:name, :contact, :organization,  :collection)
+      params.permit(include_metrics: [])
     end
 end

@@ -11,8 +11,29 @@
 
 <h1>New Collection</h1>
 
-<%= render 'form', collection: @collection %>
+<%= form_tag do %>
+  <%= label_tag(:name, "Collection Name:") %>
+  <%= text_field_tag(:name) %>
+<br/>
+<br/>
+  <%= label_tag(:contact, "Contact (ORCiD - this is validated!):") %>
+  <%= text_field_tag(:contact) %>
+<br/>
+<br/>
+  <%= label_tag(:organization, "Your Organization Name:") %>
+  <%= text_field_tag(:organization) %>
+<br/>
+<br/>	
+	<div style="clear: both;"/>
+  <%= label_tag(:metrics, "Load Collection With Metrics:") %>
 
-<h3>In the next step, you will add Metrics to your collection</h3>
+  <%= select_tag :metrics, options_from_collection_for_select(@metrics, "smarturl", "name"), size: 10, multiple: true  %> 
+<br/>
+
+
+  <%= submit_tag("Create Collection") %>
+
+<% end %>
+
 
 <!-- <%= link_to 'Back', collections_path %> -->
