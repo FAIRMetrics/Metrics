@@ -49,11 +49,15 @@ A Metric Test is a Web API that has the following features:
 
 1)  It is described in YAML using a (http://smart-api.info/)[smartAPI] interface annotation (smartAPI is an extension of openAPI/Swagger, which allows semantic annotation of various metadata elements and interface input/output fields.  An editor for smartAPI (http://smart-api.info/editor/)[is available].
 2)  HTTP GET on the endpoint of the Metric Test URL returns that smartAPI document in YAML
-3)  HTTP POST of a simple JSON document triggers the execution of the test.  The document structure is:
+3)  HTTP POST of a simple JSON document {subject => GUID} triggers the execution of the test.  (we are working on JSON Schema for these documents now, but following the example below will get you started)
+4)  The Test returns a block of JSON-LD containing information about the test, including date/time, comments, and score
 
-     {'subject': 'your.GUID.here'}
+For example
 
-4)  The Test returns a block of JSON-LD with a structure as follows:
+    curl -X POST -D -L -H "Content-Type: application/json" -H "Accept: application/json" -d '{"subject": "10.5281/zenodo.1147435"}' http://linkeddata.systems/cgi-bin/FAIR_Tests/gen2_unique_identifier
+
+Might return the following result:
+
 
       [
         {
@@ -88,7 +92,8 @@ A Metric Test is a Web API that has the following features:
         }
       ]
 
-The "score" of the Metric Test is the value of the "SIO:000300" (has_value) predicate.  Comments from the evaluation, for example, explanations for failure, are in the schema:comment.  Other metadata is provided.
+
+The "score" of the Metric Test is the value of the "SIO:000300" (has_value) predicate.  Comments from the evaluation, for example, explanations for failure, are in the schema:comment.  Other metadata is provided, as shown (all shown fields are required!).
 
 This Metric Test is registered by either HTTP POST of properly formatted JSON to the Evaluator registry (see API here:https://github.com/FAIRMetrics/Metrics/tree/master/MetricsEvaluatorCode/Ruby/fairmetrics), or by visiting the manual submission page at:  http://linkeddata.systems:3000/metrics/new, where the form field on that page asks for the URL of the Metric Test's YAML document.
 
