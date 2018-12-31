@@ -1,0 +1,10 @@
+HTTP/1.1 201 Created
+Content-Type: application/json; charset=utf-8
+Location: http://linkeddata.systems:3000/collections/1
+ETag: W/"dddee7d6ad0b14fb555a6dfc708deaa3"
+Cache-Control: max-age=0, private, must-revalidate
+X-Request-Id: 836fcd6c-a4d6-4ff0-8f0e-330f4a21b5cf
+X-Runtime: 1.036482
+Vary: Origin
+Transfer-Encoding: chunked
+
