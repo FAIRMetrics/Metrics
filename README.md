@@ -103,6 +103,10 @@ This Metric Test is registered by either HTTP POST of properly formatted JSON to
 
 Once registered, a Metric Test can be included in new Metric Collections, and used by the Evaluator software for automated testing of data resources.
 
+# Resources available to help in Metric Testing
+
+The [FAIRSharing Registry](https://fairsharing.org) is a repository for a wide variety of standards, including file formats, ontologies, identifier types, etc.  They provide a JSON API that can be used within Metrics Tests to look-up "standards" a test encounters in its exploration of (meta)data to determine if that standard is registered.  Standards that are not registered with FAIRSharing should be encouraged to do so by contacting the appropriate standards-body, or by contacting the FAIRSharing team with a request to include the standard in their registry.
+
 # PHILOSOPHY OF FAIR TESTING (under development!  Comments welcome!)
 
 Evaluating FAIRness is a controversial issue!  We (the Metrics Authoring Group) feel that these concerns can be eased through bringing more clarity regarding the "philosophy" behind FAIRness testing.
