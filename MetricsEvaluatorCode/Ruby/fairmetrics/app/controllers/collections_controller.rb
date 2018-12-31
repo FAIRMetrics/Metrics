@@ -2,45 +2,45 @@ class CollectionsController < ApiController
 #class CollectionsController < ApplicationController
 
 #  before_action :set_collection, only: [:show, :edit, :update, :destroy]
-  before_action :set_collection, only: [:show, ]
+  before_action :set_collection, only: [:show, :deprecate ]
 
-  skip_before_action :authenticate_request, only: %i[index show new collect_metrics register_metrics create]
-
-
-  def collect_metrics
-    @collection = Collection.find(params[:id])
-    @metrics = Metric.where("name LIKE ?", "%")
-  end
+  skip_before_action :authenticate_request, only: %i[index show new collect_metrics register_metrics create deprecate]
 
 
-  def register_metrics
-    @collection = Collection.find(params[:id])
-    
-    @collection.metrics.each do |m|
-      @collection.metrics.delete(m)
-      @collection.save!
-    end
-    @collection.metrics.each do |m|  # why do I need to do this twice?!!??   If I don't, there's one left over!
-      @collection.metrics.delete(m)
-      @collection.save!
-    end
+  #def collect_metrics
+  #  @collection = Collection.find(params[:id])
+  #  @metrics = Metric.where("name LIKE ?", "%")
+  #end
 
-    metrics = params[:metrics]
-    metrics.each do |m|
-      metric = Metric.find(m)
-      @collection.metrics << metric
-    end
 
-    respond_to do |format|
-      if @collection.save
-        format.html { redirect_to action: "show", id: @collection.id }   # url_for{@collection}
-        format.json { render :show, status: :created, location: @collection }
-      else
-        format.html { render :new }
-        format.json { render json: @collection.errors, status: :unprocessable_entity }
-      end
-    end
-  end
+  #def register_metrics
+  #  @collection = Collection.find(params[:id])
+  #  
+  #  @collection.metrics.each do |m|
+  #    @collection.metrics.delete(m)
+  #    @collection.save!
+  #  end
+  #  @collection.metrics.each do |m|  # why do I need to do this twice?!!??   If I don't, there's one left over!
+  #    @collection.metrics.delete(m)
+  #    @collection.save!
+  #  end
+  #
+  #  metrics = params[:metrics]
+  #  metrics.each do |m|
+  #    metric = Metric.find(m)
+  #    @collection.metrics << metric
+  #  end
+  #
+  #  respond_to do |format|
+  #    if @collection.save
+  #      format.html { redirect_to action: "show", id: @collection.id }   # url_for{@collection}
+  #      format.json { render :show, status: :created, location: @collection }
+  #    else
+  #      format.html { render :new }
+  #      format.json { render json: @collection.errors, status: :unprocessable_entity }
+  #    end
+  #  end
+  #end
 
 
   # GET /collections
@@ -69,16 +69,10 @@ class CollectionsController < ApiController
   # POST /collections.json
   def create
     
-    #  TODO:  Can't allow the loadmetrics parameter to be sent to the COllection.new routine
-    # will have to do this myself by creating the Metrics objects and adding them...
     @collection = Collection.new(name: params[:name],
                                  contact: params[:contact],
                                  organization: params[:organization])
     metricurls = params[:include_metrics]  # note that these might not exist in the registry!  We will check in a moment
-$stderr.puts "params:"
-$stderr.puts params
-
-
 
     @metrics = Metric.where(smarturl: metricurls)
     
@@ -86,7 +80,7 @@ $stderr.puts params
       @collection.errors[:nameexists] << "A collection by that name already exists"
     end
     
-    # TODO   # no longer send the object = validate returns true or false
+    # TODO  if the validation URL is invalid, it crashes ugly.  Catch that error one day
     unless validate_orcid(@collection.contact)  # this adds an error if it fails
       @collection.errors[:orcid_invalid] << "The ORCiD #{@collection.contact} failed lookup"
     end
@@ -100,10 +94,9 @@ $stderr.puts params
       if existing.deprecated
         @collection.errors << "metric #{m} is deprecated and cannot be used"
       end
-#      @collection.metrics << existing
     end
  
-    @metrics.each {|m| @collection.metrics << m}
+    @metrics.each {|m| @collection.metrics << m}  # it's ok to add the metrics, even if one is invalid, because the next routine catches errors and causes failure
     
     respond_to do |format|
       if  !@collection.errors.any? && @collection.save
@@ -155,6 +148,19 @@ $stderr.puts params
     #end
   end
   
+  def deprecate
+    @collection.deprecated = true
+    respond_to do |format|
+      if @collection.errors.any? or !@collection.save
+        format.html { redirect_to action: show, notice: 'Collection could not be deprecated.  Sorry, I dont know why' }
+        format.json { render json: @collection.errors, status: :unprocessable_entity }
+      else
+        @collection.save
+        format.html { redirect_to action: show, notice: 'Collection was successfully deprecated.' }
+        format.json { head :no_content }
+      end
+    end
+  end
   
 
   private

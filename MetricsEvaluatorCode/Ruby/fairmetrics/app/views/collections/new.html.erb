@@ -25,9 +25,9 @@
 <br/>
 <br/>	
 	<div style="clear: both;"/>
-  <%= label_tag(:metrics, "Load Collection With Metrics:") %>
+  <%= label_tag(:include_metrics, "Load Collection With Metrics:") %>
 
-  <%= select_tag :metrics, options_from_collection_for_select(@metrics, "smarturl", "name"), size: 10, multiple: true  %> 
+  <%= select_tag :include_metrics, options_from_collection_for_select(@metrics, "smarturl", "name"), size: 10, multiple: true  %> 
 <br/>
 
 

@@ -1,9 +1,8 @@
 #class MetricsController < ApplicationController
 class MetricsController < ApiController
   
-#  before_action :set_metric, only: [ :show, :edit, :update, :destroy]
-  before_action :set_metric, only: [ :show, ]
-  skip_before_action :authenticate_request, only: %i[index show new create], raise: false
+  before_action :set_metric, only: [ :show, :deprecate]
+  skip_before_action :authenticate_request, only: %i[index show new create deprecate], raise: false
 
 
   # GET /metrics
@@ -115,9 +114,6 @@ class MetricsController < ApiController
     
     respond_to do |format|
       if errors.length == 0 and @metric.save
-        #@collection = Collection.where("name = ?", "__ALL__METRICS")
-        #collect_all = @collection.first
-        #collect_all.metrics << @metric
         format.html { redirect_to @metric, notice: 'Metric was successfully created.' }
         format.json { render :show, status: :created, location: @metric }
       else
@@ -136,29 +132,40 @@ class MetricsController < ApiController
   # PATCH/PUT /metrics/1
   # PATCH/PUT /metrics/1.json
   def update
-    respond_to do |format|
-      if @metric.update(metric_params)
-        format.html { redirect_to @metric, notice: 'Metric was successfully updated.' }
-        format.json { render :show, status: :ok, location: @metric }
-      else
-        format.html { render :edit }
-        format.json { render json: @metric.errors, status: :unprocessable_entity }
-      end
-    end
+    #respond_to do |format|
+    #  if @metric.update(metric_params)
+    #    format.html { redirect_to @metric, notice: 'Metric was successfully updated.' }
+    #    format.json { render :show, status: :ok, location: @metric }
+    #  else
+    #    format.html { render :edit }
+    #    format.json { render json: @metric.errors, status: :unprocessable_entity }
+    #  end
+    #end
   end
 
   # DELETE /metrics/1
   # DELETE /metrics/1.json
   def destroy
-    @metric.destroy
-    respond_to do |format|
-      format.html { redirect_to metrics_url, notice: 'Metric was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    #@metric.destroy
+    #respond_to do |format|
+    #  format.html { redirect_to metrics_url, notice: 'Metric was successfully destroyed.' }
+    #  format.json { head :no_content }
+    #end
   end
 
-
-
+  def deprecate
+    @metric.deprecated = true
+    respond_to do |format|
+      if @metric.errors.any? or !@metric.save
+        format.html { redirect_to action: show, notice: 'Metric could not be deprecated.  Sorry, I dont know why' }
+        format.json { render json: @metric.errors, status: :unprocessable_entity }
+      else
+        @metric.save
+        format.html { redirect_to action: show, notice: 'Metric was successfully deprecated.' }
+        format.json { head :no_content }
+      end
+    end
+  end
  
 
   private
@@ -182,27 +189,6 @@ class MetricsController < ApiController
       params.require(:metric).permit(:smarturl)
     end
 
-
-
-    #def fetch(uri_str)  # we create a "fetch" routine that does some basic error-handling.  
-    #
-    #  address = URI(uri_str)  # create a "URI" object (Uniform Resource Identifier: https://en.wikipedia.org/wiki/Uniform_Resource_Identifier)
-    #  response = Net::HTTP.get_response(address)  # use the Net::HTTP object "get_response" method
-    #                                               # to call that address
-    #
-    #  case response   # the "case" block allows you to test various conditions... it is like an "if", but cleaner!
-    #    when Net::HTTPSuccess then  # when response Object is of type Net::HTTPSuccess
-    #      # successful retrieval of web page
-    #      return response  # return that response object to the main code
-    #    else
-    #      raise Exception, "Something went wrong... the call to #{uri_str} failed; type #{response.class}"
-    #      # note - if you want to learn more about Exceptions, and error-handling
-    #      # read this page:  http://rubylearning.com/satishtalim/ruby_exceptions.html  
-    #      # you can capture the Exception and do something useful with it!
-    #      response = False
-    #      return response  # now we are returning 'False', and we will check that with an "if" statement in our main code
-    #  end 
-    #end
     
     def known_metricuri(url)
       # logger.debug("looking for #{url}")

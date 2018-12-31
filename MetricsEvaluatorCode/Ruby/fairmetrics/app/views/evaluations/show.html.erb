@@ -24,65 +24,33 @@
 </p>
 
 <p>
+  <strong>Execution Endpoint (HTTP POST):</strong>
+  http://linkeddata.systems:3000/collections/<%= @collection.id %>/evaluate
+</p>
+
+<p>
   <strong>Executed Data:</strong><br/>
   <div style="padding-left: 40px;">
-<% if @evaluation.body %>
-  <script>
-  function showJSON() {
-   var jsonPretty = JSON.stringify(JSON.parse(document.getElementById('RAW').innerHTML),null,2);
-   document.getElementById('RAW').innerHTML = "<pre><code>" + jsonPretty + "</code></pre>";
-   document.getElementById('RAW').style.display = "block";
-  }
-  </script>
-  <div id="RAW"  style="display:none;" class="raw_json" > <%= @evaluation.body %> </div>
-  <input type="button" name="showraw" value="Show JSON" onclick="showJSON();" />
-  
-    <% hash = JSON.parse(@evaluation.body) %>
-        <%      kz = hash.keys
-                @mets = []
-                kz.each do |k|
-                        k =~ /.*?(\d+)$/ ; metricid = $1
-                        metric = Metric.find(metricid)
-                        @mets << metric
-                end
-                @ms = Array.new
-                @f = Array.new 
-                @a = Array.new 
-                @i = Array.new 
-                @r = Array.new 
-                @mets.each do |m| 
-                        case m.principle.upcase
-                              when /F/
-                                @f << m
-                              when /A/
-                                @a << m
-                              when /I/
-                                @i << m
-                              when/R/
-                                  @r << m
-                        end
-                end
-                @f.sort_by! {|mm| mm.principle}
-                @a.sort_by! {|mm| mm.principle}
-                @i.sort_by! {|mm| mm.principle}
-                @r.sort_by! {|mm| mm.principle}
-                @ms.push(*@f)
-                @ms.push(*@a)
-                @ms.push(*@i)
-                @ms.push(*@r)
-                %>
-  <% @ms.each do |metric|
-        body = hash["http://linkeddata.systems:3000/metrics/#{metric.id}"]  # this is awful!!  Put the URI into the database!
-        %>
-    <div style="font-size: +1.5em;  padding-top: 20px;"><%= metric.principle %>: <%= metric.name %></div>
-    <div style="padding-left: 60px;">
-      <% body.each do |key| %>
-        <i><%= key %> : <%= body[key] %></i><br/>
+      <% if @evaluation.body %>
+        <script>
+        function showJSON() {
+         var jsonPretty = JSON.stringify(JSON.parse(document.getElementById('RAW').innerHTML),null,2);
+         document.getElementById('RAW').innerHTML = "<pre><code>" + jsonPretty + "</code></pre>";
+         document.getElementById('RAW').style.display = "block";
+        }
+        </script>
+        <div id="RAW"  style="display:none;" class="raw_json" > <%= @evaluation.body %> </div>
+        <input type="button" name="showraw" value="Show JSON" onclick="showJSON();" />
+        
+        
+        <% hash = JSON.parse(@evaluation.body)  %>
+        <div style="padding-left: 60px;">
+          <% hash.each do |key| %>
+              <i><%= key %> : <%= hash[key] %></i><br/>
+          <% end %>
+        </div>
       <% end %>
-    </div>
-  <% end %>
-<% end %>
-</div>
+  </div>
   
 
 </p>
@@ -101,7 +69,7 @@
 
 </div>
 <div style="float: left; padding-left: 50px;">
-<%=  link_to image_tag("eval_button.jpg"), template_path(@evaluation) %>
+
   
 </div>
 
