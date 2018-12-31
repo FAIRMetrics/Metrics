@@ -1,5 +1,7 @@
 # Metrics Compliance Tests and "The Evaluator"
 
-This repository contains the Metrics Compliance tests that were written by the FAIR Metrics team (in the Perl folder).  It also contains the Ruby code behind The Evaluator.
+This repository contains the Metrics Compliance tests that were written by the FAIR Metrics team (these are being re-written, so all code in the Perl folder should be considered deprecated and only for historical interest).  
 
-**A public demonstration server for The Evaluator** is available at:  http://linkeddata.systems:3000   This is the code that was used to generate the results reported in [submitted] and in the pre-print [submitted]
+The Evaluator software is avalable in the https://github.com/FAIRMetrics/Metrics/edit/master/MetricsEvaluatorCode/Ruby/fairmetrics folder  see the ReadMe in that folder for instructions on use.
+
+**A public demonstration server for The Evaluator** is available at:  http://linkeddata.systems:3000  see above for instructions.
