@@ -47,7 +47,7 @@ With the goal of providing an objective, automated way of testing (meta)data res
 
 A Metric Test is a Web API that has the following features:
 
-1)  It is described in YAML using a (http://smart-api.info/)[smartAPI] interface annotation (smartAPI is an extension of openAPI/Swagger, which allows semantic annotation of various metadata elements and interface input/output fields.  An editor for smartAPI (http://smart-api.info/editor/)[is available].
+1)  It is described in YAML using a [smartAPI](http://smart-api.info/) interface annotation (smartAPI is an extension of openAPI/Swagger, which allows semantic annotation of various metadata elements and interface input/output fields.  An editor for smartAPI [is available](http://smart-api.info/editor/).
 2)  HTTP GET on the endpoint of the Metric Test URL returns that smartAPI document in YAML
 3)  HTTP POST of a simple JSON document {subject => GUID} triggers the execution of the test.  (we are working on JSON Schema for these documents now, but following the example below will get you started)
 4)  The Test returns a block of JSON-LD containing information about the test, including date/time, comments, and score
