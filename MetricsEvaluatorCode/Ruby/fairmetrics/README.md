@@ -275,7 +275,7 @@ A Human readable Web page describing the outcome of the evaluation  (the equival
 
 # <a name="posts"></a> HTTP POST Operations
 
-## <a name="createnewmetric"> /metric
+## <a name="createnewmetric"> /metrics
 
 POST the URL to the smartAPI interface definition (currently *must* be in YAML!) in order to register a new Metric Test
 
