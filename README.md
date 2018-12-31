@@ -49,7 +49,7 @@ A Metric Test is a Web API that has the following features:
 
 1)  It is described in YAML using a [smartAPI](http://smart-api.info/) interface annotation (smartAPI is an extension of openAPI/Swagger, which allows semantic annotation of various metadata elements and interface input/output fields.  [An editor for smartAPI](http://smart-api.info/editor/) is available.
 2)  HTTP GET on the endpoint of the Metric Test URL returns that smartAPI document in YAML (for example: http://linkeddata.systems/cgi-bin/FAIR_Tests/gen2_unique_identifier)
-3)  HTTP POST to that same endpoint of a simple JSON document {subject => GUID} triggers the execution of the test.  (we are working on JSON Schema for these documents now, but following the example below will get you started)
+3)  HTTP POST of the **metadata GUID** to that same endpoint, in a simple JSON document {subject => GUID}, triggers the execution of the test.  (we are working on JSON Schema for these documents now, but following the example below will get you started)
 4)  The Test returns a block of JSON-LD containing information about the test, including date/time, comments, and score
 
 For example
@@ -94,6 +94,8 @@ Might return the following result:
 
 
 The "score" of the Metric Test is the value of the "SIO:000300" (has_value) predicate, and must be a floating-point value between 0 and 1.  The precise meaning of that value should be explained in the Comments (schema:comment) section, along wth, for example, explanations for failure.  Other metadata is provided, as shown (all shown fields are required!).
+
+**NOTE** No other information may be provided to the Metric Test beyond the **metadata** GUID.  The purpose of FAIR Metric Tests is to determine if machines can find, access, and "interpret" (meta)data, thus it is a firm requirement that only the metadata GUID may be given to the test.  The aspect of FAIRness being evaluated **must** be automatically discernable using that metadata.
 
 This Metric Test is registered by either HTTP POST of properly formatted JSON to the Evaluator registry (see API here:https://github.com/FAIRMetrics/Metrics/tree/master/MetricsEvaluatorCode/Ruby/fairmetrics), or by visiting the manual submission page at:  http://linkeddata.systems:3000/metrics/new, where the form field on that page asks for the URL of the Metric Test's YAML document.
 
