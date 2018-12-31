@@ -61,7 +61,7 @@ Might return the following result:
 
       [
         {
-          "@id": "http://linkeddata.systems//cgi-bin/FAIR_Tests/gen2_unique_identifier#10.5281/zenodo.1147435/result-2018-12-31T13:32:43+00:00",
+          "@id": "http://linkeddata.systems/cgi-bin/FAIR_Tests/gen2_unique_identifier#10.5281/zenodo.1147435/result-2018-12-31T13:32:43+00:00",
           "@type": [
             "http://fairmetrics.org/resources/metric_evaluation_result"
           ],
@@ -73,7 +73,7 @@ Might return the following result:
           ],
           "http://schema.org/comment": [
             {
-              "@value": "[]Found a Crossref DOI - pass",
+              "@value": "Found a Crossref DOI - pass",
               "@language": "en"
             }
           ],
