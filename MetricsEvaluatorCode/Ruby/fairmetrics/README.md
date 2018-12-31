@@ -281,7 +281,7 @@ POST the URL to the smartAPI interface definition (currently *must* be in YAML!)
 
 Sample JSON
 
-curl -X POST -D -L -H "Content-Type: application/json" -H "Accept: application/json" -d '{"smarturl": "http://linkeddata.systems/cgi-bin/FAIR_Tests/gen2_metadata_identifier_in_metadata"}' http://linkeddata.systems:3000/metrics
+    curl -X POST -D -L -H "Content-Type: application/json" -H "Accept: application/json" -d '{"smarturl": "http://linkeddata.systems/cgi-bin/FAIR_Tests/gen2_metadata_identifier_in_metadata"}' http://linkeddata.systems:3000/metrics
 
 response 200 OK
 
@@ -303,7 +303,7 @@ POST the JSON describing a new Metric Collection to register that collection in 
 
 Sample JSON
 
-curl -X POST -D -L -H "Content-Type: application/json" -H "Accept: application/json" -d '{"name": "JSON Test 3", "contact": "0000-0001-6960-357X", "organization": "Hackathon", "include_metrics": ["http://linkeddata.systems/cgi-bin/FAIR_Tests/gen2_metadata_identifier_in_metadata"]}'  http://linkeddata.systems:3000/collections
+    curl -X POST -D -L -H "Content-Type: application/json" -H "Accept: application/json" -d '{"name": "JSON Test 3", "contact": "0000-0001-6960-357X", "organization": "Hackathon", "include_metrics": ["http://linkeddata.systems/cgi-bin/FAIR_Tests/gen2_metadata_identifier_in_metadata"]}'  http://linkeddata.systems:3000/collections
 
 Response 200 OK
 
@@ -358,7 +358,7 @@ Send a block of JSON containing the Resource (GUID) to be evaluated, and other m
 
 Sample JSON
 
-curl -X POST -D -L -H "Content-Type: application/json" -H "Accept: application/json" -d '{"resource": "10.5281/zenodo.1147435", "executor":  "0000-0001-6960-357X", "title": "an exemplar evaluation"}' http://linkeddata.systems:3000/collections/1/evaluate 
+    curl -X POST -D -L -H "Content-Type: application/json" -H "Accept: application/json" -d '{"resource": "10.5281/zenodo.1147435", "executor":  "0000-0001-6960-357X", "title": "an exemplar evaluation"}' http://linkeddata.systems:3000/collections/1/evaluate 
 
 Response 302 Redirect  (redirected to the URL of a newly created Evaluation http://linkeddata.systems/evaluations/{id}  with a structure similar to:
 
