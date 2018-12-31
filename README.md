@@ -49,8 +49,10 @@ A Metric Test is a Web API that has the following features:
 
 1)  It is described in YAML using a [smartAPI](http://smart-api.info/) interface annotation (smartAPI is an extension of openAPI/Swagger, which allows semantic annotation of various metadata elements and interface input/output fields.  [An editor for smartAPI](http://smart-api.info/editor/) is available.
 2)  HTTP GET on the endpoint of the Metric Test URL returns that smartAPI document in YAML (for example: http://linkeddata.systems/cgi-bin/FAIR_Tests/gen2_unique_identifier)
-3)  HTTP POST of the **metadata GUID** to that same endpoint, in a simple JSON document {subject => GUID}, triggers the execution of the test.  (we are working on JSON Schema for these documents now, but following the example below will get you started)
+3)  HTTP POST of the **metadata GUID** to that same endpoint, in a simple JSON document {subject => GUID}, triggers the execution of the test.  
 4)  The Test returns a block of JSON-LD containing information about the test, including date/time, comments, and score
+
+(we are working on JSON Schema for these documents now, but following the example below will get you started)
 
 For example
 
