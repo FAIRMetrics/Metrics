@@ -17,6 +17,7 @@ The FAIR Evaluator is a Ruby on Rails application that is used to:
 * [Get Evaluations](#getevaluations)
 * [Get Evaluation Creation Template](#getevaluationstemplate)
 * [Get Evaluation Result](#getevaluationresult)
+
 [HTTP POST Operations](#posts)
 * [Register New Metric Test](#createnewmetric)
 * [Register New Collection](#createnewcollection)
