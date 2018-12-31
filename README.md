@@ -93,7 +93,7 @@ Might return the following result:
       ]
 
 
-The "score" of the Metric Test is the value of the "SIO:000300" (has_value) predicate.  Comments from the evaluation, for example, explanations for failure, are in the schema:comment.  Other metadata is provided, as shown (all shown fields are required!).
+The "score" of the Metric Test is the value of the "SIO:000300" (has_value) predicate, and must be a floating-point value between 0 and 1.  The precise meaning of that value should be explained in the Comments (schema:comment) section, along wth, for example, explanations for failure.  Other metadata is provided, as shown (all shown fields are required!).
 
 This Metric Test is registered by either HTTP POST of properly formatted JSON to the Evaluator registry (see API here:https://github.com/FAIRMetrics/Metrics/tree/master/MetricsEvaluatorCode/Ruby/fairmetrics), or by visiting the manual submission page at:  http://linkeddata.systems:3000/metrics/new, where the form field on that page asks for the URL of the Metric Test's YAML document.
 
