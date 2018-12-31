@@ -31,6 +31,18 @@
   <a href='<%= @metric.smarturl %>'><%= @metric.smarturl %></a>
 </p>
 
+<p>
+  <strong>Deprecated?:</strong>
+    <% if @metric.deprecated == true %>
+    <span style="color:red;">
+    <% end %>
+    <%= @metric.deprecated %>
+    <% if @metric.deprecated == true %>
+    </span>
+    <% end %>
+
+</p>
+
 <!-- <%= link_to 'Edit', edit_metric_path(@metric) %>  -->
 <%= link_to 'Back', metrics_path %> 
 <%= link_to 'Home', about_path %> 
