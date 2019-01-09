@@ -8,7 +8,7 @@ type3 =     "http://www.w3.org/ns/prov#Collection"
 # THIS JBUILDER TEMPLATE CREATES AN LDP Container
 # AS JSON LD
 
-json.set! '@id', collection_url(collection, format: :json)
+json.set! '@id', collection_url(collection)
 
 
 json.set! '@type' do
@@ -57,7 +57,7 @@ end
 
 
 json.set! 'http://www.w3.org/ns/dcat#identifier' do
-	json.set! '@id', collection_url(collection, format: :json)
+	json.set! '@id', collection_url(collection)
 end
 
 json.set! 'http://www.w3.org/ns/dcat#publisher' do
