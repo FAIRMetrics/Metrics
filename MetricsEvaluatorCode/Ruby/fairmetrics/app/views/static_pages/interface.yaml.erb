@@ -11,7 +11,7 @@ info:
     name: "CC0"
     url: "http://linkeddata.systems:3000/license"
   title: FAIR Evaluator API
-  version: '0.1.1'
+  version: '0.1'
 servers:
 - description: The primary endpoint for the demonstration server
   url: http://linkeddata.systems:3000
@@ -24,6 +24,17 @@ paths:
 
 
   /metrics:
+    get:
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/metrics_array'
+          description: the requested FAIR Metric
+      summary: Retrieve all FAIR Metrics
+      tags:
+      - metrics
     post:
       requestBody:
         content:
@@ -75,6 +86,17 @@ paths:
 
 
   /collections:
+    get:
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/collections_array'
+          description: the requested Metric Collection
+      summary: Retrieve all Metric Collections
+      tags:
+      - collections
     post:
       requestBody:
         content:
@@ -196,6 +218,11 @@ components:
       required:
       - smarturl
       type: object
+    metrics_array:
+      type: array
+      items:
+        $ref: '#/components/schemas/metrics_result'
+
     metrics_result:
       properties:
         id:
@@ -215,6 +242,10 @@ components:
         principle:
           type: string
 
+    collections_array:
+      type: array
+      items:
+        $ref: '#/components/schemas/collections_result'
 
     collections:
       properties:
