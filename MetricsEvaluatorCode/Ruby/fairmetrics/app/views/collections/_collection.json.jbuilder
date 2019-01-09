@@ -67,7 +67,7 @@ end
 
 json.set! 'http://www.w3.org/ns/ldp#contains' do
 	json.array! collection.metrics do |metric|
-		json.set! '@id', root_url + metric.id.to_s
+		json.set! '@id', metric_url(metric)
 	end
 end
 

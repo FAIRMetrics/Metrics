@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  
   root 'static_pages#home'
   
   scope "/FAIR_Evaluator" do 
