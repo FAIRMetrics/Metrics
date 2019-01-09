@@ -117,9 +117,9 @@ class MetricsController < ApiController
         format.html { redirect_to @metric, notice: 'Metric was successfully created.' }
         format.json { render :show, status: :created, location: @metric }
       else
-        @metric.errors[:other].push(errors)
+        @metric.errors[:details].unshift *errors
         format.html { render :new }
-        format.json { render :json => {status: :unprocessable_entity, errors: @metric.errors}}
+        format.json { render :json => {status: :bad_request, errors: @metric.errors}, status: 400}
       end
     end
 

@@ -77,22 +77,22 @@ class CollectionsController < ApiController
     @metrics = Metric.where(smarturl: metricurls)
     
     if Collection.where('name=?', @collection.name).first
-      @collection.errors[:nameexists] << "A collection by that name already exists"
+      @collection.errors[:description] << "A collection by that name already exists"
     end
     
     # TODO  if the validation URL is invalid, it crashes ugly.  Catch that error one day
     unless validate_orcid(@collection.contact)  # this adds an error if it fails
-      @collection.errors[:orcid_invalid] << "The ORCiD #{@collection.contact} failed lookup"
+      @collection.errors[:description] << "The ORCiD #{@collection.contact} failed lookup"
     end
 
     metricurls.each do |m|
       existing = Metric.find_by({smarturl: m})
       unless existing
-        @collection.errors << "metric #{m} doesn't exist in this registry"
+        @collection.errors[:description] << "metric #{m} doesn't exist in this registry"
         next
       end
       if existing.deprecated
-        @collection.errors << "metric #{m} is deprecated and cannot be used"
+        @collection.errors[:description] << "metric #{m} is deprecated and cannot be used"
       end
     end
  
@@ -103,9 +103,9 @@ class CollectionsController < ApiController
         format.html { redirect_to action: "show", id: @collection.id }   # url_for{@collection}
         format.json { render :show, status: :created, location: @collection }
       else
-        @collection.errors[:other] << "failed to save new collection"
+        @collection.errors[:description] << "failed to save new collection"
         format.html { render :new }
-        format.json { render json: @collection.errors, status: :unprocessable_entity }
+        format.json { render :json => {status: :bad_request, errors: @collection.errors}, status: 400}
       end
     end
   end
@@ -153,7 +153,7 @@ class CollectionsController < ApiController
     respond_to do |format|
       if @collection.errors.any? or !@collection.save
         format.html { redirect_to action: show, notice: 'Collection could not be deprecated.  Sorry, I dont know why' }
-        format.json { render json: @collection.errors, status: :unprocessable_entity }
+        format.json {  render :json => {status: :bad_request, errors: @collection.errors}, status: 400  }
       else
         @collection.save
         format.html { redirect_to action: show, notice: 'Collection was successfully deprecated.' }

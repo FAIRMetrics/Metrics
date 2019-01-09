@@ -1,0 +1,310 @@
+openapi: 3.0.0
+info:
+  contact:
+    email: mark.wilkinson@upm.es
+    name: Mark Wilkinson
+    x-id: https://orcid.org/0000-0001-6960-357X
+    x-role: responsible developer
+  description: The FAIR Evaluator - automated testing of Web resources for their compliance with the FAIR Metrics
+  termsOfService: http://linkeddata.systems:3000/terms
+  
+  title: FAIR Evaluator API
+  version: '0.1'
+license: http://linkeddata.systems:3000/license
+servers:
+- description: The primary endpoint for the demonstration server
+  url: https://linkeddata.systems:3000
+tags:
+- name: FAIR Metrics
+- name: Evaluation
+
+
+paths:
+
+
+  /metrics:
+    post:
+      requestBody:
+        content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/metrics'
+        description: The URL to the smartAPI descriptor of the Metric
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/metrics_result'
+          description: A description of the registered metric
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResult'
+          description: A response indicating an improperly formatted query
+      summary: to register a new metric, send the smartURL to this endpiint
+      tags:
+      - smartURL
+      
+      
+      
+  /metrics/{metricid}:
+    get:
+      parameters:
+      - description: metric id (the Evaluator's internal id for this Metric)
+        example: '5'
+        in: path
+        name: metricid
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/metrics_result'
+          description: the requested FAIR Metric
+        '404':
+          description: A response indicating an unknown metric id
+      summary: Retrieve FAIR Metrics by their Evaluator-id.
+      tags:
+      - metrics
+
+
+  /collections:
+    post:
+      requestBody:
+        content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/collections'
+        description: register a new collection of FAIR Metrics
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/collections_result'
+          description: A LDP-Container, in JSON-LD, describing the Metric Collection
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResult'
+          description: A response indicating an improperly formatted query
+      summary: Create a new collection of Metrics to be used for Evaluations
+      tags:
+      - Metric Collections
+
+
+  /collections/{collectionid}:
+    get:
+      parameters:
+      - description: collection id (the Evaluator's internal id for this Metric Collection)
+        example: '5'
+        in: path
+        name: collectionid
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/collections_result'
+          description: the requested FAIR Metric Collection as an LDP Container
+        '404':
+          description: A response indicating an unknown collection id
+      summary: Retrieve FAIR Metrics Collections by their Evaluator-id.
+      tags:
+      - A Metric Collection
+  
+
+
+  /collections/{collectionid}/evalute:
+    post:
+      parameters:
+      - description: the collection being used for the evaluation
+        example: '5'
+        in: path
+        name: collectionid
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/evaluate'
+        description: The information pertaining to this evaluation
+      responses:
+        '302':
+          description: "302 response to the description of the evaluation result"
+          headers:
+            Location:
+              schema:
+                type: "string"
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResult'
+          description: A response indicating an improperly formatted query
+      summary: to register a new metric, send the smartURL to this endpiint
+      tags:
+      - execute Evaluation
+
+  /evaluations/{evaluationid}/result:
+    get:
+      parameters:
+      - description: evaluation id (the Evaluator's internal id for this evaluation)
+        example: '5'
+        in: path
+        name: evaluationid
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/evaluation_result'
+          description: the requested FAIR Metric
+        '404':
+          description: A response indicating an unknown evaluation id
+      summary: Retrieve the result of an existing FAIR Evaluation
+      tags:
+      - evaluations
+
+
+
+
+
+
+components:
+
+  schemas:
+    metrics:
+      properties:
+        smarturl:
+          type: string
+      required:
+      - smarturl
+      type: object
+    metrics_result:
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        creator:
+          type: string
+        email:
+          type: string
+        smarturl:
+          type: string
+        created_at:
+          type: string
+        updated_at:
+          type: string
+        principle:
+          type: string
+
+
+    collections:
+      properties:
+        name:
+          type: string
+        contact:
+          type: string
+        organization:
+          type: string
+        include_metrics:
+          $ref: '#/components/schemas/metrics_list'
+      required:
+      - name
+      - contact
+      - organization
+      - include_metrics
+      type: object
+    collections_result:
+      properties:
+        "@id":
+          type: string
+        "@type":
+          $ref: '#/components/schemas/types_list'
+        "http://purl.org/dc/elements/1.1/authoredBy":
+          $ref: '#/components/schemas/ids'
+        "http://purl.org/dc/elements/1.1/license":
+          $ref: '#/components/schemas/ids'
+        "http://purl.org/dc/elements/1.1/title":
+          $ref: '#/components/schemas/values'
+        "http://purl.org/dc/elements/1.1/creator":
+          $ref: '#/components/schemas/values'
+        "http://purl.org/pav/version":
+          $ref: '#/components/schemas/values'
+        "http://rdfs.org/ns/void#description":
+          $ref: '#/components/schemas/values'
+        "http://www.w3.org/ns/dcat#entities":
+          $ref: '#/components/schemas/values'
+        "http://www.w3.org/ns/dcat#contactPoint":
+          $ref: '#/components/schemas/ids'
+        "http://www.w3.org/ns/dcat#identifier":
+          $ref: '#/components/schemas/ids'
+        "http://www.w3.org/ns/dcat#publisher":
+          $ref: '#/components/schemas/ids'
+        "http://www.w3.org/ns/ldp#contains":
+          $ref: '#/components/schemas/metrics_list'
+    metrics_list:
+      type: array
+      items:
+        $ref: '#/components/schemas/ids'
+    types_list:
+      type: array
+      items:
+        $ref: '#/components/schemas/ids'
+    ids:
+      properties:
+        "@id": 
+          type: string
+    values:
+      properties:
+        "@id": 
+          type: string
+
+          
+    evaluate:
+      properties:
+        resource:
+          type: string
+        executor:
+          type: string
+        title:
+          type: string
+      required:
+      - resource
+      - executor
+      - title
+      type: object
+
+    evaluation_result:
+      type: string
+
+          
+    ErrorResult:
+      properties:
+        status:
+          type: string
+        errors:
+          $ref: '#/components/schemas/errorblock'
+      type: object
+
+    errorblock:
+      type: array
+      items:
+        type: string
+      

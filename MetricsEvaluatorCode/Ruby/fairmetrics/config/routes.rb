@@ -10,8 +10,14 @@ Rails.application.routes.draw do
   resources :metrics
 
    
-  root 'static_pages#show'
-  get '/about', to: 'static_pages#show'
+  root 'static_pages#home'
+  get '/about', to: 'static_pages#home'
+  get '/interface', to: 'static_pages#interface'
+  get '/terms', to: 'static_pages#tos'
+  get '/license', to: 'static_pages#license'
+  
+  
+  
   post 'collections/new', to: 'collections#create'
   post 'collections', to: 'collections#create'
   post 'collections/:id/deprecate', to: 'collections#deprecate'
