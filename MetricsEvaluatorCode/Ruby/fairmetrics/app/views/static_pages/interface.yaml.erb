@@ -26,6 +26,13 @@ paths:
   /metrics:
     get:
       responses:
+        '302':
+          description: "302 redirect"
+          headers:
+            Location:
+              schema:
+                type: "string"
+
         '200':
           content:
             application/json:
@@ -43,6 +50,12 @@ paths:
                 $ref: '#/components/schemas/metrics'
         description: The URL to the smartAPI descriptor of the Metric
       responses:
+        '302':
+          description: "302 redirect"
+          headers:
+            Location:
+              schema:
+                type: "string"
         '200':
           content:
             application/json:
@@ -72,6 +85,12 @@ paths:
         schema:
           type: string
       responses:
+        '302':
+          description: "302 redirect"
+          headers:
+            Location:
+              schema:
+                type: "string"
         '200':
           content:
             application/json:
@@ -88,6 +107,12 @@ paths:
   /collections:
     get:
       responses:
+        '302':
+          description: "302 redirect"
+          headers:
+            Location:
+              schema:
+                type: "string"
         '200':
           content:
             application/json:
@@ -105,6 +130,12 @@ paths:
                 $ref: '#/components/schemas/collections'
         description: register a new collection of FAIR Metrics
       responses:
+        '302':
+          description: "302 redirect"
+          headers:
+            Location:
+              schema:
+                type: "string"
         '200':
           content:
             application/json:
@@ -133,6 +164,12 @@ paths:
         schema:
           type: string
       responses:
+        '302':
+          description: "302 redirect"
+          headers:
+            Location:
+              schema:
+                type: "string"
         '200':
           content:
             application/json:
@@ -165,7 +202,7 @@ paths:
         description: The information pertaining to this evaluation
       responses:
         '302':
-          description: "302 response to the description of the evaluation result"
+          description: "302 redirect"
           headers:
             Location:
               schema:
@@ -191,6 +228,12 @@ paths:
         schema:
           type: string
       responses:
+        '302':
+          description: "302 redirect"
+          headers:
+            Location:
+              schema:
+                type: "string"      
         '200':
           content:
             application/json:
