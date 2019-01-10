@@ -12,7 +12,7 @@ SafeYAML::OPTIONS[:default_mode] = :safe
 class EvaluationsController < ApiController
 
     #before_action :set_evaluation, only: [:show, :edit, :update, :destroy, :template, :result, :redisplay_result, :execute_analysis :execute_analysis_json]
-  before_action :set_evaluation, only: [:show, :template, :result, :redisplay_result, :deprecate, :execute_analysis]
+  before_action :set_evaluation, only: [:show, :template, :result, :redisplay_result, :deprecate]
   skip_before_action :authenticate_request, only: %i[new index template show deprecate execute_analysis create result]
 
   include SharedFunctions
@@ -87,7 +87,7 @@ class EvaluationsController < ApiController
     # so if you fix the data model, you have to fix lots of other things (obviously LOL!)
 
     #  THIS IS BAD!!!!!!!!!!!!!!!!!  VERY VERY BAD!!!
-    collection_uri_prefix = "http://linkeddata.systems:3000/collections/"  #  THIS IS BAD!!!!!!!!!!!!!!!!!  VERY VERY BAD!!!
+    #  collection_uri_prefix = "http://linkeddata.systems:3000/collections/"  #  THIS IS BAD!!!!!!!!!!!!!!!!!  VERY VERY BAD!!!
     #  THIS IS BAD!!!!!!!!!!!!!!!!!  VERY VERY BAD!!!
     #  THIS IS BAD!!!!!!!!!!!!!!!!!  VERY VERY BAD!!!
     errors = Hash.new([])
