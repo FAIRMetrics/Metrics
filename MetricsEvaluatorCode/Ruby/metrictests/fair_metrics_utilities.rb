@@ -3,9 +3,55 @@ require 'rdf'
 require 'rdf/json'
 require 'json/ld'
 
+class Utils
+    Utils::TEXT_FORMATS = ['text/html',  # should this be a hash of MIME vs base type
+				'text/plain',
+				'application/json',
+				'application/json+ld',
+				'text/turtle',
+				'application/rdf+xml',
+				'application/n-triples',
+				'text/xml',
+				'application/n3',
+				'application/rdf+n3',
+				'application/turtle',
+				'application/x-turtle',
+				'text/n3',
+				'text/turtle',
+				'text/rdf+n3',
+				'text/rdf+turtle'
+				]
+    
+    Utils::DATA_PREDICATES = [
+        'http://xmlns.com/foaf/0.1/primaryTopic',
+        'http://schema.org/about', # inverse 'http://schema.org/subjectOf',
+        'http://schema.org/mainEntity',
+        'http://schema.org/codeRepository',
+        'http://semanticscience.org/resource/SIO_000332', # is about
+        'http://purl.obolibrary.org/obo/IAO_0000136', # is about
+        ]
+        
+                       
+                       
+                              
+    #  MARK!  MONDAY!!!              
+    #need to create a resolution function here that deals with whatever kind of identifier comes in and passes
+    #back the body content.  Don't want to dplucate code resolving GUIDs in each test!
+    # ##########################
+    
+    
+    
+    
+    
+    
+    
+    
+    
+end
+
+
 class Swagger   
   attr_accessor :debug
-
   attr_accessor :title  
   attr_accessor :tests_metric
   attr_accessor :description
@@ -25,9 +71,9 @@ class Swagger
   attr_accessor :fairsharing_key_location
   attr_accessor :score
   attr_accessor :testedURI
-  
-  def initialize (params = {})
-	@debug = true
+    
+  def initialize(params = {})
+	@debug = false
 	
     @title = params.fetch(:title, 'unnamed')
     @tests_metric = params.fetch(:tests_metric)
@@ -48,6 +94,8 @@ class Swagger
     @fairsharing_key_location = params.fetch(:fairsharing_key_location)
 	@score = params.fetch(:score, 0)
 	@testedURI = params.fetch(:testedURI, "")
+	
+
 	
   end
   
@@ -162,13 +210,13 @@ EOF_EOF
       end
   
       unless o.respond_to?('uri')
-		$stderr.puts "|#{o}| #{o.class}"
+        #$stderr.puts "|#{o}| #{o.class}"
         if o.to_s =~ /^\w+:\/?\/?[^\s]+/
                 o = RDF::URI.new(o.to_s)
         elsif o.to_s =~ /^\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d/
                 o = RDF::Literal.new(o.to_s, :datatype => RDF::XSD.date)
         elsif o.to_s =~ /^\d\.\d/
-		  $stderr.puts "\n\n\n\nFOUND FLOAT\n\n\n\n"
+        #$stderr.puts "\n\n\n\nFOUND FLOAT\n\n\n\n"
                 o = RDF::Literal.new(o.to_s, :datatype => RDF::XSD.float)
         elsif o.to_s =~ /^[0-9]+$/
                 o = RDF::Literal.new(o.to_s, :datatype => RDF::XSD.int)
@@ -196,8 +244,8 @@ EOF_EOF
     end
     
 	def addComment(newcomment)		  
-		  self.comments = self.comments.to_s + newcomment.to_s
-		  return self.comments
+		  self.comments << newcomment.to_s
+		  #return self.comments
 	end
 
   def createEvaluationResponse
@@ -218,7 +266,7 @@ EOF_EOF
     
     
     if not self.comments.eql?("")
-      triplify(meURI, "http://schema.org/comment", self.comments, g)
+      triplify(meURI, "http://schema.org/comment", self.comments.join("\n"), g)
     else
       triplify(meURI, "http://schema.org/comment", "no comments", g)
     end

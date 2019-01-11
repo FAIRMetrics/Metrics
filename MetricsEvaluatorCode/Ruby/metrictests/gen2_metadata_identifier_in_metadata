@@ -8,33 +8,103 @@ require 'rdf/turtle'
 require 'sparql'
 
 
-debug = false
+debug = true
 
 def testGUID
 	
 	guid = @swagger.testedURI
 
-	# TODO - switch these to a CASE clause and have only one return statement
-	# BSYNRYMUTXBXSQ-UHFFFAOYSA-N
-	inchi = Regexp.new(/\w{14}\-\w{10}\-\w/)
-	if guid.match(inchi)
+	inchi = Regexp.new(/^\w{14}\-\w{10}\-\w$/)
+	doi = Regexp.new(/^10.\d{4,9}\/[-._;()\/:A-Z0-9]+$/i)
+	handle = Regexp.new(/^[2-9]0.\d{4,9}\/[-._;()\/:A-Z0-9]+$/i)
+	uri = Regexp.new(/^\w+:\/?\/?[^\s]+$/)
+
+	case 
+	when guid.match(inchi)
+		return do_inchi(guid)
+	when guid.match(doi)
+		return do_doi(guid)
+	when guid.match(handle)
+		return do_handle(guid)
+	when guid.match(uri)
+		return do_uri(guid)
+	else
+		@swagger.addComment("The identifier #{guid} did not match any known identification system (tested inchi, doi, handle, uri) and therefore did not pass this metric.  If you think this is an error, please contact the FAIR Metrics group (http://fairmetrics.org).")
+		@swagger.score = 0
+		return @swagger.createEvaluationResponse
+	end
+	
+end
+
+def deep_dive(parent, myHash)
+	vals = []
+	myHash.each {|key, value| value.is_a?(Hash) ? deep_dive(key, value) : vals << value}
+	return vals
+end
+
+def do_handle(guid)
+	head =  %x{curl -I -L  "http://hdl.handle.net/#{guid}"}
+	$stderr.puts head
+	if (head.match(/HTTP\/1\.1\s200.*?content-type:\s?(\w+\/\w+):?/im))  # handles often do a redirect, so take the header that is 200
+		type = $1
+		@swagger.addComment("Found a non-crossref DOI or other Handle.  ")
+		@swagger.addComment("Found #{type} type of file by resolving Handle.  ")
+		unless Utils::TEXT_FORMATS.include?(type)
+			@swagger.addComment("  #{type} is not considered a parsable file format by this Metric Test.  If you disagree, contact us.  ")
+			@swagger.score = 0
+			return @swagger.createEvaluationResponse
+		else
+			retrieve = %x{curl -L -H "Accept: #{type}" http://hdl.handle.net/#{guid} 2>/dev/null}
+			#$stderr.puts retrieve
+			if retrieve.include?(guid)
+				@swagger.addComment("  The GUID #{guid} was found in the content of the resolved identifier.  ")
+				@swagger.score = 1
+				return @swagger.createEvaluationResponse
+			else
+				@swagger.addComment("  The GUID #{guid} was NOT found in the content of the resolved identifier.  ")
+				@swagger.score = 0
+				return @swagger.createEvaluationResponse
+			end
+		end
+		
+	else
+		@swagger.addComment("  Found no file type resolved by handle... this is very weird!  Probably an error.... contact us!  ")
+		@swagger.addComment("Found a non-crossref DOI or other Handle")
+		@swagger.score = 0
+		return @swagger.createEvaluationResponse
+	end
+end
+
+
+
+def do_inchi(guid)
 		@swagger.addComment("Found an InChI Key GUID")
-		step1 = %x{curl -H "Accept: application/rdf+xml" https://pubchem.ncbi.nlm.nih.gov/rest/rdf/inchikey/#{guid} 2>/dev/null}
-		$stderr.puts step1
-		reader = RDF::Reader.for(:ntriples).new(step1) 
+		step1 = %x{curl -H "Accept: text/turtle" https://pubchem.ncbi.nlm.nih.gov/rest/rdf/inchikey/#{guid} 2>/dev/null}
+		#$stderr.puts step1
+		reader = RDF::Reader.for(:turtle).new(step1) 
 		g = RDF::Graph.new << reader
 
 		query = SPARQL.parse("select ?s ?p ?o where {?s ?p ?o . FILTER(CONTAINS(str(?o), '#{guid}'))}")
 		results = query.execute(g)
+		#$stderr.puts results
+
 		if results.any?
 			f = results.first
 			@swagger.addComment("found matching metadata #{f[:s]} #{f[:p]} #{f[:o]}")		
 			@swagger.score = 1
 			return @swagger.createEvaluationResponse
+		else
+			@swagger.addComment("SPARQL query on rdf-turtle output from pubchem failed to find the metadata identifier in the first layer of metadata.  This is not very good.  Moving down to the second layer to search further.  ")
 		end
 		
 		query = SPARQL.parse("select ?o where {?s <http://semanticscience.org/resource/is-attribute-of> ?o}")
 		results = query.execute(g)
+		unless results.any
+			@swagger.addComment("could not find the sio:is_attribute_of predicate in the first layer of metadata.  Aborting with failure.  ")		
+			@swagger.score = 0
+			return @swagger.createEvaluationResponse
+		end
+		
 		cpd = results.first[:o]
 		cpd = cpd.to_s
 		cpd = cpd.gsub(/\/$/, "")
@@ -48,16 +118,16 @@ def testGUID
 		results = query.execute(g2)
 		unless results.any?
 			@swagger.score = 0
-			@swagger.addComment("Failed to find #{guid} in output of #{cpd}")
+			@swagger.addComment("Failed to find #{guid} in RDF Turtle output of #{cpd}.  Aborting with failure.  ")
 			return @swagger.createEvaluationResponse
 		end
 		f = results.first
-		@swagger.addComment("found matching metadata #{f[:s]} #{f[:p]} #{f[:o]}")		
+		@swagger.addComment("found matching metadata #{f[:s]} #{f[:p]} #{f[:o]}.  Success!")		
 		@swagger.score = 1
 		return @swagger.createEvaluationResponse
-	end
-	doi = Regexp.new(/^10.\d{4,9}\/[-._;()\/:A-Z0-9]+$/i)
-	if guid.match(doi)
+end
+
+def do_doi(guid)
 		@swagger.addComment("Found a Crossref DOI - testing its metadata.  ")
 		rdf = %x{curl -s -L -H   "Accept: text/turtle" "http://doi.org/#{guid}" 2>/dev/null}
 		reader = RDF::Reader.for(:turtle).new(rdf) 
@@ -91,25 +161,12 @@ def testGUID
 		@swagger.score = 0
 		@swagger.addComment("Failed to find precise or even pattern-match of #{guid} in output parsed from crossref metadata")
 		return @swagger.createEvaluationResponse
-	end
+end
 
-	
-
-	handle = Regexp.new(/^[2-9]0.\d{4,9}\/[-._;()\/:A-Z0-9]+$/i)
-	if guid.match(handle)
-		result = manageHandle(guid)
-		@swagger.addComment("Found a non-crossref DOI or other Handle")
-		@swagger.score = result
-		return @swagger.createEvaluationResponse
-	end
-	
-	uri = Regexp.new(/\w+:\/?\/?[^\s]+/)
-	if guid.match(uri)
-		@swagger.addComment("Found a URI")
+def do_uri(guid)
+		@swagger.addComment("Found a URI.  ")
 		result = %x{extruct #{guid} 2>&1}
 		hash = JSON.parse(result)
-
-
 
 		vals = deep_dive(nil, hash)
 		if vals.contain?guid
@@ -121,37 +178,24 @@ def testGUID
 		end
 			
 		return @swagger.createEvaluationResponse
-	end
-
-	@swagger.addComment("the identifier #{guid} did not match any known identification system (tested inchi, doi, handle, uri) and therefore did not pass this metric.  If you think this is an error, please contact the FAIR Metrics group (http://fairmetrics.org).")
-	@swagger.score = 0
-	return @swagger.createEvaluationResponse
-
-	
-end
-
-def deep_dive(parent, myHash)
-	vals = []
-	myHash.each {|key, value| value.is_a?(Hash) ? deep_dive(key, value) : vals << value}
-	return vals
 end
 
 
-def manageHandle(guid)
-	head =  %x{curl -I -L  "http://hdl.handle.net/#{guid}"}
-	if (head.match(/content-type:(.*)/i))
-		@swagger.addComment("  Found #{$1} type of file")
-		return 1
-	else
-		@swagger.addComment("  Found no file type resolved by handle")
-		return 0
-	end
-end
+
+
+
+
+
+
+
+# =======================================================================
+
 
 if debug
-	@input = '{"subject": "10.5281/zenodo.1147435"}'
-#	@input = '{"subject": "BSYNRYMUTXBXSQ-UHFFFAOYSA-N"}'
-#	@input = '{"subject": "LFQSCWFLJHTTHZ-UHFFFAOYSA-N"}'
+#	@input = '{"subject": "10.5281/zenodo.1147435"}'  # doi
+#	@input = '{"subject": "BSYNRYMUTXBXSQ-UHFFFAOYSA-N"}' # inchi
+#	@input = '{"subject": "LFQSCWFLJHTTHZ-UHFFFAOYSA-N"}' # another inchi
+	@input = '{"subject": "20.1000/105"}'  # handle
 else 
 	@input = $stdin.read
 end
