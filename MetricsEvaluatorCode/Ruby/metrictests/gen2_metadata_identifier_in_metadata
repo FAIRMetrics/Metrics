@@ -14,22 +14,23 @@ def testGUID
 	
 	guid = @swagger.testedURI
 
-	inchi = Regexp.new(/^\w{14}\-\w{10}\-\w$/)
-	doi = Regexp.new(/^10.\d{4,9}\/[-._;()\/:A-Z0-9]+$/i)
-	handle = Regexp.new(/^[2-9]0.\d{4,9}\/[-._;()\/:A-Z0-9]+$/i)
-	uri = Regexp.new(/^\w+:\/?\/?[^\s]+$/)
+	idtype, parser, graph, comments = Utils::resolveit(guid)
 
-	case 
-	when guid.match(inchi)
-		return do_inchi(guid)
-	when guid.match(doi)
-		return do_doi(guid)
-	when guid.match(handle)
-		return do_handle(guid)
-	when guid.match(uri)
-		return do_uri(guid)
+	comments.each do |c|
+		@swagger.addComment(c)
+	end
+	
+	case idtype
+	when "inchi"
+		return do_inchi(guid, parser, graph)
+	when "doi"
+		return do_doi(guid, parser, graph)
+	when "handle"
+		return do_handle(guid, parser, graph)
+	when "uri"
+		return do_uri(guid, parser, graph)
 	else
-		@swagger.addComment("The identifier #{guid} did not match any known identification system (tested inchi, doi, handle, uri) and therefore did not pass this metric.  If you think this is an error, please contact the FAIR Metrics group (http://fairmetrics.org).")
+		@swagger.addComment("  The identifier #{guid} did not match any known identification system (tested inchi, doi, handle, uri) and therefore did not pass this metric.  If you think this is an error, please contact the FAIR Metrics group (http://fairmetrics.org).")
 		@swagger.score = 0
 		return @swagger.createEvaluationResponse
 	end
@@ -42,7 +43,7 @@ def deep_dive(parent, myHash)
 	return vals
 end
 
-def do_handle(guid)
+def do_handle(guid, parser, graph)
 	head =  %x{curl -I -L  "http://hdl.handle.net/#{guid}"}
 	$stderr.puts head
 	if (head.match(/HTTP\/1\.1\s200.*?content-type:\s?(\w+\/\w+):?/im))  # handles often do a redirect, so take the header that is 200
@@ -77,48 +78,23 @@ end
 
 
 
-def do_inchi(guid)
-		@swagger.addComment("Found an InChI Key GUID")
-		step1 = %x{curl -H "Accept: text/turtle" https://pubchem.ncbi.nlm.nih.gov/rest/rdf/inchikey/#{guid} 2>/dev/null}
-		#$stderr.puts step1
-		reader = RDF::Reader.for(:turtle).new(step1) 
-		g = RDF::Graph.new << reader
-
+def do_inchi(guid, parser, graph)
+	
 		query = SPARQL.parse("select ?s ?p ?o where {?s ?p ?o . FILTER(CONTAINS(str(?o), '#{guid}'))}")
-		results = query.execute(g)
+		results = query.execute(graph)
 		#$stderr.puts results
 
 		if results.any?
 			f = results.first
-			@swagger.addComment("found matching metadata #{f[:s]} #{f[:p]} #{f[:o]}")		
-			@swagger.score = 1
-			return @swagger.createEvaluationResponse
-		else
-			@swagger.addComment("SPARQL query on rdf-turtle output from pubchem failed to find the metadata identifier in the first layer of metadata.  This is not very good.  Moving down to the second layer to search further.  ")
+			@swagger.addComment("Found pattern-match in metadata #{f[:s]} #{f[:p]} #{f[:o]}.  This provides a partial success score.")		
+			@swagger.score = 0.5
 		end
 		
-		query = SPARQL.parse("select ?o where {?s <http://semanticscience.org/resource/is-attribute-of> ?o}")
-		results = query.execute(g)
-		unless results.any
-			@swagger.addComment("could not find the sio:is_attribute_of predicate in the first layer of metadata.  Aborting with failure.  ")		
-			@swagger.score = 0
-			return @swagger.createEvaluationResponse
-		end
-		
-		cpd = results.first[:o]
-		cpd = cpd.to_s
-		cpd = cpd.gsub(/\/$/, "")
-#		cpd = cpd + ".rdf"
-		#https://pubchem.ncbi.nlm.nih.gov/rest/rdf/compound/CID2244/.rdf/ ->  2244.rdf
-		step2 = %x{curl -L -H "Accept:text/turtle" #{cpd}  2>/dev/null}
-#		$stderr.puts step2
-		reader = RDF::Reader.for(:turtle).new(step2) 
-		g2 = RDF::Graph.new << reader
-		query = SPARQL.parse("select ?s ?p ?o where {?s ?p '#{guid}'}")
-		results = query.execute(g2)
+		query = SPARQL.parse("select ?s ?p ?o . FILTER(str(?o)='#{guid}')")
+		results = query.execute(graph)
 		unless results.any?
-			@swagger.score = 0
-			@swagger.addComment("Failed to find #{guid} in RDF Turtle output of #{cpd}.  Aborting with failure.  ")
+			@swagger.score += 0
+			@swagger.addComment("Failed to find exact-match of #{guid} (e.g. as a string) in RDF output. The Principles require that the GUID of the entity be explicit in the metadata.  ")
 			return @swagger.createEvaluationResponse
 		end
 		f = results.first
@@ -194,8 +170,8 @@ end
 if debug
 #	@input = '{"subject": "10.5281/zenodo.1147435"}'  # doi
 #	@input = '{"subject": "BSYNRYMUTXBXSQ-UHFFFAOYSA-N"}' # inchi
-#	@input = '{"subject": "LFQSCWFLJHTTHZ-UHFFFAOYSA-N"}' # another inchi
-	@input = '{"subject": "20.1000/105"}'  # handle
+	@input = '{"subject": "LFQSCWFLJHTTHZ-UHFFFAOYSA-N"}' # another inchi
+#	@input = '{"subject": "20.1000/105"}'  # handle
 else 
 	@input = $stdin.read
 end
