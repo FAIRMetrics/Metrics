@@ -121,6 +121,7 @@ if __name__=='__main__':
     title=fm.getTitle()
     authors=fm.getAuthors()
     metricId=fm.getShortID().replace('_','-')   # Avoid _ in latex template
+    metricId=fm.getShortID().replace('->','\rightarrow')   # Avoid _ in latex template
     metricIdVerb=fm.getID()
     shortTitle=fm.getShortTitle()
     topicTitle=fm.getTopicTitle()
