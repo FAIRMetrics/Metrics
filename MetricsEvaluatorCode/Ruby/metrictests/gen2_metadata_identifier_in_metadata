@@ -8,7 +8,7 @@ require 'rdf/turtle'
 require 'sparql'
 
 
-debug = true
+debug = false
 
 def testGUID
 	
