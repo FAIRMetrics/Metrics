@@ -90,7 +90,7 @@ def do_inchi(guid, parser, graph)
 			@swagger.score = 0.5
 		end
 		
-		query = SPARQL.parse("select ?s ?p ?o . FILTER(str(?o)='#{guid}')")
+		query = SPARQL.parse("select ?s ?p ?o WHERE {?s ?p ?o . FILTER(str(?o)='#{guid}')}")
 		results = query.execute(graph)
 		unless results.any?
 			@swagger.score += 0
