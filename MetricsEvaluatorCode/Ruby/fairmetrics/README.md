@@ -23,7 +23,7 @@ The FAIR Evaluator is a Ruby on Rails application that is used to:
 * [Register New Collection](#createnewcollection)
 * [Execute a New Evaluation](#createnewevaluation)
 
-(the demonstration Evaluator is running at http://linkeddata.systems:3000  All paths below are relative to this root.
+(the demonstration Evaluator is running at **CURRENTLY OFFLINE FOR REDESIGN** All paths below are relative to this root.
 
 # <a name="gets"></a> HTTP GET Operations
 
