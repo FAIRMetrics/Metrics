@@ -99,7 +99,7 @@ The "score" of the Metric Test is the value of the "SIO:000300" (has_value) pred
 
 **NOTE** No other information may be provided to the Metric Test beyond the **metadata** GUID.  The purpose of FAIR Metric Tests is to determine if machines can find, access, and "interpret" (meta)data, thus it is a firm requirement that only the metadata GUID may be given to the test.  The aspect of FAIRness being evaluated **must** be automatically discernable using that metadata.
 
-This Metric Test is registered by either HTTP POST of properly formatted JSON to the Evaluator registry (see API here:https://github.com/FAIRMetrics/Metrics/tree/master/MetricsEvaluatorCode/Ruby/fairmetrics), or by visiting the manual submission page at:  http://linkeddata.systems:3000/metrics/new, where the form field on that page asks for the URL of the Metric Test's YAML document.
+This Metric Test is registered by either HTTP POST of properly formatted JSON to the Evaluator registry (see API here:https://github.com/FAIRMetrics/Metrics/tree/master/MetricsEvaluatorCode/Ruby/fairmetrics), or by visiting the manual submission page at:  **CURRENTLY OFFLINE FOR A REDESIGN**, where the form field on that page asks for the URL of the Metric Test's YAML document.
 
 Once registered, a Metric Test can be included in new Metric Collections, and used by the Evaluator software for automated testing of data resources.
 
