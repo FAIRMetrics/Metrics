@@ -39,7 +39,7 @@ At this time, there is no formal process for adoption of Metrics (incuding those
 
 # HOW TO CREATE A NEW METRIC TEST
 
-With the goal of providing an objective, automated way of testing (meta)data resources against the Metrics, the Metrics Authorship Group have created the FAIR Evaluator, which is running as a demonstration service at http://linkeddata.systems:3000.  The Evaluator is a registry of:
+With the goal of providing an objective, automated way of testing (meta)data resources against the Metrics, the Metrics Authorship Group have created the FAIR Evaluator, which is running as a demonstration service at **CURRENTLY OFFLINE FOR REDESIGN**.  The Evaluator provides a registry and execution functions for:
 
 * Metric Tests
 * Community-defined Collections of Metric Tests
