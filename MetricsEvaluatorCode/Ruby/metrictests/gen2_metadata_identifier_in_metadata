@@ -12,9 +12,9 @@ debug = false
 
 def testGUID
 	
-	guid = @swagger.testedURI
+	guid = @swagger.testedGUID
 
-	idtype, parser, graph, comments = Utils::resolveit(guid)
+	idtype, metadataobject, comments = Utils::resolveit(guid)
 
 	comments.each do |c|
 		@swagger.addComment(c)
@@ -22,13 +22,13 @@ def testGUID
 	
 	case idtype
 	when "inchi"
-		return do_inchi(guid, parser, graph)
+		return do_inchi(guid, parser, metadataobject)
 	when "doi"
-		return do_doi(guid, parser, graph)
+		return do_doi(guid, parser, metadataobject)
 	when "handle"
-		return do_handle(guid, parser, graph)
+		return do_handle(guid, parser, metadataobject)
 	when "uri"
-		return do_uri(guid, parser, graph)
+		return do_uri(guid, parser, metadataobject)
 	else
 		@swagger.addComment("  The identifier #{guid} did not match any known identification system (tested inchi, doi, handle, uri) and therefore did not pass this metric.  If you think this is an error, please contact the FAIR Metrics group (http://fairmetrics.org).")
 		@swagger.score = 0
@@ -37,12 +37,10 @@ def testGUID
 	
 end
 
-def deep_dive(parent, myHash)
-	vals = []
-	myHash.each {|key, value| value.is_a?(Hash) ? deep_dive(key, value) : vals << value}
-	return vals
-end
 
+# So.... Handles may never return a graph
+# so perhaps "graph" is not the right structure
+# maybe I have to check if it is a Hash/JSON,or a 
 def do_handle(guid, parser, graph)
 	head =  %x{curl -I -L  "http://hdl.handle.net/#{guid}"}
 	$stderr.puts head
@@ -78,10 +76,10 @@ end
 
 
 
-def do_inchi(guid, parser, graph)
+def do_inchi(guid, parser, metadataobject)
 	
 		query = SPARQL.parse("select ?s ?p ?o where {?s ?p ?o . FILTER(CONTAINS(str(?o), '#{guid}'))}")
-		results = query.execute(graph)
+		results = query.execute(metadataobject.graph)
 		#$stderr.puts results
 
 		if results.any?
@@ -91,7 +89,7 @@ def do_inchi(guid, parser, graph)
 		end
 		
 		query = SPARQL.parse("select ?s ?p ?o WHERE {?s ?p ?o . FILTER(str(?o)='#{guid}')}")
-		results = query.execute(graph)
+		results = query.execute(metadataobject.graph)
 		unless results.any?
 			@swagger.score += 0
 			@swagger.addComment("Failed to find exact-match of #{guid} (e.g. as a string) in RDF output. The Principles require that the GUID of the entity be explicit in the metadata.  ")
@@ -206,7 +204,7 @@ if (!cgi.request_method or cgi.request_method == "GET") and !debug
 elsif cgi.request_method == "POST" or debug
         input_json = JSON.parse(@input)
         guid = input_json["subject"]
-        @swagger.testedURI = guid
+        @swagger.testedGUID = guid
         response = testGUID
         puts "Content-type: application/json+ld\n\n"
         puts response

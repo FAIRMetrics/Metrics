@@ -11,13 +11,34 @@ debug = true
 
 def testGUID
 	
-	guid = @swagger.testedURI
+	guid = @swagger.testedGUID
 	
-	# this is hash-based, until I can import into RDF
-	uri = Regexp.new(/\w+:\/?\/?[^\s]+/)
-	doi = Regexp.new(/^10.\d{4,9}\/[-._;()\/:A-Z0-9]+$/i)
+	idtype, parser, graph, comments = Utils::resolveit(guid)
 
-	if guid.match(uri) or guid.match(doi)
+	comments.each do |c|
+		@swagger.addComment(c)
+	end
+
+
+	case idtype
+	when "inchi"
+		return do_inchi(guid, parser, graph)
+	when "doi"
+		return do_doi_or_url(guid, parser, graph)
+	when "handle"
+		return do_handle(guid, parser, graph)
+	when "uri"
+		return do_doi_or_url(guid, parser, graph)
+	else
+		@swagger.addComment("  The identifier #{guid} did not match any known identification system (tested inchi, doi, handle, uri) and therefore did not pass this metric.  If you think this is an error, please contact the FAIR Metrics group (http://fairmetrics.org).")
+		@swagger.score = 0
+		return @swagger.createEvaluationResponse
+	end
+end
+
+
+def do_doi_or_url(guid, parser, graph)
+
 		guidurl = ""
 		if guid.match(doi)
 			guidurl = "http://doi.org/#{guid}"
@@ -49,8 +70,9 @@ def testGUID
 			@swagger.score = 0
 		end			
 		return @swagger.createEvaluationResponse
-	end
+end
 
+def do_inchi(guid, parser, graph)
 	#the rest are graph-based
 	g = RDF::Graph.new
 
@@ -168,13 +190,14 @@ def manageHandle(guid)
 end
 
 if debug
-	@input = '{"subject": "10.5281/zenodo.1147435"}' # my deposit fails
-	@input = '{"subject": "10.5281/zenodo.2235452"}' # github export pass
-
-	#@input = '{"subject": "BSYNRYMUTXBXSQ-UHFFFAOYSA-N"}'
+#	@input = '{"subject": "10.5281/zenodo.1147435"}'  # doi
+#	@input = '{"subject": "BSYNRYMUTXBXSQ-UHFFFAOYSA-N"}' # inchi
+#	@input = '{"subject": "LFQSCWFLJHTTHZ-UHFFFAOYSA-N"}' # another inchi
+	@input = '{"subject": "20.1000/105"}'  # handle
 else 
 	@input = $stdin.read
 end
+
 
 cgi = CGI.new
 
@@ -206,7 +229,7 @@ if (!cgi.request_method or cgi.request_method == "GET") and !debug
 elsif cgi.request_method == "POST" or debug
         input_json = JSON.parse(@input)
         guid = input_json["subject"]
-        @swagger.testedURI = guid
+        @swagger.testedGUID = guid
         response = testGUID
         puts "Content-type: application/json+ld\n\n"
         puts response

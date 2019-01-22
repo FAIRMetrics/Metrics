@@ -8,21 +8,23 @@ require 'net/https' # for openssl
 require 'uri'
 require 'rdf/turtle'
 require 'sparql'
+require 'tempfile'
+
 
 class Utils
+    Utils::AcceptHeader = {'Accept' => 'text/turtle, application/n3, application/rdf+n3, application/turtle, application/x-turtle,text/n3,text/turtle,                   text/rdf+n3, text/rdf+turtle,application/json+ld, text/xhtml+xml,application/rdf+xml,application/n-triples' }
+
+
     Utils::TEXT_FORMATS = {
         'text' => ['text/plain',],
     }
 
-    Utils::AcceptHeader = {'Accept' => 'text/turtle, application/n3, application/rdf+n3, application/turtle, application/x-turtle,text/n3,text/turtle,                   text/rdf+n3, text/rdf+turtle,application/json+ld, text/xhtml+xml,application/rdf+xml,application/n-triples' }
-
-
     Utils::RDF_FORMATS = {
-      'jsonld'  => ['application/json+ld'],
+      'jsonld'  => ['application/ld+json'],
       'turtle'  => ['text/turtle','application/n3','application/rdf+n3',
                    'application/turtle', 'application/x-turtle','text/n3','text/turtle',
                    'text/rdf+n3', 'text/rdf+turtle'],
-      'rdfa'    => ['text/xhtml+xml'],
+      'rdfa'    => ['text/xhtml+xml', 'application/xhtml+xml'],
       'rdfxml'  => ['application/rdf+xml'],
       'triples' => ['application/n-triples',]
     }
@@ -51,11 +53,7 @@ class Utils
         
                        
                        
-                              
-    #  MARK!  MONDAY!!!              
-    #need to create a resolution function here that deals with whatever kind of identifier comes in and passes
-    #back the body content.  Don't want to dplucate code resolving GUIDs in each test!
-    # ##########################
+                       
     
     def Utils::resolveit(guid)
       inchi = Regexp.new(/^\w{14}\-\w{10}\-\w$/)
@@ -63,74 +61,265 @@ class Utils
       handle = Regexp.new(/^[2-9]0.\d{4,9}\/[-._;()\/:A-Z0-9]+$/i)
       uri = Regexp.new(/^\w+:\/?\/?[^\s]+$/)
 
+      meta = MetadataObject.new()
       case 
         when guid.match(inchi)
-          (parser, data, comments) = Utils::resolve_inchi(guid)
-          return "inchi",parser, data, comments
+          metadata = Utils::resolve_inchi(guid, meta)
+          return metadata
         when guid.match(doi)
-          parser, data, comments = Utils::resolve_doi(guid)
-          return "doi", parser, data, comments
+          metadata = Utils::resolve_doi(guid, meta)
+          return metadata
         when guid.match(handle)
-           parser, data, comments = Utils::resolve_handle(guid)
-           return "handle", parser, data, comments
+           metadata = Utils::resolve_handle(guid, meta)
+           return metadata
         when guid.match(uri)
-          parser, data, comments = Utils::resolve_uri(guid)
-          return "uri", parser, data, comments
+          metadata = Utils::resolve_uri(guid, meta)
+          return metadata
+        else
+          meta.comments << "the guid did not correspond to any known GUID.  Aborting.  "
+          return meta
       end
-
-      return nil, nil, nil, ["the guid did not correspond to any known GUID"]
     end
     
     
     
-    def Utils::resolve_inchi(guid)
-      comments = Array.new()
-      g = RDF::Graph.new
+    def Utils::resolve_inchi(guid, meta)
+      meta.guidtype = "inchi"
       
-      comments << "Found an InChI Key GUID.  "
-      step1 = self.fetch("https://pubchem.ncbi.nlm.nih.gov/rest/rdf/inchikey/#{guid}")
+      meta.comments << "Found an InChI Key GUID.  "
+      response1 = self.fetch("https://pubchem.ncbi.nlm.nih.gov/rest/rdf/inchikey/#{guid}")
       # this is a Net::HTTP response
       #$stderr.puts step1.body
+      meta.full_response = response1  # set it here so it isn't empty
       
-      (parser, type) = Utils::figure_out_type(step1)
-      
-      return g, comments unless parser
+      (parser, type) = Utils::figure_out_type(response1)
+      unless parser
+        meta.comments << "couldn't find a parser for the data returned from https://pubchem.ncbi.nlm.nih.gov/rest/rdf/inchikey/#{guid}"
+        return meta
+      end
 
       # this next operation is safe because we know that pubchem does in fact return Turtle
-      return g,comments unless parser.eql?"turtle"  # simply fail if they asked for HTML or something else
-      reader = RDF::Reader.for(:turtle).new(step1.body) 
-      g << reader
+      unless parser.eql?"turtle"
+        meta.comments << "expected turtle format...  aborting"
+        return meta   # simply fail if they asked for HTML or something else
+      end
+      
+      Utils::parse_rdf(meta, response1) 
         
       query = SPARQL.parse("select ?o where {?s <http://semanticscience.org/resource/is-attribute-of> ?o}")
-      results = query.execute(g)
+      results = query.execute(meta.graph)
       unless results.any?
-        comments << "could not find the sio:is_attribute_of predicate in the first layer of metadata.  Aborting with failure.  "
-        return g, comments
+        meta.comments << "could not find the sio:is_attribute_of predicate in the first layer of metadata.  Aborting with failure.  "
+        return meta
       end
       
       cpd = results.first[:o]
       cpd = cpd.to_s
       cpd = cpd.gsub(/\/$/, "")
-      step2 = fetch(cpd)
-      (parser, type) = Utils::figure_out_type(step2)
-      return g, comments unless parser
-
+      response2 = fetch(cpd)
+      (parser, type) = Utils::figure_out_type(response2)
       # this next operation is safe because we know that pubchem does in fact return Turtle
-      return g,comments unless parser.eql?"turtle"  # simply fail if they asked for HTML or something else
-      reader = RDF::Reader.for(:turtle).new(step2.body) 
-      g << reader
+      unless parser.eql?"turtle"
+        meta.comments << "expected turtle format... from #{cpd} aborting"
+        return meta   # simply fail if they asked for HTML or something else
+      end
+      Utils::parse_rdf(meta, response2)
       
-      return parser, g, comments
+      return meta
     end
     
-    def Utils::resolve_doi(guid, type = "text/turtle")
+    
+    
+    def Utils::resolve_doi(guid, meta)
     end
     
-    def Utils::resolvehandle(guid, type = "text/turtle")
+    
+    
+    
+    def Utils::resolve_handle(guid, meta)
+      
+      meta.guidtype = "handle"
+      meta.comments << "Found a non-crossref DOI or other Handle.  "
+      Utils::resolve_uri("http://hdl.handle.net/#{guid}", meta)
+      return meta
+
+    end
+      
+    
+    
+    def Utils::resolve_uri(guid, meta, nolinkheaders)
+      meta.guidtype = "uri" if meta.guidtype == "unknown"  # might have been set already, e.g. to 'handle' or 'doi'
+      
+      response =  fetch(guid)
+      meta.full_response = response
+
+      $stderr.puts response.head
+
+      links = Array.new
+      links = Utils::parse_link_meta_headers(response) unless nolinkheaders
+      links.each {|link| Utils::resolve_uri(link, meta, true)}  # this fills the metadata object with the content from Link headers, but not recursively
+      
+      if (response.header['content-type'].match(/([\w\+]+\/[\w\+]+):?/im))
+        type = $1
+        meta.comments << "Found #{type} type of file by resolving GUID.  "
+
+
+        if Utils::TEXT_FORMATS.include?(type)
+          Utils::parse_text(meta, response)
+
+        elsif Utils::RDF_FORMATS.include?(type)
+          Utils::parse_rdf(meta, response)
+        elsif Utils::HTML_FORMATS.include?(type)
+          
+        elsif Utils::XML_FORMATS.include?(type)
+        elsif Utils::JSON_FORMATS.include?(type)
+          
+        else
+          meta.comments << "Can't parse the metadata in a structured way, falling-back on the 'extruct' tool.  "
+          Utils::parse_extruct(meta, guid)
+          meta.comments << "Can't parse the metadata in a structured way, falling-back on the Apache 'tika' tool.  "
+          Utils::parse_tika(meta, response)
+        end
+        
+        #curl -X GET http://localhost:9998/tika
+        #curl -T polyA http://localhost:9998/meta --header "Accept: application/rdf+xml" --header "Content-Type: application/xhtml+xml"
+
+      end
+  
+      return meta
+
     end
     
-    def Utils::resolve_uri(guid, type = "text/turtle" )
+    
+    # ==================================================================
+    # ==================================================================
+    # ==================================================================
+    # ==================================================================
+    # ==================================================================
+    
+    def Utils::parse_text(meta, message)
+        meta.comments << "Plain Text cannot be mapped to any parser.  No structured metadata found.  "
+        meta.comments << "using Apache Tika to attempt to extract metadata. "
+        
+        
+        file = Tempfile.new('foo')
+        file.write(messsage.body)
+        file.rewind
+        
+        result = %x{curl -T #{file.path} http://localhost:9998/meta --header "Accept: application/rdf+xml 2>&1}
+        file.close
+        file.unlink    # deletes the temp file
+
+        r = RDF::Format.for(content_type: "application/rdf+xml").reader.new(result)
+        meta.merge_rdf(r.to_list)
+
     end
+    
+    
+    
+    def Utils::parse_html(meta, message)
+      
+    end
+    
+    
+    
+    def Utils::parse_rdf(meta, message, format=nil)
+      contenttype = ""
+      body = "" # to hold the raw rdf
+      if message.class <= Net::HTTPResponse  # should probably do duck typing here... more Rubyish!
+        if (message.head['content-type'].match(/([\w\+]+\/[\w\+]+):?/im))
+          contenttype = $1
+          body = message.body
+        else
+          meta.comments << "no content-type header could be found in the message.  This is very odd!  Likely a bug in our software.  "
+        end
+      else # this is just an incoming string... in which case, it MUST have a format indicator (MIME type)
+        contenttype = format
+        if !contenttype
+          meta.comments << "no content-type was passed with a raw RDF body.  This is very odd!  Likely a bug in our software (i.e. not your fault!)  Please tell the dev team.  "
+        end
+        body = message # this is raw rdf
+      end
+      body = body.to_json if Utils::RDF_FORMATS['jsonld'].include? contenttype 
+      reader = RDF::Format.for(content_type: contenttype).reader.new(body)
+      meta.merge_rdf(reader.to_a)
+    end
+    
+    
+    
+    
+    def Utils::parse_xml(meta, message)
+    end
+    
+    
+    
+    
+    def Utils::parse_extruct(meta, uri)
+      
+        meta.comments << "Using 'extruct' to try to extract metadata from return value (message body) of #{uri}.  "
+        
+        result = %x{extruct #{uri} 2>&1}
+        # need to do some error checking here!
+        json = JSON.parse result
+        
+        Utils::parse_rdf(meta, json["json-ld"], "application/ld+json")  #RDF
+        # json["microdata"] #hash NOT YET IMPLEMENTED
+        #json["microformat"] # unknown # NOT YET IMPLEMENTED
+        #json["opengraph"] # hash NOT YET IMPLEMENTED
+        Utils::parse_rdf(meta, json["rdfa"], "application/xhtml+xml")  # RDF
+        hash = json.to_hash        
+        meta.merge_hash(hash)
+ 
+    end
+    
+    
+    
+    def Utils::parse_link_meta_headers(message)
+      # we can be sure that a Link header is a URL
+      # code stolen from https://gist.github.com/thesowah/0ca5e1b4b3c61bfe8e13
+      parts = response.header['link'].split(',')
+
+      links = Array.new
+      # Parse each part into a named link
+      parts.each do |part, index|
+        section = part.split(';')
+        url = section[0][/<(.*)>/,1]
+        type = section[1][/rel="(.*)"/,1].to_sym
+        next unless type == "meta"  # only keep meta headers
+        links << url
+      end
+      return links
+      
+    end
+    
+    
+    
+    
+    def Utils::deep_dive_values(myHash)
+      vals = Array.new()
+      myHash.each_pair do |k,v|
+        if v.is_a?(Hash)
+          $stderr.puts "key: #{k} recursing..."
+          deep_dive(v)
+        else
+          vals << v 
+        end
+      end
+      return vals
+    end
+
+    def Utils::deep_dive_properties(myHash)
+      props = Array.new()
+      myHash.each_pair do |k,v|
+        props << k
+        if v.is_a?(Hash)
+          $stderr.puts "key: #{k} recursing..."
+          deep_dive(v)
+        end
+      end
+      return props
+    end
+
     
 
   def Utils::figure_out_type(message)
@@ -288,7 +477,7 @@ class Swagger
   attr_accessor :comments
   attr_accessor :fairsharing_key_location
   attr_accessor :score
-  attr_accessor :testedURI
+  attr_accessor :testedGUID
     
   def initialize(params = {})
 	@debug = false
@@ -311,7 +500,7 @@ class Swagger
     @comments = params.fetch(:comments, [])
     @fairsharing_key_location = params.fetch(:fairsharing_key_location)
 	@score = params.fetch(:score, 0)
-	@testedURI = params.fetch(:testedURI, "")
+	@testedGUID = params.fetch(:testedGUID, "")
 	
 
 	
@@ -490,7 +679,50 @@ EOF_EOF
     end
     
     return g.dump(:jsonld)
-  end
+  end	
 	
-   
 end
+
+
+
+# =======================================================================
+# =======================================================================
+# =======================================================================
+# =======================================================================
+# =======================================================================
+# =======================================================================
+# =======================================================================
+
+
+
+
+class MetadataObject
+    
+  attr_accessor :hash  # a hash of metadata
+  attr_accessor :graph  # a RDF.rb graph of metadata
+  attr_accessor :comments  # an array of comments
+  attr_accessor :guidtype  # the type of GUID that was detected
+  attr_accessor :full_response  # will be a Net::HTTP::Response
+    
+  def initialize(params = {}) # get a name from the "new" call, or set a default
+    @hash = Hash.new
+    @graph = RDF::Graph.new
+    @comments = Array.new
+    @guidtype = "unknown"
+  end
+  
+  def merge_hash(hash)
+    $self.hash.merge(hash)
+  end
+  
+  def merge_rdf(triples)  # incoming list of triples
+    self.graph << triples
+    return self.graph
+  end
+
+  def rdf
+    return self.graph
+  end
+  
+end
+
