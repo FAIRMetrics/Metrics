@@ -7,104 +7,55 @@ require 'rdf'
 require 'rdf/turtle'
 require 'sparql'
 
-debug = true
+debug = false
 
 def testGUID
 	
 	guid = @swagger.testedGUID
 	
-	idtype, parser, graph, comments = Utils::resolveit(guid)
+	metadata = Utils::resolveit(guid)  # this is where the magic happens!
 
-	comments.each do |c|
+	metadata.comments.each do |c|
 		@swagger.addComment(c)
 	end
 
-
-	case idtype
-	when "inchi"
-		return do_inchi(guid, parser, graph)
-	when "doi"
-		return do_doi_or_url(guid, parser, graph)
-	when "handle"
-		return do_handle(guid, parser, graph)
-	when "uri"
-		return do_doi_or_url(guid, parser, graph)
-	else
+	if metadata.guidtype == "unknown"
 		@swagger.addComment("  The identifier #{guid} did not match any known identification system (tested inchi, doi, handle, uri) and therefore did not pass this metric.  If you think this is an error, please contact the FAIR Metrics group (http://fairmetrics.org).")
 		@swagger.score = 0
 		return @swagger.createEvaluationResponse
 	end
-end
+	
+	hash = metadata.hash
+	
+	properties = Utils::deep_dive_properties(hash)
 
-
-def do_doi_or_url(guid, parser, graph)
-
-		guidurl = ""
-		if guid.match(doi)
-			guidurl = "http://doi.org/#{guid}"
-		else
-			guidurl = guid
-		end
-			
-		@swagger.addComment("Found a URI or DOI.  ")
-		result = %x{extruct #{guidurl} 2>&1}
-		hash = JSON.parse(result)
-		properties = deep_dive_property(nil, hash)
-		if properties.include?"codeRepository"
+	properties.each do |keyval|
+		key, value = nil, nil
+		(key, value) = keyval;
+		key = key.to_s
+		if key =~ /codeRepository/
 			@swagger.addComment "found 'codeRepository' in metadata.  "
 			@swagger.score = 1
-		elsif properties.include?"mainEntity"
+		elsif key =~ /mainEntity/
 			@swagger.addComment "found schema 'mainEntity' in metadata.  "
 			@swagger.score = 1
-		elsif properties.include?"primaryTopic"
+		elsif key =~ /primaryTopic/
 			@swagger.addComment "found 'primaryTopic' in metadata.  "
 			@swagger.score = 1
-		elsif properties.include?"is-about" or properties.include?"0000136"
+		elsif key =~ /is-about/ or key =~ /IAO:0000136/ or key =~ /IAO_0000136/
 			@swagger.addComment "found Information Artifact Ontology 'is-about' in metadata.  "
 			@swagger.score = 1
-		elsif properties.include?"000332"
+		elsif key =~ /000332/ or key =~ /SIO:0000136/
 			@swagger.addComment "found SIO is about in metadata.  "
 			@swagger.score = 1
-		else
-			@swagger.addComment "DID NOT find #{guid} in metadata.  "
-			@swagger.score = 0
-		end			
-		return @swagger.createEvaluationResponse
-end
-
-def do_inchi(guid, parser, graph)
-	#the rest are graph-based
-	g = RDF::Graph.new
-
-	inchi = Regexp.new(/\w{14}\-\w{10}\-\w/)
-	if guid.match(inchi)
-		@swagger.addComment("Found an InChI Key GUID.  ")
-		step1 = %x{curl -H "Accept: application/rdf+xml" https://pubchem.ncbi.nlm.nih.gov/rest/rdf/inchikey/#{guid} 2>/dev/null}
-		
-		reader = RDF::Reader.for(:ntriples).new(step1) 
-		g << reader
-		query = SPARQL.parse("select ?o where {?s <http://semanticscience.org/resource/is-attribute-of> ?o}")
-		results = query.execute(g)
-		if results.any?
-			cpd = results.first[:o]
-			cpd = cpd.to_s
-			cpd = cpd.gsub(/\/$/, "")
-			step2 = %x{curl -L -H "Accept:text/turtle" #{cpd}  2>/dev/null}
-			reader = RDF::Reader.for(:turtle).new(step2)
-			g << reader
 		end
 	end
-	
-	doi = Regexp.new(/^10.\d{4,9}\/[-._;()\/:A-Z0-9]+$/i)
-	if guid.match(doi)
-		@swagger.addComment("Found a Crossref DOI.  ")
-		rdf = %x{curl -s -L -H   "Accept: text/turtle" "http://doi.org/#{guid}" 2>/dev/null}
-		reader = RDF::Reader.for(:turtle).new(rdf) 
-		g << reader
-		
-		
-	end
 
+	g = metadata.graph
+	if @swagger.debug
+		g.each {|s| puts s.subject.to_s + "\t" + s.predicate.to_s + "\t" + s.object.to_s + "\n"}
+	end
+	
 	if g.size > 0  # have we found anything yet?
 		query = SPARQL.parse("select ?o where {?s <http://semanticscience.org/resource/is-about> ?o}")
 		results = query.execute(g)
@@ -145,55 +96,20 @@ def do_inchi(guid, parser, graph)
 		end
 		
 		if @swagger.score == 0
-			@swagger.addComment "Was unable to find the data identifier using any (common) predicate.  Sorry! "
+			@swagger.addComment "Was unable to locate the data identifier in the metadata using any (common) property/predicate reserved for this purpose.  Tested SIO:is-about, SIO:0003323, schema:mainEntity, IAO:0000136, schema:codeRepository, and foaf:primaryTopic.  Sorry! "
 		end
-		return @swagger.createEvaluationResponse
-	
 	end
-	
-	handle = Regexp.new(/^[2-9]0.\d{4,9}\/[-._;()\/:A-Z0-9]+$/i)
-	if guid.match(handle)
-		result = manageHandle(guid)
-		@swagger.addComment("Found a non-crossref DOI or other Handle - this metric test currently cannot work with this metadata, therefore, failure on this metric does not indicate any fault of yours!")
-		@swagger.score = 0
-		return @swagger.createEvaluationResponse
-	end
-	
-	@swagger.addComment("the identifier #{guid} did not match any known identification system (tested inchi, doi, handle, uri) and therefore did not pass this metric.  If you think this is an error, please contact the FAIR Metrics group (http://fairmetrics.org).")
-	@swagger.score = 0
+
 	return @swagger.createEvaluationResponse
 end
 
-def deep_dive(parent, myHash)
-	vals = []
-	myHash.each {|key, value| value.is_a?(Hash) ? deep_dive(key, value) : vals << value}
-	return vals
-end
-
-def deep_dive_property(parent, myHash)
-	props = []
-	myHash.each {|key, value| value.is_a?(Hash) ? deep_dive(key, value) : props << key}
-	$stderr.puts "FOUND PROPERTIES:\n\n" + props.join("\n")
-	return props
-end
-
-
-def manageHandle(guid)
-	head =  %x{curl -I -L  "http://hdl.handle.net/#{guid}"}
-	if (head.match(/content-type:(.*)/i))
-		@swagger.addComment("  Found #{$1} type of file")
-		return 1
-	else
-		@swagger.addComment("  Found no file type resolved by handle")
-		return 0
-	end
-end
 
 if debug
-#	@input = '{"subject": "10.5281/zenodo.1147435"}'  # doi
+#	@input = '{"subject": "10.5281/zenodo.1147435"}'  # doi fail
+	@input = '{"subject": "10.5281/zenodo.1065973"}'  # doi fail
 #	@input = '{"subject": "BSYNRYMUTXBXSQ-UHFFFAOYSA-N"}' # inchi
 #	@input = '{"subject": "LFQSCWFLJHTTHZ-UHFFFAOYSA-N"}' # another inchi
-	@input = '{"subject": "20.1000/105"}'  # handle
+#	@input = '{"subject": "20.1000/105"}'  # handle (fail)
 else 
 	@input = $stdin.read
 end
@@ -220,7 +136,7 @@ schemas = {'subject' => ['string', "the GUID being tested"]}
 			:response_description => 'The response is a binary (1/0), success or failure',
 			:schemas => schemas,
 			:fairsharing_key_location => '../fairsharing.key',
-				 				 
+			:debug => debug				 				 
 })
 
 if (!cgi.request_method or cgi.request_method == "GET") and !debug

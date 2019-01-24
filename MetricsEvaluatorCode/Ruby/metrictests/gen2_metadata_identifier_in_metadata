@@ -8,157 +8,92 @@ require 'rdf/turtle'
 require 'sparql'
 
 
-debug = false
+debug = true
 
 def testGUID
-	
 	guid = @swagger.testedGUID
+	
+	metadata = Utils::resolveit(guid)  # this is where the magic happens!
 
-	idtype, metadataobject, comments = Utils::resolveit(guid)
-
-	comments.each do |c|
+	metadata.comments.each do |c|
 		@swagger.addComment(c)
 	end
-	
-	case idtype
-	when "inchi"
-		return do_inchi(guid, parser, metadataobject)
-	when "doi"
-		return do_doi(guid, parser, metadataobject)
-	when "handle"
-		return do_handle(guid, parser, metadataobject)
-	when "uri"
-		return do_uri(guid, parser, metadataobject)
-	else
+
+	if metadata.guidtype == "unknown"
 		@swagger.addComment("  The identifier #{guid} did not match any known identification system (tested inchi, doi, handle, uri) and therefore did not pass this metric.  If you think this is an error, please contact the FAIR Metrics group (http://fairmetrics.org).")
 		@swagger.score = 0
 		return @swagger.createEvaluationResponse
-	end
-	
-end
+	end	
 
-
-# So.... Handles may never return a graph
-# so perhaps "graph" is not the right structure
-# maybe I have to check if it is a Hash/JSON,or a 
-def do_handle(guid, parser, graph)
-	head =  %x{curl -I -L  "http://hdl.handle.net/#{guid}"}
-	$stderr.puts head
-	if (head.match(/HTTP\/1\.1\s200.*?content-type:\s?(\w+\/\w+):?/im))  # handles often do a redirect, so take the header that is 200
-		type = $1
-		@swagger.addComment("Found a non-crossref DOI or other Handle.  ")
-		@swagger.addComment("Found #{type} type of file by resolving Handle.  ")
-		unless Utils::TEXT_FORMATS.include?(type)
-			@swagger.addComment("  #{type} is not considered a parsable file format by this Metric Test.  If you disagree, contact us.  ")
-			@swagger.score = 0
-			return @swagger.createEvaluationResponse
-		else
-			retrieve = %x{curl -L -H "Accept: #{type}" http://hdl.handle.net/#{guid} 2>/dev/null}
-			#$stderr.puts retrieve
-			if retrieve.include?(guid)
-				@swagger.addComment("  The GUID #{guid} was found in the content of the resolved identifier.  ")
-				@swagger.score = 1
-				return @swagger.createEvaluationResponse
-			else
-				@swagger.addComment("  The GUID #{guid} was NOT found in the content of the resolved identifier.  ")
-				@swagger.score = 0
-				return @swagger.createEvaluationResponse
-			end
-		end
+	if metadata.graph.size > 0
 		
-	else
-		@swagger.addComment("  Found no file type resolved by handle... this is very weird!  Probably an error.... contact us!  ")
-		@swagger.addComment("Found a non-crossref DOI or other Handle")
-		@swagger.score = 0
-		return @swagger.createEvaluationResponse
-	end
-end
-
-
-
-def do_inchi(guid, parser, metadataobject)
-	
+		# query pattern-match in an object position
 		query = SPARQL.parse("select ?s ?p ?o where {?s ?p ?o . FILTER(CONTAINS(str(?o), '#{guid}'))}")
-		results = query.execute(metadataobject.graph)
-		#$stderr.puts results
-
+		results = query.execute(metadata.graph)	
 		if results.any?
 			f = results.first
 			@swagger.addComment("Found pattern-match in metadata #{f[:s]} #{f[:p]} #{f[:o]}.  This provides a partial success score.")		
-			@swagger.score = 0.5
+			@swagger.score = 0.75
 		end
 		
+		# query pattern-match in an subject position
+		query = SPARQL.parse("select ?s ?p ?o where {?s ?p ?o . FILTER(CONTAINS(str(?s), '#{guid}'))}")
+		results = query.execute(metadata.graph)	
+		if results.any?
+			f = results.first
+			@swagger.addComment("Found pattern-match in metadata #{f[:s]} #{f[:p]} #{f[:o]}.  This provides a partial success score.")		
+			@swagger.score = 0.75
+		end
+
 		query = SPARQL.parse("select ?s ?p ?o WHERE {?s ?p ?o . FILTER(str(?o)='#{guid}')}")
-		results = query.execute(metadataobject.graph)
-		unless results.any?
-			@swagger.score += 0
-			@swagger.addComment("Failed to find exact-match of #{guid} (e.g. as a string) in RDF output. The Principles require that the GUID of the entity be explicit in the metadata.  ")
-			return @swagger.createEvaluationResponse
-		end
-		f = results.first
-		@swagger.addComment("found matching metadata #{f[:s]} #{f[:p]} #{f[:o]}.  Success!")		
-		@swagger.score = 1
-		return @swagger.createEvaluationResponse
-end
-
-def do_doi(guid)
-		@swagger.addComment("Found a Crossref DOI - testing its metadata.  ")
-		rdf = %x{curl -s -L -H   "Accept: text/turtle" "http://doi.org/#{guid}" 2>/dev/null}
-		reader = RDF::Reader.for(:turtle).new(rdf) 
-		g = RDF::Graph.new << reader
-
-		query = SPARQL.parse("select ?s ?p ?o where {?s ?p '#{guid}'}")
-		results = query.execute(g)
+		results = query.execute(metadata.graph)
 		if results.any?
-			@swagger.score = 1
-			@swagger.addComment("Found precise match of #{guid} in output parsed from crossref metadata")
-			return @swagger.createEvaluationResponse
+			@swagger.score += 0.25
+			@swagger.addComment("Found exact-match of #{guid} (e.g. as a string) in RDF output.   ")
+			f = results.first
+			@swagger.addComment("found matching metadata #{f[:s]} #{f[:p]} #{f[:o]}.  Success!")		
 		end
-
-
-		query = SPARQL.parse("select ?s ?p ?o where {?s ?p ?o . FILTER(REGEX(str(?o), '#{guid}'))}")
-		results = query.execute(g)
+		
+		query = SPARQL.parse("select ?s ?p ?o WHERE {?s ?p ?o . FILTER(str(?s)='#{guid}')}")
+		results = query.execute(metadata.graph)
 		if results.any?
-			@swagger.score = 0.75
-			@swagger.addComment("Found pattern (regexp) match of #{guid} in output parsed from crossref metadata")
-			return @swagger.createEvaluationResponse
+			@swagger.score += 0.25
+			@swagger.addComment("Found exact-match of #{guid} (e.g. as a string) in RDF output.   ")
+			f = results.first
+			@swagger.addComment("found matching metadata #{f[:s]} #{f[:p]} #{f[:o]}.  Success!")		
 		end
 
-		query = SPARQL.parse("select ?s ?p ?o where {?s ?p ?o . FILTER(REGEX(str(?s), '#{guid}'))}")
-		results = query.execute(g)
-		if results.any?
-			@swagger.score = 0.75
-			@swagger.addComment("Found pattern (regexp) match of #{guid} in output parsed from crossref metadata")
-			return @swagger.createEvaluationResponse
+	end
+	
+	if metadata.hash.size > 1
+		properties = Utils::deep_dive_properties(hash)
+
+		properties.each do |keyval|
+			key, value = nil, nil
+			(key, value) = keyval;
+			key = key.to_s
+			if key =~ /#{guid}/ or value.to_s =~ /#{guid}/
+				@swagger.addComment "found #{guid} in hashed metadata.  "
+				@swagger.score = 0.75
+			end
 		end
-			
-		@swagger.score = 0
-		@swagger.addComment("Failed to find precise or even pattern-match of #{guid} in output parsed from crossref metadata")
-		return @swagger.createEvaluationResponse
-end
-
-def do_uri(guid)
-		@swagger.addComment("Found a URI.  ")
-		result = %x{extruct #{guid} 2>&1}
-		hash = JSON.parse(result)
-
-		vals = deep_dive(nil, hash)
-		if vals.contain?guid
-			@swagger.addComment "found #{guid} in metadata"
-			@swagger.score = 1
+	end
+	if @swagger.score == 0  # if still zero, try the raw unstructured content	
+		if meta.full_response.include?guid
+			@swagger.addComment("  The identifier #{guid} was found within the raw content returned by resolution of that identifier.  ")
+			@swagger.score = 0.5
+			return @swagger.createEvaluationResponse
 		else
-			@swagger.addComment "DID NOT find #{guid} in metadata"
-			@swagger.score = 0
+			@swagger.addComment("  The identifier #{guid} was not found in either the structured or unstructured content from resolving that identifier.   ")
+			@swagger.score = 0.0
+			return @swagger.createEvaluationResponse
 		end
-			
-		return @swagger.createEvaluationResponse
+	else
+		@swagger.score = 1.0 if @swagger.score > 1.0
+		return @swagger.createEvaluationResponse  # release the result from all other tests
+	end	
+	
 end
-
-
-
-
-
-
 
 
 
@@ -166,9 +101,9 @@ end
 
 
 if debug
-#	@input = '{"subject": "10.5281/zenodo.1147435"}'  # doi
+	@input = '{"subject": "10.5281/zenodo.1147435"}'  # doi
 #	@input = '{"subject": "BSYNRYMUTXBXSQ-UHFFFAOYSA-N"}' # inchi
-	@input = '{"subject": "LFQSCWFLJHTTHZ-UHFFFAOYSA-N"}' # another inchi
+#	@input = '{"subject": "LFQSCWFLJHTTHZ-UHFFFAOYSA-N"}' # another inchi
 #	@input = '{"subject": "20.1000/105"}'  # handle
 else 
 	@input = $stdin.read
