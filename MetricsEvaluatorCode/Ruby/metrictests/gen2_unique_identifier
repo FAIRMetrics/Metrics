@@ -1,13 +1,14 @@
 #!/home/mark_moby_wilkinson/.rvm/rubies/ruby-2.5.1/bin/ruby
-require 'fair_metrics_utilities'
+require './fair_metrics_utilities.rb'
 require 'cgi'
 require 'json'
 require 'uri'
 
+debug = false
 
 def testGUID
 	
-	guid = @swagger.testedURI
+	guid = @swagger.testedGUID
 
 	# TODO - switch these to a CASE clause and have only one return statement
 	inchi = Regexp.new(/\w{14}\-\w{10}\-\w{1}/)
@@ -45,8 +46,17 @@ def testGUID
 	
 end
 
-@input = $stdin.read
-#@input = '{"subject": "10.5281/zenodo.1147435"}'
+
+
+if debug
+	@input = '{"subject": "10.5281/zenodo.1147435"}'  # doi
+#	@input = '{"subject": "BSYNRYMUTXBXSQ-UHFFFAOYSA-N"}' # inchi
+#	@input = '{"subject": "LFQSCWFLJHTTHZ-UHFFFAOYSA-N"}' # another inchi
+#	@input = '{"subject": "20.1000/105"}'  # handle
+else 
+	@input = $stdin.read
+end
+
 cgi = CGI.new
 
 schemas = {'subject' => ['string', "the GUID being tested"]}
@@ -72,16 +82,14 @@ schemas = {'subject' => ['string', "the GUID being tested"]}
 })
 
 
-if (!cgi.request_method or cgi.request_method == "GET")
-#if false
+if (!cgi.request_method or cgi.request_method == "GET")  and !debug
 	puts "Content-type: application/openapi+yaml;version=3.0\n\n"
 	puts @swagger.getSwagger
 	
-elsif cgi.request_method == "POST"
-#elsif true
+elsif cgi.request_method == "POST"  or debug
 	input_json = JSON.parse(@input)
 	guid = input_json["subject"]
-	@swagger.testedURI = guid
+	@swagger.testedGUID = guid
 	response = testGUID
 	puts "Content-type: application/json+ld\n\n"
 	puts response
