@@ -132,7 +132,7 @@ schemas = {'subject' => ['string', "the GUID being tested"]}
 			:protocol => 'http',
 			:host => 'linkeddata.systems',
 			:basePath => '/cgi-bin',
-			:path => '/FAIR_Tests/gen2_identifier_in_metadata',
+			:path => '/FAIR_Tests/gen2_data_identifier_in_metadata',
 			:response_description => 'The response is a binary (1/0), success or failure',
 			:schemas => schemas,
 			:fairsharing_key_location => '../fairsharing.key',
