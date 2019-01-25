@@ -90,7 +90,7 @@ class EvaluationsController < ApiController
     #  collection_uri_prefix = "http://linkeddata.systems:3000/collections/"  #  THIS IS BAD!!!!!!!!!!!!!!!!!  VERY VERY BAD!!!
     #  THIS IS BAD!!!!!!!!!!!!!!!!!  VERY VERY BAD!!!
     #  THIS IS BAD!!!!!!!!!!!!!!!!!  VERY VERY BAD!!!
-    errors = Hash.new([])
+    
     httpheader = Hash.new()
     @subject = ""
 
@@ -142,7 +142,7 @@ class EvaluationsController < ApiController
           
           endpoint = spec.endpoint(path.to_s, method.to_s)
           endpoint.body_schema['properties'].keys.each do |param|
-            $stderr.puts "found property #{param}"
+            #$stderr.puts "found property #{param}"
             #next if param == "subject"
             json_to_pass = endpoint.query_json(data_to_pass[metricsmarturl])  # this call will auto-format the JSON according to teh schema in the YAML
           end
@@ -152,7 +152,7 @@ class EvaluationsController < ApiController
           basepath = spec.raw['basePath']
           
           
-          $stderr.puts "ADDRESS " + http.to_s + "://" + domain.to_s + basepath.to_s  + path.to_s
+          #$stderr.puts "ADDRESS " + http.to_s + "://" + domain.to_s + basepath.to_s  + path.to_s
           uri = URI.parse(http.to_s + "://" + domain.to_s + basepath.to_s + path.to_s)
 
           httpheader["Content-Type"] = 'application/json'
@@ -161,27 +161,40 @@ class EvaluationsController < ApiController
           http = Net::HTTP.new(uri.host, uri.port)
           request = Net::HTTP::Post.new(uri.request_uri, httpheader)
           request.body = json_to_pass.to_json
+          # request.body = '"sub": "cnn"}' ############## UNCOMMENT TO FORCE A SERVICE FAILURE FOR TEST PURPOSES
           $stderr.puts json_to_pass.to_json
           response = http.request(request)
-          body = JSON.parse(response.body)  # create a hash
-          result_for_db[metric.smarturl] = body   # this is a has of the metric id and the hash of the JSON string from the evaluation service
+          if response.kind_of? Net::HTTPSuccess
+            if response.header['content-type'] =~ /json/          
+              body = JSON.parse(response.body)  # create a hash
+              result_for_db[metric.smarturl] = body   # this is a has of the metric id and the hash of the JSON string from the evaluation service
+            else
+              @evaluation.errors[:not_json] << " - Response message from FAIR Metrics Test service #{uri} was not JSON.  "
+            end
+          else
+            @evaluation.errors[:not_success_code] << " - FAIR Metrics Testing service at #{uri} returned a failure code.  "
+          end
         end
       end
     end
 
     @evaluation[:result] = result_for_db.to_json
-    @evaluation.save
-    $stderr.puts result_for_db.to_s
-    $stderr.puts "\n\n\nFINAL:  " + @evaluation.inspect
+    
+    #$stderr.puts result_for_db.to_s
+    #$stderr.puts "\n\n\nFINAL:  " + @evaluation.inspect
     
   
     respond_to do |format|
-      if @evaluation.save
+      if !@evaluation.errors.any? && @evaluation.save
         format.html { redirect_to result_url(@evaluation), notice: "" }
         format.json { render :show, status: :ok }
       else
-        format.html { redirect_to evaluations_url, notice: "" }
-        format.json { head :no_content }
+        @evaluation.errors[:general_failure] << " - Failed to save new evaluation."
+        errors = @evaluation.errors.full_messages
+        errorheader = ""
+        errors.each {|e| errorheader += e.to_s + "||||" }
+        format.html { redirect_to evaluationtemplate_url(:id => @collection.id, :errors => errorheader)  }
+        format.json { render :json => {status: :bad_request, errors: @evaluation.errors}, status: 400 }
       end
     end
 

@@ -1,5 +1,15 @@
 
-<h1>Globally Unique Identifier (GUID) to be Evaluated:</h1>
+  <% errorheader =  params[:errors] %>
+  <% if errorheader %>
+
+    <% errors = errorheader.split('||||') %>
+    <% errors.each do |e| %>
+    
+      <center><span style="background: red; color: white;"><%= e %></span></center><br/>
+    <% end %>
+  <% end %>
+  
+  <h1>Globally Unique Identifier (GUID) to be Evaluated:</h1>
 <h2>NOTE: This is the GUID for the <b><i>metadata!</i></b> of your data record</h2>
 <h4><span style="color:red;">If you enter the GUID of your data, you will fail most tests. <br/>You have been warned :-) </span></h4><br/>
 <br/>Hint: We currently recognze INCHI Keys, DOIs, Handles and URLs. Contact <a href="mailto:mark.wilkinson@upm.es">the developer</a> to add new GUID types to this list - for example, we plan to support LSIDs soon, and others.
