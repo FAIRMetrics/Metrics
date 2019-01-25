@@ -12,7 +12,7 @@ SafeYAML::OPTIONS[:default_mode] = :safe
 class EvaluationsController < ApiController
 
     #before_action :set_evaluation, only: [:show, :edit, :update, :destroy, :template, :result, :redisplay_result, :execute_analysis :execute_analysis_json]
-  before_action :set_evaluation, only: [:show, :template, :result, :redisplay_result, :deprecate]
+  before_action :set_evaluation, only: [:show, :result, :redisplay_result, :deprecate]
   skip_before_action :authenticate_request, only: %i[new index template show deprecate execute_analysis create result]
 
   include SharedFunctions
