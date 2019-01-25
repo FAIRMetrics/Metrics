@@ -33,10 +33,7 @@
         <td><%= collection.organization %></td>
         <td><%= collection.deprecated %></td>
         <td><%= link_to 'Show', collection %></td>
-        <td><a href="
-        <%= "/collections/#{collection.id}/evaluate/template" %>
-        ">Execute Evaluation</a>
-        </td>
+        <td><%= link_to 'Execute Evaluation', evaluationtemplate_path(collection) %></td>
       </tr>
     <% end %>
   </tbody>

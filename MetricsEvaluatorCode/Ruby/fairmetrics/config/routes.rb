@@ -33,11 +33,11 @@ Rails.application.routes.draw do
     
    
     #get 'collections/:id/evaluation', to: 'evaluations#template', as: 'template'
-    post 'collections/:id/evaluate', to: 'evaluations#execute_analysis'  # collections/7/evaluate
-    get 'collections/:id/evaluate/template', to: 'evaluations#template'  # collections/7/evaluate
+    post 'collections/:id/evaluate', to: 'evaluations#execute_analysis', as: 'executeevaluation' # collections/7/evaluate
+    get 'collections/:id/evaluate/template', to: 'evaluations#template', as: 'evaluationtemplate'  # collections/7/evaluate
     
-    post 'evaluations/:id/result', to: 'evaluations#result', as: 'result'  # I think this is more REST-like...??  posting to Result to update the state of Result?  
-    get 'evaluations/:id/result', to: 'evaluations#result'
+    post 'evaluations/:id/result', to: 'evaluations#result', as: 'result'
+    get 'evaluations/:id/result', to: 'evaluations#result', as: 'getresult'
     #post 'evaluations/:id/result', to: 'evaluations#result'
     #get 'evaluations/:id/error', to: 'evaluations#error'
     

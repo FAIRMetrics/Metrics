@@ -15,7 +15,7 @@
 
 <br/>
 
-<%= form_with(url: "/collections/#{@collection.id}/evaluate", local: true, method: "post") do |form| %>
+<%= form_with(url: executeevaluation_path(@collection), local: true, method: "post") do |form| %>
 
 GUID:						<input type="text" name="resource" size="50"/>
 <br/><br/>
