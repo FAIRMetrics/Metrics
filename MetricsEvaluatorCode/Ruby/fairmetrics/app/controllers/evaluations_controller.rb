@@ -172,7 +172,7 @@ class EvaluationsController < ApiController
               @evaluation.errors[:not_json] << " - Response message from FAIR Metrics Test service #{uri} was not JSON.  "
             end
           else
-            @evaluation.errors[:not_success_code] << " - FAIR Metrics Testing service at #{uri} returned a failure code.  "
+            @evaluation.errors[:not_success_code] << " - FAIR Testing service at #{uri} returned a failure code.  "
           end
         end
       end
@@ -240,7 +240,7 @@ class EvaluationsController < ApiController
     
     @metrics = @collection.metrics
     unless (@metrics and @metrics.count > 0)
-      @evaluation.errors[:no_metrics] << "no metrics found"
+      @evaluation.errors[:no_metrics] << "no tests found"
       return []
     end
     $stderr.puts "\n\nMETRICS: #{@metrics}\n\n"

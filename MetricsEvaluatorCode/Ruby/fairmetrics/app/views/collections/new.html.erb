@@ -23,6 +23,12 @@
   <%= label_tag(:organization, "Your Organization Name:") %>
   <%= text_field_tag(:organization) %>
 <br/>
+
+<br/>
+  <%= label_tag(:description, "Description of the Collection:") %>
+  <%= text_area_tag('description', "This information should include, for example, the community that this collection of FAIR tests is relevant for.  This text will be searchable to discover this Collection.", :rows => 10, :cols => 50, :placeholder => "This information should include, for example, the community that this collection of FAIR tests is relevant for.  This text will be searchable to discover this Collection.") %>
+<br/>
+
 <br/>	
 	<div style="clear: both;"/>
   <%= label_tag(:include_metrics, "Load Collection With Metrics:") %>

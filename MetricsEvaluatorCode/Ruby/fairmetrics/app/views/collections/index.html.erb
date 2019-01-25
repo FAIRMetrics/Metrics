@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Fairmetrics</title>
+    <title>Collections of FAIR Maturity Indicators</title>
     <%= csrf_meta_tags %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
@@ -18,6 +18,7 @@
       <th>Name</th>
       <th>Contact</th>
       <th>Organization</th>
+      <th>Description</th>
       <th>Deprecated?</th>
       <th>Show</th>
       <th>NEW EVALUATION</th>
@@ -31,6 +32,7 @@
         <td><%= collection.name %></td>
         <td><%= collection.contact %></td>
         <td><%= collection.organization %></td>
+        <td style="width: 150px;"><%= collection.description %></td>
         <td><%= collection.deprecated %></td>
         <td><%= link_to 'Show', collection %></td>
         <td><%= link_to 'Execute Evaluation', evaluationtemplate_path(collection) %></td>

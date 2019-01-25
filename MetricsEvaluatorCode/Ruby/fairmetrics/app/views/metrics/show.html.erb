@@ -6,8 +6,10 @@
 
 <p>
   <strong>Creator:</strong>
-<!--  <a href="https://orcid.org/<%= @metric.creator %>"><%= @metric.creator %></a> -->
+
+  <a href="https://orcid.org/<%= @metric.orcid %>">
   <%= @metric.creator %>
+  </a>
   
 </p>
 
@@ -18,7 +20,7 @@
 
 <p>
   <strong>Tests Principle:</strong>
-  <a href="https://purl.org/fair-metrics/<%= @metric.principle %>"><%= @metric.principle %></a>
+  <a href="http://purl.org/fair-ontology#<%= @metric.principle %>"><%= @metric.principle %></a>
 </p>
 
 <p>

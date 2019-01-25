@@ -71,7 +71,8 @@ class CollectionsController < ApiController
     
     @collection = Collection.new(name: params[:name],
                                  contact: params[:contact],
-                                 organization: params[:organization])
+                                 organization: params[:organization],
+                                 description: params[:description])
     metricurls = params[:include_metrics]  # note that these might not exist in the registry!  We will check in a moment
 
     @metrics = Metric.where(smarturl: metricurls)
@@ -171,7 +172,7 @@ class CollectionsController < ApiController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def collection_params
-      params.permit(:name, :contact, :organization,  :collection)
+      params.permit(:name, :contact, :organization, :description, :collection)
       params.permit(include_metrics: [])
     end
 end
