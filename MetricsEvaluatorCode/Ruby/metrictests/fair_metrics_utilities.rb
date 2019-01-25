@@ -232,6 +232,7 @@ class Utils
     
     
     def Utils::parse_rdf(meta, message, format=nil)
+      #$stderr.puts "\n\nrequested format #{format}\n\n"
       contenttype = ""
       body = "" # to hold the raw rdf
       #$stderr.puts "MESSAGE CLASS #{message} #{message.class}\n\n\n"
@@ -252,10 +253,20 @@ class Utils
         end
         body = message # this is raw rdf
       end
-      body = body.to_json if Utils::RDF_FORMATS['jsonld'].include? contenttype 
-      #$stderr.puts "Trying to create RDF reader for #{contenttype}\n\n#{body}\n\n\n"
-      formattype = RDF::Format.for({:sample => body})
-      formattype ||= RDF::Format.for(content_type: contenttype)
+
+      #$stderr.puts "\n\n\nSampling \n\n#{body}\n\n"
+      unless body =~ /\w/
+          meta.comments << "This #{contenttype} component appears to have no content.  "
+          return meta
+      end
+
+      formattype = RDF::Format.for(content_type: contenttype)
+      formattype ||= RDF::Format.for({:sample => body})
+      if formattype.include?"JSON"
+          body = body.to_json
+          return meta unless body.any?
+      end
+      #$stderr.puts "\n\n\nTrying to create RDF reader for #{formattype}\n\n#{body}\n\n#{message}\n"
       if !formattype
         meta.comments << "We were unable to find an RDF reader type that matches the content that was returned.  Please send your GUID to the dev team so we can investigate!  "
         return meta
@@ -295,7 +306,7 @@ class Utils
         meta.comments << "Using 'extruct' to try to extract metadata from return value (message body) of #{uri}.  "
         
         result = %x{extruct #{uri} 2>&1}
-        # puts "\n\n\n\n\n\n\n#{result.class}\n\n#{result.to_s}\n\n"
+        #$stderr.puts "\n\n\n\n\n\n\n#{result.class}\n\n#{result.to_s}\n\n"
         # need to do some error checking here!
         if result[0] == "{" # this is JSON
           json = JSON.parse result
@@ -304,9 +315,9 @@ class Utils
           # json["microdata"] #hash NOT YET IMPLEMENTED
           #json["microformat"] # unknown # NOT YET IMPLEMENTED
           #json["opengraph"] # hash NOT YET IMPLEMENTED
-          Utils::parse_rdf(meta, json["rdfa"], "application/xhtml+xml")  # RDF
-          hash = json.to_hash        
-          meta.merge_hash(hash)
+          Utils::parse_rdf(meta, json["rdfa"], "application/ld+json")  # RDF
+                  
+          meta.merge_hash(json.first) if json.first.is_a?Hash
         else
           meta.comments << "the extruct tool failed to find parseable data at #{uri}"
         end

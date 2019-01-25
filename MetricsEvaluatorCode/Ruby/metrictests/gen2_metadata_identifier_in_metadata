@@ -8,7 +8,7 @@ require 'rdf/turtle'
 require 'sparql'
 
 
-debug = false
+debug = true
 
 def testGUID
 	guid = @swagger.testedGUID
@@ -79,7 +79,7 @@ def testGUID
 		end
 	end
 	if @swagger.score == 0  # if still zero, try the raw unstructured content	
-		if meta.full_response.include?guid
+		if metadata.full_response.body.include?guid
 			@swagger.addComment("  The identifier #{guid} was found within the raw content returned by resolution of that identifier.  ")
 			@swagger.score = 0.5
 			return @swagger.createEvaluationResponse
@@ -101,7 +101,8 @@ end
 
 
 if debug
-	@input = '{"subject": "10.5281/zenodo.1147435"}'  # doi
+#	@input = '{"subject": "10.5281/zenodo.1147435"}'  # doi
+	@input = '{"subject": "http://cnn.com"}'  # url
 #	@input = '{"subject": "BSYNRYMUTXBXSQ-UHFFFAOYSA-N"}' # inchi
 #	@input = '{"subject": "LFQSCWFLJHTTHZ-UHFFFAOYSA-N"}' # another inchi
 #	@input = '{"subject": "20.1000/105"}'  # handle
