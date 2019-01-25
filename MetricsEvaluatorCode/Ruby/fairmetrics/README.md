@@ -41,12 +41,12 @@ Provides a human-readable, or JSON serialized list of known metrics, including t
 
 sample JSON output
 
-    curl -X GET -D -L -H "Content-Type: application/json" -H "Accept: application/json" http://linkeddata.systems:3000/metrics
+    curl -X GET -D -L -H "Content-Type: application/json" -H "Accept: application/json" http://w3id.org/FAIR_Evaluator/metrics
 
 results in:
 
     [{
-    "id": "http://linkeddata.systems:3000/metrics/9.json",
+    "id": "http://w3id.org/FAIR_Evaluator/metrics/9.json",
     "name": "FAIR Metrics Gen2- Unique Identifier",
     "creator": "Mark D Wilkinson",
     "email": "markw@illuminae.com",
@@ -55,7 +55,7 @@ results in:
     "updated_at": "2018-12-12T02:43:20.569Z",
     "principle": "https://purl.org/fair-metrics/F1"
     }, {
-    "id": "http://linkeddata.systems:3000/metrics/10.json",
+    "id": "http://w3id.org/FAIR_Evaluator/metrics/10.json",
     "name": "FAIR Metrics Gen2- Metadata Identifier Explicitly In Metadata",
     "creator": "Mark D Wilkinson",
     "email": "markw@illuminae.com",
@@ -64,7 +64,7 @@ results in:
     "updated_at": "2018-12-31T08:22:15.219Z",
     "principle": "https://purl.org/fair-metrics/F3"
     }, {
-    "id": "http://linkeddata.systems:3000/metrics/11.json",
+    "id": "http://w3id.org/FAIR_Evaluator/metrics/11.json",
     "name": "FAIR Metrics Gen2- Metadata Identifier Explicitly In Metadata",
     "creator": "Mark D Wilkinson",
     "email": "markw@illuminae.com",
@@ -81,12 +81,12 @@ The Web Page or JSON representation of a specific Metric Test identified by its 
 
 sample JSON output
 
-    curl -X GET -D -L -H "Content-Type: application/json" -H "Accept: application/json" http://linkeddata.systems:3000/metrics/11
+    curl -X GET -D -L -H "Content-Type: application/json" -H "Accept: application/json" http://w3id.org/FAIR_Evaluator/metrics/11
 
 results in:
 
     {
-        "id": "http://linkeddata.systems:3000/metrics/11.json",
+        "id": "http://w3id.org/FAIR_Evaluator/metrics/11.json",
         "name": "FAIR Metrics Gen2- Metadata Identifier Explicitly In Metadata",
         "creator": "Mark D Wilkinson",
         "email": "markw@illuminae.com",
@@ -107,12 +107,12 @@ Provides a human-readable, or JSON serialized list of known metric collections, 
 
 sample JSON output
 
-    curl -X GET -D -L -H "Content-Type: application/json" -H "Accept: application/json" http://linkeddata.systems:3000/collections
+    curl -X GET -D -L -H "Content-Type: application/json" -H "Accept: application/json" http://w3id.org/FAIR_Evaluator/collections
 
 results in:
 
     [{
-      "@id": "http://linkeddata.systems:3000/collections/1.json",
+      "@id": "http://w3id.org/FAIR_Evaluator/collections/1.json",
       "@type": [{
         "@id": "http://purl.org/dc/dcmitype/Dataset"
       }, {
@@ -145,17 +145,17 @@ results in:
         "@id": "https://dx.doi.org/0000-0001-6960-357X"
       },
       "http://www.w3.org/ns/dcat#identifier": {
-        "@id": "http://linkeddata.systems:3000/collections/1.json"
+        "@id": "http://w3id.org/FAIR_Evaluator/collections/1.json"
       },
       "http://www.w3.org/ns/dcat#publisher": {
         "@id": "http://fairmetrics.org"
       },
       "http://www.w3.org/ns/ldp#contains": [{
-          "@id": "http://linkeddata.systems:3000/metrics/9"
+          "@id": "http://w3id.org/FAIR_Evaluator/metrics/9"
         }, {
-          "@id": "http://linkeddata.systems:3000/metrics/10"
+          "@id": "http://w3id.org/FAIR_Evaluator/metrics/10"
         }, {
-          "@id": "http://linkeddata.systems:3000/metrics/11"
+          "@id": "http://w3id.org/FAIR_Evaluator/metrics/11"
         }]
     }]
 
@@ -165,12 +165,12 @@ The Web Page or JSON representation of a specific collection identified by its i
 
 sample JSON output
 
-    curl -X GET -D -L -H "Content-Type: application/json" -H "Accept: application/json" http://linkeddata.systems:3000/collections/5
+    curl -X GET -D -L -H "Content-Type: application/json" -H "Accept: application/json" http://w3id.org/FAIR_Evaluator/collections/5
 
 results in:
 
         {
-            "@id": "http://linkeddata.systems:3000/collections/5.json",
+            "@id": "http://w3id.org/FAIR_Evaluator/collections/5.json",
             "@type": [{
                 "@id": "http://purl.org/dc/dcmitype/Dataset"
             }, {
@@ -209,9 +209,9 @@ results in:
                 "@id": "http://fairmetrics.org"
             },
             "http://www.w3.org/ns/ldp#contains": [{
-                "@id": "http://linkeddata.systems:3000/metrics/9"
+                "@id": "http://w3id.org/FAIR_Evaluator/metrics/9"
             }, {
-                "@id": "http://linkeddata.systems:3000/metrics/10"
+                "@id": "http://w3id.org/FAIR_Evaluator/metrics/10"
             }]
         }
 
@@ -222,7 +222,7 @@ Provides a human-readable, or JSON serialized list of known evaluations.  These 
 
 sample JSON output
 
-    curl -X GET -D -L -H "Content-Type: application/json" -H "Accept: application/json" http://linkeddata.systems:3000/evaluations
+    curl -X GET -D -L -H "Content-Type: application/json" -H "Accept: application/json" http://w3id.org/FAIR_Evaluator/evaluations
 
 results in:
 
@@ -230,8 +230,8 @@ results in:
         "id": 12,
         "collection": "1",
         "resource": "https://www.uniprot.org/uniprot/P05067",
-        "body": "{\"http://linkeddata.systems:3000/metrics/1\":{\"subject\":\"https://www.uniprot.org/uniprot/P05067\",\"spec\":\"https://fairsharing.org/bsg-s001182\"},\"http://linkeddata.systems:3000/metrics/2\":{\"subject\":\"https://www.uniprot.org/uniprot/P05067\",\"persistence_doc\":\"https://fairsharing.org/bsg-s001182\"},\"http://linkeddata.systems:3000/metrics/3\":{\"subject\":\"https://www.uniprot.org/uniprot/P05067\",\"metadata\":\"https://www.uniprot.org/uniprot/P05067\",\"format\":\"https://fairsharing.org/FAIRsharing.p77ph9\"},\"http://linkeddata.systems:3000/metrics/4\":{\"subject\":\"https://www.uniprot.org/uniprot/P05067\",\"metadata\":\"https://www.uniprot.org/uniprot/P05067\",\"identifier\":\"https://www.uniprot.org/uniprot/P05067\"},\"http://linkeddata.systems:3000/metrics/5\":{\"subject\":\"https://www.uniprot.org/uniprot/P05067\",\"search_uri\":\"https://www.uniprot.org/uniprot/?query=A4_HUMAN\"}}",
-        "result": "{\"http://linkeddata.systems:3000/metrics/1\":{\"http://linkeddata.systems/cgi-bin/fair_metrics/Metrics/metric_unique_identifier/result#1544432741\":{\"http://semanticscience.org/resource/SIO_000300\":[{\"value\":\"1\",\"type\":\"literal\"}],\"http://www.w3.org/1999/02/22-rdf-syntax-ns#type\":[{\"value\":\"http://fairmetrics.org/resources/metric_evaluation_result\",\"type\":\"uri\"}],\"http://purl.obolibrary.org/obo/date\":[{\"value\":\"2018-12-10T09:05:41\",\"type\":\"literal\",\"datatype\":\"xsd:dateTime\"}],\"http://schema.org/comment\":[{\"value\":\"All OK!\",\"type\":\"literal\"}]},\"https://www.uniprot.org/uniprot/P05067\":{\"http://semanticscience.org/resource/SIO_000629\":[{\"value\":\"http://linkeddata.systems/cgi-bin/fair_metrics/Metrics/metric_unique_identifier/result#1544432741\",\"type\":\"uri\"}]}},\"http://linkeddata.systems:3000/metrics/2\":{\"https://www.uniprot.org/uniprot/P05067\":{\"http://semanticscience.org/resource/SIO_000629\":[{\"value\":\"http://linkeddata.systems/cgi-bin/fair_metrics/Metrics/metric_identifier_persistence/result#1544432753\",\"type\":\"uri\"}]},\"http://linkeddata.systems/cgi-bin/fair_metrics/Metrics/metric_identifier_persistence/result#1544432753\":{\"http://purl.obolibrary.org/obo/date\":[{\"type\":\"literal\",\"datatype\":\"xsd:dateTime\",\"value\":\"2018-12-10T09:05:53\"}],\"http://schema.org/comment\":[{\"value\":\"All OK!\",\"type\":\"literal\"}],\"http://www.w3.org/1999/02/22-rdf-syntax-ns#type\":[{\"value\":\"http://fairmetrics.org/resources/metric_evaluation_result\",\"type\":\"uri\"}],\"http://semanticscience.org/resource/SIO_000300\":[{\"value\":\"1\",\"type\":\"literal\"}]}},\"http://linkeddata.systems:3000/metrics/3\":{\"http://linkeddata.systems/cgi-bin/fair_metrics/Metrics/metric_machine_readable_metadata/result#1544432765\":{\"http://www.w3.org/1999/02/22-rdf-syntax-ns#type\":[{\"value\":\"http://fairmetrics.org/resources/metric_evaluation_result\",\"type\":\"uri\"}],\"http://semanticscience.org/resource/SIO_000300\":[{\"value\":\"1\",\"type\":\"literal\"}],\"http://schema.org/comment\":[{\"value\":\"All OK!\",\"type\":\"literal\"}],\"http://purl.obolibrary.org/obo/date\":[{\"value\":\"2018-12-10T09:06:05\",\"datatype\":\"xsd:dateTime\",\"type\":\"literal\"}]},\"https://www.uniprot.org/uniprot/P05067\":{\"http://semanticscience.org/resource/SIO_000629\":[{\"type\":\"uri\",\"value\":\"http://linkeddata.systems/cgi-bin/fair_metrics/Metrics/metric_machine_readable_metadata/result#1544432765\"}]}},\"http://linkeddata.systems:3000/metrics/4\":{\"http://linkeddata.systems/cgi-bin/fair_metrics/Metrics/metric_identifier_in_metadata/result#1544432779\":{\"http://schema.org/comment\":[{\"value\":\"There was no identifier https://www.uniprot.org/uniprot/P05067 in document at https://www.uniprot.org/uniprot/P05067\",\"type\":\"literal\"}],\"http://www.w3.org/1999/02/22-rdf-syntax-ns#type\":[{\"value\":\"http://fairmetrics.org/resources/metric_evaluation_result\",\"type\":\"uri\"}],\"http://semanticscience.org/resource/SIO_000300\":[{\"value\":\"0\",\"type\":\"literal\"}],\"http://purl.obolibrary.org/obo/date\":[{\"datatype\":\"xsd:dateTime\",\"type\":\"literal\",\"value\":\"2018-12-10T09:06:19\"}]},\"https://www.uniprot.org/uniprot/P05067\":{\"http://semanticscience.org/resource/SIO_000629\":[{\"type\":\"uri\",\"value\":\"http://linkeddata.systems/cgi-bin/fair_metrics/Metrics/metric_identifier_in_metadata/result#1544432779\"}]}},\"http://linkeddata.systems:3000/metrics/5\":{\"https://www.uniprot.org/uniprot/P05067\":{\"http://semanticscience.org/resource/SIO_000629\":[{\"type\":\"uri\",\"value\":\"http://linkeddata.systems/cgi-bin/fair_metrics/Metrics/metric_searchable_index/result#1544432795\"}]},\"http://linkeddata.systems/cgi-bin/fair_metrics/Metrics/metric_searchable_index/result#1544432795\":{\"http://purl.obolibrary.org/obo/date\":[{\"value\":\"2018-12-10T09:06:35\",\"datatype\":\"xsd:dateTime\",\"type\":\"literal\"}],\"http://www.w3.org/1999/02/22-rdf-syntax-ns#type\":[{\"value\":\"http://fairmetrics.org/resources/metric_evaluation_result\",\"type\":\"uri\"}],\"http://schema.org/comment\":[{\"type\":\"literal\",\"value\":\"Failed to find the UUID in the output from  'https://www.uniprot.org/uniprot/?query=A4_HUMAN'\"}],\"http://semanticscience.org/resource/SIO_000300\":[{\"value\":\"0\",\"type\":\"literal\"}]}}}",
+        "body": "{\"http://w3id.org/FAIR_Evaluator/metrics/1\":{\"subject\":\"https://www.uniprot.org/uniprot/P05067\",\"spec\":\"https://fairsharing.org/bsg-s001182\"},\"http://w3id.org/FAIR_Evaluator/metrics/2\":{\"subject\":\"https://www.uniprot.org/uniprot/P05067\",\"persistence_doc\":\"https://fairsharing.org/bsg-s001182\"},\"http://w3id.org/FAIR_Evaluator/metrics/3\":{\"subject\":\"https://www.uniprot.org/uniprot/P05067\",\"metadata\":\"https://www.uniprot.org/uniprot/P05067\",\"format\":\"https://fairsharing.org/FAIRsharing.p77ph9\"},\"http://w3id.org/FAIR_Evaluator/metrics/4\":{\"subject\":\"https://www.uniprot.org/uniprot/P05067\",\"metadata\":\"https://www.uniprot.org/uniprot/P05067\",\"identifier\":\"https://www.uniprot.org/uniprot/P05067\"},\"http://w3id.org/FAIR_Evaluator/metrics/5\":{\"subject\":\"https://www.uniprot.org/uniprot/P05067\",\"search_uri\":\"https://www.uniprot.org/uniprot/?query=A4_HUMAN\"}}",
+        "result": "{\"http://w3id.org/FAIR_Evaluator/metrics/1\":{\"http://linkeddata.systems/cgi-bin/fair_metrics/Metrics/metric_unique_identifier/result#1544432741\":{\"http://semanticscience.org/resource/SIO_000300\":[{\"value\":\"1\",\"type\":\"literal\"}],\"http://www.w3.org/1999/02/22-rdf-syntax-ns#type\":[{\"value\":\"http://fairmetrics.org/resources/metric_evaluation_result\",\"type\":\"uri\"}],\"http://purl.obolibrary.org/obo/date\":[{\"value\":\"2018-12-10T09:05:41\",\"type\":\"literal\",\"datatype\":\"xsd:dateTime\"}],\"http://schema.org/comment\":[{\"value\":\"All OK!\",\"type\":\"literal\"}]},\"https://www.uniprot.org/uniprot/P05067\":{\"http://semanticscience.org/resource/SIO_000629\":[{\"value\":\"http://linkeddata.systems/cgi-bin/fair_metrics/Metrics/metric_unique_identifier/result#1544432741\",\"type\":\"uri\"}]}},\"http://w3id.org/FAIR_Evaluator/metrics/2\":{\"https://www.uniprot.org/uniprot/P05067\":{\"http://semanticscience.org/resource/SIO_000629\":[{\"value\":\"http://linkeddata.systems/cgi-bin/fair_metrics/Metrics/metric_identifier_persistence/result#1544432753\",\"type\":\"uri\"}]},\"http://linkeddata.systems/cgi-bin/fair_metrics/Metrics/metric_identifier_persistence/result#1544432753\":{\"http://purl.obolibrary.org/obo/date\":[{\"type\":\"literal\",\"datatype\":\"xsd:dateTime\",\"value\":\"2018-12-10T09:05:53\"}],\"http://schema.org/comment\":[{\"value\":\"All OK!\",\"type\":\"literal\"}],\"http://www.w3.org/1999/02/22-rdf-syntax-ns#type\":[{\"value\":\"http://fairmetrics.org/resources/metric_evaluation_result\",\"type\":\"uri\"}],\"http://semanticscience.org/resource/SIO_000300\":[{\"value\":\"1\",\"type\":\"literal\"}]}},\"http://w3id.org/FAIR_Evaluator/metrics/3\":{\"http://linkeddata.systems/cgi-bin/fair_metrics/Metrics/metric_machine_readable_metadata/result#1544432765\":{\"http://www.w3.org/1999/02/22-rdf-syntax-ns#type\":[{\"value\":\"http://fairmetrics.org/resources/metric_evaluation_result\",\"type\":\"uri\"}],\"http://semanticscience.org/resource/SIO_000300\":[{\"value\":\"1\",\"type\":\"literal\"}],\"http://schema.org/comment\":[{\"value\":\"All OK!\",\"type\":\"literal\"}],\"http://purl.obolibrary.org/obo/date\":[{\"value\":\"2018-12-10T09:06:05\",\"datatype\":\"xsd:dateTime\",\"type\":\"literal\"}]},\"https://www.uniprot.org/uniprot/P05067\":{\"http://semanticscience.org/resource/SIO_000629\":[{\"type\":\"uri\",\"value\":\"http://linkeddata.systems/cgi-bin/fair_metrics/Metrics/metric_machine_readable_metadata/result#1544432765\"}]}},\"http://w3id.org/FAIR_Evaluator/metrics/4\":{\"http://linkeddata.systems/cgi-bin/fair_metrics/Metrics/metric_identifier_in_metadata/result#1544432779\":{\"http://schema.org/comment\":[{\"value\":\"There was no identifier https://www.uniprot.org/uniprot/P05067 in document at https://www.uniprot.org/uniprot/P05067\",\"type\":\"literal\"}],\"http://www.w3.org/1999/02/22-rdf-syntax-ns#type\":[{\"value\":\"http://fairmetrics.org/resources/metric_evaluation_result\",\"type\":\"uri\"}],\"http://semanticscience.org/resource/SIO_000300\":[{\"value\":\"0\",\"type\":\"literal\"}],\"http://purl.obolibrary.org/obo/date\":[{\"datatype\":\"xsd:dateTime\",\"type\":\"literal\",\"value\":\"2018-12-10T09:06:19\"}]},\"https://www.uniprot.org/uniprot/P05067\":{\"http://semanticscience.org/resource/SIO_000629\":[{\"type\":\"uri\",\"value\":\"http://linkeddata.systems/cgi-bin/fair_metrics/Metrics/metric_identifier_in_metadata/result#1544432779\"}]}},\"http://w3id.org/FAIR_Evaluator/metrics/5\":{\"https://www.uniprot.org/uniprot/P05067\":{\"http://semanticscience.org/resource/SIO_000629\":[{\"type\":\"uri\",\"value\":\"http://linkeddata.systems/cgi-bin/fair_metrics/Metrics/metric_searchable_index/result#1544432795\"}]},\"http://linkeddata.systems/cgi-bin/fair_metrics/Metrics/metric_searchable_index/result#1544432795\":{\"http://purl.obolibrary.org/obo/date\":[{\"value\":\"2018-12-10T09:06:35\",\"datatype\":\"xsd:dateTime\",\"type\":\"literal\"}],\"http://www.w3.org/1999/02/22-rdf-syntax-ns#type\":[{\"value\":\"http://fairmetrics.org/resources/metric_evaluation_result\",\"type\":\"uri\"}],\"http://schema.org/comment\":[{\"type\":\"literal\",\"value\":\"Failed to find the UUID in the output from  'https://www.uniprot.org/uniprot/?query=A4_HUMAN'\"}],\"http://semanticscience.org/resource/SIO_000300\":[{\"value\":\"0\",\"type\":\"literal\"}]}}}",
         "executor": "0000-0001-6960-357X",
         "title": "UniProt A4_HUMAN",
         "created_at": "2018-12-10T09:05:28.883Z",
@@ -245,7 +245,7 @@ Provides a human-readable, or JSON serialized outcome of a single evaluation wit
 
 sample JSON output
 
-    curl -X GET -D -L -H "Content-Type: application/json" -H "Accept: application/json" http://linkeddata.systems:3000/evaluations/11
+    curl -X GET -D -L -H "Content-Type: application/json" -H "Accept: application/json" http://w3id.org/FAIR_Evaluator/evaluations/11
 
 results in:
 
@@ -253,8 +253,8 @@ results in:
         "id": 12,
         "collection": "1",
         "resource": "https://www.uniprot.org/uniprot/P05067",
-        "body": "{\"http://linkeddata.systems:3000/metrics/1\":{\"subject\":\"https://www.uniprot.org/uniprot/P05067\",\"spec\":\"https://fairsharing.org/bsg-s001182\"},\"http://linkeddata.systems:3000/metrics/2\":{\"subject\":\"https://www.uniprot.org/uniprot/P05067\",\"persistence_doc\":\"https://fairsharing.org/bsg-s001182\"},\"http://linkeddata.systems:3000/metrics/3\":{\"subject\":\"https://www.uniprot.org/uniprot/P05067\",\"metadata\":\"https://www.uniprot.org/uniprot/P05067\",\"format\":\"https://fairsharing.org/FAIRsharing.p77ph9\"},\"http://linkeddata.systems:3000/metrics/4\":{\"subject\":\"https://www.uniprot.org/uniprot/P05067\",\"metadata\":\"https://www.uniprot.org/uniprot/P05067\",\"identifier\":\"https://www.uniprot.org/uniprot/P05067\"},\"http://linkeddata.systems:3000/metrics/5\":{\"subject\":\"https://www.uniprot.org/uniprot/P05067\",\"search_uri\":\"https://www.uniprot.org/uniprot/?query=A4_HUMAN\"}}",
-        "result": "{\"http://linkeddata.systems:3000/metrics/1\":{\"http://linkeddata.systems/cgi-bin/fair_metrics/Metrics/metric_unique_identifier/result#1544432741\":{\"http://semanticscience.org/resource/SIO_000300\":[{\"value\":\"1\",\"type\":\"literal\"}],\"http://www.w3.org/1999/02/22-rdf-syntax-ns#type\":[{\"value\":\"http://fairmetrics.org/resources/metric_evaluation_result\",\"type\":\"uri\"}],\"http://purl.obolibrary.org/obo/date\":[{\"value\":\"2018-12-10T09:05:41\",\"type\":\"literal\",\"datatype\":\"xsd:dateTime\"}],\"http://schema.org/comment\":[{\"value\":\"All OK!\",\"type\":\"literal\"}]},\"https://www.uniprot.org/uniprot/P05067\":{\"http://semanticscience.org/resource/SIO_000629\":[{\"value\":\"http://linkeddata.systems/cgi-bin/fair_metrics/Metrics/metric_unique_identifier/result#1544432741\",\"type\":\"uri\"}]}},\"http://linkeddata.systems:3000/metrics/2\":{\"https://www.uniprot.org/uniprot/P05067\":{\"http://semanticscience.org/resource/SIO_000629\":[{\"value\":\"http://linkeddata.systems/cgi-bin/fair_metrics/Metrics/metric_identifier_persistence/result#1544432753\",\"type\":\"uri\"}]},\"http://linkeddata.systems/cgi-bin/fair_metrics/Metrics/metric_identifier_persistence/result#1544432753\":{\"http://purl.obolibrary.org/obo/date\":[{\"type\":\"literal\",\"datatype\":\"xsd:dateTime\",\"value\":\"2018-12-10T09:05:53\"}],\"http://schema.org/comment\":[{\"value\":\"All OK!\",\"type\":\"literal\"}],\"http://www.w3.org/1999/02/22-rdf-syntax-ns#type\":[{\"value\":\"http://fairmetrics.org/resources/metric_evaluation_result\",\"type\":\"uri\"}],\"http://semanticscience.org/resource/SIO_000300\":[{\"value\":\"1\",\"type\":\"literal\"}]}},\"http://linkeddata.systems:3000/metrics/3\":{\"http://linkeddata.systems/cgi-bin/fair_metrics/Metrics/metric_machine_readable_metadata/result#1544432765\":{\"http://www.w3.org/1999/02/22-rdf-syntax-ns#type\":[{\"value\":\"http://fairmetrics.org/resources/metric_evaluation_result\",\"type\":\"uri\"}],\"http://semanticscience.org/resource/SIO_000300\":[{\"value\":\"1\",\"type\":\"literal\"}],\"http://schema.org/comment\":[{\"value\":\"All OK!\",\"type\":\"literal\"}],\"http://purl.obolibrary.org/obo/date\":[{\"value\":\"2018-12-10T09:06:05\",\"datatype\":\"xsd:dateTime\",\"type\":\"literal\"}]},\"https://www.uniprot.org/uniprot/P05067\":{\"http://semanticscience.org/resource/SIO_000629\":[{\"type\":\"uri\",\"value\":\"http://linkeddata.systems/cgi-bin/fair_metrics/Metrics/metric_machine_readable_metadata/result#1544432765\"}]}},\"http://linkeddata.systems:3000/metrics/4\":{\"http://linkeddata.systems/cgi-bin/fair_metrics/Metrics/metric_identifier_in_metadata/result#1544432779\":{\"http://schema.org/comment\":[{\"value\":\"There was no identifier https://www.uniprot.org/uniprot/P05067 in document at https://www.uniprot.org/uniprot/P05067\",\"type\":\"literal\"}],\"http://www.w3.org/1999/02/22-rdf-syntax-ns#type\":[{\"value\":\"http://fairmetrics.org/resources/metric_evaluation_result\",\"type\":\"uri\"}],\"http://semanticscience.org/resource/SIO_000300\":[{\"value\":\"0\",\"type\":\"literal\"}],\"http://purl.obolibrary.org/obo/date\":[{\"datatype\":\"xsd:dateTime\",\"type\":\"literal\",\"value\":\"2018-12-10T09:06:19\"}]},\"https://www.uniprot.org/uniprot/P05067\":{\"http://semanticscience.org/resource/SIO_000629\":[{\"type\":\"uri\",\"value\":\"http://linkeddata.systems/cgi-bin/fair_metrics/Metrics/metric_identifier_in_metadata/result#1544432779\"}]}},\"http://linkeddata.systems:3000/metrics/5\":{\"https://www.uniprot.org/uniprot/P05067\":{\"http://semanticscience.org/resource/SIO_000629\":[{\"type\":\"uri\",\"value\":\"http://linkeddata.systems/cgi-bin/fair_metrics/Metrics/metric_searchable_index/result#1544432795\"}]},\"http://linkeddata.systems/cgi-bin/fair_metrics/Metrics/metric_searchable_index/result#1544432795\":{\"http://purl.obolibrary.org/obo/date\":[{\"value\":\"2018-12-10T09:06:35\",\"datatype\":\"xsd:dateTime\",\"type\":\"literal\"}],\"http://www.w3.org/1999/02/22-rdf-syntax-ns#type\":[{\"value\":\"http://fairmetrics.org/resources/metric_evaluation_result\",\"type\":\"uri\"}],\"http://schema.org/comment\":[{\"type\":\"literal\",\"value\":\"Failed to find the UUID in the output from  'https://www.uniprot.org/uniprot/?query=A4_HUMAN'\"}],\"http://semanticscience.org/resource/SIO_000300\":[{\"value\":\"0\",\"type\":\"literal\"}]}}}",
+        "body": "{\"http://w3id.org/FAIR_Evaluator/metrics/1\":{\"subject\":\"https://www.uniprot.org/uniprot/P05067\",\"spec\":\"https://fairsharing.org/bsg-s001182\"},\"http://w3id.org/FAIR_Evaluator/metrics/2\":{\"subject\":\"https://www.uniprot.org/uniprot/P05067\",\"persistence_doc\":\"https://fairsharing.org/bsg-s001182\"},\"http://w3id.org/FAIR_Evaluator/metrics/3\":{\"subject\":\"https://www.uniprot.org/uniprot/P05067\",\"metadata\":\"https://www.uniprot.org/uniprot/P05067\",\"format\":\"https://fairsharing.org/FAIRsharing.p77ph9\"},\"http://w3id.org/FAIR_Evaluator/metrics/4\":{\"subject\":\"https://www.uniprot.org/uniprot/P05067\",\"metadata\":\"https://www.uniprot.org/uniprot/P05067\",\"identifier\":\"https://www.uniprot.org/uniprot/P05067\"},\"http://w3id.org/FAIR_Evaluator/metrics/5\":{\"subject\":\"https://www.uniprot.org/uniprot/P05067\",\"search_uri\":\"https://www.uniprot.org/uniprot/?query=A4_HUMAN\"}}",
+        "result": "{\"http://w3id.org/FAIR_Evaluator/metrics/1\":{\"http://linkeddata.systems/cgi-bin/fair_metrics/Metrics/metric_unique_identifier/result#1544432741\":{\"http://semanticscience.org/resource/SIO_000300\":[{\"value\":\"1\",\"type\":\"literal\"}],\"http://www.w3.org/1999/02/22-rdf-syntax-ns#type\":[{\"value\":\"http://fairmetrics.org/resources/metric_evaluation_result\",\"type\":\"uri\"}],\"http://purl.obolibrary.org/obo/date\":[{\"value\":\"2018-12-10T09:05:41\",\"type\":\"literal\",\"datatype\":\"xsd:dateTime\"}],\"http://schema.org/comment\":[{\"value\":\"All OK!\",\"type\":\"literal\"}]},\"https://www.uniprot.org/uniprot/P05067\":{\"http://semanticscience.org/resource/SIO_000629\":[{\"value\":\"http://linkeddata.systems/cgi-bin/fair_metrics/Metrics/metric_unique_identifier/result#1544432741\",\"type\":\"uri\"}]}},\"http://w3id.org/FAIR_Evaluator/metrics/2\":{\"https://www.uniprot.org/uniprot/P05067\":{\"http://semanticscience.org/resource/SIO_000629\":[{\"value\":\"http://linkeddata.systems/cgi-bin/fair_metrics/Metrics/metric_identifier_persistence/result#1544432753\",\"type\":\"uri\"}]},\"http://linkeddata.systems/cgi-bin/fair_metrics/Metrics/metric_identifier_persistence/result#1544432753\":{\"http://purl.obolibrary.org/obo/date\":[{\"type\":\"literal\",\"datatype\":\"xsd:dateTime\",\"value\":\"2018-12-10T09:05:53\"}],\"http://schema.org/comment\":[{\"value\":\"All OK!\",\"type\":\"literal\"}],\"http://www.w3.org/1999/02/22-rdf-syntax-ns#type\":[{\"value\":\"http://fairmetrics.org/resources/metric_evaluation_result\",\"type\":\"uri\"}],\"http://semanticscience.org/resource/SIO_000300\":[{\"value\":\"1\",\"type\":\"literal\"}]}},\"http://w3id.org/FAIR_Evaluator/metrics/3\":{\"http://linkeddata.systems/cgi-bin/fair_metrics/Metrics/metric_machine_readable_metadata/result#1544432765\":{\"http://www.w3.org/1999/02/22-rdf-syntax-ns#type\":[{\"value\":\"http://fairmetrics.org/resources/metric_evaluation_result\",\"type\":\"uri\"}],\"http://semanticscience.org/resource/SIO_000300\":[{\"value\":\"1\",\"type\":\"literal\"}],\"http://schema.org/comment\":[{\"value\":\"All OK!\",\"type\":\"literal\"}],\"http://purl.obolibrary.org/obo/date\":[{\"value\":\"2018-12-10T09:06:05\",\"datatype\":\"xsd:dateTime\",\"type\":\"literal\"}]},\"https://www.uniprot.org/uniprot/P05067\":{\"http://semanticscience.org/resource/SIO_000629\":[{\"type\":\"uri\",\"value\":\"http://linkeddata.systems/cgi-bin/fair_metrics/Metrics/metric_machine_readable_metadata/result#1544432765\"}]}},\"http://w3id.org/FAIR_Evaluator/metrics/4\":{\"http://linkeddata.systems/cgi-bin/fair_metrics/Metrics/metric_identifier_in_metadata/result#1544432779\":{\"http://schema.org/comment\":[{\"value\":\"There was no identifier https://www.uniprot.org/uniprot/P05067 in document at https://www.uniprot.org/uniprot/P05067\",\"type\":\"literal\"}],\"http://www.w3.org/1999/02/22-rdf-syntax-ns#type\":[{\"value\":\"http://fairmetrics.org/resources/metric_evaluation_result\",\"type\":\"uri\"}],\"http://semanticscience.org/resource/SIO_000300\":[{\"value\":\"0\",\"type\":\"literal\"}],\"http://purl.obolibrary.org/obo/date\":[{\"datatype\":\"xsd:dateTime\",\"type\":\"literal\",\"value\":\"2018-12-10T09:06:19\"}]},\"https://www.uniprot.org/uniprot/P05067\":{\"http://semanticscience.org/resource/SIO_000629\":[{\"type\":\"uri\",\"value\":\"http://linkeddata.systems/cgi-bin/fair_metrics/Metrics/metric_identifier_in_metadata/result#1544432779\"}]}},\"http://w3id.org/FAIR_Evaluator/metrics/5\":{\"https://www.uniprot.org/uniprot/P05067\":{\"http://semanticscience.org/resource/SIO_000629\":[{\"type\":\"uri\",\"value\":\"http://linkeddata.systems/cgi-bin/fair_metrics/Metrics/metric_searchable_index/result#1544432795\"}]},\"http://linkeddata.systems/cgi-bin/fair_metrics/Metrics/metric_searchable_index/result#1544432795\":{\"http://purl.obolibrary.org/obo/date\":[{\"value\":\"2018-12-10T09:06:35\",\"datatype\":\"xsd:dateTime\",\"type\":\"literal\"}],\"http://www.w3.org/1999/02/22-rdf-syntax-ns#type\":[{\"value\":\"http://fairmetrics.org/resources/metric_evaluation_result\",\"type\":\"uri\"}],\"http://schema.org/comment\":[{\"type\":\"literal\",\"value\":\"Failed to find the UUID in the output from  'https://www.uniprot.org/uniprot/?query=A4_HUMAN'\"}],\"http://semanticscience.org/resource/SIO_000300\":[{\"value\":\"0\",\"type\":\"literal\"}]}}}",
         "executor": "0000-0001-6960-357X",
         "title": "UniProt A4_HUMAN",
         "created_at": "2018-12-10T09:05:28.883Z",
@@ -281,12 +281,12 @@ POST the URL to the smartAPI interface definition (currently *must* be in YAML!)
 
 Sample JSON
 
-    curl -X POST -D -L -H "Content-Type: application/json" -H "Accept: application/json" -d '{"smarturl": "http://linkeddata.systems/cgi-bin/FAIR_Tests/gen2_metadata_identifier_in_metadata"}' http://linkeddata.systems:3000/metrics
+    curl -X POST -D -L -H "Content-Type: application/json" -H "Accept: application/json" -d '{"smarturl": "http://linkeddata.systems/cgi-bin/FAIR_Tests/gen2_metadata_identifier_in_metadata"}' http://w3id.org/FAIR_Evaluator/metrics
 
 response 200 OK
 
     {
-        "id": "http://linkeddata.systems:3000/metrics/1.json",
+        "id": "http://w3id.org/FAIR_Evaluator/metrics/1.json",
         "name": "FAIR Metrics Gen2- Metadata Identifier Explicitly In Metadata",
         "creator": "Mark D Wilkinson",
         "email": "markw@illuminae.com",
@@ -303,12 +303,12 @@ POST the JSON describing a new Metric Collection to register that collection in 
 
 Sample JSON
 
-    curl -X POST -D -L -H "Content-Type: application/json" -H "Accept: application/json" -d '{"name": "JSON Test 3", "contact": "0000-0001-6960-357X", "organization": "Hackathon", "include_metrics": ["http://linkeddata.systems/cgi-bin/FAIR_Tests/gen2_metadata_identifier_in_metadata"]}'  http://linkeddata.systems:3000/collections
+    curl -X POST -D -L -H "Content-Type: application/json" -H "Accept: application/json" -d '{"name": "JSON Test 3", "contact": "0000-0001-6960-357X", "organization": "Hackathon", "include_metrics": ["http://linkeddata.systems/cgi-bin/FAIR_Tests/gen2_metadata_identifier_in_metadata"]}'  http://w3id.org/FAIR_Evaluator/collections
 
 Response 200 OK
 
     {
-        "@id": "http://linkeddata.systems:3000/collections/1.json",
+        "@id": "http://w3id.org/FAIR_Evaluator/collections/1.json",
         "@type": [{
             "@id": "http://purl.org/dc/dcmitype/Dataset"
         }, {
@@ -341,13 +341,13 @@ Response 200 OK
             "@id": "https://dx.doi.org/0000-0001-6960-357X"
         },
         "http://www.w3.org/ns/dcat#identifier": {
-            "@id": "http://linkeddata.systems:3000/collections/1.json"
+            "@id": "http://w3id.org/FAIR_Evaluator/collections/1.json"
         },
         "http://www.w3.org/ns/dcat#publisher": {
             "@id": "http://fairmetrics.org"
         },
         "http://www.w3.org/ns/ldp#contains": [{
-            "@id": "http://linkeddata.systems:3000/metrics/1"
+            "@id": "http://w3id.org/FAIR_Evaluator/metrics/1"
         }]
     }
 
@@ -358,7 +358,7 @@ Send a block of JSON containing the Resource (GUID) to be evaluated, and other m
 
 Sample JSON
 
-    curl -X POST -D -L -H "Content-Type: application/json" -H "Accept: application/json" -d '{"resource": "10.5281/zenodo.1147435", "executor":  "0000-0001-6960-357X", "title": "an exemplar evaluation"}' http://linkeddata.systems:3000/collections/1/evaluate 
+    curl -X POST -D -L -H "Content-Type: application/json" -H "Accept: application/json" -d '{"resource": "10.5281/zenodo.1147435", "executor":  "0000-0001-6960-357X", "title": "an exemplar evaluation"}' http://w3id.org/FAIR_Evaluator/collections/1/evaluate 
 
 Response 302 Redirect  (redirected to the URL of a newly created Evaluation http://linkeddata.systems/evaluations/{id}  with a structure similar to:
 
@@ -366,8 +366,8 @@ Response 302 Redirect  (redirected to the URL of a newly created Evaluation http
         "id": 12,
         "collection": "1",
         "resource": "https://www.uniprot.org/uniprot/P05067",
-        "body": "{\"http://linkeddata.systems:3000/metrics/1\":{\"subject\":\"https://www.uniprot.org/uniprot/P05067\",\"spec\":\"https://fairsharing.org/bsg-s001182\"},\"http://linkeddata.systems:3000/metrics/2\":{\"subject\":\"https://www.uniprot.org/uniprot/P05067\",\"persistence_doc\":\"https://fairsharing.org/bsg-s001182\"},\"http://linkeddata.systems:3000/metrics/3\":{\"subject\":\"https://www.uniprot.org/uniprot/P05067\",\"metadata\":\"https://www.uniprot.org/uniprot/P05067\",\"format\":\"https://fairsharing.org/FAIRsharing.p77ph9\"},\"http://linkeddata.systems:3000/metrics/4\":{\"subject\":\"https://www.uniprot.org/uniprot/P05067\",\"metadata\":\"https://www.uniprot.org/uniprot/P05067\",\"identifier\":\"https://www.uniprot.org/uniprot/P05067\"},\"http://linkeddata.systems:3000/metrics/5\":{\"subject\":\"https://www.uniprot.org/uniprot/P05067\",\"search_uri\":\"https://www.uniprot.org/uniprot/?query=A4_HUMAN\"}}",
-        "result": "{\"http://linkeddata.systems:3000/metrics/1\":{\"http://linkeddata.systems/cgi-bin/fair_metrics/Metrics/metric_unique_identifier/result#1544432741\":{\"http://semanticscience.org/resource/SIO_000300\":[{\"value\":\"1\",\"type\":\"literal\"}],\"http://www.w3.org/1999/02/22-rdf-syntax-ns#type\":[{\"value\":\"http://fairmetrics.org/resources/metric_evaluation_result\",\"type\":\"uri\"}],\"http://purl.obolibrary.org/obo/date\":[{\"value\":\"2018-12-10T09:05:41\",\"type\":\"literal\",\"datatype\":\"xsd:dateTime\"}],\"http://schema.org/comment\":[{\"value\":\"All OK!\",\"type\":\"literal\"}]},\"https://www.uniprot.org/uniprot/P05067\":{\"http://semanticscience.org/resource/SIO_000629\":[{\"value\":\"http://linkeddata.systems/cgi-bin/fair_metrics/Metrics/metric_unique_identifier/result#1544432741\",\"type\":\"uri\"}]}},\"http://linkeddata.systems:3000/metrics/2\":{\"https://www.uniprot.org/uniprot/P05067\":{\"http://semanticscience.org/resource/SIO_000629\":[{\"value\":\"http://linkeddata.systems/cgi-bin/fair_metrics/Metrics/metric_identifier_persistence/result#1544432753\",\"type\":\"uri\"}]},\"http://linkeddata.systems/cgi-bin/fair_metrics/Metrics/metric_identifier_persistence/result#1544432753\":{\"http://purl.obolibrary.org/obo/date\":[{\"type\":\"literal\",\"datatype\":\"xsd:dateTime\",\"value\":\"2018-12-10T09:05:53\"}],\"http://schema.org/comment\":[{\"value\":\"All OK!\",\"type\":\"literal\"}],\"http://www.w3.org/1999/02/22-rdf-syntax-ns#type\":[{\"value\":\"http://fairmetrics.org/resources/metric_evaluation_result\",\"type\":\"uri\"}],\"http://semanticscience.org/resource/SIO_000300\":[{\"value\":\"1\",\"type\":\"literal\"}]}},\"http://linkeddata.systems:3000/metrics/3\":{\"http://linkeddata.systems/cgi-bin/fair_metrics/Metrics/metric_machine_readable_metadata/result#1544432765\":{\"http://www.w3.org/1999/02/22-rdf-syntax-ns#type\":[{\"value\":\"http://fairmetrics.org/resources/metric_evaluation_result\",\"type\":\"uri\"}],\"http://semanticscience.org/resource/SIO_000300\":[{\"value\":\"1\",\"type\":\"literal\"}],\"http://schema.org/comment\":[{\"value\":\"All OK!\",\"type\":\"literal\"}],\"http://purl.obolibrary.org/obo/date\":[{\"value\":\"2018-12-10T09:06:05\",\"datatype\":\"xsd:dateTime\",\"type\":\"literal\"}]},\"https://www.uniprot.org/uniprot/P05067\":{\"http://semanticscience.org/resource/SIO_000629\":[{\"type\":\"uri\",\"value\":\"http://linkeddata.systems/cgi-bin/fair_metrics/Metrics/metric_machine_readable_metadata/result#1544432765\"}]}},\"http://linkeddata.systems:3000/metrics/4\":{\"http://linkeddata.systems/cgi-bin/fair_metrics/Metrics/metric_identifier_in_metadata/result#1544432779\":{\"http://schema.org/comment\":[{\"value\":\"There was no identifier https://www.uniprot.org/uniprot/P05067 in document at https://www.uniprot.org/uniprot/P05067\",\"type\":\"literal\"}],\"http://www.w3.org/1999/02/22-rdf-syntax-ns#type\":[{\"value\":\"http://fairmetrics.org/resources/metric_evaluation_result\",\"type\":\"uri\"}],\"http://semanticscience.org/resource/SIO_000300\":[{\"value\":\"0\",\"type\":\"literal\"}],\"http://purl.obolibrary.org/obo/date\":[{\"datatype\":\"xsd:dateTime\",\"type\":\"literal\",\"value\":\"2018-12-10T09:06:19\"}]},\"https://www.uniprot.org/uniprot/P05067\":{\"http://semanticscience.org/resource/SIO_000629\":[{\"type\":\"uri\",\"value\":\"http://linkeddata.systems/cgi-bin/fair_metrics/Metrics/metric_identifier_in_metadata/result#1544432779\"}]}},\"http://linkeddata.systems:3000/metrics/5\":{\"https://www.uniprot.org/uniprot/P05067\":{\"http://semanticscience.org/resource/SIO_000629\":[{\"type\":\"uri\",\"value\":\"http://linkeddata.systems/cgi-bin/fair_metrics/Metrics/metric_searchable_index/result#1544432795\"}]},\"http://linkeddata.systems/cgi-bin/fair_metrics/Metrics/metric_searchable_index/result#1544432795\":{\"http://purl.obolibrary.org/obo/date\":[{\"value\":\"2018-12-10T09:06:35\",\"datatype\":\"xsd:dateTime\",\"type\":\"literal\"}],\"http://www.w3.org/1999/02/22-rdf-syntax-ns#type\":[{\"value\":\"http://fairmetrics.org/resources/metric_evaluation_result\",\"type\":\"uri\"}],\"http://schema.org/comment\":[{\"type\":\"literal\",\"value\":\"Failed to find the UUID in the output from  'https://www.uniprot.org/uniprot/?query=A4_HUMAN'\"}],\"http://semanticscience.org/resource/SIO_000300\":[{\"value\":\"0\",\"type\":\"literal\"}]}}}",
+        "body": "{\"http://w3id.org/FAIR_Evaluator/metrics/1\":{\"subject\":\"https://www.uniprot.org/uniprot/P05067\",\"spec\":\"https://fairsharing.org/bsg-s001182\"},\"http://w3id.org/FAIR_Evaluator/metrics/2\":{\"subject\":\"https://www.uniprot.org/uniprot/P05067\",\"persistence_doc\":\"https://fairsharing.org/bsg-s001182\"},\"http://w3id.org/FAIR_Evaluator/metrics/3\":{\"subject\":\"https://www.uniprot.org/uniprot/P05067\",\"metadata\":\"https://www.uniprot.org/uniprot/P05067\",\"format\":\"https://fairsharing.org/FAIRsharing.p77ph9\"},\"http://w3id.org/FAIR_Evaluator/metrics/4\":{\"subject\":\"https://www.uniprot.org/uniprot/P05067\",\"metadata\":\"https://www.uniprot.org/uniprot/P05067\",\"identifier\":\"https://www.uniprot.org/uniprot/P05067\"},\"http://w3id.org/FAIR_Evaluator/metrics/5\":{\"subject\":\"https://www.uniprot.org/uniprot/P05067\",\"search_uri\":\"https://www.uniprot.org/uniprot/?query=A4_HUMAN\"}}",
+        "result": "{\"http://w3id.org/FAIR_Evaluator/metrics/1\":{\"http://linkeddata.systems/cgi-bin/fair_metrics/Metrics/metric_unique_identifier/result#1544432741\":{\"http://semanticscience.org/resource/SIO_000300\":[{\"value\":\"1\",\"type\":\"literal\"}],\"http://www.w3.org/1999/02/22-rdf-syntax-ns#type\":[{\"value\":\"http://fairmetrics.org/resources/metric_evaluation_result\",\"type\":\"uri\"}],\"http://purl.obolibrary.org/obo/date\":[{\"value\":\"2018-12-10T09:05:41\",\"type\":\"literal\",\"datatype\":\"xsd:dateTime\"}],\"http://schema.org/comment\":[{\"value\":\"All OK!\",\"type\":\"literal\"}]},\"https://www.uniprot.org/uniprot/P05067\":{\"http://semanticscience.org/resource/SIO_000629\":[{\"value\":\"http://linkeddata.systems/cgi-bin/fair_metrics/Metrics/metric_unique_identifier/result#1544432741\",\"type\":\"uri\"}]}},\"http://w3id.org/FAIR_Evaluator/metrics/2\":{\"https://www.uniprot.org/uniprot/P05067\":{\"http://semanticscience.org/resource/SIO_000629\":[{\"value\":\"http://linkeddata.systems/cgi-bin/fair_metrics/Metrics/metric_identifier_persistence/result#1544432753\",\"type\":\"uri\"}]},\"http://linkeddata.systems/cgi-bin/fair_metrics/Metrics/metric_identifier_persistence/result#1544432753\":{\"http://purl.obolibrary.org/obo/date\":[{\"type\":\"literal\",\"datatype\":\"xsd:dateTime\",\"value\":\"2018-12-10T09:05:53\"}],\"http://schema.org/comment\":[{\"value\":\"All OK!\",\"type\":\"literal\"}],\"http://www.w3.org/1999/02/22-rdf-syntax-ns#type\":[{\"value\":\"http://fairmetrics.org/resources/metric_evaluation_result\",\"type\":\"uri\"}],\"http://semanticscience.org/resource/SIO_000300\":[{\"value\":\"1\",\"type\":\"literal\"}]}},\"http://w3id.org/FAIR_Evaluator/metrics/3\":{\"http://linkeddata.systems/cgi-bin/fair_metrics/Metrics/metric_machine_readable_metadata/result#1544432765\":{\"http://www.w3.org/1999/02/22-rdf-syntax-ns#type\":[{\"value\":\"http://fairmetrics.org/resources/metric_evaluation_result\",\"type\":\"uri\"}],\"http://semanticscience.org/resource/SIO_000300\":[{\"value\":\"1\",\"type\":\"literal\"}],\"http://schema.org/comment\":[{\"value\":\"All OK!\",\"type\":\"literal\"}],\"http://purl.obolibrary.org/obo/date\":[{\"value\":\"2018-12-10T09:06:05\",\"datatype\":\"xsd:dateTime\",\"type\":\"literal\"}]},\"https://www.uniprot.org/uniprot/P05067\":{\"http://semanticscience.org/resource/SIO_000629\":[{\"type\":\"uri\",\"value\":\"http://linkeddata.systems/cgi-bin/fair_metrics/Metrics/metric_machine_readable_metadata/result#1544432765\"}]}},\"http://w3id.org/FAIR_Evaluator/metrics/4\":{\"http://linkeddata.systems/cgi-bin/fair_metrics/Metrics/metric_identifier_in_metadata/result#1544432779\":{\"http://schema.org/comment\":[{\"value\":\"There was no identifier https://www.uniprot.org/uniprot/P05067 in document at https://www.uniprot.org/uniprot/P05067\",\"type\":\"literal\"}],\"http://www.w3.org/1999/02/22-rdf-syntax-ns#type\":[{\"value\":\"http://fairmetrics.org/resources/metric_evaluation_result\",\"type\":\"uri\"}],\"http://semanticscience.org/resource/SIO_000300\":[{\"value\":\"0\",\"type\":\"literal\"}],\"http://purl.obolibrary.org/obo/date\":[{\"datatype\":\"xsd:dateTime\",\"type\":\"literal\",\"value\":\"2018-12-10T09:06:19\"}]},\"https://www.uniprot.org/uniprot/P05067\":{\"http://semanticscience.org/resource/SIO_000629\":[{\"type\":\"uri\",\"value\":\"http://linkeddata.systems/cgi-bin/fair_metrics/Metrics/metric_identifier_in_metadata/result#1544432779\"}]}},\"http://w3id.org/FAIR_Evaluator/metrics/5\":{\"https://www.uniprot.org/uniprot/P05067\":{\"http://semanticscience.org/resource/SIO_000629\":[{\"type\":\"uri\",\"value\":\"http://linkeddata.systems/cgi-bin/fair_metrics/Metrics/metric_searchable_index/result#1544432795\"}]},\"http://linkeddata.systems/cgi-bin/fair_metrics/Metrics/metric_searchable_index/result#1544432795\":{\"http://purl.obolibrary.org/obo/date\":[{\"value\":\"2018-12-10T09:06:35\",\"datatype\":\"xsd:dateTime\",\"type\":\"literal\"}],\"http://www.w3.org/1999/02/22-rdf-syntax-ns#type\":[{\"value\":\"http://fairmetrics.org/resources/metric_evaluation_result\",\"type\":\"uri\"}],\"http://schema.org/comment\":[{\"type\":\"literal\",\"value\":\"Failed to find the UUID in the output from  'https://www.uniprot.org/uniprot/?query=A4_HUMAN'\"}],\"http://semanticscience.org/resource/SIO_000300\":[{\"value\":\"0\",\"type\":\"literal\"}]}}}",
         "executor": "0000-0001-6960-357X",
         "title": "UniProt A4_HUMAN",
         "created_at": "2018-12-10T09:05:28.883Z",
