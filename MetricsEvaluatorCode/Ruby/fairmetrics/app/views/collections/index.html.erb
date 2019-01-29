@@ -9,7 +9,15 @@
   </head>
 
   <body>
-    
+
+<style>
+td {
+  text-align: center;
+}
+  
+</style>
+
+
 <h1>Collections</h1>
 
 <table>
@@ -28,16 +36,16 @@
     <% @collections.each do |collection| %>
     <% next if collection.name =~ /__ALL/ %>
       <tr>
-        <td width="100px"><%= collection.name %></td>
-        <td width="100px"><%= collection.contact %></td>
-        <td width="100px"><%= collection.organization %></td>
-        <td><%= collection.deprecated %></td>
+        <td width="150px"><%= collection.name %></td>
+        <td width="150px"><%= collection.contact %></td>
+        <td width="150px"><%= collection.organization %></td>
+        <td width="50px"><%= collection.deprecated %></td>
         <td><%= link_to 'Show', collection %></td>
         <td><%= link_to 'Execute Evaluation', evaluationtemplate_path(collection) %></td>
       </tr>
-      <tr><td></td><td colspan="2"><%= collection.description %></td><td colspan="3"></td></tr>
-      <!--<tr><td></td><td colspan="2"><hr width="20%"/></td></tr>
-      <tr><td></td></tr>-->
+      <tr><td></td><td colspan="3"><b><i><%= collection.description %></i></b></td><td colspan="2"></td></tr>
+      <tr><td></td><td colspan="2"><hr width="20%"/></td></tr>
+      <tr><td></td></tr>
     <% end %>
   </tbody>
 </table>
