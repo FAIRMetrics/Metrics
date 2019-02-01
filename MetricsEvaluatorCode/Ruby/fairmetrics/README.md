@@ -8,7 +8,7 @@ The FAIR Evaluator is a Ruby on Rails application that is used to:
 
 # API
 [HTTP GET Operations](#gets)
-* [Get Metric Test Creation Template](#getmetricstemplate)
+* [Search](#getsearch)
 * [Get Metric Tests](#getmetrics)
 * [Get Specific Metric Test](#getmetric)
 * [Get Collection Creation Template](#getcollectionstemplate)
@@ -19,6 +19,7 @@ The FAIR Evaluator is a Ruby on Rails application that is used to:
 * [Get Evaluation Result](#getevaluationresult)
 
 [HTTP POST Operations](#posts)
+* [Search](#postsearch)
 * [Register New Metric Test](#createnewmetric)
 * [Register New Collection](#createnewcollection)
 * [Execute a New Evaluation](#createnewevaluation)
@@ -30,6 +31,10 @@ The FAIR Evaluator is a Ruby on Rails application that is used to:
 ## /
 
 The root URL provides a (human-readable only) list of the entry-points for human exploration.
+
+## <a name="getsearch"> /searches/new 
+
+For humans, opens a Web page where keywords can be input.  When called with Accept: application/json, returns a JSON Schema describing the search interface, as well as a URL to POST the search parameters to (in the Location header)
 
 ## <a name="getmetricstemplate"> /metrics/new 
 
@@ -274,6 +279,97 @@ A Human readable Web page describing the outcome of the evaluation  (the equival
 
 
 # <a name="posts"></a> HTTP POST Operations
+
+## <a name="postsearch"> /searches/{id}
+
+returns a block of JSON containing a list of matching Metrics (based on their 'description' property), and a list of matching Collections (based on their 'description' property).  The format of the list members is identical to the format of an individual Metric or Collection descriptor (e.g. [METRIC](#getmetric); [COLLECTION](#getcollection)
+
+Sample JSON
+
+     curl -L -H "Accept: application/json" -H "Content-type: application/json" -d '{"keywords": "identifier"}' http://w3id.org/FAIR_Evaluator/searches/172ad304-3a30-4c80-8265-fc47089e7f66
+
+Response 200 OK
+
+    {
+	"title": "Search Results",
+	"description": "Your search results, separated into matching 'metrics' and 'collections'",
+	"metrics": [{
+		"id": "https://w3id.org/FAIR_Evaluator/metrics/4.json",
+		"name": "FAIR Metrics Gen2- Unique Identifier",
+		"creator": "Mark D Wilkinson",
+		"email": "markw@illuminae.com",
+		"smarturl": "http://linkeddata.systems/cgi-bin/FAIR_Tests/gen2_unique_identifier",
+		"created_at": "2019-01-25T09:30:58.691Z",
+		"updated_at": "2019-01-25T09:30:58.691Z",
+		"principle": "https://purl.org/fair-metrics/F1"
+	}, {
+		"id": "https://w3id.org/FAIR_Evaluator/metrics/5.json",
+		"name": "FAIR Metrics Gen2- Data Identifier Explicitly In Metadata",
+		"creator": "Mark D Wilkinson",
+		"email": "markw@illuminae.com",
+		"smarturl": "http://linkeddata.systems/cgi-bin/FAIR_Tests/gen2_data_identifier_in_metadata",
+		"created_at": "2019-01-25T09:31:17.630Z",
+		"updated_at": "2019-01-25T09:31:17.630Z",
+		"principle": "https://purl.org/fair-metrics/F3"
+	}, {
+		"id": "https://w3id.org/FAIR_Evaluator/metrics/6.json",
+		"name": "FAIR Metrics Gen2- Metadata Identifier Explicitly In Metadata",
+		"creator": "Mark D Wilkinson",
+		"email": "markw@illuminae.com",
+		"smarturl": "http://linkeddata.systems/cgi-bin/FAIR_Tests/gen2_metadata_identifier_in_metadata",
+		"created_at": "2019-01-25T09:31:32.053Z",
+		"updated_at": "2019-01-25T09:31:32.053Z",
+		"principle": "https://purl.org/fair-metrics/F3"
+	}],
+	"collections": [{
+		"@id": "https://w3id.org/FAIR_Evaluator/collections/4",
+		"@type": [{
+			"@id": "http://purl.org/dc/dcmitype/Dataset"
+		}, {
+			"@id": "http://www.w3.org/ns/ldp#BasicContainer"
+		}, {
+			"@id": "http://www.w3.org/ns/prov#Collection"
+		}],
+		"http://purl.org/dc/elements/1.1/authoredBy": {
+			"@id": "https://dx.doi.org/0000-0001-6960-357X"
+		},
+		"http://purl.org/dc/elements/1.1/license": {
+			"@id": "https://creativecommons.org/licenses/by/4.0"
+		},
+		"http://purl.org/dc/elements/1.1/title": {
+			"@value": "Gen2 Three Identifier Metrics"
+		},
+		"http://purl.org/dc/elements/1.1/creator": {
+			"@value": "CBGP UPM-INIA"
+		},
+		"http://purl.org/pav/version": {
+			"@value": "2019-01-25T14:39:19.975Z"
+		},
+		"http://rdfs.org/ns/void#description": {
+			"@value": "FAIR Metrics Evaluation Collection Gen2 Three Identifier Metrics authored by https://dx.doi.org/0000-0001-6960-357X"
+		},
+		"http://www.w3.org/ns/dcat#entities": {
+			"@value": 3
+		},
+		"http://www.w3.org/ns/dcat#contactPoint": {
+			"@id": "https://dx.doi.org/0000-0001-6960-357X"
+		},
+		"http://www.w3.org/ns/dcat#identifier": {
+			"@id": "https://w3id.org/FAIR_Evaluator/collections/4"
+		},
+		"http://www.w3.org/ns/dcat#publisher": {
+			"@id": "http://fairmetrics.org"
+		},
+		"http://www.w3.org/ns/ldp#contains": [{
+			"@id": "https://w3id.org/FAIR_Evaluator/metrics/4"
+		}, {
+			"@id": "https://w3id.org/FAIR_Evaluator/metrics/5"
+		}, {
+			"@id": "https://w3id.org/FAIR_Evaluator/metrics/6"
+		}]
+	}]
+     }
+
 
 ## <a name="createnewmetric"> /metrics
 
