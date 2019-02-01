@@ -247,13 +247,70 @@ paths:
       - evaluations
 
 
-
+  /searches:
+    get:
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/search_schema'
+          description: a JSON Schema document for how to post a search query
+      summary: Search over Collections and FAIR Maturity Tests
+      tags:
+      - search
+    post:
+      requestBody:
+        content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/searchinput'
+        description: submit keywords for a search
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/searchresult'
+          description: a block of JSON containing two lists - a list of Maturity Tests, and a list of Collections - that match the search keywords
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResult'
+          description: A response indicating an improperly formatted query
+      summary: Execute a search over Maturity Indicator Test descriptions and Collection descriptions
+      tags:
+      - Metric Collections
 
 
 
 components:
 
   schemas:
+
+    search_schema:
+      properties:
+        properties:
+          type: string
+
+    searchinput:
+      properties:
+        keywords:
+          type: string
+
+    searchresult:
+      properties:
+        metrics:
+          type: array
+          items:
+            $ref: '#/components/schemas/metrics_result'
+        collections:
+          type: array
+          items:
+            $ref: '#/components/schemas/collections_result'
+          
+
     metrics:
       properties:
         smarturl:
