@@ -1,0 +1,13 @@
+
+<h1>New Search</h1>
+<%= form_for :newsearch, url: @new_url do %>
+  <%= label_tag(:keywords, "Comma-separated Keywords: ") %>
+  <%= text_field_tag(:keywords) %>
+  <br/><br/>
+  <%= submit_tag("Start Search") %>
+
+<% end %>
+
+<br>
+
+<%= link_to 'Home', about_path %> 

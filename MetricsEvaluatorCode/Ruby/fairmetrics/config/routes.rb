@@ -42,6 +42,11 @@ Rails.application.routes.draw do
     #get 'evaluations/:id/error', to: 'evaluations#error'
     
     
+    get 'searches/new', to: 'searches#new'
+    get 'searches', to: 'searches#new'
+    post 'searches/:id', to: 'searches#execute'
+    get 'searches/:id', to: 'searches#show'
+    
     # API methods
     namespace :v1, defaults: {format: 'json'} do
       scope '/users' do

@@ -1,0 +1,110 @@
+
+<h1>Search Results</h1>
+<ul>
+<li><a href="#collections">Matched Collections</a></li>
+<li><a href="#metrics">Matched Maturity Indicator Tests</a></li>
+</ul>
+
+
+<a name="metrics"><H3>Maturity Indicator Tests matching search terms</H3></a>
+
+<div style="padding-left: 50px;">
+
+<% @metrics.each do |metric| %>
+    <strong>Test Name:</strong>
+    <%= metric.name %>
+  </p>
+  <div style="padding-left: 50px;">
+
+  <p>
+    <strong>Indicator Identifier:</strong>
+    Metric #<a href="<%= metric_url(metric.id)  %>"><%= metric.id %></a>
+  </p>
+
+  <p>
+    <div style="width: 300px;">
+    <strong>Description:</strong>
+    <%= metric.description %>
+    </div>
+  </p>
+    
+  <p>
+    <strong>Tests Principle:</strong>
+    <a href="http://purl.org/fair-ontology#<%= metric.principle %>"><%= metric.principle %></a>
+  </p>
+  
+  <p>
+    <strong>Tests Maturity Indicator Metric:</strong>
+    <a href="<%= metric.test_of_metric %>"><%= metric.test_of_metric %></a>
+  </p>
+  
+  <p>
+    <strong>Test Interface URL (SmartAPI):</strong>
+    <a href='<%= metric.smarturl %>'><%= metric.smarturl %></a>
+  </p>
+  
+  <p>
+    <strong>Deprecated?:</strong>
+      <% if metric.deprecated == true %>
+      <span style="color:red;">
+      <% end %>
+      <%= metric.deprecated %>
+      <% if metric.deprecated == true %>
+      </span>
+      <% end %>
+  
+  </p>
+  </div>
+<br/><br/>
+<% end %>
+</div>
+
+<hr/>
+
+
+<a name="collections"><H3>Collections matching search terms</H3></a>
+
+<div style="padding-left: 50px;">
+
+<% @collections.each do |collection| %>
+
+<p>
+  <strong>Name:</strong>
+  <%= collection.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <div style="width: 300px;">
+  <%= collection.description %>
+  </div>
+</p>
+
+<p>
+  <strong>Contact:</strong>
+  <a href="https://orcid.org/<%= collection.contact %>"><%= collection.contact %></a>
+</p>
+
+<p>
+  <strong>Organization:</strong>
+  <%= collection.organization %>
+</p>
+
+<p>
+  <strong>Includes the following FAIR Maturity Indicator Tests:</strong>
+  <div style="padding-left: 30px;">
+
+  <% collection.metrics.each do |m| %>
+  
+        <p></p><span style='text-indent: 30px;'></span><a href="<%= url_for m %>"><%= m.id %> : <%= m.name %></a></span>
+  
+  <% end %>
+
+  </div>
+  <% end %>
+</div>
+
+
+<br>
+
+<%= link_to 'Home', about_path %> 
