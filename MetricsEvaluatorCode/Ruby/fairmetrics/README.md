@@ -282,11 +282,11 @@ A Human readable Web page describing the outcome of the evaluation  (the equival
 
 ## <a name="postsearch"> /searches/{id}
 
-returns a block of JSON containing a list of matching Metrics (based on their 'description' property), and a list of matching Collections (based on their 'description' property).  The format of the list members is identical to the format of an individual Metric or Collection descriptor (e.g. [METRIC](#getmetric); [COLLECTION](#getcollection)
+returns a block of JSON containing a list of matching Metrics (based on their 'description' property), and a list of matching Collections (based on their 'description' property).  The format of the list members is identical to the format of an individual Metric or Collection descriptor (e.g. [METRIC](#getmetric); [COLLECTION](#getcollection) )
 
 Sample JSON
 
-     curl -L -H "Accept: application/json" -H "Content-type: application/json" -d '{"keywords": "identifier"}' https://w3id.org/FAIR_Evaluator/searches/172ad304-3a30-4c80-8265-fc47089e7f66
+     curl -X POST -L -H "Accept: application/json" -H "Content-type: application/json" -d '{"keywords": "identifier"}' https://w3id.org/FAIR_Evaluator/searches/172ad304-3a30-4c80-8265-fc47089e7f66
 
 Response 200 OK
 
