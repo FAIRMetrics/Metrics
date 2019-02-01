@@ -1,2 +1,0 @@
-      invoke  active_record
-      create    db/migrate/20181210064520_add_deprecated_to_evaluations.rb
