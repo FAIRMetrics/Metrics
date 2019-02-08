@@ -8,7 +8,7 @@ The FAIR Evaluator is a Ruby on Rails application that is used to:
 
 # API
 [HTTP GET Operations](#gets)
-* [Search](#getsearch)
+* Search(See Search under POST operations)
 * [Get Metric Tests](#getmetrics)
 * [Get Specific Metric Test](#getmetric)
 * [Get Collection Creation Template](#getcollectionstemplate)
@@ -19,7 +19,9 @@ The FAIR Evaluator is a Ruby on Rails application that is used to:
 * [Get Evaluation Result](#getevaluationresult)
 
 [HTTP POST Operations](#posts)
-* [Search](#postsearch)
+* Search
+  * [Request Interface](#postsearch)
+  * [Execute Search](#postsearch2)
 * [Register New Metric Test](#createnewmetric)
 * [Register New Collection](#createnewcollection)
 * [Execute a New Evaluation](#createnewevaluation)
@@ -32,9 +34,6 @@ The FAIR Evaluator is a Ruby on Rails application that is used to:
 
 The root URL provides a (human-readable only) list of the entry-points for human exploration.
 
-## <a name="getsearch"> /searches/new 
-
-For humans, opens a Web page where keywords can be input.  When called with Accept: application/json, returns a JSON Schema describing the search interface, as well as a URL to POST the search parameters to (in the Location header)
 
 ## <a name="getmetricstemplate"> /metrics/new 
 
@@ -46,12 +45,14 @@ Provides a human-readable, or JSON serialized list of known metrics, including t
 
 sample JSON output
 
-    curl -X GET -D -L -H "Content-Type: application/json" -H "Accept: application/json" https://w3id.org/FAIR_Evaluator/metrics
+    curl  -L -X GET -H "Content-Type: application/json" -H "Accept: application/json" https://w3id.org/FAIR_Evaluator/metrics/
 
 results in:
 
     [{
-    "id": "https://w3id.org/FAIR_Evaluator/metrics/9.json",
+    "@context": "https://w3id.org/FAIR_Evaluator/schema",
+    "@type": ["http://purl.org/dc/dcmitype/Dataset", "https://purl.org/fair-ontology/FAIR-Metrics-Compliance-Test"],
+    "@id": "https://w3id.org/FAIR_Evaluator/metrics/4",
     "name": "FAIR Metrics Gen2- Unique Identifier",
     "creator": "Mark D Wilkinson",
     "email": "markw@illuminae.com",
@@ -60,7 +61,9 @@ results in:
     "updated_at": "2018-12-12T02:43:20.569Z",
     "principle": "https://purl.org/fair-metrics/F1"
     }, {
-    "id": "https://w3id.org/FAIR_Evaluator/metrics/10.json",
+    "@context": "https://w3id.org/FAIR_Evaluator/schema",
+    "@type": ["http://purl.org/dc/dcmitype/Dataset", "https://purl.org/fair-ontology/FAIR-Metrics-Compliance-Test"],
+    "@id": "https://w3id.org/FAIR_Evaluator/metrics/10.json",
     "name": "FAIR Metrics Gen2- Metadata Identifier Explicitly In Metadata",
     "creator": "Mark D Wilkinson",
     "email": "markw@illuminae.com",
@@ -69,7 +72,9 @@ results in:
     "updated_at": "2018-12-31T08:22:15.219Z",
     "principle": "https://purl.org/fair-metrics/F3"
     }, {
-    "id": "https://w3id.org/FAIR_Evaluator/metrics/11.json",
+    "@context": "https://w3id.org/FAIR_Evaluator/schema",
+    "@type": ["http://purl.org/dc/dcmitype/Dataset", "https://purl.org/fair-ontology/FAIR-Metrics-Compliance-Test"],
+    "@id": "https://w3id.org/FAIR_Evaluator/metrics/11.json",
     "name": "FAIR Metrics Gen2- Metadata Identifier Explicitly In Metadata",
     "creator": "Mark D Wilkinson",
     "email": "markw@illuminae.com",
@@ -86,12 +91,13 @@ The Web Page or JSON representation of a specific Metric Test identified by its 
 
 sample JSON output
 
-    curl -X GET -D -L -H "Content-Type: application/json" -H "Accept: application/json" https://w3id.org/FAIR_Evaluator/metrics/11
+    curl -L -X GET -H "Content-Type: application/json" -H "Accept: application/json" https://w3id.org/FAIR_Evaluator/metrics/4
 
 results in:
 
-    {
-        "id": "https://w3id.org/FAIR_Evaluator/metrics/11.json",
+    {"@context":"https://w3id.org/FAIR_Evaluator/schema",
+     "@id":"https://w3id.org/FAIR_Evaluator/metrics/4",
+     "@type":["http://purl.org/dc/dcmitype/Dataset","https://purl.org/fair-ontology/FAIR-Metrics-Compliance-Test"]
         "name": "FAIR Metrics Gen2- Metadata Identifier Explicitly In Metadata",
         "creator": "Mark D Wilkinson",
         "email": "markw@illuminae.com",
@@ -112,7 +118,7 @@ Provides a human-readable, or JSON serialized list of known metric collections, 
 
 sample JSON output
 
-    curl -X GET -D -L -H "Content-Type: application/json" -H "Accept: application/json" https://w3id.org/FAIR_Evaluator/collections
+    curl -L -X GET -H "Content-Type: application/json" -H "Accept: application/json" https://w3id.org/FAIR_Evaluator/collections
 
 results in:
 
@@ -170,7 +176,7 @@ The Web Page or JSON representation of a specific collection identified by its i
 
 sample JSON output
 
-    curl -X GET -D -L -H "Content-Type: application/json" -H "Accept: application/json" https://w3id.org/FAIR_Evaluator/collections/5
+    curl -L -X GET -H "Content-Type: application/json" -H "Accept: application/json" https://w3id.org/FAIR_Evaluator/collections/5
 
 results in:
 
@@ -227,7 +233,7 @@ Provides a human-readable, or JSON serialized list of known evaluations.  These 
 
 sample JSON output
 
-    curl -X GET -D -L -H "Content-Type: application/json" -H "Accept: application/json" https://w3id.org/FAIR_Evaluator/evaluations
+    curl -L -X GET -H "Content-Type: application/json" -H "Accept: application/json" https://w3id.org/FAIR_Evaluator/evaluations
 
 results in:
 
@@ -250,7 +256,7 @@ Provides a human-readable, or JSON serialized outcome of a single evaluation wit
 
 sample JSON output
 
-    curl -X GET -D -L -H "Content-Type: application/json" -H "Accept: application/json" https://w3id.org/FAIR_Evaluator/evaluations/11
+    curl -L -X GET -D -H "Content-Type: application/json" -H "Accept: application/json" https://w3id.org/FAIR_Evaluator/evaluations/11
 
 results in:
 
@@ -280,17 +286,24 @@ A Human readable Web page describing the outcome of the evaluation  (the equival
 
 # <a name="posts"></a> HTTP POST Operations
 
-## <a name="postsearch"> /searches/{id}
+## <a name="postsearch"> /searches/
 
-returns a block of JSON containing a list of matching Metrics (based on their 'description' property), and a list of matching Collections (based on their 'description' property).  The format of the list members is identical to the format of an individual Metric or Collection descriptor (e.g. [METRIC](#getmetric); [COLLECTION](#getcollection) )
+Returns a 201 CREATED header, with a Location tag indicating the location of your search interface.  The body of the message contains a JSON Schema describing the search interface (i.e. an array of keywords)
+
+## <a name="postsearch2"> /searches/{Location}
+
+Searches are executed by POSTing to the URL provided to you in the "Location" tag of the response to the call above.  POST of a correctly formatted block of JSON returns a block of JSON-LD containing a list of matching Metrics (based on their 'description' property), and a list of matching Collections (based on their 'description' property).  The format of the list members is identical to the format of an individual Metric or Collection descriptor (e.g. [METRIC](#getmetric); [COLLECTION](#getcollection) )
 
 Sample JSON
 
-     curl -X POST -L -H "Accept: application/json" -H "Content-type: application/json" -d '{"keywords": "identifier"}' https://w3id.org/FAIR_Evaluator/searches/172ad304-3a30-4c80-8265-fc47089e7f66
+     curl -L -X POST -H "Accept: application/json" -H "Content-type: application/json" -d '{"keywords": "identifier"}' https://w3id.org/FAIR_Evaluator/searches/172ad304-3a30-4c80-8265-fc47089e7f66
 
 Response 200 OK
 
     {
+        "@id": "https://w3id.org/FAIR_Evaluator/searches/172ad304-3a30-4c80-8265-fc47089e7f66",
+	"@context": "https://w3id.org/FAIR_Evaluator/schema",
+	"@type": ["http://purl.org/dc/dcmitype/Dataset", "http://schema.org/result"],
 	"title": "Search Results",
 	"description": "Your search results, separated into matching 'metrics' and 'collections'",
 	"metrics": [{
@@ -377,7 +390,7 @@ POST the URL to the smartAPI interface definition (currently *must* be in YAML!)
 
 Sample JSON
 
-    curl -X POST -D -L -H "Content-Type: application/json" -H "Accept: application/json" -d '{"smarturl": "http://linkeddata.systems/cgi-bin/FAIR_Tests/gen2_metadata_identifier_in_metadata"}' https://w3id.org/FAIR_Evaluator/metrics
+    curl -L -X POST -D -H "Content-Type: application/json" -H "Accept: application/json" -d '{"smarturl": "http://linkeddata.systems/cgi-bin/FAIR_Tests/gen2_metadata_identifier_in_metadata"}' https://w3id.org/FAIR_Evaluator/metrics
 
 response 200 OK
 
@@ -399,7 +412,7 @@ POST the JSON describing a new Metric Collection to register that collection in 
 
 Sample JSON
 
-    curl -X POST -D -L -H "Content-Type: application/json" -H "Accept: application/json" -d '{"name": "JSON Test 3", "contact": "0000-0001-6960-357X", "organization": "Hackathon", "include_metrics": ["http://linkeddata.systems/cgi-bin/FAIR_Tests/gen2_metadata_identifier_in_metadata"]}'  https://w3id.org/FAIR_Evaluator/collections
+    curl -L -X POST -D -H "Content-Type: application/json" -H "Accept: application/json" -d '{"name": "JSON Test 3", "contact": "0000-0001-6960-357X", "organization": "Hackathon", "include_metrics": ["http://linkeddata.systems/cgi-bin/FAIR_Tests/gen2_metadata_identifier_in_metadata"]}'  https://w3id.org/FAIR_Evaluator/collections
 
 Response 200 OK
 
@@ -454,7 +467,7 @@ Send a block of JSON containing the Resource (GUID) to be evaluated, and other m
 
 Sample JSON
 
-    curl -X POST -D -L -H "Content-Type: application/json" -H "Accept: application/json" -d '{"resource": "10.5281/zenodo.1147435", "executor":  "0000-0001-6960-357X", "title": "an exemplar evaluation"}' https://w3id.org/FAIR_Evaluator/collections/1/evaluate 
+    curl -L -X POST -D -H "Content-Type: application/json" -H "Accept: application/json" -d '{"resource": "10.5281/zenodo.1147435", "executor":  "0000-0001-6960-357X", "title": "an exemplar evaluation"}' https://w3id.org/FAIR_Evaluator/collections/1/evaluate 
 
 Response 302 Redirect  (redirected to the URL of a newly created Evaluation http://linkeddata.systems/evaluations/{id}  with a structure similar to:
 
