@@ -6,6 +6,7 @@
 	"schema": "http://schema.org/",
 	"xsd": "http://www.w3.org/2001/XMLSchema#",
 	"sio": "http://semanticscience.org/resource/",
+   "foaf": "http://xmlns.com/foaf/0.1/",
 	
 	"id": {"@id": "schema:identifier", "@type": "xsd:string"},
 	"name": {"@id": "schema:name", "@type": "xsd:string"},
@@ -14,8 +15,9 @@
 	"smarturl": {"@id": "schema:url", "@type": "xsd:string"},
 	"created-at": {"@id": "dct:created", "@type": "xsd:date"},
 	"updated-at": {"@id": "dct:modified", "@type": "xsd:date"},
-	"principle": {"@id": "sio:is-about", "@type": "xsd:anyURI"}
-	
+	"principle": {"@id": "sio:is-about", "@type": "xsd:anyURI"},
+	"test_of_metric": {"@id": "foaf:primaryTopic", "@type": "xsd:anyURI"},
+   "orcid": {"@id": "dct:creator", "@type": "xsd:string"}
 	
    }
 }

@@ -16,12 +16,22 @@ class CollectionsController < ApiController
   # GET /collections/1
   # GET /collections/1.json
   def show
+    respond_to do |format|
+        format.html { render :show }
+        format.json { render :show,  location: @collection }
+        format.jsonld { render :show, formats: :json,  location: @collection }
+    end
   end
 
   # GET /collections/new
   def new
     @metrics = Metric.where(deprecated: false)
     @collection = Collection.new
+    #respond_to do |format|
+    #    format.html { render :show }
+    #    format.json { render :show,  location: @collection }
+    #    format.jsonld { render :show, formats: :json,  location: @collection }
+    #end
   end
 
   # GET /collections/1/edit
@@ -67,10 +77,12 @@ class CollectionsController < ApiController
       if  !@collection.errors.any? && @collection.save
         format.html { redirect_to action: "show", id: @collection.id }   # url_for{@collection}
         format.json { render :show, status: :created, location: @collection }
+        format.jsonld { render :show, formats: :json, status: :created, location: @collection }
       else
         @collection.errors[:description] << "failed to save new collection"
         format.html { render :new }
         format.json { render :json => {status: :bad_request, errors: @collection.errors}, status: 400}
+        format.jsonld { render :json => {status: :bad_request, errors: @collection.errors}, status: 400}
       end
     end
   end
@@ -96,10 +108,12 @@ class CollectionsController < ApiController
       if @collection.errors.any? or !@collection.save
         format.html { redirect_to action: show, notice: 'Collection could not be deprecated.  Sorry, I dont know why' }
         format.json {  render :json => {status: :bad_request, errors: @collection.errors}, status: 400  }
+        format.jsonld {  render :json => {status: :bad_request, errors: @collection.errors}, status: 400  }
       else
         @collection.save
         format.html { redirect_to action: show, notice: 'Collection was successfully deprecated.' }
         format.json { head :no_content }
+        format.jsonld { head :no_content }
       end
     end
   end

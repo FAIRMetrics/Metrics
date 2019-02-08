@@ -1,19 +1,20 @@
 doi_url = "https://dx.doi.org/"
+fairont = "https://purl.org/fair-ontology/"
 metrics_url = "https://purl.org/fair-metrics/"
 type1="http://purl.org/dc/dcmitype/Dataset"
 type2 =    "http://www.w3.org/ns/ldp#BasicContainer"
 type3 =     "http://www.w3.org/ns/prov#Collection"
+type4 = fairont + "FAIR-Metrics-Collection"
 
 # THIS JBUILDER TEMPLATE CREATES AN LDP Container
 # AS JSON LD
 
 json.set! '@id', collection_url(collection)
+json.set! '@context', "https://w3id.org/FAIR_Evaluator/schema"
 
 
 json.set! '@type' do
-	json.array! [type1, type2, type3] do |type|
-		json.set! '@id', type
-	end
+	json.array! [type1, type2, type3, type4]
 end
 
 

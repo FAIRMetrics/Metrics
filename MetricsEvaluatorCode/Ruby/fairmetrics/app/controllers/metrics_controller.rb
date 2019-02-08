@@ -14,12 +14,22 @@ class MetricsController < ApiController
   # GET /metrics/1
   # GET /metrics/1.json
   def show
+    respond_to do |format|
+        format.html { render :show }
+        format.json { render :show,  location: @metric }
+        format.jsonld { render :show, formats: :json,  location: @metric }
+    end
+
   end
 
   # GET /metrics/new
   def new
     @metric = Metric.new
-    @metric
+    #respond_to do |format|
+    #    format.html { render :show }
+    #    format.json { render :show,  location: @metric }
+    #    format.jsonld { render :show, formats: :json,  location: @metric }
+    #end
   end
 
   # GET /metrics/1/edit
@@ -116,10 +126,12 @@ class MetricsController < ApiController
       if errors.length == 0 and @metric.save
         format.html { redirect_to @metric, notice: 'Metric was successfully created.' }
         format.json { render :show, status: :created, location: @metric }
+        format.jsonld { render :show, status: :created, location: @metric }
       else
-        @metric.errors[:details].unshift *errors
+        @metric.errors[:details].unshift(*errors)
         format.html { render :new }
         format.json { render :json => {status: :bad_request, errors: @metric.errors}, status: 400}
+        format.jsonld { render :json => {status: :bad_request, errors: @metric.errors}, status: 400}
       end
     end
 
@@ -159,10 +171,11 @@ class MetricsController < ApiController
       if @metric.errors.any? or !@metric.save
         format.html { redirect_to action: show, notice: 'Metric could not be deprecated.  Sorry, I dont know why' }
         format.json { render json: @metric.errors, status: :unprocessable_entity }
+        format.jsonld { render json: @metric.errors, status: :unprocessable_entity }
       else
         @metric.save
         format.html { redirect_to action: show, notice: 'Metric was successfully deprecated.' }
-        format.json { head :no_content }
+        format.jsonld { head :no_content }
       end
     end
   end
