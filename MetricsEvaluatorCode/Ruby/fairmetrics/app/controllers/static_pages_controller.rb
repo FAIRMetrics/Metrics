@@ -67,6 +67,11 @@ class StaticPagesController < ApplicationController
     render template: "static_pages/interface", content_type: "application/x-yaml", formats: ["yaml"]
   end
 
+  def schema
+    render "schema.jsonld",  formats: [:jsonld]
+  
+  end
+  
   def help
   end
 

@@ -49,7 +49,8 @@ Rails.application.routes.draw do
     post 'searches/:id', to: 'searches#execute'
     get 'searches/:id', to: 'searches#show'
     
-    get 'schema', to: 'static_pages#schema.json'
+    get 'schema', to: 'static_pages#schema'
+    
     # API methods
     namespace :v1, defaults: {format: 'json'} do
       scope '/users' do
