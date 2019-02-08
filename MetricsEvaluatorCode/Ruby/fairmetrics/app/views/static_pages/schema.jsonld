@@ -14,7 +14,7 @@
 	"smarturl": {"@id": "schema:url", "@type": "xsd:string"},
 	"created-at": {"@id": "dct:created", "@type": "xsd:date"},
 	"updated-at": {"@id": "dct:modified", "@type": "xsd:date"},
-	"principle": {"@id": "sio:is-about", "@type": "xsd:anyURI"},
+	"principle": {"@id": "sio:is-about", "@type": "xsd:anyURI"}
 	
 	
    }
