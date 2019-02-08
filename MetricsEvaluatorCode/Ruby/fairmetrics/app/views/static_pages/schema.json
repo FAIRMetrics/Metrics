@@ -1,0 +1,21 @@
+{
+   "@context": {
+	"eval": "http://w3id.org/FAIR_Evaluator/schema#",
+	"prov": "https://www.w3.org/ns/prov#",
+	"dct": "http://purl.org/dc/terms/",
+	"schema": "http://schema.org/",
+	"xsd": "http://www.w3.org/2001/XMLSchema#",
+	"sio": "http://semanticscience.org/resource/",
+	
+	"id": {"@id": "schema:identifier", "@type": "xsd:string"},
+	"name": {"@id": "schema:name", "@type": "xsd:string"},
+	"creator": {"@id": "dct:creator", "@type": "xsd:string"},
+	"email": {"@id": "schema:email", "@type": "xsd:string"},
+	"smarturl": {"@id": "schema:url", "@type": "xsd:string"},
+	"created-at": {"@id": "dct:created", "@type": "xsd:date"},
+	"updated-at": {"@id": "dct:modified", "@type": "xsd:date"},
+	"principle": {"@id": "sio:is-about", "@type": "xsd:anyURI"},
+	
+	
+   }
+}

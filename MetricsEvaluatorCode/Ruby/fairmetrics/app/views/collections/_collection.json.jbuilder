@@ -1,5 +1,4 @@
 doi_url = "https://dx.doi.org/"
-root_url = "http://linkeddata.systems:3000/metrics/"
 metrics_url = "https://purl.org/fair-metrics/"
 type1="http://purl.org/dc/dcmitype/Dataset"
 type2 =    "http://www.w3.org/ns/ldp#BasicContainer"
