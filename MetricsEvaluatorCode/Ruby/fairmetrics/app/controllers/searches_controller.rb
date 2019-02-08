@@ -10,6 +10,7 @@ class SearchesController < ApiController
     respond_to do |format|
         format.html { redirect_to action: new, status: 302  }
         format.json { redirect_to action: new, status: 302  }
+        format.jsonld { redirect_to action: new, status: 302  }
     end
   end
 
@@ -24,6 +25,7 @@ class SearchesController < ApiController
     respond_to do |format|
         format.html { render :new, status: 201  }
         format.json { render :new,   status: 201  }
+        format.jsonld { render :new, formats: :json,  status: 201  }
     end
 	
   end
@@ -34,6 +36,7 @@ class SearchesController < ApiController
     respond_to do |format|
         format.html { render :expired, status: 410  }
         format.json { render :expired, status: 410  }
+        format.jsonld { render :expired, formats: :json, status: 410  }
     end
   end
   
@@ -43,7 +46,7 @@ class SearchesController < ApiController
     allkeys = keywords.split(",")
     @metrics = Array.new
     @collections = Array.new
-    
+    @URL = request.original_url
     allkeys.each do |key|
       key.strip!
       @metrics.concat(Metric.where("description LIKE ?", "%#{key}%"))
@@ -56,6 +59,7 @@ class SearchesController < ApiController
     respond_to do |format|
         format.html { render :results, status: 200  }
         format.json { render :results,   status: 200  }
+        format.jsonld { render :results, formats: :json,   status: 200  }
     end
 
   end
