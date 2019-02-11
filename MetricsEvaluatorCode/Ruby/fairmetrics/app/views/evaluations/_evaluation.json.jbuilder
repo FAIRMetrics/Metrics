@@ -7,6 +7,7 @@ type1="http://purl.org/dc/dcmitype/Dataset"
 type2 = fairont + "FAIR-Evaluation-Output"
 
 
+
 json.set! '@id', evaluation_url(evaluation)
 json.set! '@context', "https://w3id.org/FAIR_Evaluator/schema"
 
@@ -34,7 +35,9 @@ json.set! 'http://www.w3.org/ns/dcat#identifier', evaluation_url(evaluation)
 
 json.set! 'http://www.w3.org/ns/dcat#publisher', "http://fairmetrics.org"
 
-json.set! 'evaluationInput', evaluation.body.to_s
+unless @brief
+	json.set! 'evaluationInput', evaluation.body.to_s
 
-json.set! 'evaluationResult', evaluation.result.to_s
+	json.set! 'evaluationResult', evaluation.result.to_s
+end
 
