@@ -40,7 +40,7 @@ json.set! 'http://www.w3.org/ns/dcat#identifier', collection_url(collection)
 json.set! 'http://www.w3.org/ns/dcat#publisher', "http://fairmetrics.org"
 
 json.set! 'http://www.w3.org/ns/ldp#contains' do
-	json.array! [collection.metrics.map {|m| metric_url(m)}]
+	json.array! collection.metrics.map {|m| metric_url(m)}
 end
 	
 
