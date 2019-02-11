@@ -10,6 +10,7 @@ require 'net/http'
 require 'openssl'
 
   def validate_orcid(orcid)
+    return false unless orcid
     orcid.gsub!(/\s/, "+")
     page = fetch("http://orcid.org/#{orcid}")
     #logger.debug("\n\n\n\n\n\n\nPAGE: #{page.class}\n\n\n\n\n\n\n") 

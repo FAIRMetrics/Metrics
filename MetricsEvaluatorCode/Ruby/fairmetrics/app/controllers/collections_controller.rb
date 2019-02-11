@@ -43,15 +43,17 @@ class CollectionsController < ApiController
   # POST /collections.json
   def create
     
-    @collection = Collection.new(name: params[:name],
-                                 contact: params[:contact],
-                                 organization: params[:organization],
-                                 description: params[:description])
+    @collection = Collection.new(name: collection_params[:name],
+                                 contact: collection_params[:contact],
+                                 organization: collection_params[:organization],
+                                 description: collection_params[:description])
     if @collection.description == "" or @collection.description == nil
       @collection.errors[:description] << "Collections must have descriptions"
     end
     
-    metricurls = params[:include_metrics]  # note that these might not exist in the registry!  We will check in a moment
+    metricurls = collection_params[:include_metrics]  # note that these might not exist in the registry!  We will check in a moment
+
+logger.debug("METRICURLS\n\n#{metricurls}**\n\nPARAMS #{collection_params.inspect}\n\n")
 
     @metrics = Metric.where(smarturl: metricurls)
     
@@ -131,7 +133,7 @@ class CollectionsController < ApiController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def collection_params
-      params.permit(:name, :contact, :organization, :description, :collection)
-      params.permit(include_metrics: [])
+
+      params.permit(:name, :contact, :organization, :description, :collection, include_metrics: [])
     end
 end
