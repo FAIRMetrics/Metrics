@@ -325,14 +325,16 @@ Sample JSON
 response 200 OK
 
     {
-        "id": "https://w3id.org/FAIR_Evaluator/metrics/1.json",
-        "name": "FAIR Metrics Gen2- Metadata Identifier Explicitly In Metadata",
-        "creator": "Mark D Wilkinson",
-        "email": "markw@illuminae.com",
-        "smarturl": "http://linkeddata.systems/cgi-bin/FAIR_Tests/gen2_metadata_identifier_in_metadata",
-        "created_at": "2018-12-31T11:30:46.545Z",
-        "updated_at": "2018-12-31T11:30:46.545Z",
-        "principle": "https://purl.org/fair-metrics/F3"
+     "@context":"https://w3id.org/FAIR_Evaluator/schema",
+     "@id":"https://w3id.org/FAIR_Evaluator/metrics/999",
+     "@type":["http://purl.org/dc/dcmitype/Dataset","https://purl.org/fair-ontology/FAIR-Metrics-Compliance-Test"]
+    "name": "FAIR Metrics Gen2- Metadata Identifier Explicitly In Metadata",
+    "creator": "Mark D Wilkinson",
+    "email": "markw@illuminae.com",
+    "smarturl": "http://linkeddata.systems/cgi-bin/FAIR_Tests/gen2_metadata_identifier_in_metadata",
+    "created_at": "2018-12-31T08:04:59.636Z",
+    "updated_at": "2018-12-31T08:04:59.636Z",
+    "principle": "https://purl.org/fair-metrics/F3"
     }
 
 
