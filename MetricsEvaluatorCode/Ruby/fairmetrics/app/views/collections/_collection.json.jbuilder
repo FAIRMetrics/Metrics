@@ -29,7 +29,7 @@ json.set! 'http://purl.org/dc/elements/1.1/creator', collection.organization
 
 json.set! 'http://purl.org/pav/version', collection.updated_at
 
-json.set! 'http://rdfs.org/ns/void#description', 'FAIR Metrics Evaluation Collection '  + collection.name + ' authored by ' + orcid_url + collection.contact.to_s
+json.set! 'http://rdfs.org/ns/void#description', 'FAIR Metrics Evaluation Collection '  + collection.name + ' authored by ' + orcid_url + collection.contact.to_s + ".  " + collection.description
 
 json.set! 'http://www.w3.org/ns/dcat#entities', collection.metrics.count
 

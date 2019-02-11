@@ -47,6 +47,10 @@ class CollectionsController < ApiController
                                  contact: params[:contact],
                                  organization: params[:organization],
                                  description: params[:description])
+    if Collection.description == "" or Collection.description == nil
+      @collection.errors[:description] << "Collections must have descriptions"
+    end
+    
     metricurls = params[:include_metrics]  # note that these might not exist in the registry!  We will check in a moment
 
     @metrics = Metric.where(smarturl: metricurls)
