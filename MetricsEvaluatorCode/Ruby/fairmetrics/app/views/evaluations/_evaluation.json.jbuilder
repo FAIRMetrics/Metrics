@@ -34,5 +34,7 @@ json.set! 'http://www.w3.org/ns/dcat#identifier', evaluation_url(evaluation)
 
 json.set! 'http://www.w3.org/ns/dcat#publisher', "http://fairmetrics.org"
 
+json.set! 'evaluationInput', evaluation.body.to_s
+
 json.set! 'evaluationResult', evaluation.result.to_s
 
