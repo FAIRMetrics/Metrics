@@ -17,13 +17,13 @@ json.set! 'description', "Your search results, separated into matching 'metrics'
 
 json.set! 'metrics' do
 	json.array! @metrics.each do |metric|
-		json.partial! "searches/metric", metric: metric
+		json.partial! "metrics/metric", metric: metric
 	end
 end
 
 json.set! 'collections' do
 	json.array! @collections.each do |collection|
-		json.partial! "searches/collection", coll: collection
+		json.partial! "collections/collection", collection: collection
 	end
 end
 

@@ -16,7 +16,6 @@ end
 
 metrics_url = "https://purl.org/fair-metrics/"
 
-
 json.extract! metric, :name, :orcid, :creator, :description, :email, :test_of_metric, :smarturl, :created_at, :updated_at
 
 json.principle metrics_url + metric.principle.to_s

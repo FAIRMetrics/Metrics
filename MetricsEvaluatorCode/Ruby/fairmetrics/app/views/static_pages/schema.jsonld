@@ -22,6 +22,7 @@
    "description": {"@id": "dct:description", "@type": "xsd:string},
    "metrics": {"@id": "skos:member"},
    "collections": {"@id": "skos:member"},
+   "primaryTopic": {"@id": "foaf:primaryTopic"},
    
    "orcid": {"@id": "dct:creator", "@type": "xsd:string"}
 	

@@ -1,4 +1,4 @@
-doi_url = "https://dx.doi.org/"
+orcid_url = "https://orcid.org/"
 fairont = "https://purl.org/fair-ontology/"
 metrics_url = "https://purl.org/fair-metrics/"
 type1="http://purl.org/dc/dcmitype/Dataset"
@@ -18,58 +18,31 @@ json.set! '@type' do
 end
 
 
-json.set! 'http://purl.org/dc/elements/1.1/authoredBy' do
-	json.set! '@id', doi_url + collection.contact.to_s
-end
+json.set! 'http://purl.org/dc/elements/1.1/authoredBy', orcid_url + collection.contact.to_s
 
 
-json.set! 'http://purl.org/dc/elements/1.1/license' do
-	json.set! '@id', 'https://creativecommons.org/licenses/by/4.0'
-end
+json.set! 'http://purl.org/dc/elements/1.1/license', 'https://creativecommons.org/licenses/by/4.0'
 
-json.set! 'http://purl.org/dc/elements/1.1/title' do
-	json.set! '@value', collection.name
-end
+json.set! 'http://purl.org/dc/elements/1.1/title', collection.name
 
-json.set! 'http://purl.org/dc/elements/1.1/creator' do
-	json.set! '@value', collection.organization
-end
+json.set! 'http://purl.org/dc/elements/1.1/creator', collection.organization
 
+json.set! 'http://purl.org/pav/version', collection.updated_at
 
-json.set! 'http://purl.org/pav/version' do
-	json.set! '@value', collection.updated_at
-end
+json.set! 'http://rdfs.org/ns/void#description', 'FAIR Metrics Evaluation Collection '  + collection.name + ' authored by ' + orcid_url + collection.contact.to_s
 
+json.set! 'http://www.w3.org/ns/dcat#entities', collection.metrics.count
 
-json.set! 'http://rdfs.org/ns/void#description' do
-	json.set! '@value', 'FAIR Metrics Evaluation Collection '  + collection.name + ' authored by ' + doi_url + collection.contact.to_s
-end
+json.set! 'http://www.w3.org/ns/dcat#contactPoint' , orcid_url + collection.contact.to_s
 
+json.set! 'http://www.w3.org/ns/dcat#identifier', collection_url(collection)
 
-json.set! 'http://www.w3.org/ns/dcat#entities' do
-	json.set! '@value', collection.metrics.count
-end
-
-
-json.set! 'http://www.w3.org/ns/dcat#contactPoint' do
-	json.set! '@id', doi_url + collection.contact.to_s
-end
-
-
-json.set! 'http://www.w3.org/ns/dcat#identifier' do
-	json.set! '@id', collection_url(collection)
-end
-
-json.set! 'http://www.w3.org/ns/dcat#publisher' do
-	json.set! '@id', "http://fairmetrics.org"
-end
-
+json.set! 'http://www.w3.org/ns/dcat#publisher', "http://fairmetrics.org"
 
 json.set! 'http://www.w3.org/ns/ldp#contains' do
-	json.array! collection.metrics do |metric|
-		json.set! '@id', metric_url(metric)
-	end
+	json.array! [collection.metrics.map {|m| metric_url(m)}]
 end
+	
 
 
 	
