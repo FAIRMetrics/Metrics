@@ -47,7 +47,7 @@ class CollectionsController < ApiController
                                  contact: params[:contact],
                                  organization: params[:organization],
                                  description: params[:description])
-    if Collection.description == "" or Collection.description == nil
+    if @collection.description == "" or @collection.description == nil
       @collection.errors[:description] << "Collections must have descriptions"
     end
     
