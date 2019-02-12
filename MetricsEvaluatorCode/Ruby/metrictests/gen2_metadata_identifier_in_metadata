@@ -101,12 +101,13 @@ end
 
 
 if debug
-#	@input = '{"subject": "10.5281/zenodo.1147435"}'  # doi
-	@input = '{"subject": "http://cnn.com"}'  # url
-#	@input = '{"subject": "BSYNRYMUTXBXSQ-UHFFFAOYSA-N"}' # inchi
-#	@input = '{"subject": "LFQSCWFLJHTTHZ-UHFFFAOYSA-N"}' # another inchi
-#	@input = '{"subject": "20.1000/105"}'  # handle
-else 
+#       @input = '{"subject": "10.5281/zenodo.1147435"}'  # doi
+#       @input = '{"subject": "http://cnn.com"}'  # url
+#       @input = '{"subject": "BSYNRYMUTXBXSQ-UHFFFAOYSA-N"}' # inchi
+#       @input = '{"subject": "LFQSCWFLJHTTHZ-UHFFFAOYSA-N"}' # another inchi
+#       @input = '{"subject": "20.1000/105"}'  # handle
+        @input = '{"subject": "http://linkeddata.systems/Magnaporthe/polyA_Sites/"}'  # handle
+else
 	@input = $stdin.read
 end
 

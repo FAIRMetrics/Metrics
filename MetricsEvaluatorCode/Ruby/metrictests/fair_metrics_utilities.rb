@@ -246,6 +246,7 @@ class Utils
           meta.comments << "no content-type header could be found in the message.  This is very odd!  Likely a bug in our software.  "
         end
       else # this is just an incoming string... in which case, it MUST have a format indicator (MIME type)
+          $stderr.puts "\n\nINCOMING STRING\n\n*#{message}*\n\n"
         contenttype = format
         if !contenttype
           meta.comments << "no content-type was passed with a raw RDF body.  This is very odd!  Likely a bug in our software (i.e. not your fault!)  Please tell the dev team.  "
@@ -254,24 +255,23 @@ class Utils
         body = message # this is raw rdf
       end
 
-      #$stderr.puts "\n\n\nSampling \n\n#{body}\n\n"
-      unless body =~ /\w/
+      $stderr.puts "\n\n\nSampling \n\n#{body}\n\n"
+      unless body.match(/\w/)
+          $stderr.puts "\n\n\nSampling FOUND NOTHING!\n\n"
           meta.comments << "This #{contenttype} component appears to have no content.  "
           return meta
       end
 
       formattype = RDF::Format.for(content_type: contenttype)
       formattype ||= RDF::Format.for({:sample => body})
-      if formattype.include?"JSON"
-          body = body.to_json
-          return meta unless body.any?
-      end
-      #$stderr.puts "\n\n\nTrying to create RDF reader for #{formattype}\n\n#{body}\n\n#{message}\n"
+      $stderr.puts "\n\n\nTrying to create RDF reader for #{formattype}\n\n#{body}\n\n#{message}\n"
+
       if !formattype
         meta.comments << "We were unable to find an RDF reader type that matches the content that was returned.  Please send your GUID to the dev team so we can investigate!  "
         return meta
       end
       reader = formattype.reader.new(body)
+      $stderr.puts "Reader Class #{reader.class}\n\n #{reader.inspect}"
       meta.merge_rdf(reader.to_a)
     end
     
@@ -306,16 +306,19 @@ class Utils
         meta.comments << "Using 'extruct' to try to extract metadata from return value (message body) of #{uri}.  "
         
         result = %x{extruct #{uri} 2>&1}
-        #$stderr.puts "\n\n\n\n\n\n\n#{result.class}\n\n#{result.to_s}\n\n"
+        $stderr.puts "\n\n\n\n\n\n\n#{result.class}\n\n#{result.to_s}\n\n"
         # need to do some error checking here!
-        if result[0] == "{" # this is JSON
+        if result.to_s.match(/^\s+?\{/) or result.to_s.match(/^\s+\[/) # this is JSON
           json = JSON.parse result
+          #$stderr.puts "\n\n\n\nFOUND JSON\n\n\n"
+          #$stderr.puts "\n\n\n\nFOUND JSON-LD\n#{json["json-ld"]} content\n\n\n"
           
-          Utils::parse_rdf(meta, json["json-ld"], "application/ld+json")  #RDF
+          Utils::parse_rdf(meta, json["json-ld"].to_json, "application/ld+json") if json["json-ld"].any?  #RDF
           # json["microdata"] #hash NOT YET IMPLEMENTED
           #json["microformat"] # unknown # NOT YET IMPLEMENTED
           #json["opengraph"] # hash NOT YET IMPLEMENTED
-          Utils::parse_rdf(meta, json["rdfa"], "application/ld+json")  # RDF
+          #$stderr.puts "\n\n\n\nFOUND rdfa\n#{json["rdfa"]} content\n\n\n"
+          Utils::parse_rdf(meta, json["rdfa"].to_json, "application/ld+json") if json["rdfa"].any?  # RDF
                   
           meta.merge_hash(json.first) if json.first.is_a?Hash
         else
