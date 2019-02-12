@@ -58,7 +58,7 @@
 <p>
 <% if @evaluation.body %>
   <!--  TODO replace this with a rails-generated URL... one day -->
-  <strong><%= link_to 'Result: ...', "/evaluations/#{@evaluation.id}/result", style: "font-size: +1em; color: blue;" %></strong>
+  <strong><%= link_to 'Result: ...', result_url(@evaluation), style: "font-size: +1em; color: blue;" %></strong>
 <% end %>
 </p>
 
