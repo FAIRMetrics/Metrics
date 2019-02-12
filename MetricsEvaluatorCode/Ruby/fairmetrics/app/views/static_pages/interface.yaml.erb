@@ -5,143 +5,58 @@ info:
     name: Mark Wilkinson
     x-id: https://orcid.org/0000-0001-6960-357X
     x-role: responsible developer
-  description: The FAIR Evaluator - automated testing of Web resources for their compliance with the FAIR Metrics
-  termsOfService: https://w3id.org/FAIR_Evaluator/terms
+  description: The FAIR Evaluator - automated testing of Web resources for their compliance
+    with the FAIR Metrics
   license:
-    name: "CC0"
-    url: "https://w3id.org/FAIR_Evaluator/license"
+    name: CC0
+    url: https://w3id.org/FAIR_Evaluator/license
+  termsOfService: https://w3id.org/FAIR_Evaluator/terms
   title: FAIR Evaluator API
-  version: '0.3.0'
+  version: 0.3.0
 servers:
 - description: The primary endpoint for the demonstration server
   url: https://w3id.org/FAIR_Evaluator
 tags:
-- name: FAIR Metrics
-- name: Evaluation
-
-
+- name: FAIR Maturity Level Evaluation
 paths:
-
-
-  /metrics:
-    get:
-      responses:
-        '302':
-          description: "302 redirect"
-          headers:
-            Location:
-              schema:
-                type: "string"
-
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/metrics_array'
-          description: the requested FAIR Metric
-      summary: Retrieve all FAIR Metrics
-      tags:
-      - metrics
-    post:
-      requestBody:
-        content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/metrics'
-        description: The URL to the smartAPI descriptor of the Metric
-      responses:
-        '302':
-          description: "302 redirect"
-          headers:
-            Location:
-              schema:
-                type: "string"
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/metrics_result'
-          description: A description of the registered metric
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResult'
-          description: A response indicating an improperly formatted query
-      summary: to register a new metric, send the smartURL to this endpiint
-      tags:
-      - smartURL
-      
-      
-      
-  /metrics/{metricid}:
-    get:
-      parameters:
-      - description: metric id (the Evaluator's internal id for this Metric)
-        example: '5'
-        in: path
-        name: metricid
-        required: true
-        schema:
-          type: string
-      responses:
-        '302':
-          description: "302 redirect"
-          headers:
-            Location:
-              schema:
-                type: "string"
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/metrics_result'
-          description: the requested FAIR Metric
-        '404':
-          description: A response indicating an unknown metric id
-      summary: Retrieve FAIR Metrics by their Evaluator-id.
-      tags:
-      - metrics
-
-
   /collections:
     get:
       responses:
-        '302':
-          description: "302 redirect"
-          headers:
-            Location:
-              schema:
-                type: "string"
         '200':
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/collections_array'
           description: the requested Metric Collection
-      summary: Retrieve all Metric Collections
-      tags:
-      - collections
-    post:
-      requestBody:
-        content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/collections'
-        description: register a new collection of FAIR Metrics
-      responses:
         '302':
-          description: "302 redirect"
+          description: 302 redirect
           headers:
             Location:
               schema:
-                type: "string"
+                type: string
+      summary: Retrieve all Metric Collections
+      tags:
+      - Retrieve Collections of Maturity Level Tests
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/collections'
+        description: register a new collection of FAIR Metrics
+      responses:
         '200':
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/collections_result'
           description: A LDP-Container, in JSON-LD, describing the Metric Collection
+        '302':
+          description: 302 redirect
+          headers:
+            Location:
+              schema:
+                type: string
         '400':
           content:
             application/json:
@@ -150,9 +65,7 @@ paths:
           description: A response indicating an improperly formatted query
       summary: Create a new collection of Metrics to be used for Evaluations
       tags:
-      - Metric Collections
-
-
+      - Create a Collection of Maturity Level Tests
   /collections/{collectionid}:
     get:
       parameters:
@@ -164,26 +77,23 @@ paths:
         schema:
           type: string
       responses:
-        '302':
-          description: "302 redirect"
-          headers:
-            Location:
-              schema:
-                type: "string"
         '200':
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/collections_result'
           description: the requested FAIR Metric Collection as an LDP Container
+        '302':
+          description: 302 redirect
+          headers:
+            Location:
+              schema:
+                type: string
         '404':
           description: A response indicating an unknown collection id
       summary: Retrieve FAIR Metrics Collections by their Evaluator-id.
       tags:
-      - A Metric Collection
-  
-
-
+      - Retrieve a Specific Maturity Test Collection
   /collections/{collectionid}/evaluate:
     post:
       parameters:
@@ -196,17 +106,17 @@ paths:
           type: string
       requestBody:
         content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/evaluate'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/evaluate'
         description: The information pertaining to this evaluation
       responses:
         '302':
-          description: "302 redirect"
+          description: 302 redirect
           headers:
             Location:
               schema:
-                type: "string"
+                type: string
         '400':
           content:
             application/json:
@@ -215,8 +125,7 @@ paths:
           description: A response indicating an improperly formatted query
       summary: to register a new metric, send the smartURL to this endpiint
       tags:
-      - execute Evaluation
-
+      - Execute a Maturity Level Evaluation
   /evaluations/{evaluationid}/result:
     get:
       parameters:
@@ -228,43 +137,128 @@ paths:
         schema:
           type: string
       responses:
-        '302':
-          description: "302 redirect"
-          headers:
-            Location:
-              schema:
-                type: "string"      
         '200':
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/evaluation_result'
           description: the requested FAIR Metric
+        '302':
+          description: 302 redirect
+          headers:
+            Location:
+              schema:
+                type: string
         '404':
           description: A response indicating an unknown evaluation id
       summary: Retrieve the result of an existing FAIR Evaluation
       tags:
-      - evaluations
-
-
-  /searches:
+      - Retrieve an Existing Maturity Level Evaluation
+  /metrics:
     get:
       responses:
         '200':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/search_schema'
-          description: a JSON Schema document for how to post a search query
-      summary: Search over Collections and FAIR Maturity Tests
+                $ref: '#/components/schemas/metrics_array'
+          description: the requested FAIR Metric
+        '302':
+          description: 302 redirect
+          headers:
+            Location:
+              schema:
+                type: string
+      summary: Retrieve all FAIR Maturity Level Tests
       tags:
-      - search
+      - Retrieve all Known Maturity Level Tests
     post:
       requestBody:
         content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/metrics'
+        description: The URL to the smartAPI descriptor of the Metric
+      responses:
+        '200':
+          content:
             application/json:
               schema:
-                $ref: '#/components/schemas/searchinput'
+                $ref: '#/components/schemas/metrics_result'
+          description: A description of the registered metric
+        '302':
+          description: 302 redirect
+          headers:
+            Location:
+              schema:
+                type: string
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResult'
+          description: A response indicating an improperly formatted query
+      summary: To register a new test, send the smartURL to this endpiint
+      tags:
+      - Register a New Maturity Level Test
+  /metrics/{metricid}:
+    get:
+      parameters:
+      - description: metric id (the Evaluator's internal id for this Metric)
+        example: '5'
+        in: path
+        name: metricid
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/metrics_result'
+          description: the requested FAIR Metric
+        '302':
+          description: 302 redirect
+          headers:
+            Location:
+              schema:
+                type: string
+        '404':
+          description: A response indicating an unknown metric id
+      summary: Retrieve FAIR Tests by their Evaluator-id.
+      tags:
+      - Retrieve a Specific Maturity Test Description
+  /searches:
+    post:
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/search_schema'
+          description: a JSON Schema document for how to post a search query, and the URL in the Location header
+          headers:
+            Location:
+              schema:
+                type: string
+      summary: Create a new search URI to POST your search terms
+      tags:
+      - Search Maturity Tests and Collections by Keyword
+ 
+  /searches/{myid}:
+    parameters:
+    - in: path
+      name: myid
+      schema:
+        type: string
+      description: This URL is given to you in the Location header when you call POST on /searches
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/searchinput'
         description: submit keywords for a search
       responses:
         '200':
@@ -272,148 +266,94 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/searchresult'
-          description: a block of JSON containing two lists - a list of Maturity Tests, and a list of Collections - that match the search keywords
+          description: a block of JSON containing two lists - a list of Maturity Tests,
+            and a list of Collections - that match the search keywords
         '400':
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResult'
           description: A response indicating an improperly formatted query
-      summary: Execute a search over Maturity Indicator Test descriptions and Collection descriptions
+      summary: Execute a search over Maturity Indicator Test descriptions and Collection
+        descriptions
       tags:
-      - Metric Collections
-
-
-
+      - Search Maturity Tests and Collections by Keyword
+      
+      
+      
 components:
-
   schemas:
-
-    search_schema:
+    ErrorResult:
       properties:
-        properties:
+        errors:
+          $ref: '#/components/schemas/errorblock'
+        status:
           type: string
-
-    searchinput:
-      properties:
-        keywords:
-          type: string
-
-    searchresult:
-      properties:
-        metrics:
-          type: array
-          items:
-            $ref: '#/components/schemas/metrics_result'
-        collections:
-          type: array
-          items:
-            $ref: '#/components/schemas/collections_result'
-          
-
-    metrics:
-      properties:
-        smarturl:
-          type: string
-      required:
-      - smarturl
       type: object
-    metrics_array:
-      type: array
-      items:
-        $ref: '#/components/schemas/metrics_result'
-
-    metrics_result:
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        creator:
-          type: string
-        email:
-          type: string
-        smarturl:
-          type: string
-        created_at:
-          type: string
-        updated_at:
-          type: string
-        principle:
-          type: string
-
-    collections_array:
-      type: array
-      items:
-        $ref: '#/components/schemas/collections_result'
-
     collections:
       properties:
-        name:
-          type: string
         contact:
           type: string
-        organization:
+          description: your ORCID (this is validated)
+        description:
           type: string
         include_metrics:
           $ref: '#/components/schemas/metrics_list'
+        name:
+          type: string
+        organization:
+          type: string
       required:
       - name
       - contact
       - organization
       - include_metrics
       type: object
+    collections_array:
+      items:
+        $ref: '#/components/schemas/collections_result'
+      type: array
     collections_result:
       properties:
-        "@id":
+        '@id':
           type: string
-        "@type":
-          $ref: '#/components/schemas/types_list'
-        "http://purl.org/dc/elements/1.1/authoredBy":
-          $ref: '#/components/schemas/ids'
-        "http://purl.org/dc/elements/1.1/license":
-          $ref: '#/components/schemas/ids'
-        "http://purl.org/dc/elements/1.1/title":
-          $ref: '#/components/schemas/values'
-        "http://purl.org/dc/elements/1.1/creator":
-          $ref: '#/components/schemas/values'
-        "http://purl.org/pav/version":
-          $ref: '#/components/schemas/values'
-        "http://rdfs.org/ns/void#description":
-          $ref: '#/components/schemas/values'
-        "http://www.w3.org/ns/dcat#entities":
-          $ref: '#/components/schemas/values'
-        "http://www.w3.org/ns/dcat#contactPoint":
-          $ref: '#/components/schemas/ids'
-        "http://www.w3.org/ns/dcat#identifier":
-          $ref: '#/components/schemas/ids'
-        "http://www.w3.org/ns/dcat#publisher":
-          $ref: '#/components/schemas/ids'
-        "http://www.w3.org/ns/ldp#contains":
+        '@context':
+          type: string
+        '@type':
+          type: array
+          items:
+            type: string
+        http://purl.org/dc/elements/1.1/authoredBy:
+          type: string
+        http://purl.org/dc/elements/1.1/creator:
+          type: string
+        http://purl.org/dc/elements/1.1/license:
+          type: string
+        http://purl.org/dc/elements/1.1/title:
+          type: string
+        http://purl.org/pav/version:
+          type: string
+        http://rdfs.org/ns/void#description:
+          type: string
+        http://www.w3.org/ns/dcat#contactPoint:
+          type: string
+        http://www.w3.org/ns/dcat#entities:
+          type: string
+        http://www.w3.org/ns/dcat#identifier:
+          type: string
+        http://www.w3.org/ns/dcat#publisher:
+          type: string
+        http://www.w3.org/ns/ldp#contains:
           $ref: '#/components/schemas/metrics_list'
-    metrics_list:
-      type: array
+    errorblock:
       items:
-        $ref: '#/components/schemas/ids'
-    types_list:
+        type: string
       type: array
-      items:
-        $ref: '#/components/schemas/ids'
-    ids:
-      properties:
-        "@id": 
-          type: string
-    values:
-      properties:
-        "@id": 
-          type: string
-
-          
     evaluate:
       properties:
-        resource:
-          type: string
         executor:
+          type: string
+        resource:
           type: string
         title:
           type: string
@@ -422,21 +362,69 @@ components:
       - executor
       - title
       type: object
-
     evaluation_result:
       type: string
-
-          
-    ErrorResult:
+    ids:
       properties:
-        status:
+        '@id':
           type: string
-        errors:
-          $ref: '#/components/schemas/errorblock'
+    metrics:
+      properties:
+        smarturl:
+          type: string
+      required:
+      - smarturl
       type: object
-
-    errorblock:
+    metrics_array:
+      items:
+        $ref: '#/components/schemas/metrics_result'
+      type: array
+    metrics_list:
       type: array
       items:
         type: string
-      
+    metrics_result:
+      properties:
+        '@id':
+          type: string
+        '@type':
+          type: array
+          items:
+            type: string
+        '@context':
+          type: string
+        created_at:
+          type: string
+        creator:
+          type: string
+        email:
+          type: string
+        id:
+          type: string
+        name:
+          type: string
+        principle:
+          type: string
+        smarturl:
+          type: string
+        updated_at:
+          type: string
+
+    search_schema:
+      properties:
+        properties:
+          type: string
+    searchinput:
+      properties:
+        keywords:
+          type: string
+    searchresult:
+      properties:
+        collections:
+          items:
+            $ref: '#/components/schemas/collections_result'
+          type: array
+        metrics:
+          items:
+            $ref: '#/components/schemas/metrics_result'
+          type: array
