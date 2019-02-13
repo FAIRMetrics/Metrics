@@ -305,8 +305,8 @@ class Utils
       
         meta.comments << "Using 'extruct' to try to extract metadata from return value (message body) of #{uri}.  "
         
-        result = %x{extruct #{uri} 2>&1}
-        $stderr.puts "\n\n\n\n\n\n\n#{result.class}\n\n#{result.to_s}\n\n"
+        result = %x{/usr/local/bin/extruct #{uri} 2>&1}
+        #$stderr.puts "\n\n\n\n\n\n\n#{result.class}\n\n#{result.to_s}\n\n"
         # need to do some error checking here!
         if result.to_s.match(/^\s+?\{/) or result.to_s.match(/^\s+\[/) # this is JSON
           json = JSON.parse result
