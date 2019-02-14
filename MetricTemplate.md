@@ -3,28 +3,28 @@
 ## Date
 
 
-###Maturity Assessment Identifier:
+### Maturity Assessment Identifier:
 
-###Maturity Assessment Name:
+### Maturity Assessment Name:
 
-###To which principle does it apply?
+### To which principle does it apply?
 
-###Why should we measure it?
-
-
-###What must be provided for the measurement?
+### Why should we measure it?
 
 
-###How is the measurement executed?
+### What must be provided for the measurement?
 
 
-###What is/are considered valid result(s)?
+### How is the measurement executed?
 
 
-###For which digital resource(s) is this relevant? (or 'all')
+### What is/are considered valid result(s)?
 
 
-###Examples of good practices (that would score well on this assessment)
+### For which digital resource(s) is this relevant? (or 'all')
 
 
-###Comments
+### Examples of good practices (that would score well on this assessment)
+
+
+### Comments
