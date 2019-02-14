@@ -14,10 +14,10 @@ Luiz Olavo Bonino da Silva Santos, Michel Dumontier
 ----
 
 ### To which principle does it apply?  
-What is being measured? & Whether there is a scheme to uniquely identify the digital resource.
+F1
 
 ### What is being measured?
-The existence of metadata even in the absence/removal of data
+Whether there is a scheme to uniquely identify the digital resource.
 
 
 ### Why should we measure it?
