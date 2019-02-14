@@ -4,7 +4,7 @@
 Mark D. Wilkinson, Susanna-Assunta Sansone, Erik Schultes, Peter Doorn,
 Luiz Olavo Bonino da Silva Santos, Michel Dumontier
 
-## Date: 2017
+#### Date: 2017
 
 
 ### Maturity Assessment Identifier: FM-A1.1 [https://purl.org/fair-metrics/FM_A1.1](https://purl.org/fair-metrics/FM_A1.1)
