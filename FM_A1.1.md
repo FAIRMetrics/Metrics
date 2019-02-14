@@ -1,6 +1,7 @@
 # TITLE:  FAIR Metric FM-A1.1
 
-## Authors: Mark D. Wilkinson, Susanna-Assunta Sansone, Erik Schultes, Peter Doorn,
+## Authors: 
+Mark D. Wilkinson, Susanna-Assunta Sansone, Erik Schultes, Peter Doorn,
 Luiz Olavo Bonino da Silva Santos, Michel Dumontier
 
 ## Date: 2017
@@ -10,7 +11,10 @@ Luiz Olavo Bonino da Silva Santos, Michel Dumontier
 
 ### Maturity Assessment Name:  Access Protocol
 
-### To which principle does it apply?  A1.1 - the protocol is open, free, and universally implementable
+----
+
+### To which principle does it apply?  
+A1.1 - the protocol is open, free, and universally implementable
 
 ### What is being measured?
 The nature and use limitations of the access protocol.
