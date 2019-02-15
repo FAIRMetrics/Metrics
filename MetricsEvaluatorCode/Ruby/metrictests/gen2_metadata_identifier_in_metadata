@@ -79,18 +79,20 @@ def testGUID
 		end
 	end
 	if @swagger.score == 0  # if still zero, try the raw unstructured content	
-		if metadata.full_response.body.include?guid
-			@swagger.addComment("  The identifier #{guid} was found within the raw content returned by resolution of that identifier.  ")
-			@swagger.score = 0.5
-			return @swagger.createEvaluationResponse
-		else
-			@swagger.addComment("  The identifier #{guid} was not found in either the structured or unstructured content from resolving that identifier.   ")
-			@swagger.score = 0.0
-			return @swagger.createEvaluationResponse
+		metadata.full_response.each do |httpresponse|
+			if httpresponsee.body.include?guid
+				@swagger.addComment("  The identifier #{guid} was found within the raw content returned by resolution of that identifier.  ")
+				@swagger.score = 0.5
+				return @swagger.createEvaluationResponse
+			else
+				@swagger.addComment("  The identifier #{guid} was not found in either the structured or unstructured content from resolving that identifier.   ")
+			end
 		end
+		
 	else
-		@swagger.score = 1.0 if @swagger.score > 1.0
-		return @swagger.createEvaluationResponse  # release the result from all other tests
+	@swagger.score = 1.0 if @swagger.score > 1.0
+	return @swagger.createEvaluationResponse  # release the result from all other tests
+
 	end	
 	
 end
