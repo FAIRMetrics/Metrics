@@ -12,6 +12,8 @@ require 'tempfile'
 require 'xmlsimple'
 require 'nokogiri'
 
+### NOTE:  please update line 308 with your LD_LIBRARY_PATH, the server needs to know.
+
 
 class Utils
     Utils::AcceptHeader = {'Accept' => 'text/turtle, application/n3, application/rdf+n3, application/turtle, application/x-turtle,text/n3,text/turtle,                   text/rdf+n3, text/rdf+turtle,application/json+ld, text/xhtml+xml,application/rdf+xml,application/n-triples' }
@@ -305,7 +307,7 @@ class Utils
       
         meta.comments << "Using 'extruct' to try to extract metadata from return value (message body) of #{uri}.  "
         
-        result = %x{/usr/local/bin/extruct #{uri} 2>&1}
+        %x{LD_LIBRARY_PATH='/usr/lib/x86_64-linux-gnu/' /usr/local/bin/extruct #{uri} 2>&1}
         #$stderr.puts "\n\n\n\n\n\n\n#{result.class}\n\n#{result.to_s}\n\n"
         # need to do some error checking here!
         if result.to_s.match(/^\s+?\{/) or result.to_s.match(/^\s+\[/) # this is JSON
