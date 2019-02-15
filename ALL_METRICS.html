@@ -1,0 +1,451 @@
+<h1 id="title-fair-metric-fm-a1.1">TITLE: FAIR Metric FM-A1.1</h1>
+<h2 id="authors">Authors:</h2>
+<p>Mark D. Wilkinson, Susanna-Assunta Sansone, Erik Schultes, Peter Doorn, Luiz Olavo Bonino da Silva Santos, Michel Dumontier</p>
+<h4 id="date-2017">Date: 2017</h4>
+<h3 id="maturity-assessment-identifier-fm-a1.1-httpspurl.orgfair-metricsfm_a1.1">Maturity Assessment Identifier: FM-A1.1 <a href="https://purl.org/fair-metrics/FM_A1.1" class="uri">https://purl.org/fair-metrics/FM_A1.1</a></h3>
+<h3 id="maturity-assessment-name-access-protocol">Maturity Assessment Name: Access Protocol</h3>
+<hr />
+<h3 id="to-which-principle-does-it-apply">To which principle does it apply?</h3>
+<p>A1.1 - the protocol is open, free, and universally implementable</p>
+<h3 id="what-is-being-measured">What is being measured?</h3>
+<p>The nature and use limitations of the access protocol.</p>
+<h3 id="why-should-we-measure-it">Why should we measure it?</h3>
+<p>Access to a resource may be limited by the specified communication protocol. In particular, we are worried about access to technical specifications and any costs associated with implementing the protocol. Protocols that are closed source or that have royalties associated with them could prevent users from being able to obtain the resource.</p>
+<h3 id="what-must-be-provided-for-the-measurement">What must be provided for the measurement?</h3>
+<ol style="list-style-type: lower-roman">
+<li>A URL to the description of the protocol</li>
+<li>true/false as to whether the protocol is open source</li>
+<li>true/false as to whether the protocol is (royalty) free</li>
+</ol>
+<h3 id="how-is-the-measurement-executed">How is the measurement executed?</h3>
+<p>Do an HTTP get on the URL to see if it returns a valid document. Ideally, we would have a universal database of communication protocols from which we can check this URL (this is now being created in FAIRSharing). We also check whether questions 2 and 3 are true or false.</p>
+<h3 id="what-isare-considered-valid-results">What is/are considered valid result(s)?</h3>
+<p>The HTTP GET on the URL should return a 200,202,203 or 206 HTTP response after resolving all and any prior redirects. e.g. 301 - 302 - 200 OK. The other two should return true/false (&quot;true&quot; is success)</p>
+<h3 id="for-which-digital-resources-is-this-relevant-or-all">For which digital resource(s) is this relevant? (or 'all')</h3>
+<p>All</p>
+<h3 id="examples-of-good-practices-that-would-score-well-on-this-assessment">Examples of good practices (that would score well on this assessment)</h3>
+<h3 id="comments">Comments</h3>
+<h1 id="title-fair-metric-fm-a1.2">TITLE: FAIR Metric FM-A1.2</h1>
+<h2 id="authors-1">Authors:</h2>
+<p>Mark D. Wilkinson, Susanna-Assunta Sansone, Erik Schultes, Peter Doorn, Luiz Olavo Bonino da Silva Santos, Michel Dumontier</p>
+<h4 id="date-2017-1">Date: 2017</h4>
+<h3 id="maturity-assessment-identifier-fm-a1.2-httpspurl.orgfair-metricsfm_a1.2">Maturity Assessment Identifier: FM-A1.2 <a href="https://purl.org/fair-metrics/FM_A1.2" class="uri">https://purl.org/fair-metrics/FM_A1.2</a></h3>
+<h3 id="maturity-assessment-name-access-authorization">Maturity Assessment Name: Access authorization</h3>
+<hr />
+<h3 id="to-which-principle-does-it-apply-1">To which principle does it apply?</h3>
+<p>A1.2 - the protocol allows for an authentication and authorization procedure, where necessary</p>
+<h3 id="what-is-being-measured-1">What is being measured?</h3>
+<p>Specification of a protocol to access restricted content.</p>
+<h3 id="why-should-we-measure-it-1">Why should we measure it?</h3>
+<p>Not all content can be made available without restriction. For instance, access and distribution of personal health data may be restricted by law or by organizational policy. In such cases, it is important that the protocol by which such content can be accessed is fully specified. Ideally, electronic content can be obtained first by applying for access. Once the requester is formally authorized to access the content, they may receive it in some electronic means, for instance by obtaining an download URL, or through a more sophisticated transaction mechanism (e.g. authenticate, authorize), or by any other means. The goal should be to reduce the time it takes for valid requests to be fulfilled.</p>
+<h3 id="what-must-be-provided-for-the-measurement-1">What must be provided for the measurement?</h3>
+<ol style="list-style-type: lower-roman">
+<li>true/false concerning whether authorization is needed</li>
+<li>a URL that resolves to a description of the process to obtain access to restricted content.</li>
+</ol>
+<h3 id="how-is-the-measurement-executed-1">How is the measurement executed?</h3>
+<p>computational validation of the data provided</p>
+<h3 id="what-isare-considered-valid-results-1">What is/are considered valid result(s)?</h3>
+<p>a valid answer contains a true or false for the first question. if true, an HTTP GET on the URL provided should return a 200, 202, 203, or 206 HTTP Response after resolving all redirects.</p>
+<h3 id="for-which-digital-resources-is-this-relevant-or-all-1">For which digital resource(s) is this relevant? (or 'all')</h3>
+<p>All</p>
+<h3 id="examples-of-good-practices-that-would-score-well-on-this-assessment-1">Examples of good practices (that would score well on this assessment)</h3>
+<h3 id="comments-1">Comments</h3>
+<h1 id="title-fair-metric-fm-a2">TITLE: FAIR Metric FM-A2</h1>
+<h2 id="authors-2">Authors:</h2>
+<p>Mark D. Wilkinson, Susanna-Assunta Sansone, Erik Schultes, Peter Doorn, Luiz Olavo Bonino da Silva Santos, Michel Dumontier</p>
+<h4 id="date-2017-2">Date: 2017</h4>
+<h3 id="maturity-assessment-identifier-fm-a2-httpspurl.orgfair-metricsfm_a1.2">Maturity Assessment Identifier: FM-A2 <a href="https://purl.org/fair-metrics/FM_A2">https://purl.org/fair-metrics/FM_A1.2</a></h3>
+<h3 id="maturity-assessment-name-metadata-longevity">Maturity Assessment Name: Metadata Longevity</h3>
+<hr />
+<h3 id="to-which-principle-does-it-apply-2">To which principle does it apply?</h3>
+<p>A2 - metadata are accessible, even when the data are no longer available</p>
+<h3 id="what-is-being-measured-2">What is being measured?</h3>
+<p>The existence of metadata even in the absence/removal of data</p>
+<h3 id="why-should-we-measure-it-2">Why should we measure it?</h3>
+<p>Cross-references to data from third-party’s FAIR data and metadata will naturally degrade over time, and become “stale links”. In such cases, it is important for FAIR providers to continue to provide descriptors of what the data was to assist in the continued interpretation of those third-party data. As per FAIR Principle F3, this metadata remains discoverable, even in the absence of the data, because it contains an explicit reference to the IRI of the data.</p>
+<h3 id="what-must-be-provided-for-the-measurement-2">What must be provided for the measurement?</h3>
+<p>URL to a formal metadata longevity plan</p>
+<h3 id="how-is-the-measurement-executed-2">How is the measurement executed?</h3>
+<p>Resolve the URL</p>
+<h3 id="what-isare-considered-valid-results-2">What is/are considered valid result(s)?</h3>
+<ul>
+<li>Successful resolution</li>
+<li>Returns a document that represents a plan or policy of some kind</li>
+<li>Preferably certified (e.g. DSA)</li>
+</ul>
+<h3 id="for-which-digital-resources-is-this-relevant-or-all-2">For which digital resource(s) is this relevant? (or 'all')</h3>
+<p>All</p>
+<h3 id="examples-of-good-practices-that-would-score-well-on-this-assessment-2">Examples of good practices (that would score well on this assessment)</h3>
+<h3 id="comments-2">Comments</h3>
+<h1 id="title-fair-metric-fm-f1a">TITLE: FAIR Metric FM-F1A</h1>
+<h2 id="authors-3">Authors:</h2>
+<p>Mark D. Wilkinson, Susanna-Assunta Sansone, Erik Schultes, Peter Doorn, Luiz Olavo Bonino da Silva Santos, Michel Dumontier</p>
+<h4 id="date-2017-3">Date: 2017</h4>
+<h3 id="maturity-assessment-identifier-fm-f1a-httpspurl.orgfair-metricsfm_f1a">Maturity Assessment Identifier: FM-F1A <a href="https://purl.org/fair-metrics/FM_F1A" class="uri">https://purl.org/fair-metrics/FM_F1A</a></h3>
+<h3 id="maturity-assessment-name-identifier-uniqueness">Maturity Assessment Name: Identifier Uniqueness</h3>
+<hr />
+<h3 id="to-which-principle-does-it-apply-3">To which principle does it apply?</h3>
+<p>F1</p>
+<h3 id="what-is-being-measured-3">What is being measured?</h3>
+<p>Whether there is a scheme to uniquely identify the digital resource.</p>
+<h3 id="why-should-we-measure-it-3">Why should we measure it?</h3>
+<p>The uniqueness of an identifier is a necessary condition to unambiguously refer that resource, and that resource alone. Otherwise, an identifier shared by multiple resources will confound efforts to describe that resource, or to use the identifier to retrieve it. Examples of identifier schemes include, but are not limited to URN, IRI, DOI, Handle, trustyURI, LSID, etc. For an in-depth understanding of the issues around identifiers, please see http://dx.plos.org/10.1371/journal.pbio.2001414</p>
+<h3 id="what-must-be-provided-for-the-measurement-3">What must be provided for the measurement?</h3>
+<p>URL to a registered identifier scheme.</p>
+<h3 id="how-is-the-measurement-executed-3">How is the measurement executed?</h3>
+<p>An identifier scheme is valid if and only if it is described in a repository that can register and present such identifier schemes (e.g. fairsharing.org). Information about the identifier scheme must be presented with a machine-readable document containing the FM1 attribute with the URL to where the scheme is described. see specification for implementation.</p>
+<h3 id="what-isare-considered-valid-results-3">What is/are considered valid result(s)?</h3>
+<p>Present or Absent</p>
+<h3 id="for-which-digital-resources-is-this-relevant-or-all-3">For which digital resource(s) is this relevant? (or 'all')</h3>
+<p>All</p>
+<h3 id="examples-of-good-practices-that-would-score-well-on-this-assessment-3">Examples of good practices (that would score well on this assessment)</h3>
+<h3 id="comments-3">Comments</h3>
+<h1 id="title-fair-metric-fm-f1b">TITLE: FAIR Metric FM-F1B</h1>
+<h2 id="authors-4">Authors:</h2>
+<p>Mark D. Wilkinson, Susanna-Assunta Sansone, Erik Schultes, Peter Doorn, Luiz Olavo Bonino da Silva Santos, Michel Dumontier</p>
+<h4 id="date-2017-4">Date: 2017</h4>
+<h3 id="maturity-assessment-identifier-fm-f1b-httpspurl.orgfair-metricsfm_f1b">Maturity Assessment Identifier: FM-F1B <a href="https://purl.org/fair-metrics/FM_F1B" class="uri">https://purl.org/fair-metrics/FM_F1B</a></h3>
+<h2 id="maturity-assessment-name-identifier-persistence">### Maturity Assessment Name: Identifier persistence</h2>
+<h3 id="to-which-principle-does-it-apply-4">To which principle does it apply?</h3>
+<p>F1</p>
+<h3 id="what-is-being-measured-4">What is being measured?</h3>
+<p>Whether there is a policy that describes what the provider will do in the event an identifier scheme becomes deprecated.</p>
+<h3 id="why-should-we-measure-it-4">Why should we measure it?</h3>
+<p>The change to an identifier scheme will have widespread implications for resource lookup, linking, and data sharing. Providers of digital resources must ensure that they have a policy to manage changes in their identifier scheme, with a specific emphasis on maintaining/redirecting previously generated identifiers.</p>
+<h3 id="what-must-be-provided-for-the-measurement-4">What must be provided for the measurement?</h3>
+<p>A URL that resolves to a document containing the relevant policy.</p>
+<h3 id="how-is-the-measurement-executed-4">How is the measurement executed?</h3>
+<p>Use an HTTP GET on URL provided.</p>
+<h3 id="what-isare-considered-valid-results-4">What is/are considered valid result(s)?</h3>
+<p>Present (a 200,202,203 or 206 HTTP response after resolving all and any prior redirects. e.g. 301 -&gt; 302 -&gt; 200 OK) or Absent (any other HTTP code)</p>
+<h3 id="for-which-digital-resources-is-this-relevant-or-all-4">For which digital resource(s) is this relevant? (or 'all')</h3>
+<p>All</p>
+<h3 id="examples-of-good-practices-that-would-score-well-on-this-assessment-4">Examples of good practices (that would score well on this assessment)</h3>
+<h3 id="comments-4">Comments</h3>
+<h1 id="title-fair-metric-fm-f2">TITLE: FAIR Metric FM-F2</h1>
+<h2 id="authors-5">Authors:</h2>
+<p>Mark D. Wilkinson, Susanna-Assunta Sansone, Erik Schultes, Peter Doorn, Luiz Olavo Bonino da Silva Santos, Michel Dumontier</p>
+<h4 id="date-2017-5">Date: 2017</h4>
+<h3 id="maturity-assessment-identifier-fm-f2-httpspurl.orgfair-metricsfm_f2">Maturity Assessment Identifier: FM-F2 <a href="https://purl.org/fair-metrics/FM_F2" class="uri">https://purl.org/fair-metrics/FM_F2</a></h3>
+<h2 id="maturity-assessment-name-machine-readability-of-metadata">### Maturity Assessment Name: Machine-readability of metadata</h2>
+<h3 id="to-which-principle-does-it-apply-5">To which principle does it apply?</h3>
+<p>F2 - Data are described with rich metadata</p>
+<h3 id="what-is-being-measured-5">What is being measured?</h3>
+<p>The availability of machine-readable metadata that describes a digital resource.</p>
+<h3 id="why-should-we-measure-it-5">Why should we measure it?</h3>
+<p>This metric <em>does not</em> attempt to measure (or even define) &quot;Richness&quot; - this will be defined in a future Metric. This metric is intended to test the format of the metadata - machine readability of metadata makes it possible to optimize discovery. For instance, Web search engines suggest the use of particular structured metadata elements to optimize search. Thus, the machine-readability aspect can help people and machines find a digital resource of interest.</p>
+<h3 id="what-must-be-provided-for-the-measurement-5">What must be provided for the measurement?</h3>
+<p>A URL to a document that contains machine-readable metadata for the digital resource. Furthermore, the file format must be specified.</p>
+<h3 id="how-is-the-measurement-executed-5">How is the measurement executed?</h3>
+<p>HTTP GET on the metadata URL. A response of [a 200,202,203 or 206 HTTP response after resolving all and any prior redirects. e.g. 301 -&gt; 302 -&gt; 200 OK] indicates that there is indeed a document. The second URL should resolve to the record of a registered file format (e.g. DCAT, DICOM, schema.org etc.) in a registry like FAIRsharing. Future ehnancements to FAIRSharing may include tags that indicate whether or not a given file format is generally-agreed to be machine-readable </p>
+<h3 id="what-isare-considered-valid-results-5">What is/are considered valid result(s)?</h3>
+<p>Machine-readable or Machine-not-readable</p>
+<h3 id="for-which-digital-resources-is-this-relevant-or-all-5">For which digital resource(s) is this relevant? (or 'all')</h3>
+<p>All</p>
+<h3 id="examples-of-good-practices-that-would-score-well-on-this-assessment-5">Examples of good practices (that would score well on this assessment)</h3>
+<h3 id="comments-5">Comments</h3>
+<h1 id="title-fair-metric-fm-f3">TITLE: FAIR Metric FM-F3</h1>
+<h2 id="authors-6">Authors:</h2>
+<p>Mark D. Wilkinson, Susanna-Assunta Sansone, Erik Schultes, Peter Doorn, Luiz Olavo Bonino da Silva Santos, Michel Dumontier</p>
+<h4 id="date-2017-6">Date: 2017</h4>
+<h3 id="maturity-assessment-identifier-fm-f3-httpspurl.orgfair-metricsfm_f3">Maturity Assessment Identifier: FM-F3 <a href="https://purl.org/fair-metrics/FM_F3" class="uri">https://purl.org/fair-metrics/FM_F3</a></h3>
+<h2 id="maturity-assessment-name-resource-identifier-in-metadata">### Maturity Assessment Name: Resource Identifier in Metadata</h2>
+<h3 id="to-which-principle-does-it-apply-6">To which principle does it apply?</h3>
+<p>F3 - metadata clearly and explicitly include the identifier of the data it describes</p>
+<h3 id="what-is-being-measured-6">What is being measured?</h3>
+<p>Whether the metadata document contains the globally unique and persistent identifier for the digital resource.</p>
+<h3 id="why-should-we-measure-it-6">Why should we measure it?</h3>
+<p>The discovery of digital object should be possible from its metadata. For this to happen, the metadata must explicitly contain the identifier for the digital resource it describes, and this should be present in the form of a qualified reference, indicating some manner of &quot;about&quot; relationship, to distinguish this identifier from the numerous others that will be present in the metadata.</p>
+<p>In addition, since many digital objects cannot be arbitrarily extended to include references to their metadata, in many cases the only means to discover the metadata related to a digital object will be to search based on the GUID of the digital object itself.</p>
+<h3 id="what-must-be-provided-for-the-measurement-6">What must be provided for the measurement?</h3>
+<p>The GUID of the metadata and the GUID of the digital resource it describes.</p>
+<h3 id="how-is-the-measurement-executed-6">How is the measurement executed?</h3>
+<p>Parsing the metadata for the given digital resource GUID.</p>
+<h3 id="what-isare-considered-valid-results-6">What is/are considered valid result(s)?</h3>
+<p>Present or absent</p>
+<h3 id="for-which-digital-resources-is-this-relevant-or-all-6">For which digital resource(s) is this relevant? (or 'all')</h3>
+<p>All</p>
+<h3 id="examples-of-good-practices-that-would-score-well-on-this-assessment-6">Examples of good practices (that would score well on this assessment)</h3>
+<h3 id="comments-6">Comments</h3>
+<h1 id="title-fair-metric-fm-f4">TITLE: FAIR Metric FM-F4</h1>
+<h2 id="authors-7">Authors:</h2>
+<p>Mark D. Wilkinson, Susanna-Assunta Sansone, Erik Schultes, Peter Doorn, Luiz Olavo Bonino da Silva Santos, Michel Dumontier</p>
+<h4 id="date-2017-7">Date: 2017</h4>
+<h3 id="maturity-assessment-identifier-fm-f4-httpspurl.orgfair-metricsfm_f4">Maturity Assessment Identifier: FM-F4 <a href="https://purl.org/fair-metrics/FM_F4" class="uri">https://purl.org/fair-metrics/FM_F4</a></h3>
+<h2 id="maturity-assessment-name-indexed-in-a-searchable-resource">### Maturity Assessment Name: Indexed in a searchable resource</h2>
+<h3 id="to-which-principle-does-it-apply-7">To which principle does it apply?</h3>
+<p>F4 - (meta)data are registered or indexed in a searchable resource</p>
+<h3 id="what-is-being-measured-7">What is being measured?</h3>
+<p>The degree to which the digital resource can be found using web-based search engines.</p>
+<h3 id="why-should-we-measure-it-7">Why should we measure it?</h3>
+<p>Most people use a search engine to initiate a search for a particular digital resource of interest. If the resource or its metadata are not indexed by web search engines, then this would substantially diminish an individual’s ability to find and reuse it. Thus, the ability to discover the resource should be tested using i) its identifier, ii) other text-based metadata.</p>
+<h3 id="what-must-be-provided-for-the-measurement-7">What must be provided for the measurement?</h3>
+<p>The persistent identifier of the resource and one or more URLs that give search results of different search engines.</p>
+<h3 id="how-is-the-measurement-executed-7">How is the measurement executed?</h3>
+<p>We perform an HTTP GET on the URLs provided and attempt to to find the persistent identifier in the page that is returned. A second step might include following each of the top XX hits and examine the resulting documents for presence of the identifier.</p>
+<h3 id="what-isare-considered-valid-results-7">What is/are considered valid result(s)?</h3>
+<p>Present or absent in the result set</p>
+<h3 id="for-which-digital-resources-is-this-relevant-or-all-7">For which digital resource(s) is this relevant? (or 'all')</h3>
+<p>All</p>
+<h3 id="examples-of-good-practices-that-would-score-well-on-this-assessment-7">Examples of good practices (that would score well on this assessment)</h3>
+<h3 id="comments-7">Comments</h3>
+<p>should set a &quot;top 50&quot; or something</p>
+<h1 id="title-fair-metric-fm-i1">TITLE: FAIR Metric FM-I1</h1>
+<h2 id="authors-8">Authors:</h2>
+<p>Mark D. Wilkinson, Susanna-Assunta Sansone, Erik Schultes, Peter Doorn, Luiz Olavo Bonino da Silva Santos, Michel Dumontier</p>
+<h4 id="date-2017-8">Date: 2017</h4>
+<h3 id="maturity-assessment-identifier-fm-i1-httpspurl.orgfair-metricsfm_i1">Maturity Assessment Identifier: FM-I1 <a href="https://purl.org/fair-metrics/FM_I1" class="uri">https://purl.org/fair-metrics/FM_I1</a></h3>
+<h2 id="maturity-assessment-name-use-a-knowledge-representation-language">### Maturity Assessment Name: Use a Knowledge Representation Language</h2>
+<h3 id="to-which-principle-does-it-apply-8">To which principle does it apply?</h3>
+<p>I1 - (meta)data use a formal, accessible, shared, and broadly applicable language for knowledge representation</p>
+<h3 id="what-is-being-measured-8">What is being measured?</h3>
+<p>use of a formal, accessible, shared, and broadly applicable language for knowledge representation.</p>
+<h3 id="why-should-we-measure-it-8">Why should we measure it?</h3>
+<p>The unambiguous communication of knowledge and meaning (what symbols are, and how they relate to one another) necessitates the use of languages that are capable of representing these concepts in a machine-readable manner.</p>
+<h3 id="what-must-be-provided-for-the-measurement-8">What must be provided for the measurement?</h3>
+<p>URL to the specification of the language</p>
+<h3 id="how-is-the-measurement-executed-8">How is the measurement executed?</h3>
+<ul>
+<li>The language must have a BNF (or other specification language) </li>
+<li>The URL resolves (accessible) </li>
+<li>The document has an IANA media-type (i.e. it is sufficiently widely-accepted and shared that it has been registered) </li>
+<li>The language can be arbitrarily extended (e.g. PDBml can be used to represent knowledge, but only about proteins) </li>
+</ul>
+<h3 id="what-isare-considered-valid-results-8">What is/are considered valid result(s)?</h3>
+<p>BNF (or other?) found, Media-type of the document is registered in FAIRSharing.</p>
+<h3 id="for-which-digital-resources-is-this-relevant-or-all-8">For which digital resource(s) is this relevant? (or 'all')</h3>
+<p>All</p>
+<h3 id="examples-of-good-practices-that-would-score-well-on-this-assessment-8">Examples of good practices (that would score well on this assessment)</h3>
+<h3 id="comments-8">Comments</h3>
+<p>Future: FAIRSharing has tags to indicate constrained vs. extendable languages?</p>
+<h1 id="title-fair-metric-fm-i2">TITLE: FAIR Metric FM-I2</h1>
+<h2 id="authors-9">Authors:</h2>
+<p>Mark D. Wilkinson, Susanna-Assunta Sansone, Erik Schultes, Peter Doorn, Luiz Olavo Bonino da Silva Santos, Michel Dumontier</p>
+<h4 id="date-2017-9">Date: 2017</h4>
+<h3 id="maturity-assessment-identifier-fm-i2-httpspurl.orgfair-metricsfm_i2">Maturity Assessment Identifier: FM-I2 <a href="https://purl.org/fair-metrics/FM_I2" class="uri">https://purl.org/fair-metrics/FM_I2</a></h3>
+<h2 id="maturity-assessment-name-use-fair-vocabularies">### Maturity Assessment Name: Use FAIR Vocabularies</h2>
+<h3 id="to-which-principle-does-it-apply-9">To which principle does it apply?</h3>
+<p>I2 - (meta)data use vocabularies that follow FAIR principles</p>
+<h3 id="what-is-being-measured-9">What is being measured?</h3>
+<p>The metadata values and qualified relations should themselves be FAIR, for example, terms from open, community-accepted vocabularies published in an appropriate knowledge-exchange format.</p>
+<h3 id="why-should-we-measure-it-9">Why should we measure it?</h3>
+<p>It is not possible to unambiguously interpret metadata represented as simple keywords or other non-qualified symbols. For interoperability, it must be possible to identify data that can be integrated like-with-like. This requires that the data, and the provenance descriptors of the data, should (where reasonable) use vocabularies and terminologies that are, themselves, FAIR.</p>
+<h3 id="what-must-be-provided-for-the-measurement-9">What must be provided for the measurement?</h3>
+<p>IRIs representing the vocabularies used for (meta)data</p>
+<h3 id="how-is-the-measurement-executed-9">How is the measurement executed?</h3>
+<p>Resolve IRIs, check FAIRness of the returned document(s).</p>
+<h3 id="what-isare-considered-valid-results-9">What is/are considered valid result(s)?</h3>
+<p>Successful resolution; document is amenable to machine-parsing and identification of terms within it. It may be possible to use FAIRSharing to validate these vocabularies.</p>
+<h3 id="for-which-digital-resources-is-this-relevant-or-all-9">For which digital resource(s) is this relevant? (or 'all')</h3>
+<p>All</p>
+<h3 id="examples-of-good-practices-that-would-score-well-on-this-assessment-9">Examples of good practices (that would score well on this assessment)</h3>
+<h3 id="comments-9">Comments</h3>
+<h1 id="title-fair-metric-fm-i">TITLE: FAIR Metric FM-I</h1>
+<h2 id="authors-10">Authors:</h2>
+<p>Mark D. Wilkinson, Susanna-Assunta Sansone, Erik Schultes, Peter Doorn, Luiz Olavo Bonino da Silva Santos, Michel Dumontier</p>
+<h4 id="date-2017-10">Date: 2017</h4>
+<h3 id="maturity-assessment-identifier-fm-i3-httpspurl.orgfair-metricsfm_i3">Maturity Assessment Identifier: FM-I3 <a href="https://purl.org/fair-metrics/FM_I3" class="uri">https://purl.org/fair-metrics/FM_I3</a></h3>
+<h2 id="maturity-assessment-name-use-qualified-references">### Maturity Assessment Name: Use Qualified References</h2>
+<h3 id="to-which-principle-does-it-apply-10">To which principle does it apply?</h3>
+<p>I3 - (meta)data include qualified references to other (meta)data</p>
+<h3 id="what-is-being-measured-10">What is being measured?</h3>
+<p>Relationships within (meta)data, and between local and third-party data, have explicit and ‘useful’ semantic meaning</p>
+<h3 id="why-should-we-measure-it-10">Why should we measure it?</h3>
+<p>One of the reasons that HTML is not suitable for machine-readable knowledge representation is that the hyperlinks between one document and another do not explain the nature of the relationship - it is “unqualified”. For Interoperability, the relationships within and between data must be more semantically rich than “is (somehow) related to”.</p>
+<p>Numerous ontologies include richer relationships that can be used for this purpose, at various levels of domain-specificity. For example, the use of skos for terminologies (e.g. exact matches), or the use of SIO for genomics (e.g. “has phenotype” for the relationship between a variant and its phenotypic consequences). The semantics of the relationship do not need to be &quot;strong&quot; - for example, &quot;objectX wasFoundInTheSameBoxAs objectY&quot; is an acceptable qualified reference</p>
+<p>Similarly, dbxrefs must be predicated with a meaningful relationship what is the nature of the cross-reference?</p>
+<p>Finally, data silos thwart interoperability. Thus, we should reasonably expect that some of the references/relations point outwards to other resources, owned by third-parties; this is one of the requirements for 5 star linked data. </p>
+<h3 id="what-must-be-provided-for-the-measurement-10">What must be provided for the measurement?</h3>
+<p>Linksets (in the formal sense) representing part or all of your resource</p>
+<h3 id="how-is-the-measurement-executed-10">How is the measurement executed?</h3>
+<p>The linksets must have qualified references</p>
+<p>At least one of the links must be in a different Web domain (or the equivalent of a different namespace for non-URI identifiers)</p>
+<h3 id="what-isare-considered-valid-results-10">What is/are considered valid result(s)?</h3>
+<ul>
+<li>References are qualified</li>
+<li>Qualities are beyond “Xref” or “is related to”</li>
+<li>One of the cross-references points outwards to a distinct namespace</li>
+</ul>
+<h3 id="for-which-digital-resources-is-this-relevant-or-all-10">For which digital resource(s) is this relevant? (or 'all')</h3>
+<p>All</p>
+<h3 id="examples-of-good-practices-that-would-score-well-on-this-assessment-10">Examples of good practices (that would score well on this assessment)</h3>
+<h3 id="comments-10">Comments</h3>
+<h1 id="title-fair-metric-fm-r1.1">TITLE: FAIR Metric FM-R1.1</h1>
+<h2 id="authors-11">Authors:</h2>
+<p>Mark D. Wilkinson, Susanna-Assunta Sansone, Erik Schultes, Peter Doorn, Luiz Olavo Bonino da Silva Santos, Michel Dumontier</p>
+<h4 id="date-2017-11">Date: 2017</h4>
+<h3 id="maturity-assessment-identifier-fm-r1.1-httpspurl.orgfair-metricsfm_r1.1">Maturity Assessment Identifier: FM-R1.1 <a href="https://purl.org/fair-metrics/FM_R1.1" class="uri">https://purl.org/fair-metrics/FM_R1.1</a></h3>
+<h2 id="maturity-assessment-name-accessible-usage-license">### Maturity Assessment Name: Accessible Usage License</h2>
+<h3 id="to-which-principle-does-it-apply-11">To which principle does it apply?</h3>
+<p>R1.1 - (meta)data are released with a clear and accessible data usage license</p>
+<h3 id="what-is-being-measured-11">What is being measured?</h3>
+<p>The existence of a license document, for BOTH (independently) the data and its associated metadata, and the ability to retrieve those documents</p>
+<h3 id="why-should-we-measure-it-11">Why should we measure it?</h3>
+<p>A core aspect of data reusability is the ability to determine, unambiguously and with relative ease, the conditions under which you are allowed to reuse the (meta)data. Thus, FAIR data providers must make these terms openly available. This applies both to data (e.g. for the purpose of third-party integration with other data) and for metadata (e.g. for the purpose of third-party indexing or other administrative metrics)</p>
+<h3 id="what-must-be-provided-for-the-measurement-11">What must be provided for the measurement?</h3>
+<p>IRI of the license (e.g. its URL) for the data license and for the metadata license</p>
+<h3 id="how-is-the-measurement-executed-11">How is the measurement executed?</h3>
+<p>Resolve the IRI(s) using its associated resolution protocol</p>
+<h3 id="what-isare-considered-valid-results-11">What is/are considered valid result(s)?</h3>
+<p>A document containing the license information</p>
+<h3 id="for-which-digital-resources-is-this-relevant-or-all-11">For which digital resource(s) is this relevant? (or 'all')</h3>
+<p>All</p>
+<h3 id="examples-of-good-practices-that-would-score-well-on-this-assessment-11">Examples of good practices (that would score well on this assessment)</h3>
+<h3 id="comments-11">Comments</h3>
+<h1 id="title-fair-metric-fm-r1.2">TITLE: FAIR Metric FM-R1.2</h1>
+<h2 id="authors-12">Authors:</h2>
+<p>Mark D. Wilkinson, Susanna-Assunta Sansone, Erik Schultes, Peter Doorn, Luiz Olavo Bonino da Silva Santos, Michel Dumontier</p>
+<h4 id="date-2017-12">Date: 2017</h4>
+<h3 id="maturity-assessment-identifier-fm-r1.2-httpspurl.orgfair-metricsfm_r1.2">Maturity Assessment Identifier: FM-R1.2 <a href="https://purl.org/fair-metrics/FM_R1.2" class="uri">https://purl.org/fair-metrics/FM_R1.2</a></h3>
+<h2 id="maturity-assessment-name-detailed-provenance">### Maturity Assessment Name: Detailed Provenance</h2>
+<h3 id="to-which-principle-does-it-apply-12">To which principle does it apply?</h3>
+<p>R1.2 - (meta)data are associated with detailed provenance</p>
+<h3 id="what-is-being-measured-12">What is being measured?</h3>
+<p>That there is provenance information associated with the data, covering at least two primary types of provenance information:</p>
+<ul>
+<li>Who/what/When produced the data (i.e. for citation)</li>
+<li>Why/How was the data produced (i.e. to understand context and relevance of the data)</li>
+</ul>
+<h3 id="why-should-we-measure-it-12">Why should we measure it?</h3>
+<p>Reusability is not only a technical issue; data can be discovered, retrieved, and even be machine-readable, but still not be reusable in any rational way. Reusability goes beyond “can I reuse this data?” to other important questions such as “may I reuse this data?”, “should I reuse this data”, and “who should I credit if I decide to use it?”</p>
+<h3 id="what-must-be-provided-for-the-measurement-12">What must be provided for the measurement?</h3>
+<p>Several IRIs - at least one of these points to one of the vocabularies used to describe citational provenance (e.g. dublin core). At least one points to one of the vocabularies (likely domain-specific) that is used to describe contextual provenance (e.g. EDAM)</p>
+<h3 id="how-is-the-measurement-executed-12">How is the measurement executed?</h3>
+<p>We resolve the IRI according to their associated protocols.</p>
+<h3 id="what-isare-considered-valid-results-12">What is/are considered valid result(s)?</h3>
+<p>IRI 1 should resolve to a recognized citation provenance standard such as Dublin Core.</p>
+<p>IRI 2 should resolve to some vocabulary that itself passes basic tests of FAIRness</p>
+<h3 id="for-which-digital-resources-is-this-relevant-or-all-12">For which digital resource(s) is this relevant? (or 'all')</h3>
+<p>All</p>
+<h3 id="examples-of-good-practices-that-would-score-well-on-this-assessment-12">Examples of good practices (that would score well on this assessment)</h3>
+<h3 id="comments-12">Comments</h3>
+<p>In the future, we may be able to cross-reference these with FAIRSharing to confirm that they are &quot;standard&quot;, and perhaps even distinguish citation vs. domain specific.</p>
+<h1 id="title-fair-metric-fm-r1.3">TITLE: FAIR Metric FM-R1.3</h1>
+<h2 id="authors-13">Authors:</h2>
+<p>Mark D. Wilkinson, Susanna-Assunta Sansone, Erik Schultes, Peter Doorn, Luiz Olavo Bonino da Silva Santos, Michel Dumontier</p>
+<h4 id="date-2017-13">Date: 2017</h4>
+<h3 id="maturity-assessment-identifier-fm-r1.3-httpspurl.orgfair-metricsfm_r1.3">Maturity Assessment Identifier: FM-R1.3 <a href="https://purl.org/fair-metrics/FM_R1.3" class="uri">https://purl.org/fair-metrics/FM_R1.3</a></h3>
+<h2 id="maturity-assessment-name-meets-community-standards">### Maturity Assessment Name: Meets Community Standards</h2>
+<h3 id="to-which-principle-does-it-apply-13">To which principle does it apply?</h3>
+<p>R1.3 - (meta)data meet domain-relevant community standards</p>
+<h3 id="what-is-being-measured-13">What is being measured?</h3>
+<p>Certification, from a recognized body, of the resource meeting community standards.</p>
+<h3 id="why-should-we-measure-it-13">Why should we measure it?</h3>
+<p>Various communities have recognized that maximizing the usability of their data requires them to adopt a set of guidelines for metadata (often in the form of “minimal information about…” models). Non-compliance with these standards will often render a dataset ‘reuseless’ because critical information about its context or provenance is missing. However, adherence to community standards does more than just improve reusability of the data. The software used by the community for analysis and visualization often depends on the (meta)data having certain fields; thus, non-compliance with standards may result in the data being unreadable by its associated tools. As such, data should be (individually) certified as being compliant, likely through some automated process (e.g. submitting the data to the community’s online validation service)</p>
+<h3 id="what-must-be-provided-for-the-measurement-13">What must be provided for the measurement?</h3>
+<p>A certification saying that the resource is compliant</p>
+<h3 id="how-is-the-measurement-executed-13">How is the measurement executed?</h3>
+<p>Validate the electronic signature as coming from a community authority (e.g. a verisign signature)</p>
+<h3 id="what-isare-considered-valid-results-13">What is/are considered valid result(s)?</h3>
+<p>Successful signature validation</p>
+<h3 id="for-which-digital-resources-is-this-relevant-or-all-13">For which digital resource(s) is this relevant? (or 'all')</h3>
+<p>All</p>
+<h3 id="examples-of-good-practices-that-would-score-well-on-this-assessment-13">Examples of good practices (that would score well on this assessment)</h3>
+<h3 id="comments-13">Comments</h3>
+<p>The <em>Metrics (narrative)</em> available in this folder are released into the public domain under the CC Zero license.</p>
+<p><strong>Individual software components in subfolders in this archive will have independent licenses in their various folder/branches.</strong></p>
+<p>CC Zero Text: https://creativecommons.org/publicdomain/zero/1.0/legalcode</p>
+<h1 id="title-fair-metric-fm-a1.1-1">TITLE: FAIR Metric FM-A1.1</h1>
+<h2 id="authors-14">Authors:</h2>
+<p>authors here</p>
+<h4 id="date-2017-14">Date: 2017</h4>
+<h3 id="maturity-assessment-identifier">Maturity Assessment Identifier:</h3>
+<h3 id="maturity-assessment-name">Maturity Assessment Name:</h3>
+<hr />
+<h3 id="to-which-principle-does-it-apply-14">To which principle does it apply?</h3>
+<h3 id="what-is-being-measured-14">What is being measured?</h3>
+<h3 id="why-should-we-measure-it-14">Why should we measure it?</h3>
+<h3 id="what-must-be-provided-for-the-measurement-14">What must be provided for the measurement?</h3>
+<h3 id="how-is-the-measurement-executed-14">How is the measurement executed?</h3>
+<h3 id="what-isare-considered-valid-results-14">What is/are considered valid result(s)?</h3>
+<h3 id="for-which-digital-resources-is-this-relevant-or-all-14">For which digital resource(s) is this relevant? (or 'all')</h3>
+<h3 id="examples-of-good-practices-that-would-score-well-on-this-assessment-14">Examples of good practices (that would score well on this assessment)</h3>
+<h3 id="comments-14">Comments</h3>
+<p><strong>TO DOWNLOAD ALL OF THE METRICS IN ONE PDF: https://github.com/FAIRMetrics/Metrics/raw/master/ALL.pdf</strong> <strong>TO VIEW THE METRICS IN YOUR BROWSER: http://htmlpreview.github.com/?https://github.com/FAIRMetrics/Metrics/blob/master/ALL.html</strong></p>
+<hr />
+<p><strong>TO DOWNLOAD THE CURRENT ZENODO RELEASE OF THE METRICS, GO HERE: https://doi.org/10.5281/zenodo.1065973</strong></p>
+<p><strong>FOR PDF's OF THE INDIVIDUAL METRICS SEE HERE: https://github.com/FAIRMetrics/Metrics/tree/master/Distributions</strong></p>
+<p><strong>FOR LaTex OF THE INDIVIDUAL METRICS SEE HERE: https://github.com/FAIRMetrics/Metrics/tree/master/Distributions</strong></p>
+<h1 id="fair-metrics">FAIR Metrics</h1>
+<p>Efforts to define metrics to assess the FAIRness of a digital resource.</p>
+<p>Note that the top-level folder (the one you are in now) contains the NanoPublications for each of the Metrics - the machine-readable format of the Metrics publication. The other formats are in the Distributions folder, in both LaTex and PDF.</p>
+<p>Initiatives</p>
+<ul>
+<li><a href="http://www.fairmetrics.org/">FAIR Metrics Group</a></li>
+<li><a href="https://bd2kccc.org/working-groups/?v=commons&amp;h=front">NIH Working Group on FAIR Metrics</a> - <a href="https://docs.google.com/document/d/1Z67UntK73zE8egLpKmIHfpexyuPWWV1gjcjfNeybK9o/edit?usp=sharing">minutes</a></li>
+<li><a href="https://zenodo.org/record/203295#.WVs8m4jfoUE">FAIR-TLC</a></li>
+<li><a href="https://www.rd-alliance.org/data-publishing-data-usability-certification-services-rda-8th-plenary-bof-meeting">RDA Working Group on Data Usability</a></li>
+<li><a href="http://ec.europa.eu/transparency/regexpert/index.cfm?do=groupDetail.groupDetail&amp;groupID=3464">Horizon 2020 Commission expert group on Turning FAIR data into reality</a></li>
+</ul>
+<p>Publications</p>
+<ul>
+<li><a href="https://doi.org/10.1101/225490">Preprint describing the metrics in this Git</a></li>
+</ul>
+<h1 id="how-to-create-a-new-metric">HOW TO CREATE A NEW METRIC</h1>
+<p>Metrics are created, initially, as a narrative document, <a href='http://fairmetrics.org/fairmetricform.html'>following a template<a> extablished by the FAIR Metrics Authoring Group. Guidance for how to complete this document is found in the <a href='http://fairmetrics.org/framework.html'>authoring framework overview</a>.</p>
+<p>Once a Metric has been designed, the document should be submitted via 'pull request' to this repository, at which time it becomes available for community discussion. The author of the Metric should publicize their Metric as widely as possible, to encourage maximal community input.</p>
+<p>At this time, there is no formal process for adoption of Metrics (incuding those that the Metrics Authoring Group have designed themselves!), as there is no official body that can recognize or &quot;stamp&quot; a Metric as being &quot;valid&quot;. Nevertheless, authors should consider the comments and criticisms they receive, and modify the Metric accordingly if the criticisms are justified.</p>
+<h1 id="how-to-create-a-new-metric-test">HOW TO CREATE A NEW METRIC TEST</h1>
+<p>With the goal of providing an objective, automated way of testing (meta)data resources against the Metrics, the Metrics Authorship Group have created the FAIR Evaluator, which is running as a demonstration service at <strong>CURRENTLY OFFLINE FOR REDESIGN</strong>. The Evaluator provides a registry and execution functions for:</p>
+<ul>
+<li>Metric Tests</li>
+<li>Community-defined Collections of Metric Tests</li>
+<li>Quantitative FAIRness evaluations of a Resource based on these Collections.</li>
+</ul>
+<p>A Metric Test is a Web API that has the following features:</p>
+<ol style="list-style-type: decimal">
+<li>It is described in YAML using a <a href="http://smart-api.info/">smartAPI</a> interface annotation (smartAPI is an extension of openAPI/Swagger, which allows semantic annotation of various metadata elements and interface input/output fields. <a href="http://smart-api.info/editor/">An editor for smartAPI</a> is available.</li>
+<li>HTTP GET on the endpoint of the Metric Test URL returns that smartAPI document in YAML (for example: http://linkeddata.systems/cgi-bin/FAIR_Tests/gen2_unique_identifier)</li>
+<li>HTTP POST of the <strong>metadata GUID</strong> to that same endpoint, in a simple JSON document {subject =&gt; GUID}, triggers the execution of the test.<br />
+</li>
+<li>The Test returns a block of JSON-LD containing information about the test, including date/time, comments, and score</li>
+</ol>
+<p>(we are working on JSON Schema for these documents now, but following the example below will get you started)</p>
+<p>For example</p>
+<pre><code>curl -X POST -D -L -H &quot;Content-Type: application/json&quot; -H &quot;Accept: application/json&quot; -d &#39;{&quot;subject&quot;: &quot;10.5281/zenodo.1147435&quot;}&#39; http://linkeddata.systems/cgi-bin/FAIR_Tests/gen2_unique_identifier</code></pre>
+<p>Might return the following result:</p>
+<pre><code>  [
+    {
+      &quot;@id&quot;: &quot;http://linkeddata.systems/cgi-bin/FAIR_Tests/gen2_unique_identifier#10.5281/zenodo.1147435/result-2018-12-31T13:32:43+00:00&quot;,
+      &quot;@type&quot;: [
+        &quot;http://fairmetrics.org/resources/metric_evaluation_result&quot;
+      ],
+      &quot;http://purl.obolibrary.org/obo/date&quot;: [
+        {
+          &quot;@value&quot;: &quot;2018-12-31T13:32:43+00:00&quot;,
+          &quot;@type&quot;: &quot;http://www.w3.org/2001/XMLSchema#date&quot;
+        }
+      ],
+      &quot;http://schema.org/comment&quot;: [
+        {
+          &quot;@value&quot;: &quot;Found a Crossref DOI - pass&quot;,
+          &quot;@language&quot;: &quot;en&quot;
+        }
+      ],
+      &quot;http://semanticscience.org/resource/SIO_000332&quot;: [
+        {
+          &quot;@value&quot;: &quot;10.5281/zenodo.1147435&quot;,
+          &quot;@language&quot;: &quot;en&quot;
+        }
+      ],
+      &quot;http://semanticscience.org/resource/SIO_000300&quot;: [
+        {
+          &quot;@value&quot;: &quot;1.0&quot;,
+          &quot;@type&quot;: &quot;http://www.w3.org/2001/XMLSchema#float&quot;
+        }
+      ]
+    }
+  ]</code></pre>
+<p>The &quot;score&quot; of the Metric Test is the value of the &quot;SIO:000300&quot; (has_value) predicate, and must be a floating-point value between 0 and 1. The precise meaning of that value should be explained in the Comments (schema:comment) section, along wth, for example, explanations for failure. Other metadata is provided, as shown (all shown fields are required!).</p>
+<p><strong>NOTE</strong> No other information may be provided to the Metric Test beyond the <strong>metadata</strong> GUID. The purpose of FAIR Metric Tests is to determine if machines can find, access, and &quot;interpret&quot; (meta)data, thus it is a firm requirement that only the metadata GUID may be given to the test. The aspect of FAIRness being evaluated <strong>must</strong> be automatically discernable using that metadata.</p>
+<p>This Metric Test is registered by either HTTP POST of properly formatted JSON to the Evaluator registry (see API here:https://github.com/FAIRMetrics/Metrics/tree/master/MetricsEvaluatorCode/Ruby/fairmetrics), or by visiting the manual submission page at: <strong>CURRENTLY OFFLINE FOR A REDESIGN</strong>, where the form field on that page asks for the URL of the Metric Test's YAML document.</p>
+<p>Once registered, a Metric Test can be included in new Metric Collections, and used by the Evaluator software for automated testing of data resources.</p>
+<h1 id="resources-available-to-help-in-metric-testing">Resources available to help in Metric Testing</h1>
+<p>The <a href="https://fairsharing.org">FAIRSharing Registry</a> is a repository for a wide variety of standards, including file formats, ontologies, identifier types, etc. They provide a JSON API that can be used within Metrics Tests to look-up &quot;standards&quot; a test encounters in its exploration of (meta)data to determine if that standard is registered. Standards that are not registered with FAIRSharing should be encouraged to do so by contacting the appropriate standards-body, or by contacting the FAIRSharing team with a request to include the standard in their registry.</p>
+<h1 id="philosophy-of-fair-testing-under-development-comments-welcome">PHILOSOPHY OF FAIR TESTING (under development! Comments welcome!)</h1>
+<p>Evaluating FAIRness is a controversial issue! We (the Metrics Authoring Group) feel that these concerns can be eased through bringing more clarity regarding the &quot;philosophy&quot; behind FAIRness testing.</p>
+<p>First, there is no such thing as &quot;FAIR&quot;, and neither is there &quot;unFAIR&quot;! As described in <a href="https://content.iospress.com/articles/information-services-and-use/isu824">this manuscript</a>, we view FAIR as a continuum of 'behaviors' exhibited by a data resource that increasingly enable machine discoverability and (re)use. Moreover, the final FAIR Principle speaks directly to the fact that &quot;FAIR&quot; will have different requirements for different communities! Thus, a given Metric (and its associated Metric Test) may not be applicable to certain types of resources from a given community; or, alternatively, there may exist in that community some standard that is widely accepted within that community to enable machine-actionability of a data resource, but that would not be recognized by a &quot;generic&quot; computational agent. This is all completely acceptable, and is the reason that the Metrics and the Metric Testing framework have been established as a community-driven initiative, rather than top-down.</p>
+<p>For example: In the bioinformatics community, a widely used format for Sequence Features is <a href="https://www.ensembl.org/info/website/upload/gff3.html">GFF3</a> - a tab-delimited format with specific constraints on the content of each field. From the perspective of a &quot;generic&quot; computational agent, it would be ~impossible to interpret or reuse that data; however, there are constraints on that format that speak directly to the interoperability objectives of FAIR - for example, that the &quot;type&quot; field must consist of a term from the Sequence Ontology. Thus, it would be reasonable for the Bioinformatics community to create a FAIR Metric, and its associated Metric Test, that evaluated if a GFF3 file fulfilled those requirements. Thus, a community could create a Metric Collection that eschewed the &quot;generic&quot; test for machine-readability of the data, and instead, utilized their own Metric Test that validated the content of that GFF3 file.</p>
+<p>In light of this, we insist that FAIR evaluations are not intended to be used as &quot;judgement&quot;, but rather as a means to objectively (AND TRANSPARENTLY!) test if a resource has successfully fulfilled the FAIRness requirements that <strong>that community</strong> has established. In this light, FAIR Evaluation is a way for individual providers, or repository owners, to test their own compliance, and to take remedial action if their resources are not passing the tests. Confirmation and/or guidance, rather than judgement.</p>
+<p>Certainly, we believe that some FAIR Metrics (for example, that the entity has a globally unique identifier, and that all data should have a license and citation information) are universal, and a prerequisite for FAIRness; however, many of the FAIR Principles must be interpreted by the individual communities, keeping as close to the &quot;spirit&quot; of FAIR as possible.</p>
