@@ -12,12 +12,14 @@ require 'tempfile'
 require 'xmlsimple'
 require 'nokogiri'
 
-### NOTE:  please update line 308 with your LD_LIBRARY_PATH, the server needs to know.
 
 
 class Utils
-    Utils::AcceptHeader = {'Accept' => 'text/turtle, application/n3, application/rdf+n3, application/turtle, application/x-turtle,text/n3,text/turtle,                   text/rdf+n3, text/rdf+turtle,application/json+ld, text/xhtml+xml,application/rdf+xml,application/n-triples' }
+    Utils::AcceptHeader = {'Accept' => 'text/turtle, application/n3, application/rdf+n3, application/turtle, application/x-turtle,text/n3,text/turtle, text/rdf+n3, text/rdf+turtle,application/json+ld, text/xhtml+xml,application/rdf+xml,application/n-triples' }
 
+    ### NOTE:  please update with your LD_LIBRARY_PATH, the server needs to know.
+    Utils::ExtructCommand = "LD_LIBRARY_PATH='/usr/lib/x86_64-linux-gnu/' /usr/local/bin/extruct"
+    #Utils::ExtructCommand = "extruct"    
 
     Utils::TEXT_FORMATS = {
         'text' => ['text/plain',],
@@ -94,7 +96,7 @@ class Utils
       response1 = self.fetch("https://pubchem.ncbi.nlm.nih.gov/rest/rdf/inchikey/#{guid}")
       # this is a Net::HTTP response
       ##$stderr.puts step1.body
-      meta.full_response = response1  # set it here so it isn't empty
+      meta.full_response << response1  # set it here so it isn't empty
       
       (parser, type) = Utils::figure_out_type(response1)
       unless parser
@@ -121,6 +123,7 @@ class Utils
       cpd = cpd.to_s
       cpd = cpd.gsub(/\/$/, "")
       response2 = fetch(cpd)
+      meta.full_response << response2  # set it here so it isn't empty
       (parser, type) = Utils::figure_out_type(response2)
       # this next operation is safe because we know that pubchem does in fact return Turtle
       unless parser.eql?"turtle"
@@ -138,7 +141,9 @@ class Utils
       meta.guidtype = "doi"
       meta.comments << "Found a Crossref DOI.  "
 
-      Utils::resolve_uri("http://dx.doi.org/#{guid}", meta)
+      Utils::resolve_uri("http://dx.doi.org/#{guid}", meta, false)  # specifically metadata
+      Utils::resolve_uri("http://dx.doi.org/#{guid}", meta, false, {"Accept" => "*/*"}) # whatever is default
+      
       return meta      
     end
     
@@ -156,11 +161,11 @@ class Utils
       
     
     
-    def Utils::resolve_uri(guid, meta, nolinkheaders=false)
+    def Utils::resolve_uri(guid, meta, nolinkheaders=false, header=Utils::AcceptHeader)
       meta.guidtype = "uri" if meta.guidtype == "unknown"  # might have been set already, e.g. to 'handle' or 'doi'
       
-      response =  Utils::fetch(guid)
-      meta.full_response = response
+      response =  Utils::fetch(guid, header)
+      meta.full_response << response
 
       #$stderr.puts response.header
 
@@ -307,8 +312,8 @@ class Utils
       
         meta.comments << "Using 'extruct' to try to extract metadata from return value (message body) of #{uri}.  "
         
-        %x{LD_LIBRARY_PATH='/usr/lib/x86_64-linux-gnu/' /usr/local/bin/extruct #{uri} 2>&1}
-        #$stderr.puts "\n\n\n\n\n\n\n#{result.class}\n\n#{result.to_s}\n\n"
+        result = %x{#{Utils::ExtructCommand} #{uri} 2>&1}
+        $stderr.puts "\n\n\n\n\n\n\n#{result.class}\n\n#{result.to_s}\n\n#{@extruct_command} #{uri} 2>&1\n\n"
         # need to do some error checking here!
         if result.to_s.match(/^\s+?\{/) or result.to_s.match(/^\s+\[/) # this is JSON
           json = JSON.parse result
@@ -427,7 +432,7 @@ class Utils
     
     
   # general Web utilities... follow redirects, for example
-  def Utils::fetch(uri_str)  #we will try to retrieve turtle whenever possible
+  def Utils::fetch(uri_str, header = Utils::AcceptHeader)  #we will try to retrieve turtle whenever possible
     address = URI::encode(uri_str)
     address = resolve(address)  # this runs through any redirects until there is a URL that will return data
     addressURI = URI(address)
@@ -437,7 +442,7 @@ class Utils
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE   # for example, when using self-signed certs
     end
     
-    response = http.request_get(address, Utils::AcceptHeader)  
+    response = http.request_get(address, header)  
 
     case response   # the \"case\" block allows you to test various conditions... it is like an \"if\", but cleaner!\n,
 	  when Net::HTTPSuccess then  # when response Object is of type Net::HTTPSuccess\n",
@@ -445,9 +450,6 @@ class Utils
 	    return response  # return that response object to the main code\n",
 	  else
 	    #raise Exception, "Something went wrong... the call to #{uri_str} failed; type #{response.class}"
-	    # note - if you want to learn more about Exceptions, and error-handling\n",
-	    # read this page:  http://rubylearning.com/satishtalim/ruby_exceptions.html  \n",
-	    # you can capture the Exception and do something useful with it!\n",
 	    response = false
 	    return response  # now we are returning 'False', and we will check that with an \"if\" statement in our main code
     end
@@ -773,13 +775,14 @@ class MetadataObject
   attr_accessor :graph  # a RDF.rb graph of metadata
   attr_accessor :comments  # an array of comments
   attr_accessor :guidtype  # the type of GUID that was detected
-  attr_accessor :full_response  # will be a Net::HTTP::Response
+  attr_accessor :full_response  # will be an array of Net::HTTP::Response
     
   def initialize(params = {}) # get a name from the "new" call, or set a default
     @hash = Hash.new
     @graph = RDF::Graph.new
     @comments = Array.new
     @guidtype = "unknown"
+    @full_response = Array.new
   end
   
   def merge_hash(hash)

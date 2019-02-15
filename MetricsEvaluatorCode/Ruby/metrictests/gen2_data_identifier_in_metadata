@@ -76,9 +76,15 @@ def testGUID
 		results = query.execute(g)
 		if  results.any?
 			@swagger.score = 1
-			@swagger.addComment "found identifier #{results.first[:o]} using Schema.org. "
+			@swagger.addComment "found identifier #{results.first[:o]} using Schema.org mainEntity property. "
 		end
 
+		query = SPARQL.parse("select ?o where {?s <http://schema.org/distribution> ?o}")
+		results = query.execute(g)
+		if  results.any?
+			@swagger.score = 1
+			@swagger.addComment "found identifier #{results.first[:o]} using Schema.org distribution property. "
+		end
 
 		query = SPARQL.parse("select ?o where {?s <http://purl.obolibrary.org/obo/IAO_0000136> ?o}")
 		results = query.execute(g)
@@ -106,10 +112,12 @@ end
 
 if debug
 #	@input = '{"subject": "10.5281/zenodo.1147435"}'  # doi fail
-	@input = '{"subject": "10.5281/zenodo.1065973"}'  # doi fail
+#	@input = '{"subject": "10.5281/zenodo.1065973"}'  # doi fail
 #	@input = '{"subject": "BSYNRYMUTXBXSQ-UHFFFAOYSA-N"}' # inchi
 #	@input = '{"subject": "LFQSCWFLJHTTHZ-UHFFFAOYSA-N"}' # another inchi
 #	@input = '{"subject": "20.1000/105"}'  # handle (fail)
+	@input = '{"subject": "http://linkeddata.systems/Magnaporthe/polyA_Sites/"}'  # handle
+
 else 
 	@input = $stdin.read
 end
@@ -121,7 +129,7 @@ schemas = {'subject' => ['string', "the GUID being tested"]}
 
 @swagger = Swagger.new({
 			:title => "FAIR Metrics Gen2- Data Identifier Explicitly In Metadata",
-			:description => "Metric to test if the metadata contains the unique identifier to the data. This is done by searching for a variety of properties, including foaf:primaryTopic, schema:mainEntity, sio:is-about, and iao:is-about. schema codeRepository is used for software releases.",
+			:description => "Metric to test if the metadata contains the unique identifier to the data. This is done by searching for a variety of properties, including foaf:primaryTopic, schema:mainEntity, schema:distribution, sio:is-about, and iao:is-about. schema codeRepository is used for software releases.",
 			:tests_metric => 'https://purl.org/fair-metrics/FM_F3',
 			:applies_to_principle => "F3",
 			:organization => 'FAIR Metrics Authoring Group',
