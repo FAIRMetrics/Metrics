@@ -54,7 +54,7 @@ require 'openssl'
 
     # is it a DOI?
     if (uri_str.match(/^(10.\d{4,9}\/[-\._;()\/:A-Z0-9]+$)/i))
-      uri_str = "http://dx.doi.org/#{uri_str}"  # convert to resolvable DOI URL
+      uri_str = "https://doi.org/#{uri_str}"  # convert to resolvable DOI URL
     end
 
 

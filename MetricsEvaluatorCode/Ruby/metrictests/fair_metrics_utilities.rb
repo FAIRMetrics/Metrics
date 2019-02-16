@@ -141,8 +141,8 @@ class Utils
       meta.guidtype = "doi"
       meta.comments << "Found a Crossref DOI.  "
 
-      Utils::resolve_uri("http://dx.doi.org/#{guid}", meta, false)  # specifically metadata
-      Utils::resolve_uri("http://dx.doi.org/#{guid}", meta, false, {"Accept" => "*/*"}) # whatever is default
+      Utils::resolve_uri("https://doi.org/#{guid}", meta, false)  # specifically metadata
+      Utils::resolve_uri("https://doi.org/#{guid}", meta, false, {"Accept" => "*/*"}) # whatever is default
       
       return meta      
     end
@@ -479,7 +479,7 @@ class Utils
 
     # is it a DOI?
     if (uri_str.match(/^(10.\d{4,9}\/[-\._;()\/:A-Z0-9]+$)/i))
-      uri_str = "http://dx.doi.org/#{uri_str}"  # convert to resolvable DOI URL
+      uri_str = "https://doi.org/#{uri_str}"  # convert to resolvable DOI URL
     end
 
 
