@@ -16,12 +16,25 @@ def testGUID
 	end
 
 	if metadata.guidtype == "unknown"
-		@swagger.addComment("  The identifier #{guid} did not match any known identification system (tested inchi, doi, handle, uri) and therefore did not pass this metric.  If you think this is an error, please contact the FAIR Metrics group (http://fairmetrics.org).")
+		@swagger.addComment("  The GUID identifier #{guid} did not match any known identification system (tested inchi, doi, handle, uri) and therefore did not pass this metric.  If you think this is an error, please contact the FAIR Metrics group (http://fairmetrics.org).")
 		@swagger.score = 0
 		return @swagger.createEvaluationResponse
+	elsif metadata.guidtype == "handle"
+		@swagger.addComment("The GUID is a Handle, which is known to be persistent.  Pass. ")
+		@swagger.score = 1
+		return @swagger.createEvaluationResponse
+	elsif metadata.guidtype == "doi"
+		@swagger.addComment("The GUID is a DOI, which is known to be persistent.  Pass. ")
+		@swagger.score = 1
+		return @swagger.createEvaluationResponse
+	elsif metadata.guidtype == "inchi"
+		@swagger.addComment("The GUID is a InChI, which is known to be persistent.  Pass. ")
+		@swagger.score = 1
+		return @swagger.createEvaluationResponse
+	else
+		@swagger.addComment("The GUID appears to be a URL.  Testing metadata returned from its resolution.  ")
 	end
 
-	
 	g = metadata.graph
 	
 	if g.size > 0  # have we found anything yet?
@@ -30,19 +43,24 @@ def testGUID
 		results = query.execute(g)
 		if results.any?
 			@swagger.addComment "Found persistence policy predicate with #{results.first[:o]} as its value.  Now testing resolution. "
-		end
-		
-		policyURI = results.first[:o]
-		result = Utils::fetch(policyURI, {"Accept" => "*/*"})  # returns HTTP object, or false
-		if result
-			@swagger.addComment("Persistence policy resolved - pass")
-			@swagger.score = 1
-			return @swagger.createEvaluationResponse
+			#$stderr.puts "\n\n\nFound persistence policy predicate with #{results.first[:o]} as its value.  Now testing resolution. \n\n\n"
+			policyURI = results.first[:o].value
+			result = Utils::fetch(policyURI, {"Accept" => "*/*"})  # returns HTTP object, or false
+			if result
+				@swagger.addComment("Persistence policy resolved.  Pass")
+				@swagger.score = 1
+				return @swagger.createEvaluationResponse
+			else
+				@swagger.addComment("Persistence policy did not resolve.  Fail.")
+				@swagger.score = 0
+				return @swagger.createEvaluationResponse
+			end
 		else
-			@swagger.addComment("Persistence policy did not resolve - fail")
+			@swagger.addComment("Did not find the #persistencePolicy predicate in the linked data.  Fail.")
 			@swagger.score = 0
 			return @swagger.createEvaluationResponse
-		end				
+		end
+			
 	else 
 		@swagger.addComment("Could not find a any linked data to test for persistence policy references.  Fail.")
 		@swagger.score = 0
