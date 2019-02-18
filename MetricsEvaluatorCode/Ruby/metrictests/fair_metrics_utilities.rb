@@ -437,7 +437,7 @@ class Utils
   # general Web utilities... follow redirects, for example
   def Utils::fetch(uri_str, header = Utils::AcceptHeader)  #we will try to retrieve turtle whenever possible
     address = URI::encode(uri_str)
-    address = resolve(address)  # this runs through any redirects until there is a URL that will return data
+    address = resolve(address, nil, nil, nil, header)  # this runs through any redirects until there is a URL that will return data
     addressURI = URI(address)
     http = Net::HTTP.new(addressURI.host, addressURI.port)
     if address.match(/^https:/i)
@@ -475,16 +475,10 @@ class Utils
 
 
    # this returns the URI that results from all redirects, etc.
-  def Utils::resolve(uri_str, agent = 'curl/7.43.0', max_attempts = 10, timeout = 10)
+  def Utils::resolve(uri_str, agent = 'curl/7.43.0', max_attempts = 10, timeout = 10, header = Utils::AcceptHeader)
     attempts = 0
     max_attempts = 5
     cookie = nil
-
-    # is it a DOI?
-    if (uri_str.match(/^(10.\d{4,9}\/[-\._;()\/:A-Z0-9]+$)/i))
-      uri_str = "https://doi.org/#{uri_str}"  # convert to resolvable DOI URL
-    end
-
 
     until attempts >= max_attempts
       attempts += 1
@@ -497,7 +491,7 @@ class Utils
       path = '/' if path == ''
       path += '?' + url.query unless url.query.nil?
 
-      params = { 'User-Agent' => agent }.merge Utils::AcceptHeader
+      params = { 'User-Agent' => agent }.merge header
       params['Cookie'] = cookie unless cookie.nil?
       request = Net::HTTP::Get.new(path, params)
 
