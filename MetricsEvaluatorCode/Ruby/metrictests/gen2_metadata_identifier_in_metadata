@@ -89,11 +89,10 @@ def testGUID
 			end
 		end
 		
-	else
+	end
+
 	@swagger.score = 1.0 if @swagger.score > 1.0
 	return @swagger.createEvaluationResponse  # release the result from all other tests
-
-	end	
 	
 end
 
@@ -108,7 +107,7 @@ if debug
 #       @input = '{"subject": "BSYNRYMUTXBXSQ-UHFFFAOYSA-N"}' # inchi
 #       @input = '{"subject": "LFQSCWFLJHTTHZ-UHFFFAOYSA-N"}' # another inchi
 #       @input = '{"subject": "20.1000/105"}'  # handle
-        @input = '{"subject": "http://linkeddata.systems/Magnaporthe/polyA_Sites/"}'  # handle
+        @input = '{"subject": "http://linkeddata.systems/Magnaporthe/polyA_Sites"}'  # handle
 else
 	@input = $stdin.read
 end
