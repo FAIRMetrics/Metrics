@@ -11,10 +11,15 @@ require 'sparql'
 require 'tempfile'
 require 'xmlsimple'
 require 'nokogiri'
+require 'parseconfig'
 
 
 
 class Utils
+    config = ParseConfig.new('config.conf')
+    @extruct = "extruct" unless config
+    @extruct = config['extruct'] && config['extruct']['command'] && !config['extruct']['command'].empty?
+
     Utils::AcceptHeader = {'Accept' => 'text/turtle, application/n3, application/rdf+n3, application/turtle, application/x-turtle,text/n3,text/turtle, text/rdf+n3, text/rdf+turtle,application/json+ld, text/xhtml+xml,application/rdf+xml,application/n-triples' }
 
     ### NOTE:  please update with your LD_LIBRARY_PATH, the server needs to know.

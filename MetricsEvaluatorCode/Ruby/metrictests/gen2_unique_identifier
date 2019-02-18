@@ -66,7 +66,7 @@ schemas = {'subject' => ['string', "the GUID being tested"]}
 @swagger = Swagger.new({
 			:title => "FAIR Metrics Gen2- Unique Identifier",
 			:description => "Metric to test if the resource has a unique identifier.  This is done by comparing the GUID to the patterns (by regexp) of known GUID schemas such as URLs and DOIs.  Known schema are registered in FAIRSharing (https://fairsharing.org/standards/?q=&selected_facets=type_exact:identifier%20schema)",
-			:tests_metric => 'https://purl.org/fair-metrics/FM_F1',
+			:tests_metric => 'https://purl.org/fair-metrics/Gen2_FM_F1',
 			:applies_to_principle => "F1",
 			:organization => 'FAIR Metrics Authoring Group',
 			:org_url => 'http://fairmetrics.org',

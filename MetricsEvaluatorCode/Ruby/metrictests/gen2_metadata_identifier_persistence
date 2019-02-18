@@ -1,0 +1,113 @@
+#!/home/mark_moby_wilkinson/.rvm/rubies/ruby-2.5.1/bin/ruby
+require './fair_metrics_utilities.rb'
+require 'cgi'
+require 'json'
+require 'uri'
+
+debug = true
+
+def testGUID
+	
+	guid = @swagger.testedGUID
+	metadata = Utils::resolveit(guid)  # this is where the magic happens!
+
+	metadata.comments.each do |c|
+		@swagger.addComment(c)
+	end
+
+	if metadata.guidtype == "unknown"
+		@swagger.addComment("  The identifier #{guid} did not match any known identification system (tested inchi, doi, handle, uri) and therefore did not pass this metric.  If you think this is an error, please contact the FAIR Metrics group (http://fairmetrics.org).")
+		@swagger.score = 0
+		return @swagger.createEvaluationResponse
+	end
+
+	
+	g = metadata.graph
+	
+	if g.size > 0  # have we found anything yet?
+		@swagger.addComment("Found linked data.  Testing for the 'http://www.w3.org/2000/10/swap/pim/doc#persistencePolicy' predicate in any discovered Linked Data")
+		query = SPARQL.parse("select ?o where {?s <http://www.w3.org/2000/10/swap/pim/doc#persistencePolicy> ?o}")
+		results = query.execute(g)
+		if results.any?
+			@swagger.addComment "Found persistence policy predicate with #{results.first[:o]} as its value.  Now testing resolution. "
+		end
+		
+		policyURI = results.first[:o]
+		result = Utils::fetch(policyURI, {"Accept" => "*/*"})  # returns HTTP object, or false
+		if result
+			@swagger.addComment("Persistence policy resolved - pass")
+			@swagger.score = 1
+			return @swagger.createEvaluationResponse
+		else
+			@swagger.addComment("Persistence policy did not resolve - fail")
+			@swagger.score = 0
+			return @swagger.createEvaluationResponse
+		end				
+	else 
+		@swagger.addComment("Could not find a any linked data to test for persistence policy references.  Fail.")
+		@swagger.score = 0
+		return @swagger.createEvaluationResponse
+	end
+
+	@swagger.addComment("the identifier #{guid} did not match any known identification system (tested inchi, doi, handle, uri) and therefore did not pass this metric.  If you think this is an error, please contact the FAIR Metrics group (http://fairmetrics.org).")
+	@swagger.score = 0
+	return @swagger.createEvaluationResponse
+
+	
+end
+
+
+
+if debug
+#	@input = '{"subject": "10.5281/zenodo.1147435"}'  # doi
+#	@input = '{"subject": "BSYNRYMUTXBXSQ-UHFFFAOYSA-N"}' # inchi
+#	@input = '{"subject": "LFQSCWFLJHTTHZ-UHFFFAOYSA-N"}' # another inchi
+#	@input = '{"subject": "20.1000/105"}'  # handle
+	@input = '{"subject": "http://linkeddata.systems/Magnaporthe/polyA_Sites"}'  # url
+
+else 
+	@input = $stdin.read
+end
+
+cgi = CGI.new
+
+schemas = {'subject' => ['string', "the GUID being tested"]}
+
+@swagger = Swagger.new({
+			:title => "FAIR Metrics Gen2- Identifier Persistence",
+			:description => "Metric to test if the unique identifier of the metadata
+			resource is likely to be persistent. Known schema are registered in
+			FAIRSharing (https://fairsharing.org/standards/?q=&selected_facets=type_exact:identifier%20schema).
+			For URLs that don't follow a schema in FAIRSharing, we look for linked data
+			containing the predicate 'http://www.w3.org/2000/10/swap/pim/doc#persistencePolicy',
+			which should point to a URL that resolves (a 200-range Header after resolving all redirects)",
+			:tests_metric => 'https://purl.org/fair-metrics/Gen2_FM_F1',
+			:applies_to_principle => "F1",
+			:organization => 'FAIR Metrics Authoring Group',
+			:org_url => 'http://fairmetrics.org',
+			:responsible_developer => "Mark D Wilkinson",
+			:email => 'markw@illuminae.com',
+			:developer_ORCiD => '0000-0001-6960-357X',
+			:protocol => 'http',
+			:host => 'linkeddata.systems',
+			:basePath => '/cgi-bin',
+			:path => '/FAIR_Tests/gen2_metadata_identifier_persistence',
+			:response_description => 'The response is a binary (1/0), success or failure',
+			:schemas => schemas,
+			:fairsharing_key_location => '../fairsharing.key',
+				 				 
+})
+
+
+if (!cgi.request_method or cgi.request_method == "GET")  and !debug
+	puts "Content-type: application/openapi+yaml;version=3.0\n\n"
+	puts @swagger.getSwagger
+	
+elsif cgi.request_method == "POST"  or debug
+	input_json = JSON.parse(@input)
+	guid = input_json["subject"]
+	@swagger.testedGUID = guid
+	response = testGUID
+	puts "Content-type: application/json+ld\n\n"
+	puts response
+end
