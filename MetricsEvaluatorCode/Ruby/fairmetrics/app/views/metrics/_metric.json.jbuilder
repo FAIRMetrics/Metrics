@@ -1,4 +1,4 @@
-doi_url = "https://dx.doi.org/"
+doi_url = "https://doi.org/"
 fairont = "https://purl.org/fair-ontology/"
 metrics_url = "https://purl.org/fair-metrics/"
 type1= "http://purl.org/dc/dcmitype/Dataset"

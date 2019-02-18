@@ -301,7 +301,7 @@ class EvaluationsController < ApiController
     #end
     #
     #resource = @evaluation.resource
-    #if (resource =~ /doi:/ or resource =~ /dx\.doi\.org/)
+    #if (resource =~ /doi:/ or resource =~ /(dx\.)?doi\.org/)
     #  canonicalizedDOI = resource.match(/(10.\d{4,9}\/[-\._;()\/:A-Z0-9]+$)/i)[1]
     #  @evaluation.resource = canonicalizedDOI
     #end
