@@ -7,7 +7,7 @@ Luiz Olavo Bonino da Silva Santos, Michel Dumontier
 #### Date: 2017
 
 
-### Maturity Assessment Identifier: FM-F1A [https://purl.org/fair-metrics/FM_F1A](https://purl.org/fair-metrics/Gen2_FM_F1A)
+### Maturity Assessment Identifier: Gen2_FM-F1A [https://purl.org/fair-metrics/Gen2_FM_F1A](https://purl.org/fair-metrics/Gen2_FM_F1A)
 
 ### Maturity Assessment Name:   Identifier Uniqueness
 
