@@ -166,8 +166,15 @@ class Utils
     
     def Utils::resolve_uri(guid, meta, nolinkheaders=false, header=Utils::AcceptHeader)
       meta.guidtype = "uri" if meta.guidtype == "unknown"  # might have been set already, e.g. to 'handle' or 'doi'
-      
+      $stderr.puts "\n\n FETCHING #{guid} #{header}\n\n"
       response =  Utils::fetch(guid, header)
+      if !response
+          response =  Utils::fetch(guid, {'Accept' => "*.*"})
+      end
+      if !response
+          return meta
+      end
+                                       
       meta.full_response << response
 
       #$stderr.puts response.header
