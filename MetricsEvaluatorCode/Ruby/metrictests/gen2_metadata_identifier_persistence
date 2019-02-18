@@ -4,7 +4,7 @@ require 'cgi'
 require 'json'
 require 'uri'
 
-debug = true
+debug = false
 
 def testGUID
 	
