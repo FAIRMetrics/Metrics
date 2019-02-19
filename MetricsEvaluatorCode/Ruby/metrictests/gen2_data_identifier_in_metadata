@@ -53,7 +53,7 @@ def testGUID
 
 	g = metadata.graph
 	if @swagger.debug
-		g.each {|s| puts s.subject.to_s + "\t" + s.predicate.to_s + "\t" + s.object.to_s + "\n"}
+		g.each {|s| $stderr.puts s.subject.to_s + "\tPRED: " + s.predicate.to_s + "\tOBJ: " + s.object.to_s + "\n"}
 	end
 	
 	if g.size > 0  # have we found anything yet?
@@ -144,7 +144,7 @@ schemas = {'subject' => ['string', "the GUID being tested"]}
 			:response_description => 'The response is a binary (1/0), success or failure',
 			:schemas => schemas,
 			:fairsharing_key_location => '../fairsharing.key',
-			:debug => debug				 				 
+			:debug => false				 				 
 })
 
 if (!cgi.request_method or cgi.request_method == "GET") and !debug
