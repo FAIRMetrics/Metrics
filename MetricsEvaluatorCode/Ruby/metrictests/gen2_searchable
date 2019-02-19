@@ -1,0 +1,217 @@
+#!/home/mark_moby_wilkinson/.rvm/rubies/ruby-2.5.1/bin/ruby
+require_relative 'fair_metrics_utilities'
+require 'cgi'
+require 'json'
+require 'uri'
+require 'rdf'
+require 'rdf/turtle'
+require 'sparql'
+require 'net/https'
+
+debug = true
+
+config = ParseConfig.new('config.conf')
+@accessKey = config['bing']['accessKey'] if config['bing'] && config['bing']['accessKey'] && !config['bing']['accessKey'].empty?
+
+def testGUID
+	
+	guid = @swagger.testedGUID
+	
+	metadata = Utils::resolveit(guid)  # this is where the magic happens!
+
+	metadata.comments.each do |c|
+		@swagger.addComment(c)
+	end
+
+	@swagger.score = 0
+	if metadata.guidtype == "unknown"
+		@swagger.addComment("  The identifier #{guid} did not match any known identification system (tested inchi, doi, handle, uri) and therefore did not pass this metric.  If you think this is an error, please contact the FAIR Metrics group (http://fairmetrics.org).")
+		return @swagger.createEvaluationResponse
+	end
+
+
+	finalURI = metadata.finalURI
+	
+	hash = metadata.hash
+	
+###################  TITLE
+	flatlist = hash.flatten(40) # hopefully no hash is more than 40 deep!
+	title = ""
+	for x in 1..flatlist.length do
+		term = flatlist[x-1]
+		next if !term.is_a?String
+		#$stderr.puts term
+		if term.match(/title$/i) # in a flattened hash, find something matching 'title' at the end of the term
+			title = flatlist[x]  # the next thing should be the title
+			break
+		end
+	end		
+	
+	searchresults = callBing(title)
+	h = JSON.parse(searchresults)
+	if h["webPages"]
+		h["webPages"]["value"].each do |p|
+			if p["url"] == finalURI
+				@swagger.addComment "found your metadata record based on its title in structured data.  "
+				@swagger.score = 1
+			end
+		end
+	end
+
+#############  Keywords
+	flatlist = hash.flatten(40) # hopefully no hash is more than 40 deep!
+	keywords = ""
+	for x in 1..flatlist.length do
+		term = flatlist[x-1]
+		#$stderr.puts term
+		next if !term.is_a?String
+		if term.match(/keywords?$/i) # in a flattened hash, find something matching 'title' at the end of the term
+			keywords = flatlist[x]  # the next thing should be the keywords
+			break
+		end
+	end		
+	#keywords = keywords.gsub!("\,", "")
+	searchresults = callBing(keywords)
+	h = JSON.parse(searchresults)
+	if h["webPages"]
+		h["webPages"]["value"].each do |p|
+			if p["url"] == finalURI
+				@swagger.addComment "found your metadata record based on its keywords in structured data.  "
+				@swagger.score = 1
+			end
+		end
+	end
+
+#####################  now with the graph data
+	
+	g = metadata.graph
+	if @swagger.debug
+		g.each {|s| $stderr.puts s.subject.to_s + "\tPRED: " + s.predicate.to_s + "\tOBJ: " + s.object.to_s + "\n"}
+	end
+	
+	if g.size > 0  # have we found anything
+		query = SPARQL.parse("select ?o where {?s ?p ?o  FILTER(CONTAINS(lcase(str(?p)), 'title'))}") # find predicate containing "title", take object
+		results = query.execute(g)
+		if results.any?
+			title = results.first[:o].to_s  # get the title
+			#$stderr.puts "looking for #{title}"
+			searchresults = callBing(title)  # search bing
+			#$stderr.puts JSON::pretty_generate(JSON(searchresults))
+			h = JSON.parse(searchresults)  # parse json
+			if h["webPages"]   # are there results
+				h["webPages"]["value"].each do |p|  # for each matching pge do
+					if p["url"] == finalURI  # compare to the final URI from the Utils::fetch routine (the page of metadata)
+						@swagger.addComment "found your metadata record based on its title in linked data.  "
+						@swagger.score = 1
+					end
+				end
+			end
+		end
+	end
+
+#######  keywords in graph
+
+	g = metadata.graph
+	if @swagger.debug
+		g.each {|s| $stderr.puts s.subject.to_s + "\tPRED: " + s.predicate.to_s + "\tOBJ: " + s.object.to_s + "\n"}
+	end
+	
+	if g.size > 0  # have we found anything
+		query = SPARQL.parse("select ?o where {?s ?p ?o  FILTER(CONTAINS(lcase(str(?p)), 'keyword'))}") # find predicate containing "title", take object
+		results = query.execute(g)
+		if results.any?
+			keywords = results.first[:o].to_s  # get the keywords
+			#$stderr.puts "looking for #{title}"
+			#keywords = keywords.gsub!("\,", "")
+			searchresults = callBing(keywords)  # search bing
+			#$stderr.puts JSON::pretty_generate(JSON(searchresults))
+			h = JSON.parse(searchresults)  # parse json
+			if h["webPages"]   # are there results
+				h["webPages"]["value"].each do |p|  # for each matching pge do
+					if p["url"] == finalURI  # compare to the final URI from the Utils::fetch routine (the page of metadata)
+						@swagger.addComment "found your metadata record based on its keywords in linked data.  "
+						@swagger.score = 1
+					end
+				end
+			end
+		end
+	end
+
+
+	return @swagger.createEvaluationResponse
+	
+end
+
+
+def callBing(phrase)
+	uri  = "https://api.cognitive.microsoft.com"
+	path = "/bing/v7.0/search"
+	
+	if @accessKey.length != 32 then
+			puts "Invalid Bing Search API subscription key!"
+			puts "Please paste yours into the source code."
+			abort
+	end
+	
+	uri = URI(uri + path + "?q=" + URI.escape(phrase) + "&count=50")
+	
+	request = Net::HTTP::Get.new(uri)
+	request['Ocp-Apim-Subscription-Key'] = @accessKey
+	
+	response = Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') do |http|
+			http.request(request)
+	end
+
+	return response.body
+
+end
+
+if debug
+#	@input = '{"subject": "10.5281/zenodo.1147435"}'  # doi fail
+#	@input = '{"subject": "10.5281/zenodo.1065973"}'  # doi fail
+#	@input = '{"subject": "BSYNRYMUTXBXSQ-UHFFFAOYSA-N"}' # inchi
+#	@input = '{"subject": "LFQSCWFLJHTTHZ-UHFFFAOYSA-N"}' # another inchi
+#	@input = '{"subject": "20.1000/105"}'  # handle (fail)
+#	@input = '{"subject": "http://linkeddata.systems/Magnaporthe/polyA_Sites"}'  # handle
+@input = '{"subject": "https://www.go-fair.org/fair-principles/"}'
+
+else 
+	@input = $stdin.read
+end
+
+
+cgi = CGI.new
+
+schemas = {'subject' => ['string', "the GUID being tested"]}
+
+@swagger = Swagger.new({
+			:title => "FAIR Metrics Gen2 - Structured Metadata",
+			:description => "Tests whether a machine is able to find structured metadata.  This could be (for example) RDFa, embedded json, json-ld, or content-negotiated structured metadata such as RDF Turtle",
+			:tests_metric => 'https://purl.org/fair-metrics/Gen2_FM_F2A',
+			:applies_to_principle => "F2",
+			:organization => 'FAIR Metrics Authoring Group',
+			:org_url => 'http://fairmetrics.org',
+			:responsible_developer => "Mark D Wilkinson",
+			:email => 'markw@illuminae.com',
+			:developer_ORCiD => '0000-0001-6960-357X',
+			:protocol => 'http',
+			:host => 'linkeddata.systems',
+			:basePath => '/cgi-bin',
+			:path => '/FAIR_Tests/gen2_structured_metadata',
+			:response_description => 'The response is a binary (1/0), success or failure',
+			:schemas => schemas,
+			:fairsharing_key_location => '../fairsharing.key',
+			:debug => false				 				 
+})
+
+if (!cgi.request_method or cgi.request_method == "GET") and !debug
+        puts "Content-type: application/openapi+yaml;version=3.0\n\n"
+        puts @swagger.getSwagger
+elsif cgi.request_method == "POST" or debug
+        input_json = JSON.parse(@input)
+        guid = input_json["subject"]
+        @swagger.testedGUID = guid
+        response = testGUID
+        puts "Content-type: application/json+ld\n\n"
+        puts response
+end

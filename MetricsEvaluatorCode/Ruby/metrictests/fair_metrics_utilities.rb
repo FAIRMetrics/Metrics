@@ -96,7 +96,7 @@ class Utils
       meta.guidtype = "inchi"
       
       meta.comments << "Found an InChI Key GUID.  "
-      response1 = self.fetch("https://pubchem.ncbi.nlm.nih.gov/rest/rdf/inchikey/#{guid}")
+      response1 = self.fetch("https://pubchem.ncbi.nlm.nih.gov/rest/rdf/inchikey/#{guid}", nil, meta)
       # this is a Net::HTTP response
       ##$stderr.puts step1.body
       meta.full_response << response1  # set it here so it isn't empty
@@ -166,10 +166,10 @@ class Utils
     
     def Utils::resolve_uri(guid, meta, nolinkheaders=false, header=Utils::AcceptHeader)
       meta.guidtype = "uri" if meta.guidtype == "unknown"  # might have been set already, e.g. to 'handle' or 'doi'
-      $stderr.puts "\n\n FETCHING #{guid} #{header}\n\n"
-      response =  Utils::fetch(guid, header)
+      #$stderr.puts "\n\n FETCHING #{guid} #{header}\n\n"
+      response =  Utils::fetch(guid, header, meta)
       if !response
-          response =  Utils::fetch(guid, {'Accept' => "*.*"})
+          response =  Utils::fetch(guid, {'Accept' => "*.*"}, meta)
       end
       if !response
           return meta
@@ -263,7 +263,7 @@ class Utils
           meta.comments << "no content-type header could be found in the message.  This is very odd!  Likely a bug in our software.  "
         end
       else # this is just an incoming string... in which case, it MUST have a format indicator (MIME type)
-          $stderr.puts "\n\nINCOMING STRING\n\n*#{message}*\n\n"
+          #$stderr.puts "\n\nINCOMING STRING\n\n*#{message}*\n\n"
         contenttype = format
         if !contenttype
           meta.comments << "no content-type was passed with a raw RDF body.  This is very odd!  Likely a bug in our software (i.e. not your fault!)  Please tell the dev team.  "
@@ -272,9 +272,9 @@ class Utils
         body = message # this is raw rdf
       end
 
-      $stderr.puts "\n\n\nSampling \n\n#{body}\n\n"
+      #$stderr.puts "\n\n\nSampling \n\n#{body}\n\n"
       unless body.match(/\w/)
-          $stderr.puts "\n\n\nSampling FOUND NOTHING!\n\n"
+          #$stderr.puts "\n\n\nSampling FOUND NOTHING!\n\n"
           meta.comments << "This #{contenttype} component appears to have no content.  "
           return meta
       end
@@ -331,10 +331,9 @@ class Utils
           #$stderr.puts "\n\n\n\nFOUND JSON-LD\n#{json["json-ld"]} content\n\n\n"
           
           Utils::parse_rdf(meta, json["json-ld"].to_json, "application/ld+json") if json["json-ld"].any?  #RDF
-          # json["microdata"] #hash NOT YET IMPLEMENTED
-          #json["microformat"] # unknown # NOT YET IMPLEMENTED
-          #json["opengraph"] # hash NOT YET IMPLEMENTED
-          #$stderr.puts "\n\n\n\nFOUND rdfa\n#{json["rdfa"]} content\n\n\n"
+          meta.merge_hash(json["microdata"].first) if json["microdata"].any?
+          meta.merge_hash(json["microformat"].first) if json["microformat"].any?
+          meta.merge_hash(json["opengraph"].first) if json["opengraph"].any?
           Utils::parse_rdf(meta, json["rdfa"].to_json, "application/ld+json") if json["rdfa"].any?  # RDF
                   
           meta.merge_hash(json.first) if json.first.is_a?Hash
@@ -442,9 +441,10 @@ class Utils
     
     
   # general Web utilities... follow redirects, for example
-  def Utils::fetch(uri_str, header = Utils::AcceptHeader)  #we will try to retrieve turtle whenever possible
+  def Utils::fetch(uri_str, header = Utils::AcceptHeader, meta)  #we will try to retrieve turtle whenever possible
     address = URI::encode(uri_str)
     address = resolve(address, nil, nil, nil, header)  # this runs through any redirects until there is a URL that will return data
+    meta.finalURI = address
     addressURI = URI(address)
     http = Net::HTTP.new(addressURI.host, addressURI.port)
     if address.match(/^https:/i)
@@ -780,17 +780,20 @@ class MetadataObject
   attr_accessor :comments  # an array of comments
   attr_accessor :guidtype  # the type of GUID that was detected
   attr_accessor :full_response  # will be an array of Net::HTTP::Response
-    
+  attr_accessor :finalURI  
   def initialize(params = {}) # get a name from the "new" call, or set a default
+      
     @hash = Hash.new
     @graph = RDF::Graph.new
     @comments = Array.new
     @guidtype = "unknown"
     @full_response = Array.new
+    @finalURI = "http://example.org"
   end
   
   def merge_hash(hash)
-    $self.hash.merge(hash)
+      $stderr.puts "\n\n\nIncoming Hash #{hash.inspect}"
+      self.hash = self.hash.merge(hash)
   end
   
   def merge_rdf(triples)  # incoming list of triples
