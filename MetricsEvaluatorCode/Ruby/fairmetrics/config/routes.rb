@@ -30,6 +30,7 @@ Rails.application.routes.draw do
     get 'collections/:id/deprecate', to: 'collections#deprecate'
     post 'metrics/:id/deprecate', to: 'metrics#deprecate'
     get 'metrics/:id/deprecate', to: 'metrics#deprecate'
+    get 'metrics/:id/refresh', to: 'metrics#refresh'
     
    
     #get 'collections/:id/evaluation', to: 'evaluations#template', as: 'template'

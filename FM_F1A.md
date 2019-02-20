@@ -1,4 +1,4 @@
-# TITLE:  FAIR Metric FM-F1A
+# TITLE:  FAIR Metric Gen2-FM-F1A
 
 ## Authors: 
 Mark D. Wilkinson, Susanna-Assunta Sansone, Erik Schultes, Peter Doorn,
@@ -7,7 +7,7 @@ Luiz Olavo Bonino da Silva Santos, Michel Dumontier
 #### Date: 2017
 
 
-### Maturity Assessment Identifier: FM-F1A [https://purl.org/fair-metrics/FM_F1A](https://purl.org/fair-metrics/FM_F1A)
+### Maturity Assessment Identifier: FM-F1A [https://purl.org/fair-metrics/Gen2_FM_F1A](https://purl.org/fair-metrics/Gen2_FM_F1A)
 
 ### Maturity Assessment Name:   Identifier Uniqueness
 

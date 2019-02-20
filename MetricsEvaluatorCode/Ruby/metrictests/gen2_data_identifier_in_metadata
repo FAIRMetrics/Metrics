@@ -36,6 +36,9 @@ def testGUID
 		if key =~ /codeRepository/
 			@swagger.addComment "found 'codeRepository' in metadata.  "
 			@swagger.score = 1
+		elsif key =~ /distribution/
+			@swagger.addComment "found 'distribution' in metadata.  "
+			@swagger.score = 1
 		elsif key =~ /mainEntity/
 			@swagger.addComment "found schema 'mainEntity' in metadata.  "
 			@swagger.score = 1
@@ -45,7 +48,7 @@ def testGUID
 		elsif key =~ /is-about/ or key =~ /IAO:0000136/ or key =~ /IAO_0000136/
 			@swagger.addComment "found Information Artifact Ontology 'is-about' in metadata.  "
 			@swagger.score = 1
-		elsif key =~ /000332/ or key =~ /SIO:0000136/
+		elsif key =~ /SIO:000332/ or key =~ /SIO_000332/
 			@swagger.addComment "found SIO is about in metadata.  "
 			@swagger.score = 1
 		end

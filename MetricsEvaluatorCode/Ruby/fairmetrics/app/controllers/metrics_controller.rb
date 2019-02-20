@@ -1,8 +1,8 @@
 #class MetricsController < ApplicationController
 class MetricsController < ApiController
   
-  before_action :set_metric, only: [ :show, :deprecate]
-  skip_before_action :authenticate_request, only: %i[index show new create deprecate], raise: false
+  before_action :set_metric, only: [ :show, :deprecate, :refresh]
+  skip_before_action :authenticate_request, only: %i[index show new create deprecate refresh], raise: false
 
 
   # GET /metrics
@@ -32,8 +32,26 @@ class MetricsController < ApiController
     #end
   end
 
-  # GET /metrics/1/edit
-  def edit
+  # GET /metrics/1/refresh
+  def refresh
+    
+    #logger.debug("\n\n\nfound #{@metric.inspect}\n\n\n")
+    smarturl = @metric['smarturl'].strip
+    errors = fill_metric(smarturl, true)
+
+    respond_to do |format|
+      if errors.length == 0 and @metric.save
+        format.html { redirect_to @metric, notice: 'Metric was successfully created.' }
+        format.json { render :show, status: :created, location: @metric }
+        format.jsonld { render :show, status: :created, location: @metric }
+      else
+        @metric.errors[:details].unshift(*errors)
+        format.html { render :new }
+        format.json { render :json => {status: :bad_request, errors: @metric.errors}, status: 400}
+        format.jsonld { render :json => {status: :bad_request, errors: @metric.errors}, status: 400}
+      end
+    end
+
   end
 
   # POST /metrics
@@ -41,18 +59,37 @@ class MetricsController < ApiController
   def create
     $stderr.puts metric_params['smarturl']
 
-    errors = []
     smarturl = metric_params['smarturl'].strip
     $stderr.puts "smarturl is #{smarturl}"
     
     if known_metricuri(smarturl)
       errors << "This metric #{smarturl} already exists - creation failed"
     end
+    
+    errors = fill_metric(smarturl, false)
 
-#    @metric = Metric.new(metric_params)  # this will convert API (JSON) calls into application calls v.v. params
+    respond_to do |format|
+      if errors.length == 0 and @metric.save
+        format.html { redirect_to @metric, notice: 'Metric was successfully created.' }
+        format.json { render :show, status: :created, location: @metric }
+        format.jsonld { render :show, status: :created, location: @metric }
+      else
+        @metric.errors[:details].unshift(*errors)
+        format.html { render :new }
+        format.json { render :json => {status: :bad_request, errors: @metric.errors}, status: 400}
+        format.jsonld { render :json => {status: :bad_request, errors: @metric.errors}, status: 400}
+      end
+    end
 
-  
+  end
+
+
+
+  def fill_metric(smarturl, refresh=false)
+    
     resp = fetch(smarturl)
+
+    errors = []
 
     name = ''
     description = ''
@@ -112,7 +149,10 @@ class MetricsController < ApiController
       errors << "The testing endpoint did not respond"
     end
     
-    @metric = Metric.new(metric_params)
+    unless (refresh)
+      @metric = Metric.new(metric_params)
+    end
+    
     @metric[:smarturl] = smarturl
     @metric[:name] = name
     @metric[:description] = description
@@ -121,21 +161,10 @@ class MetricsController < ApiController
     @metric[:email] = email
     @metric[:creator] = creator
     @metric[:orcid] = orcid
-    
-    respond_to do |format|
-      if errors.length == 0 and @metric.save
-        format.html { redirect_to @metric, notice: 'Metric was successfully created.' }
-        format.json { render :show, status: :created, location: @metric }
-        format.jsonld { render :show, status: :created, location: @metric }
-      else
-        @metric.errors[:details].unshift(*errors)
-        format.html { render :new }
-        format.json { render :json => {status: :bad_request, errors: @metric.errors}, status: 400}
-        format.jsonld { render :json => {status: :bad_request, errors: @metric.errors}, status: 400}
-      end
-    end
-
+    return errors
+  
   end
+  
   
   
   

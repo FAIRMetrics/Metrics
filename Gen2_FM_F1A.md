@@ -38,12 +38,12 @@ The GUID.
 ### How is the measurement executed?
 An identifier scheme is valid if and only if it
  * can be recognized by a machine (regular expression)
- * follows a GUID pattern described in FAIRSharing
- * That registration acknowledges that the scheme guarantees global uniqueness
+ * follows a GUID pattern registered in FAIRSharing
+ * The FAIRSharing registration acknowledges that the scheme guarantees global uniqueness
 
 
 ### What is/are considered valid result(s)?
-Matches the regular expression for a GUID type registered with FAIRSharing
+Matches the regular expression for a GUID type registered with FAIRSharing that is flagged as guaranteeing global uniqueness
 
 ### For which digital resource(s) is this relevant? (or 'all')
 All
