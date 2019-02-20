@@ -56,6 +56,8 @@ class Utils
         'http://schema.org/about', # inverse 'http://schema.org/subjectOf',
         'http://schema.org/mainEntity',
         'http://schema.org/codeRepository',
+        'http://www.w3.org/ns/dcat#distribution',
+        'http://schema.org/distribution',
         'http://semanticscience.org/resource/SIO_000332', # is about
         'http://purl.obolibrary.org/obo/IAO_0000136', # is about
         ]
