@@ -8,7 +8,7 @@ require 'rdf/turtle'
 require 'sparql'
 require 'net/https'
 
-debug = true
+debug = false
 
 def testGUID
 	
