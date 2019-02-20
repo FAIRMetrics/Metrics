@@ -18,58 +18,64 @@ def testGUID
 	if metadata.guidtype == "unknown"
 		@swagger.addComment("  The GUID identifier #{guid} did not match any known identification system (tested inchi, doi, handle, uri) and therefore did not pass this metric.  If you think this is an error, please contact the FAIR Metrics group (http://fairmetrics.org).")
 		@swagger.score = 0
-		return @swagger.createEvaluationResponse
 	elsif metadata.guidtype == "handle"
 		@swagger.addComment("The GUID is a Handle, which is known to be persistent.  Pass. ")
 		@swagger.score = 1
-		return @swagger.createEvaluationResponse
 	elsif metadata.guidtype == "doi"
 		@swagger.addComment("The GUID is a DOI, which is known to be persistent.  Pass. ")
 		@swagger.score = 1
-		return @swagger.createEvaluationResponse
 	elsif metadata.guidtype == "inchi"
 		@swagger.addComment("The GUID is a InChI, which is known to be persistent.  Pass. ")
 		@swagger.score = 1
-		return @swagger.createEvaluationResponse
 	else
-		@swagger.addComment("The GUID appears to be a URL.  Testing metadata returned from its resolution.  ")
-	end
-
-	g = metadata.graph
-	
-	if g.size > 0  # have we found anything yet?
-		@swagger.addComment("Found linked data.  Testing for the 'http://www.w3.org/2000/10/swap/pim/doc#persistencePolicy' predicate in any discovered Linked Data")
-		query = SPARQL.parse("select ?o where {?s <http://www.w3.org/2000/10/swap/pim/doc#persistencePolicy> ?o}")
-		results = query.execute(g)
-		if results.any?
-			@swagger.addComment "Found persistence policy predicate with #{results.first[:o]} as its value.  Now testing resolution. "
-			#$stderr.puts "\n\n\nFound persistence policy predicate with #{results.first[:o]} as its value.  Now testing resolution. \n\n\n"
-			policyURI = results.first[:o].value
-			result = Utils::fetch(policyURI, {"Accept" => "*/*"})  # returns HTTP object, or false
-			if result
-				@swagger.addComment("Persistence policy resolved.  Pass")
-				@swagger.score = 1
-				return @swagger.createEvaluationResponse
-			else
-				@swagger.addComment("Persistence policy did not resolve.  Fail.")
-				@swagger.score = 0
-				return @swagger.createEvaluationResponse
-			end
+		@swagger.addComment("The GUID appears to be a URL.  Testing known URL persistence schemas (purl, oclc, fdlp, purlz, w3id, ark).  ")
+		if (guid =~ /(purl)\./) or (guid =~ /(fdlp)\./) or (guid =~ /(purlz)\./) or (guid =~ /(w3id)\./) or (guid =~ /(ark)\:/)
+			@swagger.addComment("The GUID conforms with #{$1}, which is known to be persistent.  Pass. ")
+			@swagger.score = 1
 		else
-			@swagger.addComment("Did not find the #persistencePolicy predicate in the linked data.  Fail.")
+			@swagger.addComment("The GUID does not conform with any known PURL system.  ")
 			@swagger.score = 0
-			return @swagger.createEvaluationResponse
 		end
-			
-	else 
-		@swagger.addComment("Could not find a any linked data to test for persistence policy references.  Fail.")
-		@swagger.score = 0
-		return @swagger.createEvaluationResponse
+		
 	end
-
-	@swagger.addComment("the identifier #{guid} did not match any known identification system (tested inchi, doi, handle, uri) and therefore did not pass this metric.  If you think this is an error, please contact the FAIR Metrics group (http://fairmetrics.org).")
-	@swagger.score = 0
+	
 	return @swagger.createEvaluationResponse
+
+	#g = metadata.graph
+	#
+	#if g.size > 0  # have we found anything yet?
+	#	@swagger.addComment("Found linked data.  Testing for the 'http://www.w3.org/2000/10/swap/pim/doc#persistencePolicy' predicate in any discovered Linked Data")
+	#	query = SPARQL.parse("select ?o where {?s <http://www.w3.org/2000/10/swap/pim/doc#persistencePolicy> ?o}")
+	#	results = query.execute(g)
+	#	if results.any?
+	#		@swagger.addComment "Found persistence policy predicate with #{results.first[:o]} as its value.  Now testing resolution. "
+	#		#$stderr.puts "\n\n\nFound persistence policy predicate with #{results.first[:o]} as its value.  Now testing resolution. \n\n\n"
+	#		policyURI = results.first[:o].value
+	#		result = Utils::fetch(policyURI, {"Accept" => "*/*"})  # returns HTTP object, or false
+	#		if result
+	#			@swagger.addComment("Persistence policy resolved.  Pass")
+	#			@swagger.score = 1
+	#			return @swagger.createEvaluationResponse
+	#		else
+	#			@swagger.addComment("Persistence policy did not resolve.  Fail.")
+	#			@swagger.score = 0
+	#			return @swagger.createEvaluationResponse
+	#		end
+	#	else
+	#		@swagger.addComment("Did not find the #persistencePolicy predicate in the linked data.  Fail.")
+	#		@swagger.score = 0
+	#		return @swagger.createEvaluationResponse
+	#	end
+	#		
+	#else 
+	#	@swagger.addComment("Could not find a any linked data to test for persistence policy references.  Fail.")
+	#	@swagger.score = 0
+	#	return @swagger.createEvaluationResponse
+	#end
+	#
+	#@swagger.addComment("the identifier #{guid} did not match any known identification system (tested inchi, doi, handle, uri) and therefore did not pass this metric.  If you think this is an error, please contact the FAIR Metrics group (http://fairmetrics.org).")
+	#@swagger.score = 0
+	#return @swagger.createEvaluationResponse
 
 	
 end
@@ -93,7 +99,7 @@ schemas = {'subject' => ['string', "the GUID being tested"]}
 
 @swagger = Swagger.new({
 			:title => "FAIR Metrics Gen2 - Identifier Persistence",
-			:description => "Metric to test if the unique identifier of the metadata resource is likely to be persistent. Known schema are registered in FAIRSharing (https://fairsharing.org/standards/?q=&selected_facets=type_exact:identifier%20schema). For URLs that don't follow a schema in FAIRSharing, we look for linked data containing the predicate 'http://www.w3.org/2000/10/swap/pim/doc#persistencePolicy', which should point to a URL that resolves (a 200-range Header after resolving all redirects)",
+			:description => "Metric to test if the unique identifier of the metadata resource is likely to be persistent. Known schema are registered in FAIRSharing (https://fairsharing.org/standards/?q=&selected_facets=type_exact:identifier%20schema). For URLs that don't follow a schema in FAIRSharing we test known URL persistence schemas (purl, oclc, fdlp, purlz, w3id, ark).  ",
 			:tests_metric => 'https://purl.org/fair-metrics/Gen2_FM_F1B',
 			:applies_to_principle => "F1",
 			:organization => 'FAIR Metrics Authoring Group',

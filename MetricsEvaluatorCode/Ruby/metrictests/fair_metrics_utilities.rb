@@ -443,10 +443,10 @@ class Utils
     
     
   # general Web utilities... follow redirects, for example
-  def Utils::fetch(uri_str, header = Utils::AcceptHeader, meta)  #we will try to retrieve turtle whenever possible
+  def Utils::fetch(uri_str, header=Utils::AcceptHeader, meta=nil)  #we will try to retrieve turtle whenever possible
     address = URI::encode(uri_str)
     address = resolve(address, nil, nil, nil, header)  # this runs through any redirects until there is a URL that will return data
-    meta.finalURI = address
+    meta.finalURI = address if meta
     addressURI = URI(address)
     http = Net::HTTP.new(addressURI.host, addressURI.port)
     if address.match(/^https:/i)
