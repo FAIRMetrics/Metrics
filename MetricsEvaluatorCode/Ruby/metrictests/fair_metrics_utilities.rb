@@ -101,7 +101,9 @@ class Utils
       response1 = self.fetch("https://pubchem.ncbi.nlm.nih.gov/rest/rdf/inchikey/#{guid}", nil, meta)
       # this is a Net::HTTP response
       ##$stderr.puts step1.body
-      meta.full_response << response1  # set it here so it isn't empty
+      return meta unless response1
+      
+      meta.full_response << response1 # set it here so it isn't empty
       
       (parser, type) = Utils::figure_out_type(response1)
       unless parser
@@ -128,6 +130,8 @@ class Utils
       cpd = cpd.to_s
       cpd = cpd.gsub(/\/$/, "")
       response2 = fetch(cpd)
+      return meta unless response2
+      
       meta.full_response << response2  # set it here so it isn't empty
       (parser, type) = Utils::figure_out_type(response2)
       # this next operation is safe because we know that pubchem does in fact return Turtle
@@ -446,6 +450,13 @@ class Utils
   def Utils::fetch(uri_str, header=Utils::AcceptHeader, meta=nil)  #we will try to retrieve turtle whenever possible
     address = URI::encode(uri_str)
     address = resolve(address, nil, nil, nil, header)  # this runs through any redirects until there is a URL that will return data
+    unless address
+        if meta
+            meta.comments << "the discovered URL does not resolve at all.  test halting.  "
+        end
+        return false
+    end
+
     meta.finalURI = address if meta
     addressURI = URI(address)
     http = Net::HTTP.new(addressURI.host, addressURI.port)
@@ -469,6 +480,7 @@ class Utils
 
   def Utils::head(uri)
     uri = Utils::resolve(uri)
+    return false unless uri
     response=nil
     http = Net::HTTP.new(uri.host, uri.port)
     if uri.match(/^https:/i)
@@ -508,7 +520,11 @@ class Utils
         http.use_ssl = true
         http.verify_mode = OpenSSL::SSL::VERIFY_NONE
       end
-      response = http.request(request)
+      begin
+          response = http.request(request)
+      rescue
+          return false
+      end
 
       case response
         when Net::HTTPSuccess then

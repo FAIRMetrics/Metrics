@@ -1,0 +1,111 @@
+#!/home/mark_moby_wilkinson/.rvm/rubies/ruby-2.5.1/bin/ruby
+require_relative 'fair_metrics_utilities'
+require 'cgi'
+require 'json'
+require 'uri'
+require 'rdf'
+require 'rdf/turtle'
+require 'sparql'
+
+debug = false
+
+def testGUID
+	
+	guid = @swagger.testedGUID
+	
+	metadata = Utils::resolveit(guid)  # this is where the magic happens!
+
+	metadata.comments.each do |c|
+		@swagger.addComment(c)
+	end
+	@swagger.score = 0
+	
+	if metadata.guidtype == "unknown"
+		@swagger.addComment("  The identifier #{guid} did not match any known identification system (tested inchi, doi, handle, uri) and therefore did not pass this metric.  If you think this is an error, please contact the FAIR Metrics group (http://fairmetrics.org).")
+		return @swagger.createEvaluationResponse
+	end
+	
+	g = metadata.graph
+	if @swagger.debug
+		g.each {|s| $stderr.puts s.subject.to_s + "\tPRED: " + s.predicate.to_s + "\tOBJ: " + s.object.to_s + "\n"}
+	end
+	
+	if g.size > 0  # have we found anything yet?
+		@swagger.addComment("Linked data was found.  ")
+	else
+		@swagger.addComment("No linked data was found.  Test is exiting. ")
+		swagger.score = 0
+		return @swagger.createEvaluationResponse
+	end
+
+	success = 0  # we will accept 5/10 failures
+	count = 0
+	g.each do |stm|
+		break if count>=10
+		response = Utils::fetch(stm.predicate.value, Utils::AcceptHeader)  # this  sends the content-negotiation for linked data
+		(parser, contenttype) = Utils::figure_out_type(response) if response
+		success += 1 if Utils::RDF_FORMATS.keys.include?(parser)
+		$stderr.puts contenttype
+		count+=1
+	end
+	
+	if success > count * 0.5
+		@swagger.addComment("#{success} of the first #{count} predicates discovered in the linked data resolved to FAIR data.  This is sufficient to pass the test.  ")
+		@swagger.score = 1
+	else
+		@swagger.addComment("#{success} of the first #{count} predicates discovered in the linked data resolved to FAIR data.  The minimum to pass this test is 50%.  ")
+		@swagger.score = 0		
+	end
+	
+	return @swagger.createEvaluationResponse
+end
+
+
+if debug
+#	@input = '{"subject": "10.5281/zenodo.1147435"}'  # doi fail
+#	@input = '{"subject": "10.5281/zenodo.1065973"}'  # doi fail
+#	@input = '{"subject": "BSYNRYMUTXBXSQ-UHFFFAOYSA-N"}' # inchi
+#	@input = '{"subject": "LFQSCWFLJHTTHZ-UHFFFAOYSA-N"}' # another inchi
+#	@input = '{"subject": "20.1000/105"}'  # handle (fail)
+	@input = '{"subject": "http://linkeddata.systems/Magnaporthe/polyA_Sites"}'  # handle
+
+else 
+	@input = $stdin.read
+end
+
+
+cgi = CGI.new
+
+schemas = {'subject' => ['string', "the GUID being tested"]}
+
+@swagger = Swagger.new({
+			:title => "FAIR Metrics Gen2 - Metadata uses FAIR vocabularies (strong)",
+			:description => "Maturity Indicator to test if the linked data metadata uses terms that resolve to linked (FAIR) data.  ",
+			:tests_metric => 'https://purl.org/fair-metrics/Gen2_FM_I2B',
+			:applies_to_principle => "I2",
+			:organization => 'FAIR Metrics Authoring Group',
+			:org_url => 'http://fairmetrics.org',
+			:responsible_developer => "Mark D Wilkinson",
+			:email => 'markw@illuminae.com',
+			:developer_ORCiD => '0000-0001-6960-357X',
+			:protocol => 'http',
+			:host => 'linkeddata.systems',
+			:basePath => '/cgi-bin',
+			:path => '/FAIR_Tests/gen2_metadata_uses_fair_vocabularies_strong',
+			:response_description => 'The response is a binary (1/0), success or failure',
+			:schemas => schemas,
+			:fairsharing_key_location => '../fairsharing.key',
+			:debug => false				 				 
+})
+
+if (!cgi.request_method or cgi.request_method == "GET") and !debug
+        puts "Content-type: application/openapi+yaml;version=3.0\n\n"
+        puts @swagger.getSwagger
+elsif cgi.request_method == "POST" or debug
+        input_json = JSON.parse(@input)
+        guid = input_json["subject"]
+        @swagger.testedGUID = guid
+        response = testGUID
+        puts "Content-type: application/json+ld\n\n"
+        puts response
+end
