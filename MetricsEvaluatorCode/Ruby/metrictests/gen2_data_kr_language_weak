@@ -29,25 +29,29 @@ def testGUID
 	
 	properties = Utils::deep_dive_properties(hash)
 
-	@identifier = ""
+	
 	properties.each do |keyval|
 		key, value = nil, nil
 		(key, value) = keyval;
 		key = key.to_s
 		if key =~ /codeRepository/
 			@swagger.addComment "found 'codeRepository' in metadata.  "
-			@identifier = value
+			@identifier = value.to_s
+		elsif key =~ /distribution/
+			@swagger.addComment "found 'distribution' in metadata.  "
+			@identifier = value.to_s
 		elsif key =~ /mainEntity/
 			@swagger.addComment "found schema 'mainEntity' in metadata.  "
-			@identifier = value
+			@identifier = value.to_s
 		elsif key =~ /primaryTopic/
 			@swagger.addComment "found 'primaryTopic' in metadata.  "
+			@identifier = value.to_s
 		elsif key =~ /is-about/ or key =~ /IAO:0000136/ or key =~ /IAO_0000136/
 			@swagger.addComment "found Information Artifact Ontology 'is-about' in metadata.  "
-			@identifier = value
-		elsif key =~ /000332/ or key =~ /SIO:0000136/
+			@identifier = value.to_s
+		elsif key =~ /SIO:000332/ or key =~ /SIO_000332/
 			@swagger.addComment "found SIO is about in metadata.  "
-			@identifier = value
+			@identifier = value.to_s
 		end
 	end
 
@@ -62,7 +66,6 @@ def testGUID
 		if results.any?
 			@swagger.addComment "found identifier #{results.first[:o]} using SIO. "
 			@identifier = results.first[:o].value
-
 		end
 
 		query = SPARQL.parse("select ?o where {?s <http://semanticscience.org/resource/SIO_000332> ?o}")
@@ -119,42 +122,42 @@ def testGUID
 	return @swagger.createEvaluationResponse
 end
 
+
 def testIdentifier(guid)
 	
 	# This is verbatim from the gen2_metadata_identifier_persistence
-	metadata = Utils::resolveit(guid)  # this is where the magic happens!
+	datametadata = Utils::resolveit(guid)  # this is where the magic happens!
 
-	metadata.comments.each do |c|
+	datametadata.comments.each do |c|
 		@swagger.addComment(c)
 	end
 
-	if metadata.guidtype == "unknown"
+	if datametadata.guidtype == "unknown"
 		@swagger.addComment("  The GUID identifier of the data #{guid} did not match any known identification system (tested inchi, doi, handle, uri) and therefore did not pass this metric.  If you think this is an error, please contact the FAIR Metrics group (http://fairmetrics.org).")
-		@swagger.score = 0
-	elsif metadata.guidtype == "handle"
-		@swagger.addComment("The GUID of the data is a Handle, which is known to be persistent.  Pass. ")
-		@swagger.score = 1
-	elsif metadata.guidtype == "doi"
-		@swagger.addComment("The GUID of the data is a DOI, which is known to be persistent.  Pass. ")
-		@swagger.score = 1
-	elsif metadata.guidtype == "inchi"
-		@swagger.addComment("The GUID of the data is a InChI, which is known to be persistent.  Pass. ")
-		@swagger.score = 1
+	elsif datametadata.guidtype == "handle"
+		@swagger.addComment("The GUID of the data is a Handle. ")
+	elsif datametadata.guidtype == "doi"
+		@swagger.addComment("The GUID of the data is a DOI. ")
+	elsif datametadata.guidtype == "inchi"
+		@swagger.addComment("The GUID of the data is a InChI. ")
 	else
-		@swagger.addComment("The GUID appears to be a URL.  Testing known URL persistence schemas (purl, oclc, fdlp, purlz, w3id, ark).  ")
-		if (guid =~ /(purl)\./) or (guid =~ /(fdlp)\./) or (guid =~ /(purlz)\./) or (guid =~ /(w3id)\./) or (guid =~ /(ark)\:/)
-			@swagger.addComment("The GUID conforms with #{$1}, which is known to be persistent.  Pass. ")
-			@swagger.score = 1
-		else
-			@swagger.addComment("The GUID does not conform with any known PURL system.  ")
-			@swagger.score = 0
-		end
+		@swagger.addComment("The GUID of the data appears to be a URL.  ")
 	end
 
+	hash = datametadata.hash
+	graph = datametadata.graph
+	
+	if hash.any?
+		@swagger.addComment("The data was found to have at least some structured data format. ")
+		@swagger.score = 1
+	elsif graph.size > 0
+		@swagger.addComment("The data was found to have at least some structured data format. ")
+		@swagger.score = 1
+	else
+		@swagger.addComment("The resolved data, after both parsing and content-negotiation, appears to have no structured data.  ")
+	end
 
 end
-
-
 
 
 if debug
@@ -175,10 +178,10 @@ cgi = CGI.new
 schemas = {'subject' => ['string', "the GUID being tested"]}
 
 @swagger = Swagger.new({
-			:title => "FAIR Metrics Gen2 - Data Identifier Persistence",
-			:description => "Metric to test if the unique identifier of the data resource is likely to be persistent. Known schema are registered in FAIRSharing (https://fairsharing.org/standards/?q=&selected_facets=type_exact:identifier%20schema). For URLs that don't follow a schema in FAIRSharing we test known URL persistence schemas (purl, oclc, fdlp, purlz, w3id, ark).  ",
-			:tests_metric => 'https://purl.org/fair-metrics/Gen2_FM_F1B',
-			:applies_to_principle => "F1",
+			:title => "FAIR Metrics Gen2 - Data Knowledge Representation Language (weak)",
+			:description => "Maturity Indicator to test if the data uses a formal language broadly applicable for knowledge representation.  This particular test takes a broad view of what defines a 'knowledge representation language'; in this evaluation, a knowledge representation language is interpreted as one in which terms are semantically-grounded in ontologies.  Any form of structured data will pass this test",
+			:tests_metric => 'https://purl.org/fair-metrics/Gen2_FM_I1A',
+			:applies_to_principle => "I1",
 			:organization => 'FAIR Metrics Authoring Group',
 			:org_url => 'http://fairmetrics.org',
 			:responsible_developer => "Mark D Wilkinson",
@@ -187,11 +190,11 @@ schemas = {'subject' => ['string', "the GUID being tested"]}
 			:protocol => 'http',
 			:host => 'linkeddata.systems',
 			:basePath => '/cgi-bin',
-			:path => '/FAIR_Tests/gen2_data_identifier_persistence',
+			:path => '/FAIR_Tests/gen2_data_kr_language_weak',
 			:response_description => 'The response is a binary (1/0), success or failure',
 			:schemas => schemas,
 			:fairsharing_key_location => '../fairsharing.key',
-			:debug => false				 				 
+			:debug => false				 				 	 
 })
 
 if (!cgi.request_method or cgi.request_method == "GET") and !debug
