@@ -39,8 +39,10 @@ class MetricsController < ApiController
     smarturl = @metric['smarturl'].strip
     errors = fill_metric(smarturl, true)
 
+    @errors = Array.new
+    
     respond_to do |format|
-      if errors.length == 0 and @metric.save
+      if @errors.length == 0 and @metric.save
         format.html { redirect_to @metric, notice: 'Metric was successfully created.' }
         format.json { render :show, status: :created, location: @metric }
         format.jsonld { render :show, status: :created, location: @metric }
@@ -62,7 +64,7 @@ class MetricsController < ApiController
     smarturl = metric_params['smarturl'].strip
     $stderr.puts "smarturl is #{smarturl}"
     
-    @errors = []
+    @errors = Array.new
     
     if known_metricuri(smarturl)
       @errors << "This metric #{smarturl} already exists - creation failed"
@@ -90,7 +92,6 @@ class MetricsController < ApiController
   def fill_metric(smarturl, refresh=false)
     
     resp = fetch(smarturl)
-
 
     name = ''
     description = ''
