@@ -100,7 +100,7 @@ schemas = {'subject' => ['string', "the GUID being tested"]}
 
 @swagger = Swagger.new({
 			:title => "FAIR Metrics Gen2 - Metadata Persistence",
-			:description => "Metric to test if the unique identifier of the metadata resource is likely to be persistent. Known schema are registered in FAIRSharing (https://fairsharing.org/standards/?q=&selected_facets=type_exact:identifier%20schema). For URLs that don't follow a schema in FAIRSharing, we look for linked data containing the predicate 'http://www.w3.org/2000/10/swap/pim/doc#persistencePolicy', which should point to a URL that resolves (a 200-range Header after resolving all redirects)",
+			:description => "Metric to test if the metadata contains a persistence policy, explicitly identified by a persistencePolicy key (in hashed data) or a http://www.w3.org/2000/10/swap/pim/doc#persistencePolicy predicate in Linked Data.",
 			:tests_metric => 'https://purl.org/fair-metrics/Gen2_FM_FA2',
 			:applies_to_principle => "A2",
 			:organization => 'FAIR Metrics Authoring Group',
