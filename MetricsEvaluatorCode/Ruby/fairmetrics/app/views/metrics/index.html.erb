@@ -42,9 +42,13 @@
   </thead>
 
   <tbody>
-    <% @ms.each do |metric| %> 
+    <% @ms.each do |metric| %>
+    <% style="" %>
+    <% style="background-color: lightgrey;" if metric.deprecated == true %>
+    
 
-      <tr>
+
+      <tr style="<%= style %>">
         <td><%= metric.name %></td>
         <td><a href="https://orcid.org/<%= metric.orcid %>"><%= metric.creator %></a></td>
         <td><%= metric.email %></td>

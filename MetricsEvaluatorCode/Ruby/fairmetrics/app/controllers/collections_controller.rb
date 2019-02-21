@@ -53,7 +53,7 @@ class CollectionsController < ApiController
     
     metricurls = collection_params[:include_metrics]  # note that these might not exist in the registry!  We will check in a moment
 
-logger.debug("METRICURLS\n\n#{metricurls}**\n\nPARAMS #{collection_params.inspect}\n\n")
+#logger.debug("METRICURLS\n\n#{metricurls}**\n\nPARAMS #{collection_params.inspect}\n\n")
 
     @metrics = Metric.where(smarturl: metricurls)
     
@@ -112,12 +112,13 @@ logger.debug("METRICURLS\n\n#{metricurls}**\n\nPARAMS #{collection_params.inspec
     @collection.deprecated = true
     respond_to do |format|
       if @collection.errors.any? or !@collection.save
-        format.html { redirect_to action: show, notice: 'Collection could not be deprecated.  Sorry, I dont know why' }
+        @collection.errors[:deprecated] << "The collection COULD NOT be deprecated for an unknown reason"
+        format.html { redirect_to @collection, notice: 'Collection could not be deprecated.  Sorry, I dont know why' }
         format.json {  render :json => {status: :bad_request, errors: @collection.errors}, status: 400  }
         format.jsonld {  render :json => {status: :bad_request, errors: @collection.errors}, status: 400  }
       else
         @collection.save
-        format.html { redirect_to action: show, notice: 'Collection was successfully deprecated.' }
+        format.html { redirect_to @collection, notice: 'Collection was successfully deprecated.' }
         format.json { head :no_content }
         format.jsonld { head :no_content }
       end

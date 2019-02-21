@@ -36,11 +36,25 @@ td {
   <tbody>
     <% @collections.each do |collection| %>
     <% next if collection.name =~ /__ALL/ %>
-      <tr>
+        <% style="" %>
+    <% style="background-color: lightgrey;" if collection.deprecated == true %>
+    
+
+
+      <tr style="<%= style %>">
         <td width="150px"><%= collection.name %></td>
         <td width="150px"><%= collection.contact %></td>
         <td width="150px"><%= collection.organization %></td>
-        <td width="50px"><%= collection.deprecated %></td>
+        <td width="50px">
+         <% if collection.deprecated == true %>
+          <span style="color:red;">
+         <% end %>
+            <%= collection.deprecated %>
+         <% if collection.deprecated == true %>
+          </span>
+         <% end %>
+         </td>
+
         <td><%= link_to 'Show', collection %></td>
         <td><%= link_to 'Execute Evaluation', evaluationtemplate_path(collection) %></td>
       </tr>

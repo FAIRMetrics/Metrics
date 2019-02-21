@@ -1,3 +1,14 @@
+ <% if @metric.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@metric.errors.count, "error") %> occurred </h2>
+
+      <ul>
+      <% @metric.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+ <% end %>
 
 <p>
   <strong>Maturity Indicator Test Name:</strong>

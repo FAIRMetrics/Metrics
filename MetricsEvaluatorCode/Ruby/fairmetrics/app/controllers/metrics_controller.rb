@@ -62,19 +62,21 @@ class MetricsController < ApiController
     smarturl = metric_params['smarturl'].strip
     $stderr.puts "smarturl is #{smarturl}"
     
+    @errors = []
+    
     if known_metricuri(smarturl)
-      errors << "This metric #{smarturl} already exists - creation failed"
+      @errors << "This metric #{smarturl} already exists - creation failed"
     end
     
-    errors = fill_metric(smarturl, false)
+    fill_metric(smarturl, false)
 
     respond_to do |format|
-      if errors.length == 0 and @metric.save
+      if @errors.length == 0 and @metric.save
         format.html { redirect_to @metric, notice: 'Metric was successfully created.' }
         format.json { render :show, status: :created, location: @metric }
         format.jsonld { render :show, status: :created, location: @metric }
       else
-        @metric.errors[:details].unshift(*errors)
+        @metric.errors[:details].unshift(*@errors)
         format.html { render :new }
         format.json { render :json => {status: :bad_request, errors: @metric.errors}, status: 400}
         format.jsonld { render :json => {status: :bad_request, errors: @metric.errors}, status: 400}
@@ -89,7 +91,6 @@ class MetricsController < ApiController
     
     resp = fetch(smarturl)
 
-    errors = []
 
     name = ''
     description = ''
@@ -111,7 +112,7 @@ class MetricsController < ApiController
         elsif yaml["info"].has_key?"x-applies_to_principle"
                 principle = yaml["info"]["x-applies_to_principle"]
         else
-                errors << "the x-applies_to_principle property was not found"
+                @errors << "the x-applies_to_principle property was not found"
         end
         
         if yaml["info"].has_key?"x-tests_metric"
@@ -119,7 +120,7 @@ class MetricsController < ApiController
         elsif yaml["info"].has_key?"tests-metric"
                 test_of_metric = yaml["info"]["tests_metric"]
         else
-                errors << "the x-tests-metric property was not found"  # TODO errors could perhaps be a hash?
+                @errors << "the x-tests-metric property was not found"  # TODO errors could perhaps be a hash?
         end
 
         email = yaml["info"]["contact"]["email"]
@@ -129,7 +130,7 @@ class MetricsController < ApiController
         elsif yaml["info"]["contact"].has_key?"name"
                 creator = yaml["info"]["contact"]["name"]
         else
-                errors << "Contact name or responsibleDeveloper is a required property in the YAML"
+                @errors << "Contact name or responsibleDeveloper is a required property in the YAML"
         end
 
         if yaml["info"]["contact"].has_key?"x-id"
@@ -137,16 +138,16 @@ class MetricsController < ApiController
           if validate_orcid(orcid)  # one day this should be an orcid
             $stderr.puts "Validated orcid"
           else
-            errors << "'#{orcid}' is not a valid orcid."
+            @errors << "'#{orcid}' is not a valid orcid."
           end
         else
-          errors << "The testing endpoint did not return YAML with an info/contact/x-id, which should contain the authors ORCiD"
+          @errors << "The testing endpoint did not return YAML with an info/contact/x-id, which should contain the authors ORCiD"
         end
       else
-        errors << "The testing endpoint did not return YAML #{resp.body}"
+        @errors << "The testing endpoint did not return YAML #{resp.body}"
       end
     else
-      errors << "The testing endpoint did not respond"
+      @errors << "The testing endpoint did not respond"
     end
     
     unless (refresh)
@@ -161,7 +162,7 @@ class MetricsController < ApiController
     @metric[:email] = email
     @metric[:creator] = creator
     @metric[:orcid] = orcid
-    return errors
+    return @errors
   
   end
   
@@ -198,12 +199,12 @@ class MetricsController < ApiController
     @metric.deprecated = true
     respond_to do |format|
       if @metric.errors.any? or !@metric.save
-        format.html { redirect_to action: show, notice: 'Metric could not be deprecated.  Sorry, I dont know why' }
+        format.html { redirect_to @metric, notice: 'Metric could not be deprecated.  Sorry, I dont know why' }
         format.json { render json: @metric.errors, status: :unprocessable_entity }
         format.jsonld { render json: @metric.errors, status: :unprocessable_entity }
       else
         @metric.save
-        format.html { redirect_to action: show, notice: 'Metric was successfully deprecated.' }
+        format.html { redirect_to @metric, notice: 'Metric was successfully deprecated.' }
         format.jsonld { head :no_content }
       end
     end

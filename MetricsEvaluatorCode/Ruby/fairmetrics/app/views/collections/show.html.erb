@@ -1,5 +1,15 @@
-<% notice ||= "" %>
-<p id="notice"><%= notice %></p>
+  <% if @collection.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@collection.errors.count, "error") %> occurred </h2>
+
+      <ul>
+      <% @collection.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
 
 <p>
   <strong>Name:</strong>
@@ -21,6 +31,20 @@
 <p>
   <strong>Organization:</strong>
   <%= @collection.organization %>
+</p>
+
+<p>
+  <strong>Deprecated?:</strong>
+<% if @collection.deprecated == true %>
+<span style="color:red;">
+<% end %>
+ 
+  <%= @collection.deprecated %>
+
+<% if @collection.deprecated == true %>
+</span>
+<% end %>
+ 
 </p>
 
 <p>
