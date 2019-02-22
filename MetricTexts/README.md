@@ -4,12 +4,7 @@
 # FAIR Metrics
 Efforts to define metrics to assess the FAIRness of a digital resource.
 
-The folder 'MaturityIndicators' contains the text for the:
-* Generation-1 (Gen1) questionnaire-style Maturity Indicator tests
-* Generation-2 (Gen2) automatable Maturity Indicator tests.
-
-Only Gen2 tests function with the current version of the Evaluator software.
-
+Note that the top-level folder (the one you are in now) contains the NanoPublications for each of the Metrics - the machine-readable format of the Metrics publication.  The other formats are in the Distributions folder, in both LaTex and PDF.  
 
 Initiatives
 
@@ -27,7 +22,7 @@ Publications
 
 Metrics are created, initially, as a narrative document, <a href='http://fairmetrics.org/fairmetricform.html'>following a template<a> extablished by the FAIR Metrics Authoring Group. A [MarkDown version of this template](https://github.com/FAIRMetrics/Metrics/blob/master/MetricTemplate.md) is available above, and should be used for Metric submissions by the public.  Guidance for how to complete this document is found in the <a href='http://fairmetrics.org/framework.html'>authoring framework overview</a>.
   
-A Template Markdown file is provided for you in the MaturityIndicator folder.  Once a Metric has been designed, the document should be submitted via 'pull request' to this repository, at which time it becomes available for community discussion.  The author of the Metric should publicize their Metric as widely as possible, to encourage maximal community input.  
+Once a Metric has been designed, the document should be submitted via 'pull request' to this repository, at which time it becomes available for community discussion.  The author of the Metric should publicize their Metric as widely as possible, to encourage maximal community input.  
 
 At this time, there is no formal process for adoption of Metrics (incuding those that the Metrics Authoring Group have designed themselves!), as there is no official body that can recognize or "stamp" a Metric as being "valid".  Nevertheless, authors should consider the comments and criticisms they receive, and modify the Metric accordingly if the criticisms are justified.
 
