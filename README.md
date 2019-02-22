@@ -20,7 +20,7 @@ Publications
 
 # HOW TO CREATE A NEW METRIC
 
-Metrics are created, initially, as a narrative document, <a href='http://fairmetrics.org/fairmetricform.html'>following a template<a> extablished by the FAIR Metrics Authoring Group. Guidance for how to complete this document is found in the <a href='http://fairmetrics.org/framework.html'>authoring framework overview</a>.
+Metrics are created, initially, as a narrative document, <a href='http://fairmetrics.org/fairmetricform.html'>following a template<a> extablished by the FAIR Metrics Authoring Group. A [MarkDown version of this template](https://github.com/FAIRMetrics/Metrics/blob/master/MetricTemplate.md) is available above, and should be used for Metric submissions by the public.  Guidance for how to complete this document is found in the <a href='http://fairmetrics.org/framework.html'>authoring framework overview</a>.
   
 Once a Metric has been designed, the document should be submitted via 'pull request' to this repository, at which time it becomes available for community discussion.  The author of the Metric should publicize their Metric as widely as possible, to encourage maximal community input.  
 
