@@ -1,7 +1,7 @@
 # TITLE:  FAIR Metric Gen2-FM-I1A
 
 ## Authors: 
-Mark D. Wilkinson, Susanna-Assunta Sansone, Erik Schultes, Peter Doorn,
+Mark D. Wilkinson, Susanna-Assunta Sansone, Erik Schultes, 
 Luiz Olavo Bonino da Silva Santos, Michel Dumontier
 
 #### Date: 2019
