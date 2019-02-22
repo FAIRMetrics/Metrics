@@ -1,9 +1,4 @@
-
-
----------------
-
-
-**The Metrics are currently being extensively revised.  Any references you have should be considered deprecated until further notice **
+**The Metrics are currently being extensively revised.  Any references you have should be considered deprecated until further notice**
 
 
 # FAIR Metrics
