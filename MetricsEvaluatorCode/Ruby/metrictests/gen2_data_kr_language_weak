@@ -7,7 +7,7 @@ require 'rdf'
 require 'rdf/turtle'
 require 'sparql'
 
-debug = false
+debug = true
 
 def testGUID
 	
@@ -111,7 +111,7 @@ def testGUID
 		# hopefully we have it by now... if not... we fail!
 		$stderr.puts "\n\nfound identifier #{@identifier} \n\n"
 
-		if @identifier == ""
+		unless @identifier
 			@swagger.score = 0
 			@swagger.addComment "Was unable to locate the data identifier in the metadata using any (common) property/predicate reserved for this purpose.  Tested SIO:is-about, SIO:0003323, schema:mainEntity, IAO:0000136, schema:codeRepository, and foaf:primaryTopic.  Fail. "
 		else
@@ -163,10 +163,11 @@ end
 if debug
 #	@input = '{"subject": "10.5281/zenodo.1147435"}'  # doi fail
 #	@input = '{"subject": "10.5281/zenodo.1065973"}'  # doi fail
+	@input = '{"subject": "10.25504/FAIRsharing.6k0kwd"}'  # doi fail
 #	@input = '{"subject": "BSYNRYMUTXBXSQ-UHFFFAOYSA-N"}' # inchi
 #	@input = '{"subject": "LFQSCWFLJHTTHZ-UHFFFAOYSA-N"}' # another inchi
 #	@input = '{"subject": "20.1000/105"}'  # handle (fail)
-	@input = '{"subject": "http://linkeddata.systems/Magnaporthe/polyA_Sites"}'  # handle
+#	@input = '{"subject": "http://linkeddata.systems/Magnaporthe/polyA_Sites"}'  # handle
 
 else 
 	@input = $stdin.read
