@@ -1,15 +1,9 @@
-**TO DOWNLOAD ALL OF THE METRICS IN ONE PDF:  https://github.com/FAIRMetrics/Metrics/raw/master/ALL.pdf**
-**TO VIEW THE METRICS IN YOUR BROWSER:  http://htmlpreview.github.com/?https://github.com/FAIRMetrics/Metrics/blob/master/ALL.html**
+
 
 ---------------
 
 
-**TO DOWNLOAD THE CURRENT ZENODO RELEASE OF THE METRICS, GO HERE:  https://doi.org/10.5281/zenodo.1065973**
-
-**FOR PDF's OF THE INDIVIDUAL METRICS SEE HERE:  https://github.com/FAIRMetrics/Metrics/tree/master/Distributions**
-
-**FOR LaTex OF THE INDIVIDUAL METRICS SEE HERE:  https://github.com/FAIRMetrics/Metrics/tree/master/Distributions**
-
+**The Metrics are currently being extensively revised.  Any references you have should be considered deprecated until further notice **
 
 
 # FAIR Metrics
@@ -118,3 +112,15 @@ For example:  In the bioinformatics community, a widely used format for Sequence
 In light of this, we insist that FAIR evaluations are not intended to be used as "judgement", but rather as a means to objectively (AND TRANSPARENTLY!) test if a resource has successfully fulfilled the FAIRness requirements that **that community** has established.  In this light, FAIR Evaluation is a way for individual providers, or repository owners, to test their own compliance, and to take remedial action if their resources are not passing the tests.  Confirmation and/or guidance, rather than judgement.
 
 Certainly, we believe that some FAIR Metrics (for example, that the entity has a globally unique identifier, and that all data should have a license and citation information) are universal, and a prerequisite for FAIRness; however, many of the FAIR Principles must be interpreted by the individual communities, keeping as close to the "spirit" of FAIR as possible.
+
+**DEPRECATED LINKS**
+
+TO DOWNLOAD THE CURRENT ZENODO RELEASE OF THE METRICS, GO HERE:  https://doi.org/10.5281/zenodo.1065973**
+
+FOR PDF's OF THE INDIVIDUAL METRICS SEE HERE:  https://github.com/FAIRMetrics/Metrics/tree/master/Distributions**
+
+FOR LaTex OF THE INDIVIDUAL METRICS SEE HERE:  https://github.com/FAIRMetrics/Metrics/tree/master/Distributions**
+
+TO DOWNLOAD ALL OF THE METRICS IN ONE PDF:  https://github.com/FAIRMetrics/Metrics/raw/master/ALL.pdf**
+
+TO VIEW THE METRICS IN YOUR BROWSER:  http://htmlpreview.github.com/?https://github.com/FAIRMetrics/Metrics/blob/master/ALL.html
