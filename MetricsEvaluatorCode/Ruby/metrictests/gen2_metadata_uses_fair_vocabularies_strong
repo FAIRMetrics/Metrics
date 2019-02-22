@@ -7,7 +7,7 @@ require 'rdf'
 require 'rdf/turtle'
 require 'sparql'
 
-debug = false
+debug = true
 
 def testGUID
 	
@@ -68,6 +68,8 @@ if debug
 #	@input = '{"subject": "LFQSCWFLJHTTHZ-UHFFFAOYSA-N"}' # another inchi
 #	@input = '{"subject": "20.1000/105"}'  # handle (fail)
 	@input = '{"subject": "http://linkeddata.systems/Magnaporthe/polyA_Sites"}'  # handle
+	@input = '{"subject": "10.25504/FAIRsharing.6k0kwd"}'  # doi fail
+
 
 else 
 	@input = $stdin.read
