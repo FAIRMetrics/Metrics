@@ -163,16 +163,25 @@ class EvaluationsController < ApiController
           request.body = json_to_pass.to_json
           # request.body = '"sub": "cnn"}' ############## UNCOMMENT TO FORCE A SERVICE FAILURE FOR TEST PURPOSES
           $stderr.puts json_to_pass.to_json
-          response = http.request(request)
-          if response.kind_of? Net::HTTPSuccess
-            if response.header['content-type'] =~ /json/          
-              body = JSON.parse(response.body)  # create a hash
-              result_for_db[metric.smarturl] = body   # this is a has of the metric id and the hash of the JSON string from the evaluation service
+          bailout = false
+          begin
+            response = http.request(request)
+          rescue
+              @evaluation.errors[:not_json] << " - No response from #{uri}.  Aborting this test  "
+              bailout=true
+          end
+          
+          unless bailout
+            if response.kind_of? Net::HTTPSuccess
+              if response.header['content-type'] =~ /json/          
+                body = JSON.parse(response.body)  # create a hash
+                result_for_db[metric.smarturl] = body   # this is a has of the metric id and the hash of the JSON string from the evaluation service
+              else
+                @evaluation.errors[:not_json] << " - Response message from FAIR Metrics Test service #{uri} was not JSON.  "
+              end
             else
-              @evaluation.errors[:not_json] << " - Response message from FAIR Metrics Test service #{uri} was not JSON.  "
+              @evaluation.errors[:not_success_code] << " - FAIR Testing service at #{uri} returned a failure code.  "
             end
-          else
-            @evaluation.errors[:not_success_code] << " - FAIR Testing service at #{uri} returned a failure code.  "
           end
         end
       end
