@@ -44,7 +44,7 @@ def testGUID
 		break if count>=10
 		response = Utils::fetch(stm.predicate.value, Utils::AcceptHeader)  # this  sends the content-negotiation for linked data
 		(parser, contenttype) = Utils::figure_out_type(response) if response
-		success += 1 if Utils::RDF_FORMATS.keys.include?(parser)
+		success += 1 if parser and Utils::RDF_FORMATS.keys.include?(parser)
 		$stderr.puts contenttype
 		count+=1
 	end

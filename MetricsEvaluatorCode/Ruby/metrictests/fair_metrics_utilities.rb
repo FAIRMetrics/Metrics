@@ -448,8 +448,15 @@ class Utils
     
   # general Web utilities... follow redirects, for example
   def Utils::fetch(uri_str, header=Utils::AcceptHeader, meta=nil)  #we will try to retrieve turtle whenever possible
-    address = URI::encode(uri_str)
-    address = resolve(address, nil, nil, nil, header)  # this runs through any redirects until there is a URL that will return data
+
+    if Utils::isEncoded(uri_str)
+        address = fullyDecodeURI(uri_str)
+        address = URI::encode(uri_str)
+    else
+        address = uri_str
+    end
+
+    address = Utils::resolve(address, header)  # this runs through any redirects until there is a URL that will return data
     unless address
         if meta
             meta.comments << "the discovered URL does not resolve at all.  test halting.  "
@@ -458,14 +465,27 @@ class Utils
     end
 
     meta.finalURI = address if meta
-    addressURI = URI(address)
-    http = Net::HTTP.new(addressURI.host, addressURI.port)
-    if address.match(/^https:/i)
-      http.use_ssl = true                            # if using SSL
-      http.verify_mode = OpenSSL::SSL::VERIFY_NONE   # for example, when using self-signed certs
-    end
-    http.read_timeout = 90  # set to 90 seconds, because some servers, like the W3C, deeply object to my Accept headers!  LOL!
-    response = http.request_get(address, header)  
+
+      url = URI.parse(address)
+      http = Net::HTTP.new(url.host, url.port)
+      http.open_timeout = 120
+      http.read_timeout = 120
+      path = url.path
+      path = '/' if path == ''
+      path += '?' + url.query unless url.query.nil?
+
+      params = { 'User-Agent' => 'curl/7.43.0' }.merge header
+      request = Net::HTTP::Get.new(path, params)
+
+      if url.instance_of?(URI::HTTPS)
+        http.use_ssl = true
+        http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+      end
+      begin
+          response = http.request(request)
+      rescue
+          return false
+      end
 
     case response   # the \"case\" block allows you to test various conditions... it is like an \"if\", but cleaner!\n,
 	  when Net::HTTPSuccess then  # when response Object is of type Net::HTTPSuccess\n",
@@ -498,7 +518,7 @@ class Utils
 
 
    # this returns the URI that results from all redirects, etc.
-  def Utils::resolve(uri_str, agent = 'curl/7.43.0', max_attempts = 10, timeout = 90, header = Utils::AcceptHeader)
+  def Utils::resolve(uri_str, header = Utils::AcceptHeader, timeout = 90, agent = 'curl/7.43.0', max_attempts = 10)
     attempts = 0
     max_attempts = 5
     cookie = nil
@@ -540,8 +560,10 @@ class Utils
                     else
                       new_uri.to_s
                     end
+        when Net::HTTPNotAcceptable
+            break
         else
-          #$stderr.puts "\n\nUnexpected response from #{url.inspect}: " + response.inspect + "\n\n"
+          $stderr.puts "\n\nUnexpected response from #{url.inspect}: " + response.inspect + "\n\n"
       end
     end
     #$stderr.puts "\n\nToo many http redirects from  #{url.inspect}:\n\n" if attempts == max_attempts
