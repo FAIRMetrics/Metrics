@@ -69,7 +69,7 @@ if debug
 #	@input = '{"subject": "20.1000/105"}'  # handle (fail)
 	@input = '{"subject": "http://linkeddata.systems/Magnaporthe/polyA_Sites"}'  # handle
 	@input = '{"subject": "10.25504/FAIRsharing.6k0kwd"}'  # doi fail
-
+        @input = '{"subject": "https://www.ebi.ac.uk/arrayexpress/"}' 
 
 else 
 	@input = $stdin.read

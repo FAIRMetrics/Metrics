@@ -570,7 +570,22 @@ class Utils
 
     uri_str
   end
+  
+  def Utils::isEncoded(uri)
+        uri = uri || '';
+        if uri != URI.decode(uri)
+           return true
+        end
+        return false
+  end
 
+  def Utils::fullyDecodeURI(uri)
+
+          while (Utils::isEncoded(uri))
+                uri = URI.decode(uri)
+          end
+        return uri;
+  end
 end   # END OF Utils CLASS
 
 
