@@ -159,6 +159,8 @@ class EvaluationsController < ApiController
           
           # Create the HTTP objects  -execute the test!!!!!!!!
           http = Net::HTTP.new(uri.host, uri.port)
+          http.read_timeout = 300  # set to 300 seconds, because some services may be very very slow
+
           request = Net::HTTP::Post.new(uri.request_uri, httpheader)
           request.body = json_to_pass.to_json
           # request.body = '"sub": "cnn"}' ############## UNCOMMENT TO FORCE A SERVICE FAILURE FOR TEST PURPOSES
