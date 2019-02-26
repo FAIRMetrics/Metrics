@@ -464,7 +464,7 @@ class Utils
       http.use_ssl = true                            # if using SSL
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE   # for example, when using self-signed certs
     end
-    
+    http.read_timeout = 90  # set to 90 seconds, because some servers, like the W3C, deeply object to my Accept headers!  LOL!
     response = http.request_get(address, header)  
 
     case response   # the \"case\" block allows you to test various conditions... it is like an \"if\", but cleaner!\n,
@@ -483,6 +483,8 @@ class Utils
     return false unless uri
     response=nil
     http = Net::HTTP.new(uri.host, uri.port)
+    http.read_timeout = 90  # set to 90 seconds, because some servers, like the W3C, deeply object to my Accept headers!  LOL!
+
     if uri.match(/^https:/i)
       http.use_ssl = true                            # if using SSL
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE   # for example, when using self-signed certs
@@ -496,7 +498,7 @@ class Utils
 
 
    # this returns the URI that results from all redirects, etc.
-  def Utils::resolve(uri_str, agent = 'curl/7.43.0', max_attempts = 10, timeout = 10, header = Utils::AcceptHeader)
+  def Utils::resolve(uri_str, agent = 'curl/7.43.0', max_attempts = 10, timeout = 90, header = Utils::AcceptHeader)
     attempts = 0
     max_attempts = 5
     cookie = nil
