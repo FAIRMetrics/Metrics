@@ -113,14 +113,9 @@ In light of this, we insist that FAIR evaluations are not intended to be used as
 
 Certainly, we believe that some FAIR Metrics (for example, that the entity has a globally unique identifier, and that all data should have a license and citation information) are universal, and a prerequisite for FAIRness; however, many of the FAIR Principles must be interpreted by the individual communities, keeping as close to the "spirit" of FAIR as possible.
 
-**DEPRECATED LINKS**
+**LINKS TO 'Generation 1' questionnaire-style metrics**
 
 TO DOWNLOAD THE CURRENT ZENODO RELEASE OF THE METRICS, GO HERE:  https://doi.org/10.5281/zenodo.1065973**
 
-FOR PDF's OF THE INDIVIDUAL METRICS SEE HERE:  https://github.com/FAIRMetrics/Metrics/tree/master/Distributions**
+TO DOWNLOAD ALL OF THE METRICS IN ONE PDF:  https://github.com/FAIRMetrics/Metrics/blob/master/MaturityIndicators/Gen1/ALL.pdf**
 
-FOR LaTex OF THE INDIVIDUAL METRICS SEE HERE:  https://github.com/FAIRMetrics/Metrics/tree/master/Distributions**
-
-TO DOWNLOAD ALL OF THE METRICS IN ONE PDF:  https://github.com/FAIRMetrics/Metrics/raw/master/ALL.pdf**
-
-TO VIEW THE METRICS IN YOUR BROWSER:  http://htmlpreview.github.com/?https://github.com/FAIRMetrics/Metrics/blob/master/ALL.html
