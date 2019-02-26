@@ -159,16 +159,15 @@ class EvaluationsController < ApiController
           
           # Create the HTTP objects  -execute the test!!!!!!!!
           http = Net::HTTP.new(uri.host, uri.port)
-          http.read_timeout = 300  # set to 300 seconds, because some services may be very very slow
+          http.read_timeout = 300  # set to 300 seconds, because some services may be very
 
           request = Net::HTTP::Post.new(uri.request_uri, httpheader)
           request.body = json_to_pass.to_json
           # request.body = '"sub": "cnn"}' ############## UNCOMMENT TO FORCE A SERVICE FAILURE FOR TEST PURPOSES
-          logger.debug "\n\nPASSING IN JSON: #{json_to_pass.to_json}\n\n"
+          #$stderr.puts json_to_pass.to_json
           bailout = false
           begin
             response = http.request(request)
-            logger.debug "RESPONSE #{response.inspect}"
           rescue
               @evaluation.errors[:not_json] << " - No response from #{uri}.  Aborting this test  "
               bailout=true
