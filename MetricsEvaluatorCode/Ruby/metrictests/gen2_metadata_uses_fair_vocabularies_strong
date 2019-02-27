@@ -40,13 +40,18 @@ def testGUID
 
 	success = 0  # we will accept 5/10 failures
 	count = 0
+	seen = Array.new
 	g.each do |stm|
 		break if count>=10
+		count+=1
+		$stderr.puts "predicate #{stm.predicate.value}"
+		next if seen.include?stm.predicate.value
+		seen << stm.predicate.value
+		next if stm.predicate.value =~ /www\.w3\.org\/1999\/xhtml\/vocab/  # this is a very problematic site!
 		response = Utils::fetch(stm.predicate.value, Utils::AcceptHeader)  # this  sends the content-negotiation for linked data
 		(parser, contenttype) = Utils::figure_out_type(response) if response
 		success += 1 if parser and Utils::RDF_FORMATS.keys.include?(parser)
 		$stderr.puts contenttype
-		count+=1
 	end
 	
 	if success > count * 0.5
@@ -67,9 +72,10 @@ if debug
 #	@input = '{"subject": "BSYNRYMUTXBXSQ-UHFFFAOYSA-N"}' # inchi
 #	@input = '{"subject": "LFQSCWFLJHTTHZ-UHFFFAOYSA-N"}' # another inchi
 #	@input = '{"subject": "20.1000/105"}'  # handle (fail)
-	@input = '{"subject": "http://linkeddata.systems/Magnaporthe/polyA_Sites"}'  # handle
-	@input = '{"subject": "10.25504/FAIRsharing.6k0kwd"}'  # doi fail
-        @input = '{"subject": "https://www.ebi.ac.uk/arrayexpress/"}' 
+#	@input = '{"subject": "http://linkeddata.systems/Magnaporthe/polyA_Sites"}'  # handle#
+#	@input = '{"subject": "10.25504/FAIRsharing.6k0kwd"}'  # doi fail
+#        @input = '{"subject": "https://www.ebi.ac.uk/arrayexpress/"}' 
+	@input = '{"subject": "https://catalogue.bbmri.nl/menu/main/app-molgenis-app-biobank-explorer/biobank/report/bbmri-eric:ID:NL_AAAACXPAWTUFCACQK2ME25QAAM"}'
 
 else 
 	@input = $stdin.read
