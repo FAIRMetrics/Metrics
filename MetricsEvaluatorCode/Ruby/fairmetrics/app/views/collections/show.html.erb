@@ -13,7 +13,16 @@
 
 <p>
   <strong>Name:</strong>
-  <%= @collection.name %>
+  <table width='700px'>
+    <tr>
+      <td>
+          <span style="font-size: 1.3em;"><%= @collection.name %> </span>
+      </td>
+      <td>
+        <%= link_to image_tag("eval_button.jpg",  :style => "vertical-align:middle"), evaluationtemplate_path(@collection) %>
+      </td>
+    </tr>
+  </table>
 </p>
 
 <p>
