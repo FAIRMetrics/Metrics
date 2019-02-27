@@ -165,7 +165,7 @@ class EvaluationsController < ApiController
           request = Net::HTTP::Post.new(uri.request_uri, httpheader)
           request.body = json_to_pass.to_json
           # request.body = '"sub": "cnn"}' ############## UNCOMMENT TO FORCE A SERVICE FAILURE FOR TEST PURPOSES
-          $stderr.puts json_to_pass.to_json
+          # $stderr.puts json_to_pass.to_json
           bailout = false
           begin
             response = http.request(request)
