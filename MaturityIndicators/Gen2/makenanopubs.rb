@@ -3,8 +3,8 @@
 require 'rdf'
 
 template = <<END
-@prefix this: <https://w3id.org/fair/maturity_indicator/Gen2/AAAAA> .  # canonical URI for the metric
-@prefix sub: <https://w3id.org/fair/maturity_indicator/Gen2/AAAAA#> .
+@prefix : <https://w3id.org/fair/maturity_indicator/mi/Gen2/AAAAA> .  # canonical URI for the metric
+@prefix fairmi: <https://w3id.org/fair/maturity_indicator/terms/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix dcelem: <http://purl.org/dc/elements/1.1/> .
 @prefix np: <http://www.nanopub.org/nschema#> .
@@ -20,21 +20,21 @@ template = <<END
 @prefix dcat: <http://www.w3.org/ns/dcat#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 
-sub:Head {
-  sub:nanopub np:hasAssertion sub:assertion ;
-       np:hasProvenance sub:provenance ;
-       np:hasPublicationInfo sub:pubinfo ;
+:Head {
+  : np:hasAssertion :assertion ;
+       np:hasProvenance :provenance ;
+       np:hasPublicationInfo :pubinfo ;
        a np:Nanopublication .
  }
  
-sub:assertion {
- this: a fair:FAIR-Metric ;
+:assertion {
+ fairmi:AAAAA a fair:FAIR-Metric ;
   foaf:primaryTopic fair:BBBBB .
 
  }
  
-sub:provenance {
- sub:assertion dcterms:author  CCCCC ;
+:provenance {
+ :assertion dcterms:author  CCCCC ;
  rdfs:comment "DDDDD"^^xsd:string ;
  dcat:distribution _:dist1 ;
  prov:wasGeneratedBy "FAIR Metrics Working Group" .
@@ -47,8 +47,8 @@ sub:provenance {
 }
 
  
-sub:pubinfo {
- this: dcterms:created "EEEEE"^^xsd:dateTime ;
+:pubinfo {
+ : dcterms:created "EEEEE"^^xsd:dateTime ;
  dcterms:rights <https://creativecommons.org/publicdomain/zero/1.0> ;
  dcterms:rightsHolder <http://fairmetrics.org> ;
  pav:authoredBy "Mark Wilkinson" , <https://orcid.org/0000-0001-6960-357X> ;
