@@ -1,13 +1,19 @@
-# TITLE:  FAIR Metric Gen2-FM-F1A
+# TITLE:  FAIR Metric Gen2-FM-I3
 
 ## Authors: 
-Mark D. Wilkinson, Susanna-Assunta Sansone, Erik Schultes,
-Luiz Olavo Bonino da Silva Santos, Michel Dumontier
+Mark D. Wilkinson, ORCID:0000-0001-6960-357X
+Susanna-Assunta Sansone, ORCID:0000-0001-5306-5690
+Erik Schultes, ORCID:0000-0001-8888-635X
+Luiz Olavo Bonino da Silva Santos, ORCID:0000-0002-1164-1351
+Michel Dumontier, ORCID:0000-0003-4727-9435
 
-#### Date: 2019
+#### Publication Date: 26/02/2019
+#### Last Edit: 26/02/2019
+#### Accepted: pending
 
 
-### Maturity Assessment Identifier: Gen2_FM-F1A [https://purl.org/fair-metrics/Gen2_FM_F1A](https://purl.org/fair-metrics/Gen2_FM_F1A)
+
+### Maturity Assessment Identifier: Gen2_FM_F1A [https://w3id.org/fair/maturity_indicator/Gen2/Gen2_FM_F1A](https://w3id.org/fair/maturity_indicator/Gen2/Gen2_FM_F1A)
 
 ### Maturity Assessment Name:   Identifier Uniqueness
 
@@ -32,7 +38,7 @@ If you want an additional identifier scheme added to this Metric, please let us 
 The uniqueness of an identifier is a necessary condition to unambiguously refer that resource, and that resource alone. Otherwise, an identifier shared by multiple resources will confound efforts to describe that resource, or to use the identifier to retrieve it. Examples of identifier schemes include, but are not limited to URN, IRI, DOI, Handle, trustyURI, LSID, etc. For an in-depth understanding of the issues around identifiers, please see http://dx.plos.org/10.1371/journal.pbio.2001414
 
 ### What must be provided for the measurement?
-The GUID.
+The Metadata GUID.
 
 
 ### How is the measurement executed?

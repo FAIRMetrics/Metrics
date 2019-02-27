@@ -1,13 +1,18 @@
-# TITLE:  FAIR Metric Gen2-FM-A2
+# TITLE:  FAIR Metric Gen2-FM-I3
 
 ## Authors: 
-Mark D. Wilkinson, Susanna-Assunta Sansone, Erik Schultes,
-Luiz Olavo Bonino da Silva Santos, Michel Dumontier
+Mark D. Wilkinson, ORCID:0000-0001-6960-357X
+Susanna-Assunta Sansone, ORCID:0000-0001-5306-5690
+Erik Schultes, ORCID:0000-0001-8888-635X
+Luiz Olavo Bonino da Silva Santos, ORCID:0000-0002-1164-1351
+Michel Dumontier, ORCID:0000-0003-4727-9435
 
-#### Date: 2019
+#### Publication Date: 26/02/2019
+#### Last Edit: 26/02/2019
+#### Accepted: pending
 
 
-### Maturity Assessment Identifier: Gen2_FM-A2 [https://purl.org/fair-metrics/Gen2_FM_A2](https://purl.org/fair-metrics/Gen2_FM_A2)
+### Maturity Assessment Identifier: Gen2_FM_A2 [https://w3id.org/fair/maturity_indicator/Gen2/Gen2_FM_A2](https://w3id.org/fair/maturity_indicator/Gen2/Gen2_FM_A2)
 
 ### Maturity Assessment Name:   Metadata persistence
 
@@ -25,7 +30,7 @@ Cross-references to data from third-party’s FAIR data and metadata will natura
 
 
 ### What must be provided for the measurement?
-The GUID.
+The Metadata GUID.
 
 
 ### How is the measurement executed?

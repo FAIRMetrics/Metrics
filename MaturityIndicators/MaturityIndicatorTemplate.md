@@ -1,39 +1,43 @@
-# TITLE:  FAIR Metric FM-A1.1
+# TITLE:  FAIR Metric XXXXX
 
 ## Authors: 
-authors here
+John Doe, ORCID:0000-XXXX-XXXX-XXXX
+Jane Doe, ORCID:0000-XXXX-XXXX-XXXX
 
-#### Date: 2017
+
+#### Publication Date: DD/MM/YYYY
+#### Last Edit: DD/MM/YYYY
+#### Accepted: pending
 
 
-### Maturity Assessment Identifier: 
+### Maturity Assessment Identifier: ABCDE [https://w3id.org/fair/maturity_indicator/Gen2/ABCDE](https://w3id.org/fair/maturity_indicator/Gen2/ABCDE)
 
-### Maturity Assessment Name:  
+### Maturity Assessment Name:   Put Your Short Title Here
 
 ----
 
-### To which principle does it apply?  
+### To which principle does it apply?
+F A I R + 1,2,3...  (e.g. F1.2)
 
 ### What is being measured?
-
+Explain what you are measuring
 
 ### Why should we measure it?
-
+Explain why
 
 ### What must be provided for the measurement?
-
-
+The Metadata GUID.
+(this is the only acceptable answer for 2nd Gen metrics, so please leave this as it is!)
 
 
 ### How is the measurement executed?
-
-
+Explan the exact process for evaluation
 
 ### What is/are considered valid result(s)?
-
+What outcomes are pass/fail
 
 ### For which digital resource(s) is this relevant? (or 'all')
-
+All
 
 ### Examples of good practices (that would score well on this assessment)
 
