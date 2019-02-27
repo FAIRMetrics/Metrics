@@ -1,4 +1,4 @@
-# TITLE:  FAIR Metric Gen2-FM-I3
+# TITLE:  FAIR Metric Gen2-MI-I3
 
 ## Authors: 
 Mark D. Wilkinson, ORCID:0000-0001-6960-357X
@@ -7,12 +7,12 @@ Erik Schultes, ORCID:0000-0001-8888-635X
 Luiz Olavo Bonino da Silva Santos, ORCID:0000-0002-1164-1351
 Michel Dumontier, ORCID:0000-0003-4727-9435
 
-#### Publication Date: 26/02/2019
-#### Last Edit: 26/02/2019
+#### Publication Date: 2019-02-26
+#### Last Edit: 2019-02-26
 #### Accepted: pending
 
 
-### Maturity Assessment Identifier: Gen2_FM_A2 [https://w3id.org/fair/maturity_indicator/Gen2/Gen2_FM_A2](https://w3id.org/fair/maturity_indicator/Gen2/Gen2_FM_A2)
+### Maturity Assessment Identifier: Gen2_MI_A2 [https://w3id.org/fair/maturity_indicator/Gen2/Gen2_MI_A2](https://w3id.org/fair/maturity_indicator/Gen2/Gen2_MI_A2)
 
 ### Maturity Assessment Name:   Metadata persistence
 

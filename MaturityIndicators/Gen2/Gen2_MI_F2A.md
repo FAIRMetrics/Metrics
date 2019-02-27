@@ -1,4 +1,4 @@
-# TITLE:  FAIR Metric Gen2-FM-I3
+# TITLE:  FAIR Metric Gen2-MI-I3
 
 ## Authors: 
 Mark D. Wilkinson, ORCID:0000-0001-6960-357X
@@ -7,14 +7,15 @@ Erik Schultes, ORCID:0000-0001-8888-635X
 Luiz Olavo Bonino da Silva Santos, ORCID:0000-0002-1164-1351
 Michel Dumontier, ORCID:0000-0003-4727-9435
 
-#### Publication Date: 26/02/2019
-#### Last Edit: 26/02/2019
+#### Publication Date: 2019-02-26
+#### Last Edit: 2019-02-26
 #### Accepted: pending
 
 
-### Maturity Assessment Identifier: Gen2_FM_F2B [https://w3id.org/fair/maturity_indicator/Gen2/Gen2_FM_F2B](https://w3id.org/fair/maturity_indicator/Gen2/Gen2_FM_F2B)
 
-### Maturity Assessment Name:   Grounded Metadata
+### Maturity Assessment Identifier: Gen2_MI_F2A [https://w3id.org/fair/maturity_indicator/Gen2/Gen2_MI_F2A](https://w3id.org/fair/maturity_indicator/Gen2/Gen2_MI_F2A)
+
+### Maturity Assessment Name:   Structured Metadata
 
 ----
 
@@ -22,14 +23,15 @@ Michel Dumontier, ORCID:0000-0003-4727-9435
 F2
 
 ### What is being measured?
-Whether the metadata of the record contains "structured" elements that are
-"grounded" in shared vocabularies.  For example, in one of the various forms
-of linked data (JSON-LD, RDFa, Turtle, etc.)
+Whether the metadata of the record contains "structured" elements.
+These may be in the form of hash-like content (micrograph, JSON),
+or in one of the various forms of linked data (JSON-LD, RDFa, etc.)
 
 ### Why should we measure it?
-Structured, grounded data is inherently easier for machines to accurately process and
-interpret, in particular by generic agents, who are able to precisely determine the
-meaning of an element based on it being a GUID (and thus, more FAIR)
+Structured data is inherently easier for machines to accurately process and
+interpret.  Even loosely structured metadata can have reliable parsers built
+to consume it, including those of major search engines.  Thus, it improves
+the findability of the record.
 
 ### What must be provided for the measurement?
 The Metadata GUID.
@@ -43,10 +45,10 @@ Metadata is harvested by:
 3) parsing the response body either as a hash (for non-linked data) or as a Graph for linked data, or both.
 4) All other data is passed to the 'extruct' tool (https://github.com/scrapinghub/extruct) or to the Apache Tika tool (https://tika.apache.org/) for deep exploration
 5) Any linked or hash-type data found by those tools are merged with the existing Hash or Graph data
-6) The Graph is interrogated v.v. if it contains any data
+6) The Hash and Graph are interrogated v.v. if they contain any data
 
 ### What is/are considered valid result(s)?
-Graph contains data.
+Hash or Graph contains data.
 
 ### For which digital resource(s) is this relevant? (or 'all')
 All
@@ -55,6 +57,3 @@ All
 
 
 ### Comments
-BEWARE:  Apache Tika is capable of extracting metadata, in the form of Linked Data, from a wide range of opaue file-types such as PDFs and images.
-This process will therefore return Linked Data that can only be found using a special tool.  Therefore, passing this
-Metric does not mean that the publisher has *actively* made grounded metadata available.

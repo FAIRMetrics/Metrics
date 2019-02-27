@@ -5,8 +5,8 @@ John Doe, ORCID:0000-XXXX-XXXX-XXXX
 Jane Doe, ORCID:0000-XXXX-XXXX-XXXX
 
 
-#### Publication Date: DD/MM/YYYY
-#### Last Edit: DD/MM/YYYY
+#### Publication Date: 2017-11-21
+#### Last Edit: 2017-11-21
 #### Accepted: pending
 
 
