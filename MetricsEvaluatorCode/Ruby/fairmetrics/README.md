@@ -9,8 +9,8 @@ The FAIR Evaluator is a Ruby on Rails application that is used to:
 # API
 [HTTP GET Operations](#gets)
 * Search(See Search under POST operations)
-* [Get Metric Tests](#getmetrics)
-* [Get Specific Metric Test](#getmetric)
+* [Get Maturity Indicator Tests](#getmetrics)
+* [Get Specific Maturity Indicator  Test](#getmetric)
 * [Get Collection Creation Template](#getcollectionstemplate)
 * [Get Collections](#getcollections)
 * [Get Specific Collection](#getcollection)
@@ -22,11 +22,10 @@ The FAIR Evaluator is a Ruby on Rails application that is used to:
 * Search
   * [Request Interface](#postsearch)
   * [Execute Search](#postsearch2)
-* [Register New Metric Test](#createnewmetric)
+* [Register New Maturity Indicator  Test](#createnewmetric)
 * [Register New Collection](#createnewcollection)
 * [Execute a New Evaluation](#createnewevaluation)
 
-(the demonstration Evaluator is running at **CURRENTLY OFFLINE FOR REDESIGN** All paths below are relative to this root.
 
 # <a name="gets"></a> HTTP GET Operations
 
@@ -41,7 +40,7 @@ Raises the Web Page for manual registration of a Metric Test
 
 ##  <a name="getmetrics"> /metrics  or /metrics.json
 
-Provides a human-readable, or JSON serialized list of known metrics, including their 'deprecated?' status.  These URLs respond to content-negotiation (text/html or application/json only)
+Provides a human-readable, or JSON serialized list of known Maturity Indicators, including their 'deprecated?' status.  These URLs respond to content-negotiation (text/html or application/json only)
 
 sample JSON output
 
@@ -86,7 +85,7 @@ results in:
 
 ##  <a name="getmetric"> /metrics/{id}  or  /metrics/{id}.json
 
-The Web Page or JSON representation of a specific Metric Test identified by its internal Evaluator registry {id}
+The Web Page or JSON representation of a specific Maturity Indicator Test identified by its internal Evaluator registry {id}
 
 
 sample JSON output
@@ -110,11 +109,11 @@ results in:
 
 ##  <a name="getcollectionstemplate"> /collections/new 
 
-Raises the Web Page for manual registration of a Metric Collection
+Raises the Web Page for manual registration of a Maturity Indicator Collection
 
 ##  <a name="getcollections"> /collections  or /collections.json
 
-Provides a human-readable, or JSON serialized list of known metric collections, including their 'deprecated?' status.  These URLs respond to content-negotiation (text/html or application/json only).  The output is in JSON-LD, and follows the schema for a [Linked Data Platform Container](https://www.w3.org/2012/ldp/wiki/Containers)
+Provides a human-readable, or JSON serialized list of known Maturity Indicator collections, including their 'deprecated?' status.  These URLs respond to content-negotiation (text/html or application/json only).  The output is in JSON-LD, and follows the schema for a [Linked Data Platform Container](https://www.w3.org/2012/ldp/wiki/Containers)
 
 sample JSON output
 
@@ -235,9 +234,9 @@ results in:
 
 
 
-##  <a name="getevaluationstemplate"> /evaluations/{id}/template
+##  <a name="getevaluationstemplate"> /collections/{id}/evaluate/template
 
-A **Human readable Web page** (NOT FOR JSON!) describing the outcome of the evaluation
+A **Human readable Web page** (NOT FOR JSON!) providing a template to execute an evaluation using Maturity Indicator collection {id}
 
 
 ##  <a name="getevaluationresult"> /evaluations/{id}/result
@@ -253,7 +252,7 @@ Returns a 201 CREATED header, with a Location tag indicating the location of you
 
 ## <a name="postsearch2"> /searches/{Location}
 
-Searches are executed by POSTing to the URL provided to you in the "Location" tag of the response to the call above.  POST of a correctly formatted block of JSON returns a block of JSON-LD containing a list of matching Metrics (based on their 'description' property), and a list of matching Collections (based on their 'description' property).  The format of the list members is identical to the format of an individual Metric or Collection descriptor (e.g. [METRIC](#getmetric); [COLLECTION](#getcollection) )
+Searches are executed by POSTing to the URL provided to you in the "Location" tag of the response to the call above.  POST of a correctly formatted block of JSON returns a block of JSON-LD containing a list of matching Maturity Indicator (based on their 'description' property), and a list of matching Collections (based on their 'description' property).  The format of the list members is identical to the format of an individual Maturity Indicator or Collection descriptor (e.g. [Maturity Indicator](#getmetric); [COLLECTION](#getcollection) )
 
 Sample JSON
 
@@ -316,7 +315,7 @@ Response 200 OK
 
 ## <a name="createnewmetric"> /metrics
 
-POST the URL to the smartAPI interface definition (currently *must* be in YAML!) in order to register a new Metric Test
+POST the URL to the smartAPI interface definition (currently *must* be in YAML!) in order to register a new Maturity Indicator Test
 
 Sample JSON
 
@@ -340,7 +339,7 @@ response 200 OK
 
 ## <a name="createnewcollection"> /collections
 
-POST the JSON describing a new Metric Collection to register that collection in the Evaluator registry.
+POST the JSON describing a new Maturity Indicator Collection to register that collection in the Evaluator registry.
 
 Sample JSON
 
@@ -368,7 +367,7 @@ Response 200 OK
 
 ## <a name="createnewevaluation"> /collections/{id}/evaluate
 
-Send a block of JSON containing the Resource (GUID) to be evaluated, and other metadata pertaining to the identity of the individual executing the evaluation; this will initiate an evaluation of that GUID using the Metric tests described by Collection {id} in the Evaluator registry.
+Send a block of JSON containing the Resource (GUID) to be evaluated, and other metadata pertaining to the identity of the individual executing the evaluation; this will initiate an evaluation of that GUID using the Maturity Indicator tests described by Collection {id} in the Evaluator registry.
 
 Sample JSON
 
