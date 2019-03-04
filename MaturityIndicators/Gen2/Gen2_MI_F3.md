@@ -61,6 +61,7 @@ To locate the data identifier, hash data is tested for the keys:
  * SIO:000332 (is about)
  * SIO_000332
  * distribution
+ * contains
 
 Graph data is tested for the properties:
  * schema:codeRepository
@@ -70,6 +71,7 @@ Graph data is tested for the properties:
  * SIO:000332 (SemanticScience Integrated Ontology 'is about')
  * schema:distribution
  * DCAT:distribution (Data Catalogue vocabulary)
+ * ldp:contains (Linked Data Platform)
 
 To locate the Metadata's GUID:
 1) The values of all Hash keys are compared to the GUID provided to the test
