@@ -34,7 +34,7 @@ def testGUID
 		@swagger.addComment("Linked data was found.  ")
 	else
 		@swagger.addComment("No linked data was found.  Test is exiting. ")
-		swagger.score = 0
+		@swagger.score = 0
 		return @swagger.createEvaluationResponse
 	end
 
