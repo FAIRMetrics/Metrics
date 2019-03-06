@@ -212,12 +212,12 @@ class Utils
           Utils::parse_json(meta, response)
         else
           #$stderr.puts "\n\nPARSING UNKNOWN\n\n"
-          meta.comments << "Metadata may be embedded, now searching using the 'extruct' tool.  "
-          Utils::do_extruct(meta, guid)
           meta.comments << "Metadata may be embedded, now searching using the Apache 'tika' tool.  "
           Utils::do_tika(meta, response)  # this expects a string, not an Net::HTTP
           meta.comments << "Metadata may be embedded, now searching using the 'Distiller' tool.  "
 	  Utils::do_distiller(meta, guid)
+          meta.comments << "Metadata may be embedded, now searching using the 'extruct' tool.  "
+          Utils::do_extruct(meta, guid)
         end
         
         #curl -X GET http://localhost:9998/tika
