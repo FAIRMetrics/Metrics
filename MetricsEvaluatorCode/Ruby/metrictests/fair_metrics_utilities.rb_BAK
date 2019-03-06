@@ -212,12 +212,10 @@ class Utils
           Utils::parse_json(meta, response)
         else
           #$stderr.puts "\n\nPARSING UNKNOWN\n\n"
-          meta.comments << "Metadata may be embedded, now searching using the 'extruct' tool.  "
+          meta.comments << "Can't parse the metadata in a structured way, falling-back on the 'extruct' tool.  "
           Utils::do_extruct(meta, guid)
-          meta.comments << "Metadata may be embedded, now searching using the Apache 'tika' tool.  "
+          meta.comments << "Can't parse the metadata in a structured way, falling-back on the Apache 'tika' tool.  "
           Utils::do_tika(meta, response)  # this expects a string, not an Net::HTTP
-          meta.comments << "Metadata may be embedded, now searching using the 'Distiller' tool.  "
-	  Utils::do_distiller(meta, guid)
         end
         
         #curl -X GET http://localhost:9998/tika
@@ -326,22 +324,6 @@ class Utils
     end
     
     
-     def Utils::do_distiller(meta, uri)
-        meta.comments << "Using 'Kellog's Distiller' to try to extract metadata from return value (message body) of #{uri}.  "
-        
-        result = Utils::fetch("http://rdf.greggkellogg.net/distiller?command=serialize&url=#{uri}&raw")
-        $stderr.puts "\n\n\n\n\n\n\nDistiller:\n#{result.class}\n\n#{result.to_s}\n\n #{uri} 2>&1\n\n"
-        # need to do some error checking here!
-	if !result
-          meta.comments << "The Distiller tool failed to find parseable data at #{uri}.  "
-	
-	else          
-          Utils::parse_rdf(meta, result.body, "application/n-triples")
-          meta.comments << "The Distiller found parseable data at #{uri}.  "
-        end
- 
-    end
-
     def Utils::do_extruct(meta, uri)
       
         meta.comments << "Using 'extruct' to try to extract metadata from return value (message body) of #{uri}.  "
