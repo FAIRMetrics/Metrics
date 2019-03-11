@@ -51,6 +51,9 @@ def testGUID
 		elsif key =~ /SIO:000332/ or key =~ /SIO_000332/
 			@swagger.addComment "found SIO is about in metadata.  "
 			@swagger.score = 1
+		elsif key =~ /contains/ or key =~ /ldp:SIO_000332/
+			@swagger.addComment "found SIO is about in metadata.  "
+			@swagger.score = 1
 		end
 	end
 
@@ -111,6 +114,15 @@ def testGUID
 			@swagger.addComment "found identifier #{results.first[:o]} using schema.org. "
 		end
 		
+		
+		query = SPARQL.parse("select ?o where {?s <http://www.w3.org/ns/ldp#contains> ?o}")
+		results = query.execute(g)
+		if  results.any?
+			@swagger.score = 1
+			@swagger.addComment "found identifier #{results.first[:o]} using Linked Data Platform 'contains'. "
+		end
+
+
 		if @swagger.score == 0
 			@swagger.addComment "Was unable to locate the data identifier in the metadata using any (common) property/predicate reserved for this purpose.  Tested SIO:is-about, SIO:0003323, schema:mainEntity, IAO:0000136, schema:codeRepository, and foaf:primaryTopic.  Sorry! "
 		end
@@ -126,7 +138,8 @@ if debug
 #	@input = '{"subject": "BSYNRYMUTXBXSQ-UHFFFAOYSA-N"}' # inchi
 #	@input = '{"subject": "LFQSCWFLJHTTHZ-UHFFFAOYSA-N"}' # another inchi
 #	@input = '{"subject": "20.1000/105"}'  # handle (fail)
-	@input = '{"subject": "http://linkeddata.systems/Magnaporthe/polyA_Sites"}'  # handle
+#	@input = '{"subject": "http://linkeddata.systems/Magnaporthe/polyA_Sites"}'  # handle
+	@input = '{"subject": "10.5440/1185213"}'  # doi fail
 
 else 
 	@input = $stdin.read
