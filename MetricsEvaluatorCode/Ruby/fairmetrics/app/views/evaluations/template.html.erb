@@ -10,8 +10,8 @@
   <% end %>
   
   <h1>Globally Unique Identifier (GUID) to be Evaluated:</h1>
-<h2>NOTE: This is the GUID for the <b><i>metadata!</i></b> of your data record</h2>
-<h4><span style="color:red;">If you enter the GUID of your data, you will fail most tests. <br/>You have been warned :-) </span></h4><br/>
+<h2>NOTE: This is the GUID for the <b><i>metadata (!)</i></b> of your data record</h2>
+
 <br/>Hint: We currently recognze INCHI Keys, DOIs, Handles and URLs. Contact <a href="mailto:mark.wilkinson@upm.es">the developer</a> to add new GUID types to this list - for example, we plan to support LSIDs soon, and others.
 
 <br/>Hint: If you have a DOI for your data deposit, a DOI returns <b><i>metadata</i></b> to our system, so please use your DOI unless you have specifically created a better metadata record.
@@ -26,13 +26,22 @@
 <br/>
 
 <%= form_with(url: executeevaluation_path(@collection), local: true, method: "post") do |form| %>
-
-GUID:						<input type="text" name="resource" size="50"/>
+<table style="width: 500px">
+ <tr>
+<td>GUID:</td><td>						<input type="text" name="resource" size="50"/></td>
 <br/><br/>
-Collection used for this test: <%= @collection.name %><br/>
-Title of this Evaluation: 	<input type="text" name="title" size="50"/><br/>
-Your ORCID:  	<input type="text" name="executor" size="50"/><br/>
-
+</tr>
+<tr>
+<td>Collection used for this test:</td><td> <%= @collection.name %><br/></td>
+</tr>
+<tr>
+<td>Title of this Evaluation:</td><td>	<input type="text" name="title" size="50"/><br/></td> 
+</tr>
+<tr>
+<td>Your ORCID:</td><td> 	<input type="text" name="executor" size="50"/><br/></td>
+</tr>
+</table>
+</br></br>
 
 <%= submit_tag("Execute Metrics Test With This Collection") %>
 
