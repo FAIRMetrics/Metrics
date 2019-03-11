@@ -741,13 +741,13 @@ EOF_EOF
     def triplify(s, p, o, repo)
   
       if s.class == String
-              s.strip!
+              s = s.strip
       end
       if p.class == String
-              p.strip!
+              p = p.strip
       end
       if o.class == String
-              o.strip!
+              o = o.strip
       end
       
       unless s.respond_to?('uri')
