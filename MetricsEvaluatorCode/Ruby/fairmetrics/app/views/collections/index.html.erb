@@ -34,7 +34,12 @@ td {
   </thead>
 
   <tbody>
+    <% cs = Array.new %>
     <% @collections.each do |collection| %>
+    <%   cs << collection  %>
+    <% end %>
+    <% cs = cs.sort_by {|f| f.deprecated ? 1 : 0} %>
+    <% cs.each do |collection | %>
     <% next if collection.name =~ /__ALL/ %>
         <% style="" %>
     <% style="background-color: lightgrey;" if collection.deprecated == true %>
