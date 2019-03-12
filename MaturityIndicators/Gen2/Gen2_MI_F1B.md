@@ -1,4 +1,4 @@
-# TITLE:  FAIR Metric Gen2-MI-I3
+# TITLE:  FAIR Maturity Indicator Gen2-MI-I3
 
 ## Authors: 
 Mark D. Wilkinson, ORCID:0000-0001-6960-357X
@@ -12,9 +12,9 @@ Michel Dumontier, ORCID:0000-0003-4727-9435
 #### Accepted: pending
 
 
-### Maturity Assessment Identifier: Gen2_MI_F1B [https://w3id.org/fair/maturity_indicator/Gen2/Gen2_MI_F1B](https://w3id.org/fair/maturity_indicator/Gen2/Gen2_MI_F1B)
+### Maturity Indicator Identifier: Gen2_MI_F1B [https://w3id.org/fair/maturity_indicator/Gen2/Gen2_MI_F1B](https://w3id.org/fair/maturity_indicator/Gen2/Gen2_MI_F1B)
 
-### Maturity Assessment Name:   Identifier Persistence
+### Maturity Indicator Name:   Identifier Persistence
 
 ----
 
@@ -36,7 +36,7 @@ For URLs, we test widely-used PURLs, currently:
  * w3id
  * ark
 
-If you want an additional identifier scheme added to this Metric, please let us know, and please register it with FAIRSharing.
+If you want an additional identifier scheme added to this Maturity Indicator, please let us know, and please register it with FAIRSharing.
 
 
 ### Why should we measure it?

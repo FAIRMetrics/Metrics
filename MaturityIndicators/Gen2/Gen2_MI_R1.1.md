@@ -1,4 +1,4 @@
-# TITLE:  FAIR Metric Gen2-MI-R1.1
+# TITLE:  FAIR Maturity Indicator Gen2-MI-R1.1
 
 ## Authors: 
 Mark D. Wilkinson, ORCID:0000-0001-6960-357X
@@ -12,9 +12,9 @@ Michel Dumontier, ORCID:0000-0003-4727-9435
 #### Accepted: pending
 
 
-### Maturity Assessment Identifier: Gen2_MI_R1.1 [https://w3id.org/fair/maturity_indicator/Gen2/Gen2_MI_R1.1](https://w3id.org/fair/maturity_indicator/Gen2/Gen2_MI_R1.1)
+### Maturity Indicator Identifier: Gen2_MI_R1.1 [https://w3id.org/fair/maturity_indicator/Gen2/Gen2_MI_R1.1](https://w3id.org/fair/maturity_indicator/Gen2/Gen2_MI_R1.1)
 
-### Maturity Assessment Name:   Metadata contains link to license
+### Maturity Indicator Name:   Metadata contains link to license
 
 ----
 

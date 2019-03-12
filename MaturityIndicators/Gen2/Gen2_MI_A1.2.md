@@ -1,4 +1,4 @@
-# TITLE:  FAIR Metric Gen2-MI-I3
+# TITLE:  FAIR Maturity Indicator Gen2-MI-I3
 
 ## Authors: 
 Mark D. Wilkinson, ORCID:0000-0001-6960-357X
@@ -13,9 +13,9 @@ Michel Dumontier, ORCID:0000-0003-4727-9435
 
 
 
-### Maturity Assessment Identifier: Gen2_MI_A1.2 [https://w3id.org/fair/maturity_indicator/Gen2/Gen2_MI_A1.2](https://w3id.org/fair/maturity_indicator/Gen2/Gen2_MI_A1.2)
+### Maturity Indicator Identifier: Gen2_MI_A1.2 [https://w3id.org/fair/maturity_indicator/Gen2/Gen2_MI_A1.2](https://w3id.org/fair/maturity_indicator/Gen2/Gen2_MI_A1.2)
 
-### Maturity Assessment Name:   Protocol supports authentication/authorization
+### Maturity Indicator Name:   Protocol supports authentication/authorization
 
 ----
 

@@ -1,4 +1,4 @@
-# TITLE:  FAIR Metric XXXXX
+# TITLE:  FAIR Maturity Indicator XXXXX
 
 ## Authors: 
 John Doe, ORCID:0000-XXXX-XXXX-XXXX
@@ -10,9 +10,9 @@ Jane Doe, ORCID:0000-XXXX-XXXX-XXXX
 #### Accepted: pending
 
 
-### Maturity Assessment Identifier: ABCDE [https://w3id.org/fair/maturity_indicator/Gen2/ABCDE](https://w3id.org/fair/maturity_indicator/Gen2/ABCDE)
+### Maturity Indicator Identifier: ABCDE [https://w3id.org/fair/maturity_indicator/Gen2/ABCDE](https://w3id.org/fair/maturity_indicator/Gen2/ABCDE)
 
-### Maturity Assessment Name:   Put Your Short Title Here
+### Maturity Indicator Name:   Put Your Short Title Here
 
 ----
 
@@ -27,7 +27,7 @@ Explain why
 
 ### What must be provided for the measurement?
 The Metadata GUID.
-(this is the only acceptable answer for 2nd Gen metrics, so please leave this as it is!)
+(this is the only acceptable answer for 2nd Gen Maturity Indicator, so please leave this as it is!)
 
 
 ### How is the measurement executed?

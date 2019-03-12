@@ -1,4 +1,4 @@
-# TITLE:  FAIR Metric Gen2-MI-I3
+# TITLE:  FAIR Maturity Indicator Gen2-MI-I3
 
 ## Authors: 
 Mark D. Wilkinson, ORCID:0000-0001-6960-357X
@@ -12,9 +12,9 @@ Michel Dumontier, ORCID:0000-0003-4727-9435
 #### Accepted: pending
 
 
-### Maturity Assessment Identifier: Gen2_MI_F2B [https://w3id.org/fair/maturity_indicator/Gen2/Gen2_MI_F2B](https://w3id.org/fair/maturity_indicator/Gen2/Gen2_MI_F2B)
+### Maturity Indicator Identifier: Gen2_MI_F2B [https://w3id.org/fair/maturity_indicator/Gen2/Gen2_MI_F2B](https://w3id.org/fair/maturity_indicator/Gen2/Gen2_MI_F2B)
 
-### Maturity Assessment Name:   Grounded Metadata
+### Maturity Indicator Name:   Grounded Metadata
 
 ----
 
@@ -57,4 +57,4 @@ All
 ### Comments
 BEWARE:  Apache Tika is capable of extracting metadata, in the form of Linked Data, from a wide range of opaue file-types such as PDFs and images.
 This process will therefore return Linked Data that can only be found using a special tool.  Therefore, passing this
-Metric does not mean that the publisher has *actively* made grounded metadata available.
+Maturity Indicator does not mean that the publisher has *actively* made grounded metadata available.

@@ -1,4 +1,4 @@
-# TITLE:  FAIR Metric Gen2-MI-I3
+# TITLE:  FAIR Maturity Indicator Gen2-MI-I3
 
 ## Authors: 
 Mark D. Wilkinson, ORCID:0000-0001-6960-357X
@@ -12,9 +12,9 @@ Michel Dumontier, ORCID:0000-0003-4727-9435
 #### Accepted: pending
 
 
-### Maturity Assessment Identifier: Gen2_MI_I1B [https://w3id.org/fair/maturity_indicator/Gen2/Gen2_MI_I1B](https://w3id.org/fair/maturity_indicator/Gen2/Gen2_MI_I1B)
+### Maturity Indicator Identifier: Gen2_MI_I1B [https://w3id.org/fair/maturity_indicator/Gen2/Gen2_MI_I1B](https://w3id.org/fair/maturity_indicator/Gen2/Gen2_MI_I1B)
 
-### Maturity Assessment Name:   Use a Knowledge Representation Language (strict)
+### Maturity Indicator Name:   Use a Knowledge Representation Language (strict)
 
 ----
 
@@ -28,7 +28,7 @@ use of a formal, accessible, shared, and broadly applicable language for knowled
 The unambiguous communication of knowledge and meaning (what symbols are, and how they relate to one another) necessitates the use of languages that are capable of representing these concepts in a machine-readable manner.
 
 There is debate in the community about what languages would be considered "knowledge representation languages", as such
-this Maturity Metric is broken into two sub-metrics (Gen2-FM-I1A and Gen2-FM-I1B).  This metric takes a strict interpretation,
+this Maturity Indicator is broken into two sub-MIs (Gen2-FM-I1A and Gen2-FM-I1B).  This MI takes a strict interpretation,
 accepting only formats that are ontologically-grounded and machine-resolvable.
 
 

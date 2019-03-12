@@ -1,4 +1,4 @@
-# TITLE:  FAIR Metric Gen2-MI-I3
+# TITLE:  FAIR Maturity Indicator Gen2-MI-I3
 
 ## Authors: 
 Mark D. Wilkinson, ORCID:0000-0001-6960-357X
@@ -13,9 +13,9 @@ Michel Dumontier, ORCID:0000-0003-4727-9435
 
 
 
-### Maturity Assessment Identifier: Gen2_MI_F3 [https://w3id.org/fair/maturity_indicator/Gen2/Gen2_MI_F3](https://w3id.org/fair/maturity_indicator/Gen2/Gen2_MI_F3)
+### Maturity Indicator Identifier: Gen2_MI_F3 [https://w3id.org/fair/maturity_indicator/Gen2/Gen2_MI_F3](https://w3id.org/fair/maturity_indicator/Gen2/Gen2_MI_F3)
 
-### Maturity Assessment Name:   Use of GUIDs in metadata
+### Maturity Indicator Name:   Use of GUIDs in metadata
 
 ----
 
@@ -89,5 +89,5 @@ All
 
 
 ### Comments
-A future iteration of this metric will require the use of specific predicates such as schema:identifier to
+A future iteration of this MI will require the use of specific predicates such as schema:identifier to
 point to the GUID of the Metadata document itself.
