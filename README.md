@@ -7,8 +7,9 @@ The folder ['MaturityIndicators'](https://github.com/FAIRMetrics/Metrics/tree/ma
 
 Only Gen2 tests function with the current version of the [Evaluator software](https://w3id.org/FAIR_Evaluator).
 
+[List of FAIR Maturity Indicator on FAIRsharing](https://fairsharing.org/standards/?q=&selected_facets=type_exact:metric)
 
-Initiatives
+Related initiatives
 
 * [FAIR Metrics Group](http://www.fairmetrics.org/)
 * [NIH Working Group on FAIR Metrics](https://bd2kccc.org/working-groups/?v=commons&h=front) - [minutes](https://docs.google.com/document/d/1Z67UntK73zE8egLpKmIHfpexyuPWWV1gjcjfNeybK9o/edit?usp=sharing)
