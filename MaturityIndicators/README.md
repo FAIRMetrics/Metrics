@@ -11,23 +11,25 @@ The Gen1 and Gen2 folders in this directory contain textual descriptions of a va
 * [NIH Working Group on FAIR Metrics](https://bd2kccc.org/working-groups/?v=commons&h=front) - [minutes](https://docs.google.com/document/d/1Z67UntK73zE8egLpKmIHfpexyuPWWV1gjcjfNeybK9o/edit?usp=sharing)
 * [FAIR-TLC](https://zenodo.org/record/203295#.WVs8m4jfoUE)
 * [RDA Working Group on Data Usability](https://www.rd-alliance.org/data-publishing-data-usability-certification-services-rda-8th-plenary-bof-meeting)
+* [RDA Working Group on Data Maturity Model](https://www.rd-alliance.org/groups/fair-data-maturity-model-wg)
 * [Horizon 2020 Commission expert group on Turning FAIR data into reality](http://ec.europa.eu/transparency/regexpert/index.cfm?do=groupDetail.groupDetail&groupID=3464)
 
 ## Publications
 
-* [Preprint describing the metrics in this Git](https://doi.org/10.1101/225490)
+* [Paper describing the metrics in this Git](https://doi.org/10.1038/sdata.2018.118)
+* A manuscript describing the Gen2 Maturity Indicators, and the Evaluator, is currently in preparation
 
-# HOW TO CREATE A NEW MATURITY INDICATOR
+# HOW TO CREATE AND REGISTER A NEW MATURITY INDICATOR
 
-MIs are created, initially, as a narrative document, <a href='http://fairmetrics.org/fairmetricform.html'>following a template<a> extablished by the oroginal Authoring Group. A [MarkDown version of this template](https://github.com/FAIRMetrics/Metrics/blob/master/MetricTemplate.md) is available above, and should be used for MI submissions by the public.  Guidance for how to complete this document is found in the <a href='http://fairmetrics.org/framework.html'>authoring framework overview</a>.
+FAIR Maturity Indicators are created, initially, as a narrative document, <a href='http://fairmetrics.org/fairmetricform.html'>following a template<a> extablished by the FAIR Metrics Authoring Group. A [MarkDown version of this template](https://github.com/FAIRMetrics/Metrics/blob/master/MetricTemplate.md) is available above, and should be used for Maturity Indicator submissions by the public.  Guidance for how to complete this document is found in the <a href='http://fairmetrics.org/framework.html'>authoring framework overview</a>.
   
-Once a MI has been designed, the document should be submitted via 'pull request' to this repository, at which time it becomes available for community discussion.  The author of the MI should publicize it as widely as possible, to encourage maximal community input.  
+The author of the Maturity Indicator should publicize their submission as widely as possible, to encourage maximal community input. This can be achieved by registering the Maturity Indicator to <b>FAIRsharing</b>, via the <a href='https://fairsharing.org/new'>submission form </a>, or by contacting the FAIRsharing curators <a href='mailto:contact@fairsharing.org'> by email </a> they will harvest the information from the GitHub and help with the registration process. The new Maturity Indicator will be added to the existent <a href='https://fairsharing.org/standards/?q=&selected_facets=type_exact:metric'>list of Maturity Indicator </a> with the "in development" tag. 
 
-At this time, there is no formal process for adoption of MIs (incuding those that the original Authoring Group designed themselves!), as there is no official body that can recognize or "stamp" an MI as being "valid".  Nevertheless, authors should consider the comments and criticisms they receive, and modify the MI accordingly if the criticisms are justified.
+At this time, there is no formal process for adoption of Maturity Indicators (incuding those that the Authoring Group have designed themselves!), as there is no official body that can recognize or "stamp" a Maturity Indicator as being "valid".  Nevertheless, authors should consider the comments and criticisms they receive, and modify the submission accordingly if the criticisms are justified. When the Maturity Indicator is considered ready for use, the FAIRsharing curators will replace the "in development" with a "ready" tag to indicate readiness.
 
-# HOW TO CREATE A NEW MI TEST
+# HOW TO CREATE A NEW MATURITY INDICATOR TEST
 
-With the goal of providing an objective, automated way of testing (meta)data resources against the MIs, the Authorship Group have created the FAIR Evaluator, which is running as a demonstration service at http://w3id.org/FAIR_Evaluator.  The Evaluator provides a registry and execution functions for:
+With the goal of providing an objective, automated way of testing (meta)data resources against the Maturity Indicators, the Authorship Group have created the FAIR Evaluator, which is running as a demonstration service at http://w3id.org/FAIR_Evaluator.  The Evaluator provides a registry and execution functions for:
 
 * MI Tests
 * Community-defined Collections of MI Tests
@@ -91,9 +93,11 @@ This MI Test is registered by either HTTP POST of properly formatted JSON to the
 
 Once registered, a MI Test can be included in new MI Collections, and used by the Evaluator software for automated testing of data resources.
 
-# Resources available to help in MI Testing
+# FAIRsharing contents to help in in Maturity Indicator Testing
 
-The [FAIRSharing Registry](https://fairsharing.org) is a repository for a wide variety of standards, including file formats, ontologies, identifier types, etc.  They provide a JSON API that can be used within MI Tests to look-up "standards" a test encounters in its exploration of (meta)data to determine if that standard is registered.  Standards that are not registered with FAIRSharing should be encouraged to do so by contacting the appropriate standards-body, or by contacting the FAIRSharing team with a request to include the standard in their registry.
+[FAIRsharing](https://fairsharing.org) is a FAIR-enabling resource and a registry for a wide variety of community data and metadata standards, including file formats, ontologies, identifier schemas, as well as Maturity Indicators. FAIRsharing provide a JSON API that can be used within Maturity Indicator Tests to look-up "standards" a test encounters in its exploration of (meta)data to determine if that standard is registered.  
+
+Standards that are not registered with FAIRsharing are encouraged to do so by contacting the appropriate standards-body, or by submitting the missing standards via the <a href='https://fairsharing.org/new'>submission form </a>, or by contacting the FAIRsharing curators <a href='mailto:contact@fairsharing.org'> by email </a> to include the standard in their registry.  
 
 # PHILOSOPHY OF FAIR TESTING (under development!  Comments welcome!)
 
