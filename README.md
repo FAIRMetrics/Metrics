@@ -100,7 +100,7 @@ Once registered, a Maturity Indicator Test can be included in new Maturity Indic
 
 # FAIRsharing contents to help in Maturity Indicator Testing
 
-[FAIRsharing](https://fairsharing.org) is a FAIR-enabling resource and a registry for a wide variety of community data and metadata standards, including file formats, ontologies, identifier schemas, as well as Maturity Indicators. FAIRsharing provide a JSON API that can be used within Maturity Indicator Tests to look-up "standards" a test encounters in its exploration of (meta)data to determine if that standard is registered.  
+[FAIRsharing](https://fairsharing.org) is a FAIR-enabling resource and a registry for a wide variety of community data and metadata standards, including file formats, ontologies, identifier schemas, as well as for <a href='https://fairsharing.org/standards/?q=&selected_facets=type_exact:metric'> Maturity Indicators </a>.  In addition, FAIRsharing provides a JSON API that can be used within Maturity Indicator Tests to look-up "standards" a test encounters in its exploration of (meta)data to determine if that standard is registered.  
 
 Standards that are not registered with FAIRsharing are encouraged to do so by contacting the appropriate standards-body, or by submitting the missing standards via the <a href='https://fairsharing.org/new'>submission form </a>, or by contacting the FAIRsharing curators <a href='mailto:contact@fairsharing.org'> by email </a> to include the standard in their registry. 
 
