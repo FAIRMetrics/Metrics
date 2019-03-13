@@ -1,5 +1,5 @@
-# FAIR Maturity Indicators
-Tools to assess the FAIRness of a digital resource.
+# FAIR Maturity Indicators and Tools
+Resources and guidelines to assess the FAIRness of a digital resource.
 
 The folder ['MaturityIndicators'](https://github.com/FAIRMetrics/Metrics/tree/master/MaturityIndicators) contains the text (as MarkDown) for the:
 * Generation-1 (Gen1) questionnaire-style Maturity Indicator tests
@@ -7,21 +7,21 @@ The folder ['MaturityIndicators'](https://github.com/FAIRMetrics/Metrics/tree/ma
 
 Only Gen2 tests function with the current version of the [Evaluator software](https://w3id.org/FAIR_Evaluator).
 
-[List of FAIR Maturity Indicator on FAIRsharing](https://fairsharing.org/standards/?q=&selected_facets=type_exact:metric)
-
-Related initiatives
-
+## Directly Related Work
 * [FAIR Metrics Group](http://www.fairmetrics.org/)
+* [Collection of FAIR Maturity Indicator on FAIRsharing](https://fairsharing.org/standards/?q=&selected_facets=type_exact:metric)
+
+## Directly Related Publications
+* [Paper describing the metrics in this Git](https://doi.org/10.1038/sdata.2018.118)
+* A manuscript describing the Gen2 Maturity Indicators, and the Evaluator, is currently in preparation
+
+## Other Initiatives
 * [NIH Working Group on FAIR Metrics](https://bd2kccc.org/working-groups/?v=commons&h=front) - [minutes](https://docs.google.com/document/d/1Z67UntK73zE8egLpKmIHfpexyuPWWV1gjcjfNeybK9o/edit?usp=sharing)
 * [FAIR-TLC](https://zenodo.org/record/203295#.WVs8m4jfoUE)
 * [RDA Working Group on Data Usability](https://www.rd-alliance.org/data-publishing-data-usability-certification-services-rda-8th-plenary-bof-meeting)
 * [RDA Working Group on Data Maturity Model](https://www.rd-alliance.org/groups/fair-data-maturity-model-wg)
-* [Horizon 2020 Commission expert group on Turning FAIR data into reality](http://ec.europa.eu/transparency/regexpert/index.cfm?do=groupDetail.groupDetail&groupID=3464)
+* [Horizon 2020 Commission expert group on Turning FAIR data into reality](http://ec.europa.eu/transparency/regexpert/index.cfm?do=groupDetail.groupDetail&groupID=3464
 
-Publications
-
-* [Paper describing the metrics in this Git](https://doi.org/10.1038/sdata.2018.118)
-* A manuscript describing the Gen2 Maturity Indicators, and the Evaluator, is currently in preparation
 
 # HOW TO CREATE AND REGISTER A NEW MATURITY INDICATOR
 
@@ -32,6 +32,7 @@ A Template Markdown file is provided for you in the [MaturityIndicator folder](h
 The author of the Maturity Indicator should publicize their submission as widely as possible, to encourage maximal community input. This can be achieved by registering the Maturity Indicator to <b>FAIRsharing</b>, via the <a href='https://fairsharing.org/new'>submission form </a>, or by contacting the FAIRsharing curators <a href='mailto:contact@fairsharing.org'> by email </a> they will harvest the information from the GitHub and help with the registration process. The new Maturity Indicator will be added to the existent <a href='https://fairsharing.org/standards/?q=&selected_facets=type_exact:metric'>list of Maturity Indicator </a> with the "in development" tag. 
 
 At this time, there is no formal process for adoption of Maturity Indicators (incuding those that the Authoring Group have designed themselves!), as there is no official body that can recognize or "stamp" a Maturity Indicator as being "valid".  Nevertheless, authors should consider the comments and criticisms they receive, and modify the submission accordingly if the criticisms are justified. When the Maturity Indicator is considered ready for use, the FAIRsharing curators will replace the "in development" with a "ready" tag to indicate readiness.
+
 
 # HOW TO CREATE A NEW MATURITY INDICATOR TEST
 
