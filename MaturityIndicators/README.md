@@ -1,23 +1,24 @@
-
-# FAIR Maturity Indicators
-Tools to assess the FAIRness of a digital resource.
+# FAIR Maturity Indicators and Tools
+Resources and guidelines to assess the FAIRness of a digital resource.
 
 ## Gen1 and Gen2
 The Gen1 and Gen2 folders in this directory contain textual descriptions of a variety of FAIRness Maturity Indicators (MI).  Gen1 were used for the initial [survey-based FAIRness evaluations](https://doi.org/10.1101/225490), and can only be evaluated manually.  Taking the outcomes of the surveys as a broad view of community approaches to FAIRness, we then generated Gen2 MIs, which can be fully automated.  Gen2 MIs are used in the current iteration of the [FAIR Evaluator](https://w3id.org/FAIR_Evaluator)
 
-## Related Initiatives
-
+## Directly Related Work
 * [FAIR Metrics Group](http://www.fairmetrics.org/)
+* [Collection of FAIR Maturity Indicator on FAIRsharing](https://fairsharing.org/standards/?q=&selected_facets=type_exact:metric)
+
+## Directly Related Publications
+* [Paper describing the metrics in this Git](https://doi.org/10.1038/sdata.2018.118)
+* A manuscript describing the Gen2 Maturity Indicators, and the Evaluator, is currently in preparation
+
+## Other Initiatives
 * [NIH Working Group on FAIR Metrics](https://bd2kccc.org/working-groups/?v=commons&h=front) - [minutes](https://docs.google.com/document/d/1Z67UntK73zE8egLpKmIHfpexyuPWWV1gjcjfNeybK9o/edit?usp=sharing)
 * [FAIR-TLC](https://zenodo.org/record/203295#.WVs8m4jfoUE)
 * [RDA Working Group on Data Usability](https://www.rd-alliance.org/data-publishing-data-usability-certification-services-rda-8th-plenary-bof-meeting)
 * [RDA Working Group on Data Maturity Model](https://www.rd-alliance.org/groups/fair-data-maturity-model-wg)
-* [Horizon 2020 Commission expert group on Turning FAIR data into reality](http://ec.europa.eu/transparency/regexpert/index.cfm?do=groupDetail.groupDetail&groupID=3464)
+* [Horizon 2020 Commission expert group on Turning FAIR data into reality](http://ec.europa.eu/transparency/regexpert/index.cfm?do=groupDetail.groupDetail&groupID=3464
 
-## Publications
-
-* [Paper describing the metrics in this Git](https://doi.org/10.1038/sdata.2018.118)
-* A manuscript describing the Gen2 Maturity Indicators, and the Evaluator, is currently in preparation
 
 # HOW TO CREATE AND REGISTER A NEW MATURITY INDICATOR
 
