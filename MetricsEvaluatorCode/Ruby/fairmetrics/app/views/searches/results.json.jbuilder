@@ -16,14 +16,10 @@ json.set! 'title', "Search Results"
 json.set! 'description', "Your search results, separated into matching 'metrics' and 'collections'"
 
 json.set! 'metrics' do
-	json.array! @metrics.each do |metric|
-		json.partial! "metrics/metric", metric: metric
-	end
+	json.array! @metrics, partial: 'metrics/metric', as:  :metric
 end
 
 json.set! 'collections' do
-	json.array! @collections.each do |collection|
-		json.partial! "collections/collection", collection: collection
-	end
+	json.array! @collections, partial: 'collections/collection', as: :collection
 end
 

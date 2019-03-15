@@ -1,7 +1,7 @@
 class SearchesController < ApiController
 
 
-  skip_before_action :authenticate_request, only: %i[index execute show new collect_metrics register_metrics create deprecate]
+  skip_before_action :authenticate_request, only: %i[index execute show new]
 
 
   # GET /search
@@ -42,7 +42,8 @@ class SearchesController < ApiController
   
   # POST /searches/1
   def execute
-    keywords = params[:keywords]
+    logger.debug "BODY: #{request.body}\n\n\n"
+    keywords = search_params[:keywords]
     allkeys = keywords.split(",")
     @metrics = Array.new
     @collections = Array.new
@@ -70,14 +71,10 @@ class SearchesController < ApiController
   
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_collection
-      @collection = Collection.find(params[:id])
-    end
+
 
     # Never trust parameters from the scary internet, only allow the white list through.
-    def collection_params
-      params.permit(:name, :contact, :organization, :description, :collection)
-      params.permit(include_metrics: [])
+    def search_params
+      params.require(:search).permit(:keywords)
     end
 end
