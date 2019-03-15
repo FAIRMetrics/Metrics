@@ -329,6 +329,18 @@ paths:
                 $ref: '#/components/schemas/searchresult'
           description: a block of JSON containing two lists - a list of Maturity Tests,
             and a list of Collections - that match the search keywords
+        '307':
+          description: 307 redirect
+          headers:
+            Location:
+              schema:
+                type: string
+        '302':
+          description: 302 redirect
+          headers:
+            Location:
+              schema:
+                type: string
         '400':
           content:
             application/json:
