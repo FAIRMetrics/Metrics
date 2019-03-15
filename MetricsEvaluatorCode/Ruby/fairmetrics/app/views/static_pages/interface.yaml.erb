@@ -28,6 +28,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/collections_array'
           description: the requested Metric Collection
+        '307':
+          description: 307 redirect
+          headers:
+            Location:
+              schema:
+                type: string
         '302':
           description: 302 redirect
           headers:
@@ -53,6 +59,12 @@ paths:
           description: A LDP-Container, in JSON-LD, describing the Metric Collection
         '302':
           description: 302 redirect
+          headers:
+            Location:
+              schema:
+                type: string
+        '307':
+          description: 307 redirect
           headers:
             Location:
               schema:
@@ -89,6 +101,12 @@ paths:
             Location:
               schema:
                 type: string
+        '307':
+          description: 307 redirect
+          headers:
+            Location:
+              schema:
+                type: string
         '404':
           description: A response indicating an unknown collection id
       summary: Retrieve FAIR Metrics Collections by their Evaluator-id.
@@ -113,6 +131,12 @@ paths:
       responses:
         '302':
           description: 302 redirect
+          headers:
+            Location:
+              schema:
+                type: string
+        '307':
+          description: 307 redirect
           headers:
             Location:
               schema:
@@ -149,6 +173,12 @@ paths:
             Location:
               schema:
                 type: string
+        '307':
+          description: 307 redirect
+          headers:
+            Location:
+              schema:
+                type: string
         '404':
           description: A response indicating an unknown evaluation id
       summary: Retrieve the result of an existing FAIR Evaluation
@@ -163,6 +193,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/metrics_array'
           description: the requested FAIR Metric
+        '307':
+          description: 307 redirect
+          headers:
+            Location:
+              schema:
+                type: string
         '302':
           description: 302 redirect
           headers:
@@ -188,6 +224,12 @@ paths:
           description: A description of the registered metric
         '302':
           description: 302 redirect
+          headers:
+            Location:
+              schema:
+                type: string
+        '307':
+          description: 307 redirect
           headers:
             Location:
               schema:
@@ -224,6 +266,12 @@ paths:
             Location:
               schema:
                 type: string
+        '307':
+          description: 307 redirect
+          headers:
+            Location:
+              schema:
+                type: string
         '404':
           description: A response indicating an unknown metric id
       summary: Retrieve FAIR Tests by their Evaluator-id.
@@ -238,6 +286,18 @@ paths:
               schema:
                 $ref: '#/components/schemas/search_schema'
           description: a JSON Schema document for how to post a search query, and the URL in the Location header
+          headers:
+            Location:
+              schema:
+                type: string
+        '302':
+          description: 302 redirect
+          headers:
+            Location:
+              schema:
+                type: string
+        '307':
+          description: 307 redirect
           headers:
             Location:
               schema:
