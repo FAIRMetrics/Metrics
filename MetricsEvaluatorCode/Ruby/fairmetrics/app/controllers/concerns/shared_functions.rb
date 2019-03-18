@@ -8,16 +8,19 @@ module SharedFunctions
 require 'uri'
 require 'net/http'
 require 'openssl'
+require 'rest-client'
 
   def validate_orcid(orcid)
     return false unless orcid
     orcid.gsub!(/\s/, "+")
-    page = fetch("http://orcid.org/#{orcid}")
-    #logger.debug("\n\n\n\n\n\n\nPAGE: #{page.class}\n\n\n\n\n\n\n") 
-    if page and !(page.body.downcase =~ /sign\sin/)
+    page = RestClient.get "http://orcid.org/#{orcid}", {accept: :json}
+#    page = fetch_rdf("http://orcid.org/#{orcid}")
+#    logger.debug("\n\n\n\n\n\n\nPAGE: #{page.class}\n\n\n\n\n\n\n") 
+#    logger.debug("\n\n\n\n\n\n\nPAGE: #{page.body}\n\n\n\n\n\n\n") 
+    if page and page.body.downcase =~ /orcid-identifier/
       return true
     else
-      #logger.debug("\n\n\n\n\n\n\nADDING ERROR\n\n\n\n\n\n\n") 
+#      logger.debug("\n\n\n\n\n\n\nADDING ERROR\n\n\n\n\n\n\n") 
       return false
     end
   end
@@ -44,6 +47,7 @@ require 'openssl'
 	    return response  # now we are returning 'False', and we will check that with an \"if\" statement in our main code
     end
   end
+
 
 
    # this returns the URI that results from all redirects, etc.
@@ -100,6 +104,6 @@ require 'openssl'
     uri_str
     # response.body
   end
-  
+
   
 end
