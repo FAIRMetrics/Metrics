@@ -32,8 +32,8 @@ def testGUID
 		results = query.execute(metadata.graph)	
 		if results.any?
 			f = results.first
-			@swagger.addComment("Found pattern-match in metadata #{f[:s]} #{f[:p]} #{f[:o]}.  This provides a partial success score.")		
-			@swagger.score = 0.75
+			@swagger.addComment("Found pattern-match in metadata #{f[:s]} #{f[:p]} #{f[:o]}.  This scores as a success, but an additional more rigorous test will now be executed.  ")		
+			@swagger.score = 1.0
 		end
 		
 		# query pattern-match in an subject position
@@ -41,14 +41,15 @@ def testGUID
 		results = query.execute(metadata.graph)	
 		if results.any?
 			f = results.first
-			@swagger.addComment("Found pattern-match in metadata #{f[:s]} #{f[:p]} #{f[:o]}.  This provides a partial success score.")		
-			@swagger.score = 0.75
+			@swagger.addComment("Found pattern-match in metadata #{f[:s]} #{f[:p]} #{f[:o]}.  This provides a success score; however, a more rigorous test will now be executed.")		
+			@swagger.score = 1.0
 		end
 
 		query = SPARQL.parse("select ?s ?p ?o WHERE {?s ?p ?o . FILTER(str(?o)='#{guid}')}")
 		results = query.execute(metadata.graph)
+		@swagger.addComment("Looking for exact-match of #{guid}, with no prefixes or suffixes in RDF output.   ")
 		if results.any?
-			@swagger.score += 0.25
+			@swagger.score = 1.0
 			@swagger.addComment("Found exact-match of #{guid} (e.g. as a string) in RDF output.   ")
 			f = results.first
 			@swagger.addComment("found matching metadata #{f[:s]} #{f[:p]} #{f[:o]}.  Success!")		
@@ -56,8 +57,9 @@ def testGUID
 		
 		query = SPARQL.parse("select ?s ?p ?o WHERE {?s ?p ?o . FILTER(str(?s)='#{guid}')}")
 		results = query.execute(metadata.graph)
+		@swagger.addComment("Looking for exact-match of #{guid}, with no prefixes or suffixes in RDF output.   ")
 		if results.any?
-			@swagger.score += 0.25
+			@swagger.score = 1
 			@swagger.addComment("Found exact-match of #{guid} (e.g. as a string) in RDF output.   ")
 			f = results.first
 			@swagger.addComment("found matching metadata #{f[:s]} #{f[:p]} #{f[:o]}.  Success!")		
@@ -74,7 +76,7 @@ def testGUID
 			key = key.to_s
 			if key =~ /#{guid}/ or value.to_s =~ /#{guid}/
 				@swagger.addComment "found #{guid} in hashed metadata.  "
-				@swagger.score = 0.75
+				@swagger.score = 1.0
 			end
 		end
 	end
@@ -82,7 +84,7 @@ def testGUID
 		metadata.full_response.each do |httpresponse|
 			if httpresponse.body.include?guid
 				@swagger.addComment("  The identifier #{guid} was found within the raw content returned by resolution of that identifier.  ")
-				@swagger.score = 0.5
+				@swagger.score = 1.0
 				return @swagger.createEvaluationResponse
 			else
 				@swagger.addComment("  The identifier #{guid} was not found in either the structured or unstructured content from resolving that identifier.   ")
