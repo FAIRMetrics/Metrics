@@ -107,7 +107,13 @@ def testGUID
 			@swagger.addComment "found identifier #{results.first[:o]} using schema.org. "
 			@identifier = results.first[:o].value
 		end
-		
+
+                query = SPARQL.parse("select ?o where {?s <http://www.w3.org/ns/ldp#contains> ?o}")
+                results = query.execute(g)
+                if  results.any?
+                        @swagger.addComment "found identifier #{results.first[:o]} using Linked Data Platform Contains.  "
+                        @identifier = results.first[:o].value
+                end		
 		# hopefully we have it by now... if not... we fail!
 		$stderr.puts "\n\nfound identifier #{@identifier} \n\n"
 

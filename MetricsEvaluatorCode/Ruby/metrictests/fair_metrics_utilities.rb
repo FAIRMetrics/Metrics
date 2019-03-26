@@ -12,7 +12,7 @@ require 'tempfile'
 require 'xmlsimple'
 require 'nokogiri'
 require 'parseconfig'
-
+require 'rest-client'
 
 
 class Utils
@@ -397,7 +397,9 @@ class Utils
       # Parse each part into a named link
       parts.each do |part, index|
         section = part.split(';')
+next unless section[0]
         url = section[0][/<(.*)>/,1]
+next unless section[1]
         type = section[1][/rel="(.*)"/,1].to_sym
         next unless type == "meta"  # only keep meta headers
         links << url
@@ -537,56 +539,14 @@ class Utils
 
    # this returns the URI that results from all redirects, etc.
   def Utils::resolve(uri_str, header = Utils::AcceptHeader, timeout = 90, agent = 'curl/7.43.0', max_attempts = 10)
-    attempts = 0
-    max_attempts = 5
-    cookie = nil
-
-    until attempts >= max_attempts
-      attempts += 1
-
-      url = URI.parse(uri_str)
-      http = Net::HTTP.new(url.host, url.port)
-      http.open_timeout = timeout
-      http.read_timeout = timeout
-      path = url.path
-      path = '/' if path == ''
-      path += '?' + url.query unless url.query.nil?
-
-      params = { 'User-Agent' => agent }.merge header
-      params['Cookie'] = cookie unless cookie.nil?
-      request = Net::HTTP::Get.new(path, params)
-
-      if url.instance_of?(URI::HTTPS)
-        http.use_ssl = true
-        http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-      end
-      begin
-          response = http.request(request)
-      rescue
-          return false
-      end
-
-      case response
-        when Net::HTTPSuccess then
-          break
-        when Net::HTTPRedirection then
-          location = response['Location']
-          cookie = response['Set-Cookie']
-          new_uri = URI.parse(location)
-          uri_str = if new_uri.relative?
-                      url + location
-                    else
-                      new_uri.to_s
-                    end
-        when Net::HTTPNotAcceptable
-            break
-        else
-          $stderr.puts "\n\nUnexpected response from #{url.inspect}: " + response.inspect + "\n\n"
-      end
+    begin
+        resp = RestClient.head(uri_str, {"Accept" => header["Accept"], "User-Agent" => agent})
+    rescue RestClient::ExceptionWithResponse => e
+	$stderr.puts "Attempts to resolve the redirects for #{uri_str} failed with a #{e.response}.  Test halting  "
+        return false
     end
-    #$stderr.puts "\n\nToo many http redirects from  #{url.inspect}:\n\n" if attempts == max_attempts
-
-    uri_str
+    uri = resp.request.url
+    return uri
   end
   
   def Utils::isEncoded(uri)
