@@ -43,7 +43,6 @@ def testGUID
 	seen = Array.new
 	g.each do |stm|
 		break if count>=10
-		count+=1
 		$stderr.puts "predicate #{stm.predicate.value}"
 		next if seen.include?stm.predicate.value
 		seen << stm.predicate.value
@@ -51,6 +50,7 @@ def testGUID
 		response = Utils::fetch(stm.predicate.value, Utils::AcceptHeader)  # this  sends the content-negotiation for linked data
 		(parser, contenttype) = Utils::figure_out_type(response) if response
 		success += 1 if parser and Utils::RDF_FORMATS.keys.include?(parser)
+		count+=1
 		$stderr.puts contenttype
 	end
 	
