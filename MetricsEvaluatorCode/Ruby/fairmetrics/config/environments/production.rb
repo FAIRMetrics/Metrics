@@ -12,8 +12,8 @@ Rails.application.configure do
 
   # Full error reports are disabled and caching is turned on.
   config.consider_all_requests_local       = false
-#  config.action_controller.perform_caching = true
-  config.action_controller.perform_caching = false
+  config.action_controller.perform_caching = true
+#  config.action_controller.perform_caching = false
 
   # Attempt to read encrypted secrets from `config/secrets.yml.enc`.
   # Requires an encryption key in `ENV["RAILS_MASTER_KEY"]` or
@@ -58,7 +58,7 @@ Rails.application.configure do
   config.log_level = :debug
 
   # Prepend all log lines with the following tags.
-  config.log_tags = [ :request_id ]
+  config.log_tags = [:remote_ip, :request_id ]
 
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store

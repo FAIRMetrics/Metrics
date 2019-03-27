@@ -48,6 +48,9 @@ def testGUID
 		elsif key =~ /000332/ or key =~ /SIO:0000136/
 			@swagger.addComment "found SIO is about in metadata.  "
 			@identifier = value
+		elsif key =~ /contains/ or key =~ /ldp:contains/
+			@swagger.addComment "found SIO is about in metadata.  "
+			@identifier = value
 		end
 	end
 
@@ -102,6 +105,14 @@ def testGUID
 		results = query.execute(g)
 		if  results.any?
 			@swagger.addComment "found identifier #{results.first[:o]} using schema.org. "
+			@identifier = results.first[:o].value
+		end
+
+
+		query = SPARQL.parse("select ?o where {?s <http://http://www.w3.org/ns/ldp#contains> ?o}")
+		results = query.execute(g)
+		if  results.any?
+			@swagger.addComment "found identifier #{results.first[:o]} using Linked Data Platform 'contains'. "
 			@identifier = results.first[:o].value
 		end
 		
