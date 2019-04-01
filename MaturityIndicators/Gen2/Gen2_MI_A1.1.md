@@ -1,4 +1,4 @@
-# TITLE:  FAIR Maturity Indicator Gen2-MI-I3
+# TITLE:  FAIR Maturity Indicator Gen2-MI-A1.1
 
 ## Authors: 
 Mark D. Wilkinson, ORCID:0000-0001-6960-357X
