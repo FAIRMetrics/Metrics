@@ -1,6 +1,8 @@
 doi_url = "https://doi.org/"
 fairont = "https://purl.org/fair-ontology/"
 metrics_url = "https://purl.org/fair-metrics/"
+principle_url = "https://w3id.org/fair/principles/terms/"
+
 type1= "http://purl.org/dc/dcmitype/Dataset"
 type2 =    fairont + "FAIR-Metrics-Compliance-Test"
 
@@ -18,4 +20,4 @@ metrics_url = "https://purl.org/fair-metrics/"
 
 json.extract! metric, :name, :orcid, :creator, :description, :email, :test_of_metric, :smarturl, :created_at, :updated_at, :deprecated
 
-json.principle metrics_url + metric.principle.to_s
+json.principle principle_url + metric.principle.to_s

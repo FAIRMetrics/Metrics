@@ -39,6 +39,8 @@ json.set! 'http://www.w3.org/ns/dcat#identifier', collection_url(collection)
 
 json.set! 'http://www.w3.org/ns/dcat#publisher', "http://fairmetrics.org"
 
+json.set! 'http://purl.obolibrary.org/obo/IAO_0000114', collection.deprecated.to_s
+
 json.set! 'http://www.w3.org/ns/ldp#contains' do
 	json.array! collection.metrics.map {|m| metric_url(m)}
 end
