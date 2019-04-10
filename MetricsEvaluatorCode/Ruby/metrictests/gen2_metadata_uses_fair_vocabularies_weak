@@ -41,7 +41,7 @@ def testGUID
 	success = 0  # we will accept 5/10 failures
 	count = 0
 	g.each do |stm|
-		break if count>=10
+		break if count>=6
 		check = Utils::resolve(stm.predicate)  # this only does URL resolution, no retrieval - returns a string or false
 		success += 1 if check
 		count+=1
@@ -60,14 +60,14 @@ end
 
 
 if debug
-#	@input = '{"subject": "10.5281/zenodo.1147435"}'  # doi fail
-#	@input = '{"subject": "10.5281/zenodo.1065973"}'  # doi fail
+#	@input = '{"subject": "10.5281/zenodo.1147435"}'  # doi
+#	@input = '{"subject": "10.5281/zenodo.1065973"}'  # doi 
 #	@input = '{"subject": "BSYNRYMUTXBXSQ-UHFFFAOYSA-N"}' # inchi
 #	@input = '{"subject": "LFQSCWFLJHTTHZ-UHFFFAOYSA-N"}' # another inchi
 #	@input = '{"subject": "20.1000/105"}'  # handle (fail)
 #	@input = '{"subject": "http://linkeddata.systems/Magnaporthe/polyA_Sites"}'  # handle
-#	@input = '{"subject": "10.25504/FAIRsharing.6k0kwd"}'  # doi fail
-	@input = '{"subject": "http://csarven.ca/dokieli-rww"}'
+	@input = '{"subject": "10.25504/FAIRsharing.6k0kwd"}'  # doi 
+#	@input = '{"subject": "http://csarven.ca/dokieli-rww"}'
 
 else 
 	@input = $stdin.read

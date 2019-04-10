@@ -52,8 +52,8 @@ def testGUID
 				return @swagger.createEvaluationResponse
 			end
 			
-			result = Utils::fetch(policyURI, {"Accept" => "*/*"})  # returns HTTP object, or false
-			if result
+			head, body = Utils::fetch(policyURI, {"Accept" => "*/*"})  # returns HTTP object, or false
+			if head
 				@swagger.addComment("Persistence policy resolved.  Pass.")
 				@swagger.score = 1
 				return @swagger.createEvaluationResponse

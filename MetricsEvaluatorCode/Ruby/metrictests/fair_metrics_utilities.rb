@@ -13,6 +13,8 @@ require 'xmlsimple'
 require 'nokogiri'
 require 'parseconfig'
 require 'rest-client'
+require 'cgi'
+require 'digest'
 
 
 class Utils
@@ -22,7 +24,7 @@ class Utils
     #$stderr.puts "EXTRUCT #{@extruct_command}\n\n"
     Utils::ExtructCommand = @extruct_command
 
-    Utils::AcceptHeader = {'Accept' => 'text/turtle, application/n3, application/rdf+n3, application/turtle, application/x-turtle,text/n3,text/turtle, text/rdf+n3, text/rdf+turtle,application/json+ld, text/xhtml+xml,application/rdf+xml,application/n-triples' }
+    Utils::AcceptHeader = {'Accept' => 'text/turtle, application/ld+json, application/rdf+xml, text/xhtml+xml, application/n3, application/rdf+n3, application/turtle, application/x-turtle, text/n3, text/turtle, text/rdf+n3, text/rdf+turtle, application/n-triples' }
 
     Utils::TEXT_FORMATS = {
         'text' => ['text/plain',],
@@ -98,26 +100,32 @@ class Utils
       meta.guidtype = "inchi"
       
       meta.comments << "Found an InChI Key GUID.  "
-      response1 = self.fetch("https://pubchem.ncbi.nlm.nih.gov/rest/rdf/inchikey/#{guid}", nil, meta)
+#$stderr.puts "1"
+      head, body = self.fetch("https://pubchem.ncbi.nlm.nih.gov/rest/rdf/inchikey/#{guid}", Utils::AcceptHeader, meta)
       # this is a Net::HTTP response
-      ##$stderr.puts step1.body
-      return meta unless response1
+#$stderr.puts "2"
+
+      return meta unless body
+#$stderr.puts "3"
       
-      meta.full_response << response1 # set it here so it isn't empty
+      meta.full_response << body # set it here so it isn't empty
+#$stderr.puts "4"
       
-      (parser, type) = Utils::figure_out_type(response1)
+      (parser, type) = Utils::figure_out_type(head)
       unless parser
         meta.comments << "couldn't find a parser for the data returned from https://pubchem.ncbi.nlm.nih.gov/rest/rdf/inchikey/#{guid}"
         return meta
       end
+#$stderr.puts "5"
 
       # this next operation is safe because we know that pubchem does in fact return Turtle
       unless parser.eql?"turtle"
         meta.comments << "expected turtle format...  aborting"
         return meta   # simply fail if they asked for HTML or something else
       end
+#$stderr.puts "6"
       
-      Utils::parse_rdf(meta, response1) 
+      Utils::parse_rdf(meta, body) 
         
       query = SPARQL.parse("select ?o where {?s <http://semanticscience.org/resource/is-attribute-of> ?o}")
       results = query.execute(meta.graph)
@@ -125,21 +133,25 @@ class Utils
         meta.comments << "could not find the sio:is_attribute_of predicate in the first layer of metadata.  Aborting with failure.  "
         return meta
       end
+#$stderr.puts "7"
       
       cpd = results.first[:o]
       cpd = cpd.to_s
-      cpd = cpd.gsub(/\/$/, "")
-      response2 = fetch(cpd)
-      return meta unless response2
+      cpd = cpd.gsub(/\/$/, "")  # has a rogue trailing slash
+      head2, body2 = self.fetch(cpd, Utils::AcceptHeader, meta)
+      return meta unless body2
+#$stderr.puts "8"
       
-      meta.full_response << response2  # set it here so it isn't empty
-      (parser, type) = Utils::figure_out_type(response2)
+      meta.full_response << body2  # set it here so it isn't empty
+      (parser, type) = Utils::figure_out_type(head2)
       # this next operation is safe because we know that pubchem does in fact return Turtle
       unless parser.eql?"turtle"
         meta.comments << "expected turtle format... from #{cpd} aborting"
         return meta   # simply fail if they asked for HTML or something else
       end
-      Utils::parse_rdf(meta, response2)
+#$stderr.puts "9"
+      Utils::parse_rdf(meta, body2)
+#$stderr.puts "10"
       
       return meta
     end
@@ -173,23 +185,23 @@ class Utils
     def Utils::resolve_uri(guid, meta, nolinkheaders=false, header=Utils::AcceptHeader)
       meta.guidtype = "uri" if meta.guidtype == "unknown"  # might have been set already, e.g. to 'handle' or 'doi'
       #$stderr.puts "\n\n FETCHING #{guid} #{header}\n\n"
-      response =  Utils::fetch(guid, header, meta)
-      if !response
-          response =  Utils::fetch(guid, {'Accept' => "*.*"}, meta)
+      head, body = Utils::fetch(guid, header, meta)
+      if !head
+          meta.comments << "Unable to resolve #{guid} using Content-type negotiation for linked data.  Now trying */*"
+          head, body =  Utils::fetch(guid, {'Accept' => "*/*"}, meta)
       end
-      if !response
+      if !head
+          meta.comments << "Unable to resolve #{guid} using any Content-type negotiation.  Giving up.  "
           return meta
       end
                                        
-      meta.full_response << response
-
-      #$stderr.puts response.header
+      meta.full_response << body
 
       links = Array.new
-      links = Utils::parse_link_meta_headers(response) unless nolinkheaders
+      links = Utils::parse_link_meta_headers(head) unless nolinkheaders
       links.each {|link| Utils::resolve_uri(link, meta, true)}  # this fills the metadata object with the content from Link headers, but not recursively
       
-      (parser, contenttype) = Utils::figure_out_type(response)
+      parser, contenttype = Utils::figure_out_type(head)
       
       meta.comments << "Found #{parser} #{contenttype} type of file by resolving GUID.  "
       #$stderr.puts "\n\nFound #{parser} type of file by resolving GUID #{guid}.  BODY:  #{response.body}  \n\n"
@@ -197,23 +209,23 @@ class Utils
         case
         when Utils::TEXT_FORMATS.keys.include?(parser)
           #$stderr.puts "\n\nPARSING TEXT\n\n"
-          Utils::parse_text(meta, response)
+          Utils::parse_text(meta, body)
         when Utils::RDF_FORMATS.keys.include?(parser)
           #$stderr.puts "\n\nPARSING RDF\n\n"
-          Utils::parse_rdf(meta, response)
+          Utils::parse_rdf(meta, body)
         when Utils::HTML_FORMATS.keys.include?(parser)
           #$stderr.puts "\n\nPARSING HTML\n\n"
           Utils::do_extruct(meta, guid)
         when Utils::XML_FORMATS.keys.include?(parser)
           #$stderr.puts "\n\nPARSING XML\n\n"
-          Utils::parse_xml(meta, response)
+          Utils::parse_xml(meta, body)
         when Utils::JSON_FORMATS.keys.include?(parser)
           #$stderr.puts "\n\nPARSING JSON\n\n"
-          Utils::parse_json(meta, response)
+          Utils::parse_json(meta, body)
         else
           #$stderr.puts "\n\nPARSING UNKNOWN\n\n"
           meta.comments << "Metadata may be embedded, now searching using the Apache 'tika' tool.  "
-          Utils::do_tika(meta, response)  # this expects a string, not an Net::HTTP
+          Utils::do_tika(meta, body)  # this expects a string, not an Net::HTTP
           meta.comments << "Metadata may be embedded, now searching using the 'Distiller' tool.  "
 	  Utils::do_distiller(meta, guid)
           meta.comments << "Metadata may be embedded, now searching using the 'extruct' tool.  "
@@ -234,77 +246,85 @@ class Utils
     # ==================================================================
     # ==================================================================
     
-    def Utils::parse_text(meta, message)
+    def Utils::parse_text(meta, body)
         meta.comments << "Plain Text cannot be mapped to any parser.  No structured metadata found.  "
         meta.comments << "using Apache Tika to attempt to extract metadata. "
         
-        return Utils::do_tika(meta, message)
+        return Utils::do_tika(meta, body)
     
         
     end
     
-    def Utils::parse_json(meta,message)
-      hash = JSON.parse(message.body)
+    def Utils::parse_json(meta,body)
+      hash = JSON.parse(body)
       meta.hash.merge hash
       return meta.hash
     end
       
     
-    def Utils::parse_html(meta, message)
+    def Utils::parse_html(meta, body)
        # just use extruct instead
     end
     
     
     
-    def Utils::parse_rdf(meta, message, format=nil)
+    def Utils::parse_rdf(meta, body, format=nil)
       #$stderr.puts "\n\nrequested format #{format}\n\n"
-      contenttype = ""
-      body = "" # to hold the raw rdf
-      #$stderr.puts "MESSAGE CLASS #{message} #{message.class}\n\n\n"
-      if message.class <= Net::HTTPResponse  # should probably do duck typing here... more Rubyish!
-        if (message.header['content-type'].match(/([\w\+]+\/[\w\+]+):?/im))
-          contenttype = $1
-          body = message.body
-          #$stderr.puts "MESSAGE BODY #{body}\n\n\n"
-        else
-          #$stderr.puts "Message was an http response with no type???\n\n\n"
-          meta.comments << "no content-type header could be found in the message.  This is very odd!  Likely a bug in our software.  "
-        end
-      else # this is just an incoming string... in which case, it MUST have a format indicator (MIME type)
-          #$stderr.puts "\n\nINCOMING STRING\n\n*#{message}*\n\n"
-        contenttype = format
-        if !contenttype
-          meta.comments << "no content-type was passed with a raw RDF body.  This is very odd!  Likely a bug in our software (i.e. not your fault!)  Please tell the dev team.  "
-          return meta
-        end
-        body = message # this is raw rdf
-      end
+      #contenttype = ""
+      #body = "" # to hold the raw rdf
+      ##$stderr.puts "MESSAGE CLASS #{message} #{message.class}\n\n\n"
+      #if message.class <= Net::HTTPResponse  # should probably do duck typing here... more Rubyish!
+      #  if (message.header['content-type'].match(/([\w\+]+\/[\w\+]+):?/im))
+      #    contenttype = $1
+      #    body = message.body
+      #    #$stderr.puts "MESSAGE BODY #{body}\n\n\n"
+      #  else
+      #    #$stderr.puts "Message was an http response with no type???\n\n\n"
+      #    meta.comments << "no content-type header could be found in the message.  This is very odd!  Likely a bug in our software.  "
+      #  end
+      #else # this is just an incoming string... in which case, it MUST have a format indicator (MIME type)
+      #    #$stderr.puts "\n\nINCOMING STRING\n\n*#{message}*\n\n"
+      #  contenttype = format
+      #  if !contenttype
+      #    meta.comments << "no content-type was passed with a raw RDF body.  This is very odd!  Likely a bug in our software (i.e. not your fault!)  Please tell the dev team.  "
+      #    return meta
+      #  end
+      #  body = message # this is raw rdf
+      #end
 
       #$stderr.puts "\n\n\nSampling \n\n#{body}\n\n"
+      unless body
+          meta.comments << "This message body component appears to have no content.  "
+          return meta
+      end
       unless body.match(/\w/)
-          #$stderr.puts "\n\n\nSampling FOUND NOTHING!\n\n"
-          meta.comments << "This #{contenttype} component appears to have no content.  "
+          meta.comments << "This message body component appears to have no content.  "
           return meta
       end
 
-      formattype = RDF::Format.for(content_type: contenttype)
-      formattype ||= RDF::Format.for({:sample => body})
-      $stderr.puts "\n\n\nTrying to create RDF reader for #{formattype}\n\n#{body}\n\n#{message}\n"
+      #formattype = RDF::Format.for(content_type: contenttype)
+#$stderr.puts "p1"
+
+      formattype = RDF::Format.for({:sample => body})
+      #$stderr.puts "\n\n\nTrying to create RDF reader for #{formattype}\n\n#{body}\n\n#{message}\n"
+#$stderr.puts "p2"
 
       if !formattype
-        meta.comments << "We were unable to find an RDF reader type that matches the content that was returned.  Please send your GUID to the dev team so we can investigate!  "
+        meta.comments << "Unable to find an RDF reader type that matches the content that was returned from resolution.  Here is a sample #{body[0..100]}  Please send your GUID to the dev team so we can investigate!  "
         return meta
       end
       reader = formattype.reader.new(body)
-      $stderr.puts "Reader Class #{reader.class}\n\n #{reader.inspect}"
+      #$stderr.puts "Reader Class #{reader.class}\n\n #{reader.inspect}"
       meta.merge_rdf(reader.to_a)
+#$stderr.puts "p3"
+
     end
     
     
     
     
-    def Utils::parse_xml(meta, message)
-      hash = XmlSimple.xml_in(message.body)
+    def Utils::parse_xml(meta, body)
+      hash = XmlSimple.xml_in(body)
       meta.hash.merge hash
       return meta.hash
     end
@@ -312,10 +332,10 @@ class Utils
     
 
     
-    def Utils::do_tika(meta, message)
+    def Utils::do_tika(meta, body)
         file = Tempfile.new('foo')
         file.binmode
-        file.write(message.body)
+        file.write(body)
         file.rewind
         
         result = %x{curl --silent -T #{file.path} http://localhost:9998/meta --header "Accept: application/rdf+xml" 2>&1}
@@ -326,28 +346,28 @@ class Utils
     end
     
     
-     def Utils::do_distiller(meta, uri)
+    def Utils::do_distiller(meta, uri)
         meta.comments << "Using 'Kellog's Distiller' to try to extract metadata from return value (message body) of #{uri}.  "
-        
-        result = Utils::fetch("http://rdf.greggkellogg.net/distiller?command=serialize&url=#{uri}&raw")
-        $stderr.puts "\n\n\n\n\n\n\nDistiller:\n#{result.class}\n\n#{result.to_s}\n\n #{uri} 2>&1\n\n"
+        # $stderr.puts uri
+        urlparam = CGI::escape(uri.to_s)
+        head, body = Utils::fetch("http://rdf.greggkellogg.net/distiller?command=serialize&url=#{urlparam}&output_format=turtle", {"Accept" => "*/*"}, meta)
         # need to do some error checking here!
-	if !result
-          meta.comments << "The Distiller tool failed to find parseable data at #{uri}.  "
-	
-	else          
-          Utils::parse_rdf(meta, result.body, "application/n-triples")
+        if head[:content_type] =~ /html/   # this is an HTML failure message
+              meta.comments << "The Distiller tool failed to find parseable data at #{uri}.  "
+        else          
+          Utils::parse_rdf(meta, body, "text/turtle")
           meta.comments << "The Distiller found parseable data at #{uri}.  "
         end
  
     end
+
 
     def Utils::do_extruct(meta, uri)
       
         meta.comments << "Using 'extruct' to try to extract metadata from return value (message body) of #{uri}.  "
         
         result = %x{#{Utils::ExtructCommand} #{uri} 2>&1}
-        $stderr.puts "\n\n\n\n\n\n\n#{result.class}\n\n#{result.to_s}\n\n#{@extruct_command} #{uri} 2>&1\n\n"
+        #$stderr.puts "\n\n\n\n\n\n\n#{result.class}\n\n#{result.to_s}\n\n#{@extruct_command} #{uri} 2>&1\n\n"
         # need to do some error checking here!
         if result.to_s.match(/^\s+?\{/) or result.to_s.match(/^\s+\[/) # this is JSON
           json = JSON.parse result
@@ -385,10 +405,10 @@ class Utils
     
 
     
-    def Utils::parse_link_meta_headers(message)
+    def Utils::parse_link_meta_headers(headers)
       # we can be sure that a Link header is a URL
       # code stolen from https://gist.github.com/thesowah/0ca5e1b4b3c61bfe8e13
-      links = message.header['link']
+      links = headers[:link]
       return [] unless links
       
       parts = links.split(',')
@@ -397,9 +417,9 @@ class Utils
       # Parse each part into a named link
       parts.each do |part, index|
         section = part.split(';')
-next unless section[0]
+        next unless section[0]
         url = section[0][/<(.*)>/,1]
-next unless section[1]
+        next unless section[1]
         type = section[1][/rel="(.*)"/,1].to_sym
         next unless type == "meta"  # only keep meta headers
         links << url
@@ -441,8 +461,8 @@ next unless section[1]
 
     
 
-  def Utils::figure_out_type(message)
-    type = message.header['content-type']
+  def Utils::figure_out_type(head)
+    type = head[:content_type]
     type.match(/([\w\+]+\/[\w\+]+):?/im)
     type = $1
     #$stderr.puts "\n\nsearching for #{type}\n\n"
@@ -467,104 +487,131 @@ next unless section[1]
     
     
   # general Web utilities... follow redirects, for example
-  def Utils::fetch(uri_str, header=Utils::AcceptHeader, meta=nil)  #we will try to retrieve turtle whenever possible
+  def Utils::fetch(url, headers = Utils::AcceptHeader, meta=nil)  #we will try to retrieve turtle whenever possible
 
-    if Utils::isEncoded(uri_str)
-        address = fullyDecodeURI(uri_str)
-        address = URI::encode(uri_str)
-    else
-        address = uri_str
-    end
-
-    address = Utils::resolve(address, header)  # this runs through any redirects until there is a URL that will return data
-    unless address
-        if meta
-            meta.comments << "the discovered URL does not resolve at all.  test halting.  "
+        head, body = Utils::checkCache(url, headers)
+        if head and body
+            $stderr.puts "Retrieved from cache, returning data to code"
+            return [head, body]
         end
-        return false
-    end
 
-    meta.finalURI = address if meta
+		begin
+			response = RestClient::Request.execute({
+					method: :get,
+					url: url.to_s,
+					#user: user,
+					#password: pass,
+					headers: headers})			
+			meta.finalURI = response.request.url if meta
+			Utils::writeToCache(url, headers, response.headers, response.body)
+			return [response.headers, response.body]
+		rescue RestClient::ExceptionWithResponse => e
+			$stderr.puts e.response
+			response = false
+			return response  # now we are returning 'False', and we will check that with an \"if\" statement in our main code
+		rescue RestClient::Exception => e
+			$stderr.puts e.response
+			response = false
+			return response  # now we are returning 'False', and we will check that with an \"if\" statement in our main code
+		rescue Exception => e
+			$stderr.puts e
+			response = false
+			return response  # now we are returning 'False', and we will check that with an \"if\" statement in our main code
+		end		  # you can capture the Exception and do something useful with it!\n",
 
-      url = URI.parse(address)
-      http = Net::HTTP.new(url.host, url.port)
-      http.open_timeout = 120
-      http.read_timeout = 120
-      path = url.path
-      path = '/' if path == ''
-      path += '?' + url.query unless url.query.nil?
 
-      params = { 'User-Agent' => 'curl/7.43.0' }.merge header
-      request = Net::HTTP::Get.new(path, params)
-
-      if url.instance_of?(URI::HTTPS)
-        http.use_ssl = true
-        http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-      end
-      begin
-          response = http.request(request)
-      rescue
-          return false
-      end
-
-    case response   # the \"case\" block allows you to test various conditions... it is like an \"if\", but cleaner!\n,
-	  when Net::HTTPSuccess then  # when response Object is of type Net::HTTPSuccess\n",
-	    # successful retrieval of web page\n",
-	    return response  # return that response object to the main code\n",
-	  else
-	    #raise Exception, "Something went wrong... the call to #{uri_str} failed; type #{response.class}"
-	    response = false
-	    return response  # now we are returning 'False', and we will check that with an \"if\" statement in our main code
-    end
   end
 
-  def Utils::head(uri)
-    uri = Utils::resolve(uri)
-    return false unless uri
-    response=nil
-    http = Net::HTTP.new(uri.host, uri.port)
-    http.read_timeout = 90  # set to 90 seconds, because some servers, like the W3C, deeply object to my Accept headers!  LOL!
 
-    if uri.match(/^https:/i)
-      http.use_ssl = true                            # if using SSL
-      http.verify_mode = OpenSSL::SSL::VERIFY_NONE   # for example, when using self-signed certs
-    end
-    
-    response = http.head(path)
-    return response 
-    # response.each { |key, value| puts key.ljust(40) + " : " + value }
-    
+
+   # this returns the URI that results from all redirects, etc.
+  def Utils::head(url, headers = Utils::AcceptHeader)
+		
+		begin
+			response = RestClient::Request.execute({
+					method: :head,
+					url: url.to_s,
+					#user: user,
+					#password: pass,
+					headers: headers})
+			return response.headers
+		rescue RestClient::ExceptionWithResponse => e
+			$stderr.puts e.response
+			response = false
+			return response  # now we are returning 'False', and we will check that with an \"if\" statement in our main code
+		rescue RestClient::Exception => e
+			$stderr.puts e.response
+			response = false
+			return response  # now we are returning 'False', and we will check that with an \"if\" statement in our main code
+		rescue Exception => e
+			$stderr.puts e
+			response = false
+			return response  # now we are returning 'False', and we will check that with an \"if\" statement in our main code
+		end		  # you can capture the Exception and do something useful with it!\n",
+
   end
 
 
    # this returns the URI that results from all redirects, etc.
-  def Utils::resolve(uri_str, header = Utils::AcceptHeader, timeout = 90, agent = 'curl/7.43.0', max_attempts = 10)
-    begin
-        resp = RestClient.head(uri_str, {"Accept" => header["Accept"], "User-Agent" => agent})
-    rescue RestClient::ExceptionWithResponse => e
-	$stderr.puts "Attempts to resolve the redirects for #{uri_str} failed with a #{e.response}.  Test halting  "
-        return false
-    end
-    uri = resp.request.url
-    return uri
+  def Utils::resolve(url, headers = Utils::AcceptHeader)
+		
+		begin
+			response = RestClient::Request.execute({
+					method: :head,
+					url: url.to_s,
+					#user: user,
+					#password: pass,
+					headers: headers})
+			return response.request.url
+		rescue RestClient::ExceptionWithResponse => e
+			$stderr.puts e.response
+			response = false
+			return response  # now we are returning 'False', and we will check that with an \"if\" statement in our main code
+		rescue RestClient::Exception => e
+			$stderr.puts e.response
+			response = false
+			return response  # now we are returning 'False', and we will check that with an \"if\" statement in our main code
+		rescue Exception => e
+			$stderr.puts e
+			response = false
+			return response  # now we are returning 'False', and we will check that with an \"if\" statement in our main code
+		end		  # you can capture the Exception and do something useful with it!\n",
+
   end
   
-  def Utils::isEncoded(uri)
-        uri = uri || '';
-        if uri != URI.decode(uri)
-           return true
-        end
-        return false
-  end
+  
+    def Utils::checkCache(uri, headers)
+       filename = Digest::MD5.hexdigest uri + headers.to_s
+    #$stderr.puts "Checking cache for #{filename}"
+       if File.exist?("/tmp/#{filename}_head") and File.exist?("/tmp/#{filename}_body")
+    #$stderr.puts "FOUND"
+           head = Marshal.load(File.read("/tmp/#{filename}_head"))
+           body = Marshal.load(File.read("/tmp/#{filename}_body"))
+           return [head, body]
+       end
+    end
 
-  def Utils::fullyDecodeURI(uri)
-
-          while (Utils::isEncoded(uri))
-                uri = URI.decode(uri)
-          end
-        return uri;
-  end
+    def Utils::writeToCache(uri, headers, head, body)
+        filename = Digest::MD5.hexdigest uri + headers.to_s
+    #$stderr.puts "Writing cache for #{filename}"
+        headfilename = filename + "_head"
+        bodyfilename = filename + "_body"
+        File.open("/tmp/#{headfilename}", 'wb') { |f| f.write(Marshal.dump(head)) }
+        File.open("/tmp/#{bodyfilename}", 'wb') { |f| f.write(Marshal.dump(body)) }
+    end
+  
 end   # END OF Utils CLASS
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -827,7 +874,7 @@ class MetadataObject
   end
   
   def merge_hash(hash)
-      $stderr.puts "\n\n\nIncoming Hash #{hash.inspect}"
+      #$stderr.puts "\n\n\nIncoming Hash #{hash.inspect}"
       self.hash = self.hash.merge(hash)
   end
   

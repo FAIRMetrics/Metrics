@@ -42,23 +42,27 @@ def testGUID
 	count = 0
 	seen = Array.new
 	g.each do |stm|
-		break if count>=10
-		$stderr.puts "predicate #{stm.predicate.value}"
+		break if count>=6
 		next if seen.include?stm.predicate.value
 		seen << stm.predicate.value
 		next if stm.predicate.value =~ /www\.w3\.org\/1999\/xhtml\/vocab/  # this is a very problematic site!
-		response = Utils::fetch(stm.predicate.value, Utils::AcceptHeader)  # this  sends the content-negotiation for linked data
-		(parser, contenttype) = Utils::figure_out_type(response) if response
-		success += 1 if parser and Utils::RDF_FORMATS.keys.include?(parser)
-		count+=1
-		$stderr.puts contenttype
+		$stderr.puts "predicate #{stm.predicate.value}"
+		metadata2 = Utils::resolveit(stm.predicate.value)  # this  sends the content-negotiation for linked data
+		g2 = metadata2.graph
+		query = SPARQL.parse("select * where {<#{stm.predicate.value}> ?p ?o}")
+		results = query.execute(g2)
+		if  results.any?
+			# @swagger.addComment "Resolving #{stm.predicate.value}returned linked data, including that URI as a triple Subject. "
+			success += 1
+		end
+		count += 1
 	end
 	
 	if success > count * 0.5
-		@swagger.addComment("#{success} of the first #{count} predicates discovered in the linked data resolved to FAIR data.  This is sufficient to pass the test.  ")
+		@swagger.addComment("#{success} of the first #{count} predicates discovered in the metadata resolved to Linked Data data.  This is sufficient to pass the test.  ")
 		@swagger.score = 1
 	else
-		@swagger.addComment("#{success} of the first #{count} predicates discovered in the linked data resolved to FAIR data.  The minimum to pass this test is 50%.  ")
+		@swagger.addComment("#{success} of the first #{count} predicates discovered in the metadata resolved to Linked Data data.  The minimum to pass this test is 50%.  ")
 		@swagger.score = 0		
 	end
 	
@@ -73,9 +77,9 @@ if debug
 #	@input = '{"subject": "LFQSCWFLJHTTHZ-UHFFFAOYSA-N"}' # another inchi
 #	@input = '{"subject": "20.1000/105"}'  # handle (fail)
 #	@input = '{"subject": "http://linkeddata.systems/Magnaporthe/polyA_Sites"}'  # handle#
-#	@input = '{"subject": "10.25504/FAIRsharing.6k0kwd"}'  # doi fail
+	@input = '{"subject": "10.25504/FAIRsharing.6k0kwd"}'  # doi fail
 #        @input = '{"subject": "https://www.ebi.ac.uk/arrayexpress/"}' 
-	@input = '{"subject": "https://catalogue.bbmri.nl/menu/main/app-molgenis-app-biobank-explorer/biobank/report/bbmri-eric:ID:NL_AAAACXPAWTUFCACQK2ME25QAAM"}'
+#	@input = '{"subject": "https://catalogue.bbmri.nl/menu/main/app-molgenis-app-biobank-explorer/biobank/report/bbmri-eric:ID:NL_AAAACXPAWTUFCACQK2ME25QAAM"}'
 
 else 
 	@input = $stdin.read
