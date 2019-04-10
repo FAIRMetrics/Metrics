@@ -17,7 +17,7 @@ All tests begin by following a common path which attempts to extract metadata (b
 
 4) If there is no response, the URL is called again using Accept: */*, and the process cycles back to Step 3
 
-5) The body of the Response is then examined for raw or embedded metadata.  Currently, we scan for:
+5) The body of the Response is then examined for raw or embedded metadata.  Currently, we scan for:<br/>
     a) Linked Data (any "flavour", including RDFa)<br/>
     b) opengraph<br/>
     c) microdata<br/>
