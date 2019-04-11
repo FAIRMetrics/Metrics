@@ -29,30 +29,22 @@ def testGUID
 	
 	properties = Utils::deep_dive_properties(hash)
 
-	@identifier = ""
-	properties.each do |keyval|
+	dataGUID=""
+	
+		properties.each do |keyval|
 		key, value = nil, nil
 		(key, value) = keyval;
 		key = key.to_s
-		if key =~ /codeRepository/
-			@swagger.addComment "found 'codeRepository' in metadata.  "
-			@identifier = value
-		elsif key =~ /mainEntity/
-			@swagger.addComment "found schema 'mainEntity' in metadata.  "
-			@identifier = value
-		elsif key =~ /primaryTopic/
-			@swagger.addComment "found 'primaryTopic' in metadata.  "
-		elsif key =~ /is-about/ or key =~ /IAO:0000136/ or key =~ /IAO_0000136/
-			@swagger.addComment "found Information Artifact Ontology 'is-about' in metadata.  "
-			@identifier = value
-		elsif key =~ /000332/ or key =~ /SIO:0000136/
-			@swagger.addComment "found SIO is about in metadata.  "
-			@identifier = value
-		elsif key =~ /contains/ or key =~ /ldp:contains/
-			@swagger.addComment "found SIO is about in metadata.  "
-			@identifier = value
+		
+		Utils::DATA_PREDICATES.each do |prop|
+			prop =~ /.*[#\/]([^#\/]+)$/
+			if key == prop
+				@swagger.addComment "found '#{prop}' in metadata.  "
+				dataGUID=value
+			end
 		end
 	end
+
 
 	g = metadata.graph
 	if @swagger.debug
@@ -60,72 +52,58 @@ def testGUID
 	end
 	
 	if g.size > 0  # have we found anything yet?
-		query = SPARQL.parse("select ?o where {?s <http://semanticscience.org/resource/is-about> ?o}")
-		results = query.execute(g)
-		if results.any?
-			@swagger.addComment "found identifier #{results.first[:o]} using SIO. "
-			@identifier = results.first[:o].value
-
-		end
-
-		query = SPARQL.parse("select ?o where {?s <http://semanticscience.org/resource/SIO_000332> ?o}")
-		results = query.execute(g)
-		if  results.any?
-			@swagger.addComment "found identifier #{results.first[:o]} using SIO. "
-			@identifier = results.first[:o].value
-		end
-
-
-		query = SPARQL.parse("select ?o where {?s <http://schema.org/mainEntity> ?o}")
-		results = query.execute(g)
-		if  results.any?
-			@swagger.addComment "found identifier #{results.first[:o]} using Schema.org mainEntity property. "
-			@identifier = results.first[:o].value
-		end
-
-		query = SPARQL.parse("select ?o where
-							 {?s <http://schema.org/distribution> ?d.
-							 ?d <http://schema.org/contentURL> ?o}")
-		results = query.execute(g)
-		if  results.any?
-			@swagger.addComment "found identifier #{results.first[:o]} using Schema.org distribution property. "
-			@identifier = results.first[:o].value
-			$stderr.puts "\n\nfound identifier #{@identifier} using Schema.org distribution property.\n\n"
-		end
-
-		query = SPARQL.parse("select ?o where {?s <http://purl.obolibrary.org/obo/IAO_0000136> ?o}")
-		results = query.execute(g)
-		if  results.any?
-			@swagger.addComment "found identifier #{results.first[:o]} using IAO. "
-			@identifier = results.first[:o].value
-		end
-
-		
-		query = SPARQL.parse("select ?o where {?s <http://schema.org/codeRepository> ?o}")
-		results = query.execute(g)
-		if  results.any?
-			@swagger.addComment "found identifier #{results.first[:o]} using schema.org. "
-			@identifier = results.first[:o].value
-		end
-
-
-		query = SPARQL.parse("select ?o where {?s <http://http://www.w3.org/ns/ldp#contains> ?o}")
-		results = query.execute(g)
-		if  results.any?
-			@swagger.addComment "found identifier #{results.first[:o]} using Linked Data Platform 'contains'. "
-			@identifier = results.first[:o].value
-		end
-		
-		# hopefully we have it by now... if not... we fail!
-		$stderr.puts "\n\nfound identifier #{@identifier} \n\n"
-
-		if @identifier == ""
-			@swagger.score = 0
-			@swagger.addComment "Was unable to locate the data identifier in the metadata using any (common) property/predicate reserved for this purpose.  Tested SIO:is-about, SIO:0003323, schema:mainEntity, IAO:0000136, schema:codeRepository, and foaf:primaryTopic.  Fail. "
-		else
-			testIdentifier(@identifier) # this will add more comments and a score to @swagger
+		Utils::DATA_PREDICATES.each do |prop|
+			if prop =~ /schema\.org/
+				query = SPARQL.parse("select ?o where {?s <#{prop}> ?b .
+									 ?b  <http://schema.org/contentUrl> ?o}")
+				results = query.execute(g)
+				if  results.any?
+					dataGUID=results.first[:o].value
+					@swagger.addComment "found identifier #{results.first[:o]} using Schema.org distribution property. "
+				end
+				query = SPARQL.parse("select ?o where {?s <#{prop}> ?b .
+									 ?b  <https://schema.org/contentUrl> ?o}")
+				results = query.execute(g)
+				if  results.any?
+					dataGUID=results.first[:o].value
+					@swagger.addComment "found identifier #{results.first[:o]} using Schema.org distribution property. "
+				end
+			elsif prop =~ /dcat\#/
+				query = SPARQL.parse("select ?o where {?s <#{prop}> ?b .
+									 ?b  <http://www.w3.org/ns/dcat#accessURL> ?o}")
+				results = query.execute(g)
+				if  results.any?
+					dataGUID=results.first[:o].value
+					@swagger.addComment "found identifier #{results.first[:o]} using DCAT distribution property. "
+				end
+				query = SPARQL.parse("select ?o where {?s <#{prop}> ?b .
+									 ?b  <https://www.w3.org/ns/dcat#accessURL> ?o}")
+				results = query.execute(g)
+				if  results.any?
+					dataGUID=results.first[:o].value
+					@swagger.addComment "found identifier #{results.first[:o]} using DCAT distribution property. "
+				end
+			else 
+				query = SPARQL.parse("select ?o where {?s <#{prop}> ?o}")
+				results = query.execute(g)
+				if results.any?
+					dataGUID=results.first[:o].value
+					@swagger.addComment "found identifier #{results.first[:o]} using #{prop}. "
+				end
+			end
 		end
 	end
+		
+	# hopefully we have it by now... if not... we fail!
+	$stderr.puts "\n\nfound identifier #{@identifier} \n\n"
+
+	if dataGUID == ""
+		@swagger.score = 0
+		@swagger.addComment "Was unable to locate the data identifier in the metadata using any (common) property/predicate reserved for this purpose.  Tested SIO:is-about, SIO:0003323, schema:mainEntity, IAO:0000136, schema:codeRepository, and foaf:primaryTopic.  Fail. "
+	else
+		testIdentifier(dataGUID) # this will add more comments and a score to @swagger
+	end
+	
 
 	return @swagger.createEvaluationResponse
 end
@@ -133,33 +111,23 @@ end
 def testIdentifier(guid)
 	
 	# This is verbatim from the gen2_metadata_identifier_persistence
-	metadata = Utils::resolveit(guid)  # this is where the magic happens!
+	type = Utils::typeit(guid)  # this is where the magic happens!
 
-	metadata.comments.each do |c|
-		@swagger.addComment(c)
-	end
-
-	if metadata.guidtype == "unknown"
+	if !type
 		@swagger.addComment("  The GUID identifier of the data #{guid} did not match any known identification system (tested inchi, doi, handle, uri) and therefore did not pass this metric.  If you think this is an error, please contact the FAIR Metrics group (http://fairmetrics.org).")
 		@swagger.score = 0
-	elsif metadata.guidtype == "handle"
-		@swagger.addComment("The GUID of the data is a Handle, which is known to be persistent.  Pass. ")
-		@swagger.score = 1
-	elsif metadata.guidtype == "doi"
-		@swagger.addComment("The GUID of the data is a DOI, which is known to be persistent.  Pass. ")
-		@swagger.score = 1
-	elsif metadata.guidtype == "inchi"
-		@swagger.addComment("The GUID of the data is a InChI, which is known to be persistent.  Pass. ")
-		@swagger.score = 1
-	else
+	elsif type == "uri"
 		@swagger.addComment("The GUID appears to be a URL.  Testing known URL persistence schemas (purl, oclc, fdlp, purlz, w3id, ark).  ")
-		if (guid =~ /(purl)\./) or (guid =~ /(fdlp)\./) or (guid =~ /(purlz)\./) or (guid =~ /(w3id)\./) or (guid =~ /(ark)\:/)
+		if (guid =~ /(purl)\./) or (guid =~ /(oclc)\./) or(guid =~ /(fdlp)\./) or (guid =~ /(purlz)\./) or (guid =~ /(w3id)\./) or (guid =~ /(ark)\:/)
 			@swagger.addComment("The GUID conforms with #{$1}, which is known to be persistent.  Pass. ")
 			@swagger.score = 1
 		else
-			@swagger.addComment("The GUID does not conform with any known PURL system.  ")
+			@swagger.addComment("The GUID does not conform with any known permanent-URL system.  ")
 			@swagger.score = 0
 		end
+	else 
+		@swagger.addComment("The GUID of the data is a #{type}, which is known to be persistent.  Pass. ")
+		@swagger.score = 1
 	end
 
 

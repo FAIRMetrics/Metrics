@@ -33,29 +33,16 @@ def testGUID
 		key, value = nil, nil
 		(key, value) = keyval;
 		key = key.to_s
-		if key =~ /codeRepository/
-			@swagger.addComment "found 'codeRepository' in metadata.  "
-			@swagger.score = 1
-		elsif key =~ /distribution/
-			@swagger.addComment "found 'distribution' in metadata.  "
-			@swagger.score = 1
-		elsif key =~ /mainEntity/
-			@swagger.addComment "found schema 'mainEntity' in metadata.  "
-			@swagger.score = 1
-		elsif key =~ /primaryTopic/
-			@swagger.addComment "found 'primaryTopic' in metadata.  "
-			@swagger.score = 1
-		elsif key =~ /is-about/ or key =~ /IAO:0000136/ or key =~ /IAO_0000136/
-			@swagger.addComment "found Information Artifact Ontology 'is-about' in metadata.  "
-			@swagger.score = 1
-		elsif key =~ /SIO:000332/ or key =~ /SIO_000332/
-			@swagger.addComment "found SIO is about in metadata.  "
-			@swagger.score = 1
-		elsif key =~ /contains/ or key =~ /ldp:SIO_000332/
-			@swagger.addComment "found SIO is about in metadata.  "
-			@swagger.score = 1
+		
+		Utils::DATA_PREDICATES.each do |prop|
+			prop =~ /.*[#\/]([^#\/]+)$/
+			if key == prop
+				@swagger.addComment "found '#{prop}' in metadata.  "
+				@swagger.score = 1
+			end
 		end
 	end
+
 
 	g = metadata.graph
 	if @swagger.debug
@@ -63,69 +50,19 @@ def testGUID
 	end
 	
 	if g.size > 0  # have we found anything yet?
-		query = SPARQL.parse("select ?o where {?s <http://semanticscience.org/resource/is-about> ?o}")
-		results = query.execute(g)
-		if results.any?
-			@swagger.score = 1
-			@swagger.addComment "found identifier #{results.first[:o]} using SIO. "
-		end
+		Utils::DATA_PREDICATES.each do |prop|
 
-		query = SPARQL.parse("select ?o where {?s <http://semanticscience.org/resource/SIO_000332> ?o}")
-		results = query.execute(g)
-		if  results.any?
-			@swagger.score = 1
-			@swagger.addComment "found identifier #{results.first[:o]} using SIO. "
+			query = SPARQL.parse("select ?o where {?s <#{prop}> ?o}")
+			results = query.execute(g)
+			if results.any?
+				@swagger.score = 1
+				@swagger.addComment "found identifier #{results.first[:o]} using #{prop}. "
+			end
 		end
+	end
 
-
-		query = SPARQL.parse("select ?o where {?s <http://schema.org/mainEntity> ?o}")
-		results = query.execute(g)
-		if  results.any?
-			@swagger.score = 1
-			@swagger.addComment "found identifier #{results.first[:o]} using Schema.org mainEntity property. "
-		end
-
-		query = SPARQL.parse("select ?o where {?s <http://schema.org/distribution> ?o}")
-		results = query.execute(g)
-		if  results.any?
-			@swagger.score = 1
-			@swagger.addComment "found identifier #{results.first[:o]} using Schema.org distribution property. "
-		end
-
-		query = SPARQL.parse("select ?o where {?s <http://www.w3.org/ns/dcat#distribution> ?o}")
-		results = query.execute(g)
-		if  results.any?
-			@swagger.score = 1
-			@swagger.addComment "found identifier #{results.first[:o]} using DCAT distribution property. "
-		end
-
-		query = SPARQL.parse("select ?o where {?s <http://purl.obolibrary.org/obo/IAO_0000136> ?o}")
-		results = query.execute(g)
-		if  results.any?
-			@swagger.score = 1
-			@swagger.addComment "found identifier #{results.first[:o]} using IAO. "
-		end
-
-		
-		query = SPARQL.parse("select ?o where {?s <http://schema.org/codeRepository> ?o}")
-		results = query.execute(g)
-		if  results.any?
-			@swagger.score = 1
-			@swagger.addComment "found identifier #{results.first[:o]} using schema.org. "
-		end
-		
-		
-		query = SPARQL.parse("select ?o where {?s <http://www.w3.org/ns/ldp#contains> ?o}")
-		results = query.execute(g)
-		if  results.any?
-			@swagger.score = 1
-			@swagger.addComment "found identifier #{results.first[:o]} using Linked Data Platform 'contains'. "
-		end
-
-
-		if @swagger.score == 0
-			@swagger.addComment "Was unable to locate the data identifier in the metadata using any (common) property/predicate reserved for this purpose.  Tested SIO:is-about, SIO:0003323, schema:mainEntity, IAO:0000136, schema:codeRepository, and foaf:primaryTopic.  Sorry! "
-		end
+	if @swagger.score == 0
+		@swagger.addComment "Was unable to locate the data identifier in the metadata using any (common) property/predicate reserved for this purpose.  Tested schema:distribution, dcat:distribution, ldp:contains, SIO:is-about, SIO:0003323, schema:mainEntity, IAO:0000136, schema:codeRepository, and foaf:primaryTopic.  Sorry! "
 	end
 
 	return @swagger.createEvaluationResponse
@@ -138,8 +75,8 @@ if debug
 #	@input = '{"subject": "BSYNRYMUTXBXSQ-UHFFFAOYSA-N"}' # inchi
 #	@input = '{"subject": "LFQSCWFLJHTTHZ-UHFFFAOYSA-N"}' # another inchi
 #	@input = '{"subject": "20.1000/105"}'  # handle (fail)
-#	@input = '{"subject": "http://linkeddata.systems/Magnaporthe/polyA_Sites"}'  # handle
-	@input = '{"subject": "10.5440/1185213"}'  # doi fail
+	@input = '{"subject": "http://linkeddata.systems/Magnaporthe/polyA_Sites"}'  # handle
+#	@input = '{"subject": "10.5440/1185213"}'  # doi fail
 
 else 
 	@input = $stdin.read

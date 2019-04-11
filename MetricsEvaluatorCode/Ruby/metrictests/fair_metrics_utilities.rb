@@ -54,6 +54,7 @@ class Utils
 
     
     Utils::DATA_PREDICATES = [
+        'http://www.w3.org/ns/ldp#contains',
         'http://xmlns.com/foaf/0.1/primaryTopic',
         'http://schema.org/about', # inverse 'http://schema.org/subjectOf',
         'http://schema.org/mainEntity',
@@ -61,37 +62,64 @@ class Utils
         'http://www.w3.org/ns/dcat#distribution',
         'http://schema.org/distribution',
         'http://semanticscience.org/resource/SIO_000332', # is about
+        'http://semanticscience.org/resource/is-about', # is about
         'http://purl.obolibrary.org/obo/IAO_0000136', # is about
+        'http://purl.obolibrary.org/obo/IAO:0000136', # is about (not the valid URL...)
+        'https://www.w3.org/ns/ldp#contains',
+        'https://xmlns.com/foaf/0.1/primaryTopic',
+        'https://schema.org/about', # inverse 'http://schema.org/subjectOf',
+        'https://schema.org/mainEntity',
+        'https://schema.org/codeRepository',
+        'https://www.w3.org/ns/dcat#distribution',
+        'https://schema.org/distribution',
+        'https://semanticscience.org/resource/SIO_000332', # is about
+        'https://semanticscience.org/resource/is-about', # is about
+        'https://purl.obolibrary.org/obo/IAO_0000136', # is about
         ]
+
+    Utils::GUID_TYPES = {'inchi' => Regexp.new(/^\w{14}\-\w{10}\-\w$/),
+                        'doi' => Regexp.new(/^10.\d{4,9}\/[-._;()\/:A-Z0-9]+$/i),
+                        'handle' => Regexp.new(/^[2-9]0.\d{4,9}\/[-._;()\/:A-Z0-9]+$/i),
+                        'uri' => Regexp.new(/^\w+:\/?\/?[^\s]+$/)
+    }
         
                        
+
+    def Utils::resolveit(guid)
+
+      meta = MetadataObject.new()
+      
+      Utils::GUID_TYPES.each do |pair|
+          k,regex = pair
+          if k == "inchi" and regex.match(guid)
+            metadata = Utils::resolve_inchi(guid, meta)
+            return metadata
+          elsif k == "doi" and regex.match(guid)
+            metadata = Utils::resolve_doi(guid, meta)
+            return metadata
+          elsif k == "handle" and regex.match(guid)
+            metadata = Utils::resolve_handle(guid, meta)
+            return metadata
+          elsif k == "uri" and regex.match(guid)
+            metadata = Utils::resolve_uri(guid, meta)
+            return metadata
+          end
+      end
+      meta.comments << "the guid did not correspond to any known GUID.  Aborting.  "
+      return meta
+      
+    end
                        
                        
     
-    def Utils::resolveit(guid)
-      inchi = Regexp.new(/^\w{14}\-\w{10}\-\w$/)
-      doi = Regexp.new(/^10.\d{4,9}\/[-._;()\/:A-Z0-9]+$/i)
-      handle = Regexp.new(/^[2-9]0.\d{4,9}\/[-._;()\/:A-Z0-9]+$/i)
-      uri = Regexp.new(/^\w+:\/?\/?[^\s]+$/)
-
-      meta = MetadataObject.new()
-      case 
-        when guid.match(inchi)
-          metadata = Utils::resolve_inchi(guid, meta)
-          return metadata
-        when guid.match(doi)
-          metadata = Utils::resolve_doi(guid, meta)
-          return metadata
-        when guid.match(handle)
-           metadata = Utils::resolve_handle(guid, meta)
-           return metadata
-        when guid.match(uri)
-          metadata = Utils::resolve_uri(guid, meta)
-          return metadata
-        else
-          meta.comments << "the guid did not correspond to any known GUID.  Aborting.  "
-          return meta
+    def Utils::typeit(guid)
+      Utils::GUID_TYPES.each do |pair|
+          type,regex = pair
+          if regex.match(guid)
+            return type
+          end
       end
+      return false
     end
     
     
@@ -184,7 +212,7 @@ class Utils
     
     def Utils::resolve_uri(guid, meta, nolinkheaders=false, header=Utils::AcceptHeader)
       meta.guidtype = "uri" if meta.guidtype == "unknown"  # might have been set already, e.g. to 'handle' or 'doi'
-      #$stderr.puts "\n\n FETCHING #{guid} #{header}\n\n"
+      $stderr.puts "\n\n FETCHING #{guid} #{header}\n\n"
       head, body = Utils::fetch(guid, header, meta)
       if !head
           meta.comments << "Unable to resolve #{guid} using Content-type negotiation for linked data.  Now trying */*"
@@ -292,7 +320,7 @@ class Utils
       #  body = message # this is raw rdf
       #end
 
-      #$stderr.puts "\n\n\nSampling \n\n#{body}\n\n"
+      $stderr.puts "\n\n\nSampling \n\n#{body[0..2000]}\n\n"
       unless body
           meta.comments << "This message body component appears to have no content.  "
           return meta
@@ -314,7 +342,7 @@ class Utils
         return meta
       end
       reader = formattype.reader.new(body)
-      #$stderr.puts "Reader Class #{reader.class}\n\n #{reader.inspect}"
+      $stderr.puts "Reader Class #{reader.class}\n\n #{reader.inspect}"
       meta.merge_rdf(reader.to_a)
 #$stderr.puts "p3"
 

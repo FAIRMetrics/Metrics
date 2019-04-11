@@ -10,31 +10,10 @@ def testGUID
 	
 	guid = @swagger.testedGUID
 
-	# TODO - switch these to a CASE clause and have only one return statement
-	inchi = Regexp.new(/\w{14}\-\w{10}\-\w{1}/)
-	if guid.match(inchi)
-		@swagger.addComment("Found an InChI Key - pass")
-		@swagger.score = 1
-		return @swagger.createEvaluationResponse
-	end
-	
-	doi = Regexp.new(/^10.\d{4,9}\/[-._;()\/:A-Z0-9]+$/i)
-	if guid.match(doi)
-		@swagger.addComment("Found a Crossref DOI - pass")
-		@swagger.score = 1
-		return @swagger.createEvaluationResponse
-	end
+    type = Utils::typeit(guid)
 
-	handle = Regexp.new(/^[2-9]0.\d{4,9}\/[-._;()\/:A-Z0-9]+$/i)
-	if guid.match(handle)
-		@swagger.addComment("Found a non-crossref DOI or other Handle - pass")
-		@swagger.score = 1
-		return @swagger.createEvaluationResponse
-	end
-	
-	uri = Regexp.new(/\w+:\/?\/?[^\s]+/)
-	if guid.match(uri)
-		@swagger.addComment("Found a URI - pass")
+	if type
+		@swagger.addComment("Found an identifier of type '#{type}' - pass")
 		@swagger.score = 1
 		return @swagger.createEvaluationResponse
 	end

@@ -30,42 +30,21 @@ def testGUID
 	properties = Utils::deep_dive_properties(hash)
 
 	dataGUID=""
-	properties.each do |keyval|
+	
+		properties.each do |keyval|
 		key, value = nil, nil
 		(key, value) = keyval;
 		key = key.to_s
-		if key =~ /codeRepository/
-			@swagger.addComment "found 'codeRepository' in metadata.  "
-			dataGUID=value
-
-		elsif key =~ /mainEntity/
-			@swagger.addComment "found schema 'mainEntity' in metadata.  "
-			dataGUID=value
-	
-		elsif key =~ /distribution/
-			@swagger.addComment "found schema or DCAT 'distribution' in metadata.  "
-			dataGUID=value
-
-		elsif key =~ /accessRights/
-			@swagger.addComment "found schema or DCAT 'distribution' in metadata.  "
-			dataGUID=value
-
-		elsif key =~ /primaryTopic/
-			@swagger.addComment "found 'primaryTopic' in metadata.  "
-			dataGUID=value
-
-		elsif key =~ /is-about/ or key =~ /IAO:0000136/ or key =~ /IAO_0000136/
-			@swagger.addComment "found Information Artifact Ontology 'is-about' in metadata.  "
-			dataGUID=value
-
-		elsif key =~ /000332/ or key =~ /SIO:0000136/
-			@swagger.addComment "found SIO is about in metadata.  "
-			dataGUID=value
-
+		
+		Utils::DATA_PREDICATES.each do |prop|
+			prop =~ /.*[#\/]([^#\/]+)$/
+			if key == prop
+				@swagger.addComment "found '#{prop}' in metadata.  "
+				dataGUID=value
+			end
 		end
-		
-		
 	end
+
 
 	g = metadata.graph
 	if @swagger.debug
@@ -73,77 +52,51 @@ def testGUID
 	end
 	
 	if g.size > 0  # have we found anything yet?
-		query = SPARQL.parse("select ?o where {?s <http://semanticscience.org/resource/is-about> ?o}")
-		results = query.execute(g)
-		if results.any?
-			dataGUID=results.first[:o].value
-			@swagger.addComment "found identifier #{results.first[:o]} using SIO. "
+		Utils::DATA_PREDICATES.each do |prop|
+			if prop =~ /schema\.org/
+				query = SPARQL.parse("select ?o where {?s <#{prop}> ?b .
+									 ?b  <http://schema.org/contentUrl> ?o}")
+				results = query.execute(g)
+				if  results.any?
+					dataGUID=results.first[:o].value
+					@swagger.addComment "found identifier #{results.first[:o]} using Schema.org distribution property. "
+				end
+				query = SPARQL.parse("select ?o where {?s <#{prop}> ?b .
+									 ?b  <https://schema.org/contentUrl> ?o}")
+				results = query.execute(g)
+				if  results.any?
+					dataGUID=results.first[:o].value
+					@swagger.addComment "found identifier #{results.first[:o]} using Schema.org distribution property. "
+				end
+			elsif prop =~ /dcat\#/
+				query = SPARQL.parse("select ?o where {?s <#{prop}> ?b .
+									 ?b  <http://www.w3.org/ns/dcat#accessURL> ?o}")
+				results = query.execute(g)
+				if  results.any?
+					dataGUID=results.first[:o].value
+					@swagger.addComment "found identifier #{results.first[:o]} using DCAT distribution property. "
+				end
+				query = SPARQL.parse("select ?o where {?s <#{prop}> ?b .
+									 ?b  <https://www.w3.org/ns/dcat#accessURL> ?o}")
+				results = query.execute(g)
+				if  results.any?
+					dataGUID=results.first[:o].value
+					@swagger.addComment "found identifier #{results.first[:o]} using DCAT distribution property. "
+				end
+			else 
+				query = SPARQL.parse("select ?o where {?s <#{prop}> ?o}")
+				results = query.execute(g)
+				if results.any?
+					dataGUID=results.first[:o].value
+					@swagger.addComment "found identifier #{results.first[:o]} using #{prop}. "
+				end
+			end
 		end
-
-		query = SPARQL.parse("select ?o where {?s <http://semanticscience.org/resource/SIO_000332> ?o}")
-		results = query.execute(g)
-		if  results.any?
-			dataGUID=results.first[:o].value
-			@swagger.addComment "found identifier #{results.first[:o]} using SIO. "
-		end
-
-
-		query = SPARQL.parse("select ?o where {?s <http://schema.org/mainEntity> ?o}")
-		results = query.execute(g)
-		if  results.any?
-			dataGUID=results.first[:o].value
-			@swagger.addComment "found identifier #{results.first[:o]} using Schema.org mainEntity property. "
-		end
-
-		query = SPARQL.parse("select ?o where {?s <http://purl.org/dc/terms/accessRights> ?o}")
-		results = query.execute(g)
-		if  results.any?
-			dataGUID=results.first[:o].value
-			@swagger.addComment "found identifier #{results.first[:o]} using Schema.org mainEntity property. "
-		end
-
-		query = SPARQL.parse("select ?o where {?s <http://schema.org/distribution> ?b . ?b  <http://schema.org/contentUrl> ?o}")
-		results = query.execute(g)
-		if  results.any?
-			dataGUID=results.first[:o].value
-			@swagger.addComment "found identifier #{results.first[:o]} using Schema.org distribution property. "
-		end
-
-		query = SPARQL.parse("select ?o where {?s <http://www.w3.org/ns/dcat#distribution> ?b .
-							 ?b  <http://www.w3.org/ns/dcat#accessURL> ?o}")
-		results = query.execute(g)
-		if  results.any?
-			dataGUID=results.first[:o].value
-			@swagger.addComment "found identifier #{results.first[:o]} using DCAT distribution property. "
-		end
-
-		query = SPARQL.parse("select ?o where {?s <http://www.w3.org/ns/dcat#distribution> ?b .
-							 ?b  <ttp://www.w3.org/ns/dcat#downloadURL> ?o}")
-		results = query.execute(g)
-		if  results.any?
-			dataGUID=results.first[:o].value
-			@swagger.addComment "found identifier #{results.first[:o]} using DCAT distribution property. "
-		end
-
-		query = SPARQL.parse("select ?o where {?s <http://purl.obolibrary.org/obo/IAO_0000136> ?o}")
-		results = query.execute(g)
-		if  results.any?
-			dataGUID=results.first[:o].value
-			@swagger.addComment "found identifier #{results.first[:o]} using IAO. "
-		end
-		
-		query = SPARQL.parse("select ?o where {?s <http://schema.org/codeRepository> ?o}")
-		results = query.execute(g)
-		if  results.any?
-			dataGUID=results.first[:o].to_s
-			@swagger.addComment "found identifier #{results.first[:o]} using schema.org. "
-		end
-		
 	end
 
 	if (dataGUID == "") or (!dataGUID.is_a?String) 
 		@swagger.score = 0
-		@swagger.addComment "Was unable to locate the data identifier in the metadata using any (common) property/predicate reserved for this purpose.  Tested SIO:is-about, SIO:0003323, schema:distribution, dcat:distribution, schema:mainEntity, IAO:0000136, schema:codeRepository, and foaf:primaryTopic.  Sorry! "
+		@swagger.addComment "Was unable to locate the data identifier in the metadata using any (common) property/predicate reserved for this purpose.  Tested #{Utils::DATA_PREDICATES.join(" & ")} as both keys, and linked data predicates  "
 		return @swagger.createEvaluationResponse
 	end
 
@@ -151,14 +104,14 @@ def testGUID
 	# Let's now run it through the metadata collection routine
 	# to see what it is
 
-	metadata2 = Utils::resolveit(dataGUID)  # this is where the magic happens!
+	metadata2 = Utils::typeit(dataGUID)  # this is where the magic happens!
 
-	if metadata2.guidtype == "unknown"
+	if !metadata2
 		@swagger.addComment("  The identifier #{dataGUID} did not match any known identification system (tested inchi, doi, handle, uri) and therefore did not pass this metric.  If you think this is an error, please contact the FAIR Metrics group (http://fairmetrics.org).")
 		@swagger.score = 0
 		return @swagger.createEvaluationResponse
 	else
-		@swagger.addComment("  The identifier #{dataGUID} is recognized as a #{metadata2.guidtype}, which is resolvable by an open and free protocol.  ")
+		@swagger.addComment("  The identifier #{dataGUID} is recognized as a #{metadata2}, which is resolvable by an protocol that allows authorization/authentication.  ")
 		@swagger.score = 1
 		return @swagger.createEvaluationResponse
 	end
