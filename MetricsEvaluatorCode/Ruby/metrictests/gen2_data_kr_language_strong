@@ -14,13 +14,14 @@ def testGUID
 	guid = @swagger.testedGUID
 	
 	metadata = Utils::resolveit(guid)  # this is where the magic happens!
+	@swagger.score = 0
 
 	metadata.comments.each do |c|
 		@swagger.addComment(c)
 	end
 
 	if metadata.guidtype == "unknown"
-		@swagger.addComment("  The identifier #{guid} did not match any known identification system (tested inchi, doi, handle, uri) and therefore did not pass this metric.  If you think this is an error, please contact the FAIR Metrics group (http://fairmetrics.org).")
+		@swagger.addComment("FAILURE: The identifier #{guid} did not match any known identification system.\n")
 		@swagger.score = 0
 		return @swagger.createEvaluationResponse
 	end
@@ -30,30 +31,26 @@ def testGUID
 	properties = Utils::deep_dive_properties(hash)
 
 	
+	@swagger.addComment("INFO: Searching metadata for likely identifiers to the data record\n")
+	@identifier = ""
+	
 	properties.each do |keyval|
 		key, value = nil, nil
 		(key, value) = keyval;
 		key = key.to_s
-		if key =~ /codeRepository/
-			@swagger.addComment "found 'codeRepository' in metadata.  "
-			@identifier = value.to_s
-		elsif key =~ /distribution/
-			@swagger.addComment "found 'distribution' in metadata.  "
-			@identifier = value.to_s
-		elsif key =~ /mainEntity/
-			@swagger.addComment "found schema 'mainEntity' in metadata.  "
-			@identifier = value.to_s
-		elsif key =~ /primaryTopic/
-			@swagger.addComment "found 'primaryTopic' in metadata.  "
-			@identifier = value.to_s
-		elsif key =~ /is-about/ or key =~ /IAO:0000136/ or key =~ /IAO_0000136/
-			@swagger.addComment "found Information Artifact Ontology 'is-about' in metadata.  "
-			@identifier = value.to_s
-		elsif key =~ /SIO:000332/ or key =~ /SIO_000332/
-			@swagger.addComment "found SIO is about in metadata.  "
-			@identifier = value.to_s
+		
+		@swagger.addComment("INFO: Searching hash-style metadata for keys indicating a pointer to data.\n")
+		Utils::DATA_PREDICATES.each do |prop|
+			prop =~ /.*[#\/]([^#\/]+)$/
+			prop = $1
+			@swagger.addComment("INFO: Searching for key: #{prop}.\n")
+			if key == prop
+				@swagger.addComment "INFO: found '#{prop}' in metadata.  Setting data GUID to #{value} for next test.\n"
+				@identifier=value.to_s
+			end
 		end
 	end
+
 
 	g = metadata.graph
 	if @swagger.debug
@@ -61,66 +58,57 @@ def testGUID
 	end
 	
 	if g.size > 0  # have we found anything yet?
-		query = SPARQL.parse("select ?o where {?s <http://semanticscience.org/resource/is-about> ?o}")
-		results = query.execute(g)
-		if results.any?
-			@swagger.addComment "found identifier #{results.first[:o]} using SIO. "
-			@identifier = results.first[:o].value
+		@swagger.addComment("INFO: Searching Linked Data metadata for predicates indicating a pointer to data.\n")
+		Utils::DATA_PREDICATES.each do |prop|
+			@swagger.addComment("INFO: SPARQLing for #{prop}.\n")
+			if prop =~ /schema\.org/
+				query = SPARQL.parse("select ?o where {?s <#{prop}> ?b .
+									 ?b  <http://schema.org/contentUrl> ?o}")
+				results = query.execute(g)
+				if  results.any?
+					@identifier=results.first[:o].value
+					@swagger.addComment "INFO: found identifier #{@identifier} using Schema.org distribution property.\n"
+				end
+				query = SPARQL.parse("select ?o where {?s <#{prop}> ?b .
+									 ?b  <https://schema.org/contentUrl> ?o}")
+				results = query.execute(g)
+				if  results.any?
+					@identifier=results.first[:o].value
+					@swagger.addComment "INFO: found identifier #{@identifier} using Schema.org distribution property.\n"
+				end
+			elsif prop =~ /dcat\#/
+				query = SPARQL.parse("select ?o where {?s <#{prop}> ?b .
+									 ?b  <http://www.w3.org/ns/dcat#accessURL> ?o}")
+				results = query.execute(g)
+				if  results.any?
+					@identifier=results.first[:o].value
+					@swagger.addComment "INFO: found identifier #{@identifier} using DCAT distribution property.\n"
+				end
+				query = SPARQL.parse("select ?o where {?s <#{prop}> ?b .
+									 ?b  <https://www.w3.org/ns/dcat#accessURL> ?o}")
+				results = query.execute(g)
+				if  results.any?
+					@identifier=results.first[:o].value
+					@swagger.addComment "INFO: found identifier #{@identifier} using DCAT distribution property.\n"
+				end
+			else 
+				query = SPARQL.parse("select ?o where {?s <#{prop}> ?o}")
+				results = query.execute(g)
+				if results.any?
+					@identifier=results.first[:o].value
+					@swagger.addComment "INFO: found identifier #{@identifier} using #{prop}.\n"
+				end
+			end
 		end
-
-		query = SPARQL.parse("select ?o where {?s <http://semanticscience.org/resource/SIO_000332> ?o}")
-		results = query.execute(g)
-		if  results.any?
-			@swagger.addComment "found identifier #{results.first[:o]} using SIO. "
-			@identifier = results.first[:o].value
-		end
-
-
-		query = SPARQL.parse("select ?o where {?s <http://schema.org/mainEntity> ?o}")
-		results = query.execute(g)
-		if  results.any?
-			@swagger.addComment "found identifier #{results.first[:o]} using Schema.org mainEntity property. "
-			@identifier = results.first[:o].value
-		end
-
-		query = SPARQL.parse("select ?o where
-							 {?s <http://schema.org/distribution> ?d.
-							 ?d <http://schema.org/contentURL> ?o}")
-		results = query.execute(g)
-		if  results.any?
-			@swagger.addComment "found identifier #{results.first[:o]} using Schema.org distribution property. "
-			@identifier = results.first[:o].value
-			$stderr.puts "\n\nfound identifier #{@identifier} using Schema.org distribution property.\n\n"
-		end
-
-		query = SPARQL.parse("select ?o where {?s <http://purl.obolibrary.org/obo/IAO_0000136> ?o}")
-		results = query.execute(g)
-		if  results.any?
-			@swagger.addComment "found identifier #{results.first[:o]} using IAO. "
-			@identifier = results.first[:o].value
-		end
-
 		
-		query = SPARQL.parse("select ?o where {?s <http://schema.org/codeRepository> ?o}")
-		results = query.execute(g)
-		if  results.any?
-			@swagger.addComment "found identifier #{results.first[:o]} using schema.org. "
-			@identifier = results.first[:o].value
-		end
-
-                query = SPARQL.parse("select ?o where {?s <http://www.w3.org/ns/ldp#contains> ?o}")
-                results = query.execute(g)
-                if  results.any?
-                        @swagger.addComment "found identifier #{results.first[:o]} using Linked Data Platform Contains.  "
-                        @identifier = results.first[:o].value
-                end		
 		# hopefully we have it by now... if not... we fail!
-		$stderr.puts "\n\nfound identifier #{@identifier} \n\n"
+		#$stderr.puts "\n\nfound identifier #{@identifier} \n\n"
 
-		unless @identifier 
+		unless @identifier
 			@swagger.score = 0
-			@swagger.addComment "Was unable to locate the data identifier in the metadata using any (common) property/predicate reserved for this purpose.  Tested SIO:is-about, SIO:0003323, schema:mainEntity, IAO:0000136, schema:codeRepository, and foaf:primaryTopic.  Fail. "
+			@swagger.addComment "FAILURE: Was unable to locate the data identifier in the metadata using any (common) property/predicate reserved for this purpose.  Tested the following #{Utils::DATA_PREDICATES}\n"
 		else
+			@swagger.addComment "INFO: Now resolving #{@identifier} to test its response body.\n"
 			testIdentifier(@identifier) # this will add more comments and a score to @swagger
 		end
 	end
@@ -139,24 +127,25 @@ def testIdentifier(guid)
 	end
 
 	if datametadata.guidtype == "unknown"
-		@swagger.addComment("  The GUID identifier of the data #{guid} did not match any known identification system (tested inchi, doi, handle, uri) and therefore did not pass this metric.  If you think this is an error, please contact the FAIR Metrics group (http://fairmetrics.org).")
+		@swagger.addComment("INFO: The GUID identifier of the data #{guid} did not match any known identification system (tested inchi, doi, handle, uri) and therefore did not pass this metric.  If you think this is an error, please contact the FAIR Metrics group (http://fairmetrics.org).")
 	elsif datametadata.guidtype == "handle"
-		@swagger.addComment("The GUID of the data is a Handle. ")
+		@swagger.addComment("INFO: The GUID of the data is a Handle.\n")
 	elsif datametadata.guidtype == "doi"
-		@swagger.addComment("The GUID of the data is a DOI. ")
+		@swagger.addComment("INFO: The GUID of the data is a DOI.\n")
 	elsif datametadata.guidtype == "inchi"
-		@swagger.addComment("The GUID of the data is a InChI. ")
+		@swagger.addComment("INFO: The GUID of the data is a InChI.\n")
 	else
-		@swagger.addComment("The GUID of the data appears to be a URL.  ")
+		@swagger.addComment("INFO: The GUID of the data appears to be a URL.\n")
 	end
 
 	graph = datametadata.graph
 	
 	if graph.size > 0
-		@swagger.addComment("The data was found to have at least some structured data format. ")
+		@swagger.addComment("SUCCESS: The data was found to have some Linked Data content.\n")
 		@swagger.score = 1
 	else
-		@swagger.addComment("The resolved data, after both parsing and content-negotiation, appears to have no linked data.  ")
+		@swagger.addComment("FAILURE: The resolved data, after both parsing and content-negotiation, appears to have no linked data.\n")
+		@swagger.score = 1
 	end
 
 end
@@ -169,7 +158,7 @@ if debug
 #	@input = '{"subject": "LFQSCWFLJHTTHZ-UHFFFAOYSA-N"}' # another inchi
 #	@input = '{"subject": "20.1000/105"}'  # handle (fail)
 	@input = '{"subject": "http://linkeddata.systems/Magnaporthe/polyA_Sites"}'  # handle
-	@input = '{"subject": "10.25504/FAIRsharing.6k0kwd"}'  # doi fail
+#	@input = '{"subject": "10.25504/FAIRsharing.6k0kwd"}'  # doi fail
 
 
 else 

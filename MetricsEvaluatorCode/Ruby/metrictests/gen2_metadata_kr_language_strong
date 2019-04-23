@@ -21,7 +21,7 @@ def testGUID
 	@swagger.score = 0
 	
 	if metadata.guidtype == "unknown"
-		@swagger.addComment("  The identifier #{guid} did not match any known identification system (tested inchi, doi, handle, uri) and therefore did not pass this metric.  If you think this is an error, please contact the FAIR Metrics group (http://fairmetrics.org).")
+		@swagger.addComment("FAILURE: The identifier #{guid} did not match any known identification system.\n")
 		return @swagger.createEvaluationResponse
 	end
 	
@@ -31,12 +31,12 @@ def testGUID
 	end
 	
 	if g.size > 0  # have we found anything yet?
-		@swagger.addComment("Linked data was found.  ")
+		@swagger.addComment("SUCCESS: Linked data was found.  ")
 		@swagger.score = 1
 	else
-		@swagger.addComment("No linked data was found.  ")
+		@swagger.addComment("FAILURE: No linked data was found.  ")
 	end
-	
+
 	return @swagger.createEvaluationResponse
 end
 

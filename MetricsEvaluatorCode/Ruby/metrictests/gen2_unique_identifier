@@ -13,12 +13,12 @@ def testGUID
     type = Utils::typeit(guid)
 
 	if type
-		@swagger.addComment("Found an identifier of type '#{type}' - pass")
+		@swagger.addComment("SUCCESS: Found an identifier of type '#{type}'\n")
 		@swagger.score = 1
 		return @swagger.createEvaluationResponse
 	end
 
-	@swagger.addComment("the identifier #{guid} did not match any known identification system (tested inchi, doi, handle, uri) and therefore did not pass this metric.  If you think this is an error, please contact the FAIR Metrics group (http://fairmetrics.org).")
+	@swagger.addComment("FAILURE: the identifier #{guid} did not match any known identification system (tested inchi, doi, handle, uri) and therefore did not pass this metric.  If you think this is an error, please contact the FAIR Metrics group (http://fairmetrics.org).\n")
 	@swagger.score = 0
 	return @swagger.createEvaluationResponse
 

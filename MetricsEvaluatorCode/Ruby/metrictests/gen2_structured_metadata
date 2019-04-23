@@ -22,7 +22,7 @@ def testGUID
 	@swagger.score = 0
 
 	if metadata.guidtype == "unknown"
-		@swagger.addComment("  The identifier #{guid} did not match any known identification system (tested inchi, doi, handle, uri) and therefore did not pass this metric.  If you think this is an error, please contact the FAIR Metrics group (http://fairmetrics.org).")
+		@swagger.addComment("FAILURE: The identifier #{guid} did not match any known identification system (tested inchi, doi, handle, uri) and therefore did not pass this metric.  If you think this is an error, please contact the FAIR Metrics group (http://fairmetrics.org).\n")
 		return @swagger.createEvaluationResponse
 	end
 	
@@ -31,7 +31,7 @@ def testGUID
 	properties = Utils::deep_dive_properties(hash)
 
 	if properties.any?
-		@swagger.addComment "found key/value style structured metadata.  "
+		@swagger.addComment "SUCCESS: found key/value style structured metadata.\n"
 		@swagger.score = 1
 	end
 	
@@ -41,7 +41,7 @@ def testGUID
 	end
 
 	if g.size > 0  # have we found anything yet?
-		@swagger.addComment "found linked-data style structured metadata.  "
+		@swagger.addComment "SUCCESS: found linked-data style structured metadata.\n"
 		@swagger.score = 1
 	end
 

@@ -14,13 +14,14 @@ def testGUID
 	guid = @swagger.testedGUID
 	
 	metadata = Utils::resolveit(guid)  # this is where the magic happens!
+	@swagger.score = 0
 
 	metadata.comments.each do |c|
 		@swagger.addComment(c)
 	end
 
 	if metadata.guidtype == "unknown"
-		@swagger.addComment("  The identifier #{guid} did not match any known identification system (tested inchi, doi, handle, uri) and therefore did not pass this metric.  If you think this is an error, please contact the FAIR Metrics group (http://fairmetrics.org).")
+		@swagger.addComment("FAILURE: The identifier #{guid} did not match any known identification system.\n")
 		@swagger.score = 0
 		return @swagger.createEvaluationResponse
 	end
@@ -29,18 +30,23 @@ def testGUID
 	
 	properties = Utils::deep_dive_properties(hash)
 
-	dataGUID=""
 	
-		properties.each do |keyval|
+	@swagger.addComment("INFO: Searching metadata for likely identifiers to the data record\n")
+	@identifier = ""
+	
+	properties.each do |keyval|
 		key, value = nil, nil
 		(key, value) = keyval;
 		key = key.to_s
 		
+		@swagger.addComment("INFO: Searching hash-style metadata for keys indicating a pointer to data.\n")
 		Utils::DATA_PREDICATES.each do |prop|
 			prop =~ /.*[#\/]([^#\/]+)$/
+			prop = $1
+			@swagger.addComment("INFO: Searching for key: #{prop}.\n")
 			if key == prop
-				@swagger.addComment "found '#{prop}' in metadata.  "
-				dataGUID=value
+				@swagger.addComment "INFO: found '#{prop}' in metadata.  Setting data GUID to #{value} for next test.\n"
+				@identifier=value.to_s
 			end
 		end
 	end
@@ -52,61 +58,64 @@ def testGUID
 	end
 	
 	if g.size > 0  # have we found anything yet?
+		@swagger.addComment("INFO: Searching Linked Data metadata for predicates indicating a pointer to data.\n")
 		Utils::DATA_PREDICATES.each do |prop|
+			@swagger.addComment("INFO: SPARQLing for #{prop}.\n")
 			if prop =~ /schema\.org/
 				query = SPARQL.parse("select ?o where {?s <#{prop}> ?b .
 									 ?b  <http://schema.org/contentUrl> ?o}")
 				results = query.execute(g)
 				if  results.any?
-					dataGUID=results.first[:o].value
-					@swagger.addComment "found identifier #{results.first[:o]} using Schema.org distribution property. "
+					@identifier=results.first[:o].value
+					@swagger.addComment "INFO: found identifier #{@identifier} using Schema.org distribution property.\n"
 				end
 				query = SPARQL.parse("select ?o where {?s <#{prop}> ?b .
 									 ?b  <https://schema.org/contentUrl> ?o}")
 				results = query.execute(g)
 				if  results.any?
-					dataGUID=results.first[:o].value
-					@swagger.addComment "found identifier #{results.first[:o]} using Schema.org distribution property. "
+					@identifier=results.first[:o].value
+					@swagger.addComment "INFO: found identifier #{@identifier} using Schema.org distribution property.\n"
 				end
 			elsif prop =~ /dcat\#/
 				query = SPARQL.parse("select ?o where {?s <#{prop}> ?b .
 									 ?b  <http://www.w3.org/ns/dcat#accessURL> ?o}")
 				results = query.execute(g)
 				if  results.any?
-					dataGUID=results.first[:o].value
-					@swagger.addComment "found identifier #{results.first[:o]} using DCAT distribution property. "
+					@identifier=results.first[:o].value
+					@swagger.addComment "INFO: found identifier #{@identifier} using DCAT distribution property.\n"
 				end
 				query = SPARQL.parse("select ?o where {?s <#{prop}> ?b .
 									 ?b  <https://www.w3.org/ns/dcat#accessURL> ?o}")
 				results = query.execute(g)
 				if  results.any?
-					dataGUID=results.first[:o].value
-					@swagger.addComment "found identifier #{results.first[:o]} using DCAT distribution property. "
+					@identifier=results.first[:o].value
+					@swagger.addComment "INFO: found identifier #{@identifier} using DCAT distribution property.\n"
 				end
 			else 
 				query = SPARQL.parse("select ?o where {?s <#{prop}> ?o}")
 				results = query.execute(g)
 				if results.any?
-					dataGUID=results.first[:o].value
-					@swagger.addComment "found identifier #{results.first[:o]} using #{prop}. "
+					@identifier=results.first[:o].value
+					@swagger.addComment "INFO: found identifier #{@identifier} using #{prop}.\n"
 				end
 			end
 		end
-	end
 		
-	# hopefully we have it by now... if not... we fail!
-	$stderr.puts "\n\nfound identifier #{@identifier} \n\n"
+		# hopefully we have it by now... if not... we fail!
+		#$stderr.puts "\n\nfound identifier #{@identifier} \n\n"
 
-	if dataGUID == ""
-		@swagger.score = 0
-		@swagger.addComment "Was unable to locate the data identifier in the metadata using any (common) property/predicate reserved for this purpose.  Tested SIO:is-about, SIO:0003323, schema:mainEntity, IAO:0000136, schema:codeRepository, and foaf:primaryTopic.  Fail. "
-	else
-		testIdentifier(dataGUID) # this will add more comments and a score to @swagger
+		unless @identifier
+			@swagger.score = 0
+			@swagger.addComment "FAILURE: Was unable to locate the data identifier in the metadata using any (common) property/predicate reserved for this purpose.  Tested the following #{Utils::DATA_PREDICATES}\n"
+		else
+			@swagger.addComment "INFO: Now resolving #{@identifier} to test its properties.\n"
+			testIdentifier(@identifier) # this will add more comments and a score to @swagger
+		end
 	end
-	
 
 	return @swagger.createEvaluationResponse
 end
+
 
 def testIdentifier(guid)
 	
@@ -114,19 +123,19 @@ def testIdentifier(guid)
 	type = Utils::typeit(guid)  # this is where the magic happens!
 
 	if !type
-		@swagger.addComment("  The GUID identifier of the data #{guid} did not match any known identification system (tested inchi, doi, handle, uri) and therefore did not pass this metric.  If you think this is an error, please contact the FAIR Metrics group (http://fairmetrics.org).")
+		@swagger.addComment("FAILURE: The GUID identifier of the data #{guid} did not match any known identification system.\n")
 		@swagger.score = 0
 	elsif type == "uri"
-		@swagger.addComment("The GUID appears to be a URL.  Testing known URL persistence schemas (purl, oclc, fdlp, purlz, w3id, ark).  ")
+		@swagger.addComment("INFO: The GUID appears to be a URL.  Testing known URL persistence schemas (purl, oclc, fdlp, purlz, w3id, ark).\n")
 		if (guid =~ /(purl)\./) or (guid =~ /(oclc)\./) or(guid =~ /(fdlp)\./) or (guid =~ /(purlz)\./) or (guid =~ /(w3id)\./) or (guid =~ /(ark)\:/)
-			@swagger.addComment("The GUID conforms with #{$1}, which is known to be persistent.  Pass. ")
+			@swagger.addComment("SUCCESS: The GUID conforms with #{$1}, which is known to be persistent.\n")
 			@swagger.score = 1
 		else
-			@swagger.addComment("The GUID does not conform with any known permanent-URL system.  ")
+			@swagger.addComment("FAILURE: The GUID does not conform with any known permanent-URL system.\n")
 			@swagger.score = 0
 		end
 	else 
-		@swagger.addComment("The GUID of the data is a #{type}, which is known to be persistent.  Pass. ")
+		@swagger.addComment("SUCCESS: The GUID of the data is a #{type}, which is known to be persistent.\n")
 		@swagger.score = 1
 	end
 

@@ -25,7 +25,7 @@ def testGUID
 
 	@swagger.score = 0
 	if metadata.guidtype == "unknown"
-		@swagger.addComment("  The identifier #{guid} did not match any known identification system (tested inchi, doi, handle, uri) and therefore did not pass this metric.  If you think this is an error, please contact the FAIR Metrics group (http://fairmetrics.org).")
+		@swagger.addComment("FAILURE: The identifier #{guid} did not match any known identification system (tested inchi, doi, handle, uri) and therefore did not pass this metric.  If you think this is an error, please contact the FAIR Metrics group (http://fairmetrics.org).\n")
 		return @swagger.createEvaluationResponse
 	end
 
@@ -35,6 +35,7 @@ def testGUID
 	hash = metadata.hash
 	
 ###################  TITLE
+	@swagger.addComment "INFO: testing any hash-style metadata for a key matching 'title' in any case.\n"
 	flatlist = hash.flatten(40) # hopefully no hash is more than 40 deep!
 	title = ""
 	for x in 1..flatlist.length do
@@ -46,15 +47,24 @@ def testGUID
 			break
 		end
 	end		
+	unless title =~ /\w+/
+		@swagger.addComment "WARN: could not find a structured reference to the title in the hash-style metadata.\n"
+	end
 	
-	searchresults = callBing(title)
-	h = JSON.parse(searchresults)
-	if h["webPages"]
-		h["webPages"]["value"].each do |p|
-			if p["url"] == finalURI
-				@swagger.addComment "found your metadata record based on its title in structured data.  "
-				@swagger.score = 1
+	if title =~ /\w+/
+		@swagger.addComment "INFO: found title #{title}.  Searching Bing\n"
+		searchresults = callBing(title)
+		h = JSON.parse(searchresults)
+		if h["webPages"]
+			@swagger.addComment "INFO: found matches in Bing.  Checking for results that match #{finalURI}.\n"
+			h["webPages"]["value"].each do |p|
+				if p["url"] == finalURI
+					@swagger.addComment "SUCCESS:  found a metadata record based on a search of Microsoft BING for its title #{title}.\n"
+					@swagger.score = 1
+				end
 			end
+		else
+			@swagger.addComment "WARN:  Bing search for #{title} found no results.\n"			
 		end
 	end
 
@@ -71,17 +81,27 @@ def testGUID
 		end
 	end		
 	#keywords = keywords.gsub!("\,", "")
-	searchresults = callBing(keywords)
-	h = JSON.parse(searchresults)
-	if h["webPages"]
-		h["webPages"]["value"].each do |p|
-			if p["url"] == finalURI
-				@swagger.addComment "found your metadata record based on its keywords in structured data.  "
-				@swagger.score = 1
-			end
-		end
+	unless keywords =~ /\w+/
+		@swagger.addComment "WARN: could not find any human-readeable keywords in hash-style metadata.\n"
 	end
 
+	if keywords =~ /\w+/
+		@swagger.addComment "INFO: found keywords #{keywords}.  Now searching Bing.\n"
+		searchresults = callBing(keywords)
+		h = JSON.parse(searchresults)
+		if h["webPages"]
+			@swagger.addComment "INFO: found matches in Bing.  Checking for results that match #{finalURI}\n"
+			h["webPages"]["value"].each do |p|
+				if p["url"] == finalURI
+					@swagger.addComment "SUCCESS: found your metadata record based on its keywords in structured data.\n"
+					@swagger.score = 1
+				end
+			end
+		else
+			@swagger.addComment "INFO: Bing returned no search results for keywords #{keywords}.\n"  
+		end
+	end
+	
 #####################  now with the graph data
 	
 	g = metadata.graph
@@ -90,21 +110,28 @@ def testGUID
 	end
 	
 	if g.size > 0  # have we found anything
+		@swagger.addComment "INFO: Testing Linked Data-formatted metadata for any predicate that contains 'title' in any case.\n "
 		query = SPARQL.parse("select ?o where {?s ?p ?o  FILTER(CONTAINS(lcase(str(?p)), 'title'))}") # find predicate containing "title", take object
 		results = query.execute(g)
 		if results.any?
+			@swagger.addComment "INFO: found title predicate.\n "
 			title = results.first[:o].to_s  # get the title
+			@swagger.addComment "INFO: found Title:  #{title}.\n "
 			#$stderr.puts "looking for #{title}"
+			@swagger.addComment "INFO: Calling Bing search using #{title}.\n "
 			searchresults = callBing(title)  # search bing
 			#$stderr.puts JSON::pretty_generate(JSON(searchresults))
 			h = JSON.parse(searchresults)  # parse json
 			if h["webPages"]   # are there results
+				@swagger.addComment "INFO: Bing found results for#{title}.  Checking for results that match #{finalURI}.\n"
 				h["webPages"]["value"].each do |p|  # for each matching pge do
 					if p["url"] == finalURI  # compare to the final URI from the Utils::fetch routine (the page of metadata)
-						@swagger.addComment "found your metadata record based on its title in linked data.  "
+						@swagger.addComment "SUCCESS: found a metadata record based on its title in linked data.\n  "
 						@swagger.score = 1
 					end
 				end
+			else
+				@swagger.addComment "INFO: No search results from Bing\n  "
 			end
 		end
 	end
@@ -117,27 +144,35 @@ def testGUID
 	end
 	
 	if g.size > 0  # have we found anything
+		@swagger.addComment "INFO: Testing Linked Data-formatted metadata for any predicate that contains 'keyword' in any case.\n "
 		query = SPARQL.parse("select ?o where {?s ?p ?o  FILTER(CONTAINS(lcase(str(?p)), 'keyword'))}") # find predicate containing "title", take object
 		results = query.execute(g)
 		if results.any?
 			keywords = results.first[:o].to_s  # get the keywords
-			#$stderr.puts "looking for #{title}"
-			#keywords = keywords.gsub!("\,", "")
+			@swagger.addComment "INFO: found keywords.\n "
+			@swagger.addComment "INFO: found keywords #{keywords}.\n "
+			@swagger.addComment "INFO: Calling Bing search using #{keywords}.\n "
 			searchresults = callBing(keywords)  # search bing
 			#$stderr.puts JSON::pretty_generate(JSON(searchresults))
 			h = JSON.parse(searchresults)  # parse json
 			if h["webPages"]   # are there results
+				@swagger.addComment "INFO: Bing found matches using #{keywords}. Testing matches for a reference to {finalURI}\n"
 				h["webPages"]["value"].each do |p|  # for each matching pge do
 					if p["url"] == finalURI  # compare to the final URI from the Utils::fetch routine (the page of metadata)
-						@swagger.addComment "found your metadata record based on its keywords in linked data.  "
+						@swagger.addComment "SUCCESS: found a metadata record based on its keywords in linked data.\n"
 						@swagger.score = 1
 					end
 				end
+			else
+				@swagger.addComment "INFO: No results from Bing using keywords #{keywords}.\n"
 			end
 		end
 	end
 
-
+	unless @swagger.score = 1
+		@swagger.addComment "FAILURE: Was unable to discover the metadata record by search in Bing using any method\n"
+	end
+		
 	return @swagger.createEvaluationResponse
 	
 end

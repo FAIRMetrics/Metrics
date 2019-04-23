@@ -7,7 +7,7 @@ require 'rdf'
 require 'rdf/turtle'
 require 'sparql'
 
-debug = false
+debug = fralse
 
 def testGUID
 	
@@ -20,7 +20,7 @@ def testGUID
 	end
 
 	if metadata.guidtype == "unknown"
-		@swagger.addComment("The identifier #{guid} did not match any known identification system (tested inchi, doi, handle, uri) and therefore did not pass this metric.  If you think this is an error, please contact the FAIR Metrics group (http://fairmetrics.org).")
+		@swagger.addComment("FAILURE: The identifier #{guid} did not match any known identification system.\n")
 		@swagger.score = 0
 		return @swagger.createEvaluationResponse
 	end
@@ -29,16 +29,19 @@ def testGUID
 	
 	if hash.any?
 		@swagger.score = 1
-		@swagger.addComment "Found structured data.  "
+		@swagger.addComment "SUCCESS: Found structured data.\n"
 	end
 	
 	g = metadata.graph
 		
 	if g.size > 0  # have we found anything yet?
 		@swagger.score = 1
-		@swagger.addComment "Found linked data (this may or may not have originated from the author). "
+		@swagger.addComment "SUCCESS: Found linked data (this may or may not have originated from the author).\n"
 	end
 
+	if @swagger.score < 1
+		@swagger.addComment "FAILURE: unable to find any kind of structured metadata.\n"
+	end
 	return @swagger.createEvaluationResponse
 end
 

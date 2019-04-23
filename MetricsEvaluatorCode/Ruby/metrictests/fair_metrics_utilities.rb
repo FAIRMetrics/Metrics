@@ -105,7 +105,7 @@ class Utils
             return metadata
           end
       end
-      meta.comments << "the guid did not correspond to any known GUID.  Aborting.  "
+      meta.comments << "CRITICAL: The guid did not correspond to any known GUID. Tested #{Utils::GUID_TYPES.keys.to_s}. Halting.\n"
       return meta
       
     end
@@ -127,8 +127,10 @@ class Utils
     def Utils::resolve_inchi(guid, meta)
       meta.guidtype = "inchi"
       
-      meta.comments << "Found an InChI Key GUID.  "
+      meta.comments << "INFO: Found an InChI Key GUID.\n"
 #$stderr.puts "1"
+      meta.comments << "INFO: Resolving using PubChem Resolver https://pubchem.ncbi.nlm.nih.gov/rest/rdf/inchikey/#{guid} with HTTP Accept Headers #{Utils::AcceptHeader.to_s}.\n"
+
       head, body = self.fetch("https://pubchem.ncbi.nlm.nih.gov/rest/rdf/inchikey/#{guid}", Utils::AcceptHeader, meta)
       # this is a Net::HTTP response
 #$stderr.puts "2"
@@ -141,15 +143,15 @@ class Utils
       
       (parser, type) = Utils::figure_out_type(head)
       unless parser
-        meta.comments << "couldn't find a parser for the data returned from https://pubchem.ncbi.nlm.nih.gov/rest/rdf/inchikey/#{guid}"
+        meta.comments << "CRITICAL: Couldn't find a parser for the data returned from https://pubchem.ncbi.nlm.nih.gov/rest/rdf/inchikey/#{guid}. Halting. \n"
         return meta
       end
 #$stderr.puts "5"
 
       # this next operation is safe because we know that pubchem does in fact return Turtle
       unless parser.eql?"turtle"
-        meta.comments << "expected turtle format...  aborting"
-        return meta   # simply fail if they asked for HTML or something else
+        meta.comments << "CRITICAL: expected turtle format from https://pubchem.ncbi.nlm.nih.gov/rest/rdf/inchikey/#{guid}. Halting. \n"
+        return meta   
       end
 #$stderr.puts "6"
       
@@ -158,7 +160,7 @@ class Utils
       query = SPARQL.parse("select ?o where {?s <http://semanticscience.org/resource/is-attribute-of> ?o}")
       results = query.execute(meta.graph)
       unless results.any?
-        meta.comments << "could not find the sio:is_attribute_of predicate in the first layer of metadata.  Aborting with failure.  "
+        meta.comments << "CRITICAL: Could not find the sio:is_attribute_of predicate in the first layer of metadatafrom https://pubchem.ncbi.nlm.nih.gov/rest/rdf/inchikey/#{guid}. Halting. \n"
         return meta
       end
 #$stderr.puts "7"
@@ -166,15 +168,21 @@ class Utils
       cpd = results.first[:o]
       cpd = cpd.to_s
       cpd = cpd.gsub(/\/$/, "")  # has a rogue trailing slash
+      meta.comments << "INFO: Found #{cpd} as the identifier of the second layer of metadata.\n"
+      meta.comments << "INFO: Resolving #{cpd} using HTTP Accept Header #{Utils::AcceptHeader.to_s}.\n"
+        
       head2, body2 = self.fetch(cpd, Utils::AcceptHeader, meta)
-      return meta unless body2
+      unless body2
+        meta.comments << "CRITICAL: Resolution of #{cpd} using HTTP Accept Header #{Utils::AcceptHeader.to_s} returned no message body. Halting. \n"
+        return meta
+      end
 #$stderr.puts "8"
       
       meta.full_response << body2  # set it here so it isn't empty
       (parser, type) = Utils::figure_out_type(head2)
       # this next operation is safe because we know that pubchem does in fact return Turtle
       unless parser.eql?"turtle"
-        meta.comments << "expected turtle format... from #{cpd} aborting"
+        meta.comments << "CRITICAL: Expected turtle format from #{cpd}.  Halting. \n"
         return meta   # simply fail if they asked for HTML or something else
       end
 #$stderr.puts "9"
@@ -188,10 +196,12 @@ class Utils
     
     def Utils::resolve_doi(guid, meta)
       meta.guidtype = "doi"
-      meta.comments << "Found a Crossref DOI.  "
+      meta.comments << "INFO:  Found a DOI.\n"
 
-      Utils::resolve_uri("https://doi.org/#{guid}", meta, false)  # specifically metadata
-      Utils::resolve_uri("https://doi.org/#{guid}", meta, false, {"Accept" => "*/*"}) # whatever is default
+      meta.comments << "INFO:  Attempting to resolve https://doi.org/#{guid} using HTTP Headers #{Utils::AcceptHeader.to_s}.\n"
+      Utils::resolve_url("https://doi.org/#{guid}", meta, false)  # specifically metadata
+      meta.comments << "INFO:  Attempting to resolve https://doi.org/#{guid} using HTTP Headers #{{"Accept" => "*/*"}.to_s}.\n"
+      Utils::resolve_url("https://doi.org/#{guid}", meta, false, {"Accept" => "*/*"}) # whatever is default
       
       return meta      
     end
@@ -202,24 +212,34 @@ class Utils
     def Utils::resolve_handle(guid, meta)
       
       meta.guidtype = "handle"
-      meta.comments << "Found a non-crossref DOI or other Handle.  "
-      Utils::resolve_uri("http://hdl.handle.net/#{guid}", meta)
+      meta.comments << "INFO: Found a non-DOI Handle.\n"
+      meta.comments << "INFO:  Attempting to resolve http://hdl.handle.net/#{guid} using HTTP Headers #{Utils::AcceptHeader.to_s}.\n"
+      Utils::resolve_url("http://hdl.handle.net/#{guid}", meta, false)
+      meta.comments << "INFO:  Attempting to resolve http://hdl.handle.net/#{guid} using HTTP Headers #{{"Accept" => "*/*"}.to_s}.\n"
+      Utils::resolve_url("http://hdl.handle.net/#{guid}", meta, false, {"Accept" => "*/*"})
       return meta
 
     end
       
+    def Utils::resolve_uri(guid, meta)
+      
+      meta.guidtype = "uri"
+      meta.comments << "INFO: Found a URI.\n"
+      meta.comments << "INFO:  Attempting to resolve #{guid} using HTTP Headers #{Utils::AcceptHeader.to_s}.\n"
+      Utils::resolve_url(guid, meta, false)
+      meta.comments << "INFO:  Attempting to #{guid} using HTTP Headers #{Utils::AcceptHeader.to_s}.\n"
+      Utils::resolve_url(guid, meta, false, {"Accept" => "*/*"})
+      return meta
+
+    end
     
     
-    def Utils::resolve_uri(guid, meta, nolinkheaders=false, header=Utils::AcceptHeader)
+    def Utils::resolve_url(guid, meta, nolinkheaders=false, header=Utils::AcceptHeader)
       meta.guidtype = "uri" if meta.guidtype == "unknown"  # might have been set already, e.g. to 'handle' or 'doi'
       $stderr.puts "\n\n FETCHING #{guid} #{header}\n\n"
       head, body = Utils::fetch(guid, header, meta)
       if !head
-          meta.comments << "Unable to resolve #{guid} using Content-type negotiation for linked data.  Now trying */*"
-          head, body =  Utils::fetch(guid, {'Accept' => "*/*"}, meta)
-      end
-      if !head
-          meta.comments << "Unable to resolve #{guid} using any Content-type negotiation.  Giving up.  "
+          meta.comments << "WARN: Unable to resolve #{guid} using HTTP Accept header #{header.to_s}.\n"
           return meta
       end
                                        
@@ -227,36 +247,45 @@ class Utils
 
       links = Array.new
       links = Utils::parse_link_meta_headers(head) unless nolinkheaders
-      links.each {|link| Utils::resolve_uri(link, meta, true)}  # this fills the metadata object with the content from Link headers, but not recursively
+      links.each do |link|
+          meta.comments << "INFO: a Link 'meta' header was found: #{link}, and is now being followed as an independent URI that may contain metadata.\n"
+          Utils::resolve_url(link, meta, true)
+      end  # this fills the metadata object with the content from Link headers, but not recursively
       
       parser, contenttype = Utils::figure_out_type(head)
       
-      meta.comments << "Found #{parser} #{contenttype} type of file by resolving GUID.  "
+      meta.comments << "INFO: Found #{parser} #{contenttype} type of content when resolving #{guid} using HTTP Accept header #{header.to_s}.\n"
       #$stderr.puts "\n\nFound #{parser} type of file by resolving GUID #{guid}.  BODY:  #{response.body}  \n\n"
         
         case
         when Utils::TEXT_FORMATS.keys.include?(parser)
           #$stderr.puts "\n\nPARSING TEXT\n\n"
+          meta.comments << "INFO: parsing as plaintext. \n"
           Utils::parse_text(meta, body)
         when Utils::RDF_FORMATS.keys.include?(parser)
           #$stderr.puts "\n\nPARSING RDF\n\n"
+          meta.comments << "INFO: parsing as linked data. \n"
           Utils::parse_rdf(meta, body)
         when Utils::HTML_FORMATS.keys.include?(parser)
+          meta.comments << "INFO: parsing as HTML. \n"
           #$stderr.puts "\n\nPARSING HTML\n\n"
           Utils::do_extruct(meta, guid)
         when Utils::XML_FORMATS.keys.include?(parser)
+          meta.comments << "INFO: parsing as XML. \n"
           #$stderr.puts "\n\nPARSING XML\n\n"
           Utils::parse_xml(meta, body)
         when Utils::JSON_FORMATS.keys.include?(parser)
+          meta.comments << "INFO: parsing as JSON. \n"
           #$stderr.puts "\n\nPARSING JSON\n\n"
           Utils::parse_json(meta, body)
         else
           #$stderr.puts "\n\nPARSING UNKNOWN\n\n"
-          meta.comments << "Metadata may be embedded, now searching using the Apache 'tika' tool.  "
+          meta.comments << "WARN: parser could not be found. \n"
+          meta.comments << "INFO:  Metadata may be embedded, now searching using the Apache 'tika' tool.\n"
           Utils::do_tika(meta, body)  # this expects a string, not an Net::HTTP
-          meta.comments << "Metadata may be embedded, now searching using the 'Distiller' tool.  "
-	  Utils::do_distiller(meta, guid)
-          meta.comments << "Metadata may be embedded, now searching using the 'extruct' tool.  "
+          meta.comments << "INFO:  Metadata may be embedded, now searching using the 'Distiller' tool.\n"
+    	  Utils::do_distiller(meta, guid)
+          meta.comments << "INFO: Metadata may be embedded, now searching using the 'extruct' tool.\n"
           Utils::do_extruct(meta, guid)
         end
         
@@ -275,8 +304,8 @@ class Utils
     # ==================================================================
     
     def Utils::parse_text(meta, body)
-        meta.comments << "Plain Text cannot be mapped to any parser.  No structured metadata found.  "
-        meta.comments << "using Apache Tika to attempt to extract metadata. "
+        meta.comments << "WARTN: Plain Text cannot be mapped to any parser.  No structured metadata found.\n"
+        meta.comments << "INFO: Using Apache Tika to attempt to extract metadata from plaintext.\n"
         
         return Utils::do_tika(meta, body)
     
@@ -297,54 +326,27 @@ class Utils
     
     
     def Utils::parse_rdf(meta, body, format=nil)
-      #$stderr.puts "\n\nrequested format #{format}\n\n"
-      #contenttype = ""
-      #body = "" # to hold the raw rdf
-      ##$stderr.puts "MESSAGE CLASS #{message} #{message.class}\n\n\n"
-      #if message.class <= Net::HTTPResponse  # should probably do duck typing here... more Rubyish!
-      #  if (message.header['content-type'].match(/([\w\+]+\/[\w\+]+):?/im))
-      #    contenttype = $1
-      #    body = message.body
-      #    #$stderr.puts "MESSAGE BODY #{body}\n\n\n"
-      #  else
-      #    #$stderr.puts "Message was an http response with no type???\n\n\n"
-      #    meta.comments << "no content-type header could be found in the message.  This is very odd!  Likely a bug in our software.  "
-      #  end
-      #else # this is just an incoming string... in which case, it MUST have a format indicator (MIME type)
-      #    #$stderr.puts "\n\nINCOMING STRING\n\n*#{message}*\n\n"
-      #  contenttype = format
-      #  if !contenttype
-      #    meta.comments << "no content-type was passed with a raw RDF body.  This is very odd!  Likely a bug in our software (i.e. not your fault!)  Please tell the dev team.  "
-      #    return meta
-      #  end
-      #  body = message # this is raw rdf
-      #end
 
-      $stderr.puts "\n\n\nSampling \n\n#{body[0..2000]}\n\n"
+      #$stderr.puts "\n\n\nSampling \n\n#{body[0..2000]}\n\n"
       unless body
-          meta.comments << "This message body component appears to have no content.  "
+          meta.comments << "CRITICAL: The response message body component appears to have no content.\n"
           return meta
       end
       unless body.match(/\w/)
-          meta.comments << "This message body component appears to have no content.  "
+          meta.comments << "CRITICAL: The response message body component appears to have no content.\n"
           return meta
       end
 
-      #formattype = RDF::Format.for(content_type: contenttype)
-#$stderr.puts "p1"
-
       formattype = RDF::Format.for({:sample => body})
-      #$stderr.puts "\n\n\nTrying to create RDF reader for #{formattype}\n\n#{body}\n\n#{message}\n"
-#$stderr.puts "p2"
 
       if !formattype
-        meta.comments << "Unable to find an RDF reader type that matches the content that was returned from resolution.  Here is a sample #{body[0..100]}  Please send your GUID to the dev team so we can investigate!  "
+        meta.comments << "CRITICAL: Unable to find an RDF reader type that matches the content that was returned from resolution.  Here is a sample #{body[0..100]}  Please send your GUID to the dev team so we can investigate!\n"
         return meta
       end
+      meta.comments << "INFO: The response message body component appears to contain #{formattype.to_s}.\n"
       reader = formattype.reader.new(body)
-      $stderr.puts "Reader Class #{reader.class}\n\n #{reader.inspect}"
+      #$stderr.puts "Reader Class #{reader.class}\n\n #{reader.inspect}"
       meta.merge_rdf(reader.to_a)
-#$stderr.puts "p3"
 
     end
     
@@ -353,6 +355,7 @@ class Utils
     
     def Utils::parse_xml(meta, body)
       hash = XmlSimple.xml_in(body)
+      meta.comments << "INFO: The XML is being converted into a simple hash structure.\n"
       meta.hash.merge hash
       return meta.hash
     end
@@ -365,26 +368,28 @@ class Utils
         file.binmode
         file.write(body)
         file.rewind
+        meta.comments << "INFO: The message body is being examined by Apache Tika\n"
         
         result = %x{curl --silent -T #{file.path} http://localhost:9998/meta --header "Accept: application/rdf+xml" 2>&1}
         file.close
         file.unlink    # deletes the temp file
+        meta.comments << "INFO: The response from Apache Tika is being parsed\n"
 
         return Utils::parse_tika_output(meta, result)
     end
     
     
     def Utils::do_distiller(meta, uri)
-        meta.comments << "Using 'Kellog's Distiller' to try to extract metadata from return value (message body) of #{uri}.  "
+        meta.comments << "INFO: Using 'Kellog's Distiller' to try to extract metadata from return value (message body) of #{uri}.\n"
         # $stderr.puts uri
         urlparam = CGI::escape(uri.to_s)
         head, body = Utils::fetch("http://rdf.greggkellogg.net/distiller?command=serialize&url=#{urlparam}&output_format=turtle", {"Accept" => "*/*"}, meta)
         # need to do some error checking here!
         if head[:content_type] =~ /html/   # this is an HTML failure message
-              meta.comments << "The Distiller tool failed to find parseable data at #{uri}.  "
+              meta.comments << "WARN: The Distiller tool failed to find parseable data at #{uri}.\n"
         else          
           Utils::parse_rdf(meta, body, "text/turtle")
-          meta.comments << "The Distiller found parseable data at #{uri}.  "
+          meta.comments << "INFO: The Distiller found parseable data at #{uri}.  Parsing as RDF\n"
         end
  
     end
@@ -392,7 +397,7 @@ class Utils
 
     def Utils::do_extruct(meta, uri)
       
-        meta.comments << "Using 'extruct' to try to extract metadata from return value (message body) of #{uri}.  "
+        meta.comments << "INFO:  Using 'extruct' to try to extract metadata from return value (message body) of #{uri}.\n"
         
         result = %x{#{Utils::ExtructCommand} #{uri} 2>&1}
         #$stderr.puts "\n\n\n\n\n\n\n#{result.class}\n\n#{result.to_s}\n\n#{@extruct_command} #{uri} 2>&1\n\n"
@@ -401,6 +406,7 @@ class Utils
           json = JSON.parse result
           #$stderr.puts "\n\n\n\nFOUND JSON\n\n\n"
           #$stderr.puts "\n\n\n\nFOUND JSON-LD\n#{json["json-ld"]} content\n\n\n"
+          meta.comments << "INFO: the extruct tool found parseable data at #{uri}\n"
           
           Utils::parse_rdf(meta, json["json-ld"].to_json, "application/ld+json") if json["json-ld"].any?  #RDF
           meta.merge_hash(json["microdata"].first) if json["microdata"].any?
@@ -410,7 +416,7 @@ class Utils
                   
           meta.merge_hash(json.first) if json.first.is_a?Hash
         else
-          meta.comments << "the extruct tool failed to find parseable data at #{uri}"
+          meta.comments << "WARN: the extruct tool failed to find parseable data at #{uri}\n"
         end
  
     end
@@ -419,8 +425,13 @@ class Utils
       #$stderr.puts "\n\n\n\n\nTIKA OUTPUT\n\nX#{output}X\n\n\n\n\n"
       # annoyingly, when you ask Tika for rdfxml, it gives it to you INSIDE an XML element
       # meaning that you cannot directly parse it as RDF.   Grrrrrrr....
+      meta.comments << "INFO:  entering Tika parser - sample of input #{output[0..50]}.\n"
       
-      return unless output[0] == "<"  # check if it is XML
+      unless output[0] == "<"  # check if it is XML
+          meta.comments << "CRITICAL:  Tika parser expected XML. Aborting. \n"
+          return
+      end
+          
       xml = Nokogiri::XML(output)
       rdf = xml.xpath('//rdf:RDF', 'rdf' => 'http://www.w3.org/1999/02/22-rdf-syntax-ns#')
       rdf_string = rdf.to_xml
@@ -428,7 +439,7 @@ class Utils
       r = RDF::Format.for(content_type: "application/rdf+xml").reader.new(rdf_string)
       g = RDF::Graph.new << r
       meta.merge_rdf(g.statements)
-      meta.comments << "Tika executed successfully (this doesn't necessarily mean that it discovered any metadata...)  "
+      meta.comments << "INFO: Tika executed successfully (this doesn't necessarily mean that it discovered any metadata...)\n"
     end
     
 
@@ -436,6 +447,8 @@ class Utils
     def Utils::parse_link_meta_headers(headers)
       # we can be sure that a Link header is a URL
       # code stolen from https://gist.github.com/thesowah/0ca5e1b4b3c61bfe8e13
+
+
       links = headers[:link]
       return [] unless links
       
@@ -516,6 +529,13 @@ class Utils
     
   # general Web utilities... follow redirects, for example
   def Utils::fetch(url, headers = Utils::AcceptHeader, meta=nil)  #we will try to retrieve turtle whenever possible
+
+        head = Utils::head(url, headers)
+        $stderr.puts "content length " + head[:content_length].to_s
+        if head[:content_length] and head[:content_length].to_f > 300000 and meta
+            meta.comments << "WARN: The size of the content at #{url} reports itself to be >300kb.  This service will not download something so large.  This does not mean that the content is not FAIR, only that this service will not test it.  Sorry!\n"
+            return false
+        end
 
         head, body = Utils::checkCache(url, headers)
         if head and body

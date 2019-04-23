@@ -24,7 +24,7 @@ def testGUID
 	
 	
 	if metadata.guidtype == "unknown"
-		@swagger.addComment("  The identifier #{guid} did not match any known identification system (tested inchi, doi, handle, uri) and therefore did not pass this metric.  If you think this is an error, please contact the FAIR Metrics group (http://fairmetrics.org).")
+		@swagger.addComment("FAILURE: The identifier #{guid} did not match any known identification system.\n")
 		return @swagger.createEvaluationResponse
 	end
 	
@@ -34,28 +34,30 @@ def testGUID
 	end
 	
 	if g.size > 0  # have we found anything yet?
-		@swagger.addComment("Linked data was found.  ")
+		@swagger.addComment("INFO: Linked data was found.\n")
 	else
-		@swagger.addComment("No linked data was found.  Test is exiting. ")
+		@swagger.addComment("FAILURE: No linked data was found.  Test is exiting.\n")
 		@swagger.score = 0
 		return @swagger.createEvaluationResponse
 	end
 
 	success = 0  # we will accept 5/10 failures
 	count = 0
+	@swagger.addComment("INFO: Now testing for any triples whose Object is an outward link (i.e. not #{finalURI.host}).\n")
 	g.each do |stm|
 		object = stm.object
 		next unless object.resource? && !object.anonymous?
 		thisuri = URI(object.value)
+		@swagger.addComment("INFO: Testing #{thisuri}).\n")
 		success += 1 if finalURI.host != thisuri.host # note that we're checking for outward links
 		count+=1
 	end
 	
 	if success 
-		@swagger.addComment("#{success} of the #{count} triples discovered in the linked metadata pointed to resources hosted elsewhere.  ")
+		@swagger.addComment("SUCCESS: #{success} of the #{count} triples discovered in the linked metadata pointed to resources hosted elsewhere.  ")
 		@swagger.score = 1
 	else
-		@swagger.addComment("#{success} of the #{count} triples discovered in the linked metadata pointed to resources hosted elsewhere.  The minimum to pass this test is 1.  ")
+		@swagger.addComment("FAILURE: #{success} of the #{count} triples discovered in the linked metadata pointed to resources hosted elsewhere.  The minimum to pass this test is 1.  ")
 		@swagger.score = 0		
 	end
 	

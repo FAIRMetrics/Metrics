@@ -17,10 +17,10 @@ def testGUID
 	type = Utils::typeit(guid)  # this is where the magic happens!
 
 	if !type
-		@swagger.addComment("  The GUID identifier of the metadata #{guid} did not match any known identification system (tested inchi, doi, handle, uri) and therefore did not pass this metric.  If you think this is an error, please contact the FAIR Metrics group (http://fairmetrics.org).")
+		@swagger.addComment("FAILURE: The GUID identifier of the metadata #{guid} did not match any known identification system.\n")
 		@swagger.score = 0
 	else 
-		@swagger.addComment("The GUID of the metadata is a #{type}, which is known to be allow authentication/authorization.  Pass. ")
+		@swagger.addComment("SUCCESS: The GUID of the metadata is a #{type}, which is known to be allow authentication/authorization.\n")
 		@swagger.score = 1
 	end
 	return @swagger.createEvaluationResponse

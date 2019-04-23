@@ -20,7 +20,7 @@ def testGUID
 	end
 
 	if metadata.guidtype == "unknown"
-		@swagger.addComment("  The identifier #{guid} did not match any known identification system (tested inchi, doi, handle, uri) and therefore did not pass this metric.  If you think this is an error, please contact the FAIR Metrics group (http://fairmetrics.org).")
+		@swagger.addComment("FAILURE: The identifier #{guid} did not match any known identification system.\n")
 		@swagger.score = 0
 		return @swagger.createEvaluationResponse
 	end
@@ -31,15 +31,18 @@ def testGUID
 
 	dataGUID=""
 	
-		properties.each do |keyval|
+	properties.each do |keyval|
 		key, value = nil, nil
 		(key, value) = keyval;
 		key = key.to_s
 		
+		@swagger.addComment("INFO: Searching hash-style metadata for keys indicating a pointer to data.\n")
 		Utils::DATA_PREDICATES.each do |prop|
 			prop =~ /.*[#\/]([^#\/]+)$/
+			prop = $1
+			@swagger.addComment("INFO: Searching for key: #{prop}.\n")
 			if key == prop
-				@swagger.addComment "found '#{prop}' in metadata.  "
+				@swagger.addComment "INFO: found '#{prop}' in metadata.  Setting data GUID to #{value} for next test.\n"
 				dataGUID=value
 			end
 		end
@@ -52,21 +55,23 @@ def testGUID
 	end
 	
 	if g.size > 0  # have we found anything yet?
+		@swagger.addComment("INFO: Searching Linked Data metadata for predicates indicating a pointer to data.\n")
 		Utils::DATA_PREDICATES.each do |prop|
+			@swagger.addComment("INFO: SPARQLing for #{prop}.\n")
 			if prop =~ /schema\.org/
 				query = SPARQL.parse("select ?o where {?s <#{prop}> ?b .
 									 ?b  <http://schema.org/contentUrl> ?o}")
 				results = query.execute(g)
 				if  results.any?
 					dataGUID=results.first[:o].value
-					@swagger.addComment "found identifier #{results.first[:o]} using Schema.org distribution property. "
+					@swagger.addComment "INFO: found identifier #{results.first[:o].value} using Schema.org distribution property.\n"
 				end
 				query = SPARQL.parse("select ?o where {?s <#{prop}> ?b .
 									 ?b  <https://schema.org/contentUrl> ?o}")
 				results = query.execute(g)
 				if  results.any?
 					dataGUID=results.first[:o].value
-					@swagger.addComment "found identifier #{results.first[:o]} using Schema.org distribution property. "
+					@swagger.addComment "INFO: found identifier #{results.first[:o].value} using Schema.org distribution property.\n"
 				end
 			elsif prop =~ /dcat\#/
 				query = SPARQL.parse("select ?o where {?s <#{prop}> ?b .
@@ -74,21 +79,21 @@ def testGUID
 				results = query.execute(g)
 				if  results.any?
 					dataGUID=results.first[:o].value
-					@swagger.addComment "found identifier #{results.first[:o]} using DCAT distribution property. "
+					@swagger.addComment "INFO: found identifier #{results.first[:o].value} using DCAT distribution property.\n"
 				end
 				query = SPARQL.parse("select ?o where {?s <#{prop}> ?b .
 									 ?b  <https://www.w3.org/ns/dcat#accessURL> ?o}")
 				results = query.execute(g)
 				if  results.any?
 					dataGUID=results.first[:o].value
-					@swagger.addComment "found identifier #{results.first[:o]} using DCAT distribution property. "
+					@swagger.addComment "INFO: found identifier #{results.first[:o].value} using DCAT distribution property.\n"
 				end
 			else 
 				query = SPARQL.parse("select ?o where {?s <#{prop}> ?o}")
 				results = query.execute(g)
 				if results.any?
 					dataGUID=results.first[:o].value
-					@swagger.addComment "found identifier #{results.first[:o]} using #{prop}. "
+					@swagger.addComment "INFO: found identifier #{results.first[:o].value} using #{prop}.\n"
 				end
 			end
 		end
@@ -96,7 +101,7 @@ def testGUID
 
 	if (dataGUID == "") or (!dataGUID.is_a?String) 
 		@swagger.score = 0
-		@swagger.addComment "Was unable to locate the data identifier in the metadata using any (common) property/predicate reserved for this purpose.  Tested #{Utils::DATA_PREDICATES.join(" & ")} as both keys, and linked data predicates  "
+		@swagger.addComment "FAILURE: Was unable to locate the data identifier in the metadata using any (common) property/predicate reserved for this purpose.  Tested #{Utils::DATA_PREDICATES.join(" & ")} as both keys, and linked data predicates  "
 		return @swagger.createEvaluationResponse
 	end
 
@@ -107,11 +112,11 @@ def testGUID
 	metadata2 = Utils::typeit(dataGUID)  # this is where the magic happens!
 
 	if !metadata2
-		@swagger.addComment("  The identifier #{dataGUID} did not match any known identification system (tested inchi, doi, handle, uri) and therefore did not pass this metric.  If you think this is an error, please contact the FAIR Metrics group (http://fairmetrics.org).")
+		@swagger.addComment("FAILURE: The identifier #{dataGUID} did not match any known identification system.\n")
 		@swagger.score = 0
 		return @swagger.createEvaluationResponse
 	else
-		@swagger.addComment("  The identifier #{dataGUID} is recognized as a #{metadata2}, which is resolvable by an open and free protocol.  ")
+		@swagger.addComment("SUCCESS: The identifier #{dataGUID} is recognized as a #{metadata2}, which is resolvable by an open and free protocol.\n")
 		@swagger.score = 1
 		return @swagger.createEvaluationResponse
 	end

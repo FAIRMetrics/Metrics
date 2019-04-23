@@ -24,11 +24,11 @@ def testGUID
 	
 	if metadata.guidtype == "unknown"
 		@swagger.score = 0
-		@swagger.addComment("  The identifier #{guid} did not match any known identification system (tested inchi, doi, handle, uri) and therefore did not pass this metric.  If you think this is an error, please contact the FAIR Metrics group (http://fairmetrics.org).")
+		@swagger.addComment("FAILURE: The identifier #{guid} did not match any known identification system.\n")
 		return @swagger.createEvaluationResponse
 	else
 		@swagger.score = 1
-		@swagger.addComment("  The identifier #{guid} is of type #{metadata.guidtype}, which is resolvable by an open protocol.")
+		@swagger.addComment("SUCCESS: The identifier #{guid} is of type #{metadata.guidtype}, which is resolvable by an open protocol.")
 		return @swagger.createEvaluationResponse
 	end
 
