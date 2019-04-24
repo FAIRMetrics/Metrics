@@ -25,7 +25,7 @@
 
 <br/>
 
-<%= form_with(url: executeevaluation_path(@collection), local: true, method: "post") do |form| %>
+<%= form_with(url: executeevaluation_path(@collection), local: true, method: "post", :'data-type' => 'json', :multipart => false, :format => "json") do |form| %>
 <table style="width: 500px">
  <tr>
 <td>GUID:</td><td>						<input type="text" name="resource" size="50"/></td>

@@ -46,20 +46,22 @@ class EvaluationsController < ApiController
   def result
     #@evaluation = Evaluation.find(params[:id])
     result_json_string = @evaluation.result;  # get the result from the database
-    $stderr.puts "#{result_json_string} FROM DATABASE\n\n"
+    #$stderr.puts "#{result_json_string} FROM DATABASE\n\n"
     
     @result = []
     @iri = @evaluation.resource
-    $stderr.puts "#{@iri} FROM DATABASE\n\n"
+    #$stderr.puts "#{@iri} FROM DATABASE\n\n"
     
     resulthash = JSON.parse(result_json_string)
 
-    resulthash.keys.each  do |metricsmarturl|
-      thisresulthash = resulthash[metricsmarturl][0]
+    resulthash.keys.each  do |metricurl|
+      thisresulthash = resulthash[metricurl][0]
       @outgraph = RDF::Graph.new << JSON::LD::API.toRdf(thisresulthash)
 
-    $stderr.puts "SEARCHING DB FOR Metric #{metricsmarturl}"
-      metric = Metric.find_by(smarturl: metricsmarturl)
+    $stderr.puts "SEARCHING DB FOR Metric #{metricurl}"
+    #metric = Metric.find_by(smarturl: metricsmarturl)
+    metricid = metricurl =~ /.*\/(\d+)$/ && $1  # capture final digit and return
+    metric = Metric.find(metricid)
     $stderr.puts "FOUND #{metric}"
       @result << [metric, @outgraph]      
     end
@@ -117,7 +119,12 @@ class EvaluationsController < ApiController
     @title = params[:title]
 
     @evaluation = Evaluation.new(resource: @resource, executor: @executor, title: @title, collection: collectionid)
-    @evaluation[:body] =  request.body.read   # the raw JSON of the incoming request
+    
+#    {"resource": "10.5281/zenodo.1147435",
+#     "executor":  "0000-0001-6960-357X",
+#      "title": "an exemplar evaluation of a zenodo record using two identifier metrics"}
+    bodyjson = '{"resource": "' + @resource + '", "executor": "' + @executor + '", "title": "' + @title + '"}'    
+    @evaluation[:body] =  bodyjson   # the raw JSON of the incoming request
 
     result_for_db = {}
     
@@ -179,7 +186,8 @@ class EvaluationsController < ApiController
             if response.kind_of? Net::HTTPSuccess
               if response.header['content-type'] =~ /json/          
                 body = JSON.parse(response.body)  # create a hash
-                result_for_db[metric.smarturl] = body   # this is a has of the metric id and the hash of the JSON string from the evaluation service
+                metricurl = metric_url(metric)
+                result_for_db[metricurl] = body   # this is a has of the metric id and the hash of the JSON string from the evaluation service
               else
                 @evaluation.errors[:not_json] << " - Response message from FAIR Metrics Test service #{uri} was not JSON.  "
               end
