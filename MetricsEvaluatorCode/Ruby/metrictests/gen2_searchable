@@ -8,7 +8,7 @@ require 'rdf/turtle'
 require 'sparql'
 require 'net/https'
 
-debug = true
+debug = false
 
 config = ParseConfig.new('config.conf')
 @accessKey = config['bing']['accessKey'] if config['bing'] && config['bing']['accessKey'] && !config['bing']['accessKey'].empty?
