@@ -8,7 +8,7 @@ require 'rdf/turtle'
 require 'sparql'
 require 'net/https'
 
-debug = false
+debug = true
 
 config = ParseConfig.new('config.conf')
 @accessKey = config['bing']['accessKey'] if config['bing'] && config['bing']['accessKey'] && !config['bing']['accessKey'].empty?
@@ -63,6 +63,9 @@ def testGUID
 					@swagger.score = 1
 				end
 			end
+			unless @swagger.score == 1
+					@swagger.addComment "INFO: No results from Bing included #{finalURI}.\n"
+			end
 		else
 			@swagger.addComment "WARN:  Bing search for #{title} found no results.\n"			
 		end
@@ -97,6 +100,10 @@ def testGUID
 					@swagger.score = 1
 				end
 			end
+			unless @swagger.score == 1
+				@swagger.addComment "INFO: No results from Bing included #{finalURI}.\n"
+			end
+
 		else
 			@swagger.addComment "INFO: Bing returned no search results for keywords #{keywords}.\n"  
 		end
@@ -130,6 +137,9 @@ def testGUID
 						@swagger.score = 1
 					end
 				end
+				unless @swagger.score == 1
+					@swagger.addComment "INFO: No results from Bing included #{finalURI}.\n"
+				end
 			else
 				@swagger.addComment "INFO: No search results from Bing\n  "
 			end
@@ -156,20 +166,24 @@ def testGUID
 			#$stderr.puts JSON::pretty_generate(JSON(searchresults))
 			h = JSON.parse(searchresults)  # parse json
 			if h["webPages"]   # are there results
-				@swagger.addComment "INFO: Bing found matches using #{keywords}. Testing matches for a reference to {finalURI}\n"
+				@swagger.addComment "INFO: Bing found matches using #{keywords}. Testing matches for a reference to #{finalURI}\n"
 				h["webPages"]["value"].each do |p|  # for each matching pge do
 					if p["url"] == finalURI  # compare to the final URI from the Utils::fetch routine (the page of metadata)
 						@swagger.addComment "SUCCESS: found a metadata record based on its keywords in linked data.\n"
 						@swagger.score = 1
 					end
 				end
+				unless @swagger.score == 1
+					@swagger.addComment "INFO: No results from Bing included #{finalURI}.\n"
+				end
+
 			else
 				@swagger.addComment "INFO: No results from Bing using keywords #{keywords}.\n"
 			end
 		end
 	end
 
-	unless @swagger.score = 1
+	unless @swagger.score == 1
 		@swagger.addComment "FAILURE: Was unable to discover the metadata record by search in Bing using any method\n"
 	end
 		
@@ -202,13 +216,13 @@ def callBing(phrase)
 end
 
 if debug
-#	@input = '{"subject": "10.5281/zenodo.1147435"}'  # doi fail
+	@input = '{"subject": "10.5281/zenodo.1147435"}'  # doi fail
 #	@input = '{"subject": "10.5281/zenodo.1065973"}'  # doi fail
 #	@input = '{"subject": "BSYNRYMUTXBXSQ-UHFFFAOYSA-N"}' # inchi
 #	@input = '{"subject": "LFQSCWFLJHTTHZ-UHFFFAOYSA-N"}' # another inchi
 #	@input = '{"subject": "20.1000/105"}'  # handle (fail)
 #	@input = '{"subject": "http://linkeddata.systems/Magnaporthe/polyA_Sites"}'  # handle
-@input = '{"subject": "https://www.go-fair.org/fair-principles/"}'
+#@input = '{"subject": "https://www.go-fair.org/fair-principles/"}'
 
 else 
 	@input = $stdin.read

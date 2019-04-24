@@ -337,7 +337,7 @@ class Utils
           return meta
       end
 
-      formattype = RDF::Format.for({:sample => body})
+      formattype = RDF::Format.for({:sample => body[0..100]})
 
       if !formattype
         meta.comments << "CRITICAL: Unable to find an RDF reader type that matches the content that was returned from resolution.  Here is a sample #{body[0..100]}  Please send your GUID to the dev team so we can investigate!\n"
@@ -527,17 +527,18 @@ class Utils
   end
     
     
-  # general Web utilities... follow redirects, for example
+
   def Utils::fetch(url, headers = Utils::AcceptHeader, meta=nil)  #we will try to retrieve turtle whenever possible
 
         head = Utils::head(url, headers)
-        $stderr.puts "content length " + head[:content_length].to_s
+        #$stderr.puts "content length " + head[:content_length].to_s
         if head[:content_length] and head[:content_length].to_f > 300000 and meta
             meta.comments << "WARN: The size of the content at #{url} reports itself to be >300kb.  This service will not download something so large.  This does not mean that the content is not FAIR, only that this service will not test it.  Sorry!\n"
             return false
         end
 
-        head, body = Utils::checkCache(url, headers)
+        head, body, finalURI = Utils::checkCache(url, headers)
+        meta.finalURI = finalURI if meta and finalURI
         if head and body
             $stderr.puts "Retrieved from cache, returning data to code"
             return [head, body]
@@ -549,9 +550,9 @@ class Utils
 					url: url.to_s,
 					#user: user,
 					#password: pass,
-					headers: headers})			
+					headers: headers})
 			meta.finalURI = response.request.url if meta
-			Utils::writeToCache(url, headers, response.headers, response.body)
+			Utils::writeToCache(url, headers, response.headers, response.body, response.request.url)
 			return [response.headers, response.body]
 		rescue RestClient::ExceptionWithResponse => e
 			$stderr.puts e.response
@@ -635,17 +636,24 @@ class Utils
     #$stderr.puts "FOUND"
            head = Marshal.load(File.read("/tmp/#{filename}_head"))
            body = Marshal.load(File.read("/tmp/#{filename}_body"))
-           return [head, body]
+           finalURI = ""
+           if File.exist?("/tmp/#{filename}_uri")
+               finalURI = Marshal.load(File.read("/tmp/#{filename}_uri"))
+           end
+           return [head, body, finalURI]
        end
+       
     end
 
-    def Utils::writeToCache(uri, headers, head, body)
+    def Utils::writeToCache(uri, headers, head, body, finalURI)
         filename = Digest::MD5.hexdigest uri + headers.to_s
     #$stderr.puts "Writing cache for #{filename}"
         headfilename = filename + "_head"
         bodyfilename = filename + "_body"
+        urifilename = filename + "_uri"
         File.open("/tmp/#{headfilename}", 'wb') { |f| f.write(Marshal.dump(head)) }
         File.open("/tmp/#{bodyfilename}", 'wb') { |f| f.write(Marshal.dump(body)) }
+        File.open("/tmp/#{urifilename}", 'wb') { |f| f.write(Marshal.dump(finalURI)) }
     end
   
 end   # END OF Utils CLASS

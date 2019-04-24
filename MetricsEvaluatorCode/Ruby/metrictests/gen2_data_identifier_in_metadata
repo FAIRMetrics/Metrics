@@ -7,7 +7,7 @@ require 'rdf'
 require 'rdf/turtle'
 require 'sparql'
 
-debug = false
+debug = true
 
 def testGUID
 	
@@ -119,12 +119,12 @@ end
 
 
 if debug
-#	@input = '{"subject": "10.5281/zenodo.1147435"}'  # doi fail
+	@input = '{"subject": "10.5281/zenodo.1147435"}'  # doi fail
 #	@input = '{"subject": "10.5281/zenodo.1065973"}'  # doi fail
 #	@input = '{"subject": "BSYNRYMUTXBXSQ-UHFFFAOYSA-N"}' # inchi
 #	@input = '{"subject": "LFQSCWFLJHTTHZ-UHFFFAOYSA-N"}' # another inchi
 #	@input = '{"subject": "20.1000/105"}'  # handle (fail)
-	@input = '{"subject": "http://linkeddata.systems/Magnaporthe/polyA_Sites"}'  # handle
+#	@input = '{"subject": "http://linkeddata.systems/Magnaporthe/polyA_Sites"}'  # handle
 #	@input = '{"subject": "10.5440/1185213"}'  # doi fail
 
 else 
