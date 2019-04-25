@@ -104,7 +104,7 @@ def testGUID
 		# hopefully we have it by now... if not... we fail!
 		#$stderr.puts "\n\nfound identifier #{@identifier} \n\n"
 
-		unless @identifier
+		unless @identifier =~ /\w+/
 			@swagger.score = 0
 			@swagger.addComment "FAILURE: Was unable to locate the data identifier in the metadata using any (common) property/predicate reserved for this purpose.  Tested the following #{Utils::DATA_PREDICATES}\n"
 		else
