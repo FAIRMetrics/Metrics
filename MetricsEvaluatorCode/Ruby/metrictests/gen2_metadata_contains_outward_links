@@ -48,7 +48,7 @@ def testGUID
 		object = stm.object
 		next unless object.resource? && !object.anonymous?
 		thisuri = URI(object.value)
-		@swagger.addComment("INFO: Testing #{thisuri}).\n")
+		@swagger.addComment("INFO: Testing #{thisuri}.\n")
 		success += 1 if finalURI.host != thisuri.host # note that we're checking for outward links
 		count+=1
 	end

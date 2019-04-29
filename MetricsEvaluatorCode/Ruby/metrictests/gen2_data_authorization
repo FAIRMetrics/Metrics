@@ -144,7 +144,7 @@ cgi = CGI.new
 schemas = {'subject' => ['string', "the GUID being tested"]}
 
 @swagger = Swagger.new({
-			:title => "FAIR Metrics Gen2 - data autentication and authorization",
+			:title => "FAIR Metrics Gen2 - Data authentication and authorization",
 			:description => "Test a discovered data GUID for the ability to implement authentication and authorization in its resolution protocol.  Currently passes InChI Keys, DOIs, Handles, and URLs.  It also searches the metadata for the Dublin Core 'accessRights' property, which may point to a document describing the data access process. Recognition of other identifiers will be added upon request by the community.",
 			:tests_metric => 'https://purl.org/fair-metrics/Gen2_FM_A1.2',
 			:applies_to_principle => "A1.2",
