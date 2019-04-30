@@ -85,7 +85,7 @@ def testGUID
 	if @swagger.score == 0  # if still zero, try the raw unstructured content	
 		@swagger.addComment("INFO: Falling back to unstsructured information\n")
 		metadata.full_response.each do |httpresponse|
-			if httpresponse.body.include?guid
+			if httpresponse.include?guid
 				@swagger.addComment("SUCCESS: The identifier #{guid} was found within the raw content returned by resolution of that identifier.\n")
 				@swagger.score = 1.0
 				return @swagger.createEvaluationResponse
@@ -115,7 +115,8 @@ if debug
 #       @input = '{"subject": "BSYNRYMUTXBXSQ-UHFFFAOYSA-N"}' # inchi
 #       @input = '{"subject": "LFQSCWFLJHTTHZ-UHFFFAOYSA-N"}' # another inchi
 #       @input = '{"subject": "20.1000/105"}'  # handle
-        @input = '{"subject": "http://linkeddata.systems/Magnaporthe/polyA_Sites"}'  # handle
+       @input = '{"subject": "10.25504/FAIRsharing.z4xpxx"}'  # handle
+#        @input = '{"subject": "http://linkeddata.systems/Magnaporthe/polyA_Sites"}'  # handle
 else
 	@input = $stdin.read
 end
