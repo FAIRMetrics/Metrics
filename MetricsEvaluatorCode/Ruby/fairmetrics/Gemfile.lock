@@ -112,6 +112,7 @@ GEM
     mini_portile2 (2.3.0)
     minitest (5.11.3)
     multi_json (1.13.1)
+    mysql2 (0.3.21)
     net-http-persistent (3.0.0)
       connection_pool (~> 2.2)
     netrc (0.11.0)
@@ -122,10 +123,8 @@ GEM
       addressable (~> 2.3)
       json-schema (~> 2.8)
     openssl (2.0.3)
-    passenger (6.0.2)
-      rack
-      rake (>= 0.8.1)
     public_suffix (3.0.1)
+    puma (3.12.1)
     rack (2.0.3)
     rack-cors (1.0.2)
     rack-test (0.8.2)
@@ -253,10 +252,11 @@ DEPENDENCIES
   json-ld (~> 3.0.2)
   jwt
   listen (>= 3.0.5, < 3.2)
+  mysql2 (~> 0.3.8)
   nokogiri
   open_api_parser
   openssl
-  passenger
+  puma (~> 3.7)
   rack-cors
   rails (~> 5.1.4)
   rdf-json

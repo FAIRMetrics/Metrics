@@ -21,5 +21,10 @@ test:
   database: db/test.sqlite3
 
 production:
-  <<: *default
-  database: db/production.sqlite3
+  adapter: mysql2
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  timeout: 5000
+  database: evaluator_production
+  username: root
+  password: ENV.fetch("MYSQL_ROOT")
+  socket:   "/cloudsql/ejp-evaluator:europe-west3:evaluator-mysql"
