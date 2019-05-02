@@ -384,9 +384,9 @@ class Utils
         meta.comments << "INFO: Using 'Kellog's Distiller' to try to extract metadata from return value (message body) of #{uri}.\n"
         # $stderr.puts uri
         urlparam = CGI::escape(uri.to_s)
-        $stderr.puts "http://rdf.greggkellogg.net/distiller?command=serialize&url=#{urlparam}&output_format=turtle"
+        $stderr.puts "http://rdf.greggkellogg.net/distiller?command=serialize&format=rdfa&url=#{urlparam}&output_format=turtle"
         
-        head, body = Utils::fetch("http://rdf.greggkellogg.net/distiller?command=serialize&url=#{urlparam}&output_format=turtle", {"Accept" => "*/*"}, meta)
+        head, body = Utils::fetch("http://rdf.greggkellogg.net/distiller?command=serialize&format=rdfa&url=#{urlparam}&output_format=turtle", {"Accept" => "*/*"}, meta)
         # need to do some error checking here!
         if head[:content_type] =~ /html/   # this is an HTML failure message
               meta.comments << "WARN: The Distiller tool failed to find parseable data at #{uri}.\n"
