@@ -94,14 +94,14 @@ class Utils
           if k == "inchi" and regex.match(guid)
             metadata = Utils::resolve_inchi(guid, meta)
             return metadata
-          elsif k == "doi" and regex.match(guid)
-            metadata = Utils::resolve_doi(guid, meta)
-            return metadata
           elsif k == "handle" and regex.match(guid)
             metadata = Utils::resolve_handle(guid, meta)
             return metadata
           elsif k == "uri" and regex.match(guid)
             metadata = Utils::resolve_uri(guid, meta)
+            return metadata
+          elsif k == "doi" and regex.match(guid)
+            metadata = Utils::resolve_doi(guid, meta)
             return metadata
           end
       end
@@ -384,6 +384,8 @@ class Utils
         meta.comments << "INFO: Using 'Kellog's Distiller' to try to extract metadata from return value (message body) of #{uri}.\n"
         # $stderr.puts uri
         urlparam = CGI::escape(uri.to_s)
+        $stderr.puts "http://rdf.greggkellogg.net/distiller?command=serialize&url=#{urlparam}&output_format=turtle"
+        
         head, body = Utils::fetch("http://rdf.greggkellogg.net/distiller?command=serialize&url=#{urlparam}&output_format=turtle", {"Accept" => "*/*"}, meta)
         # need to do some error checking here!
         if head[:content_type] =~ /html/   # this is an HTML failure message
