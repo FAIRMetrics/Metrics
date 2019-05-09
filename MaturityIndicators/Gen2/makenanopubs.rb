@@ -102,7 +102,7 @@ ARGV.each do |file|
 		ccccc = authors(c)
 		ddddd = title(c)
 		eeeee = date(c)
-		puts [aaaaa, bbbbb, ccccc, ddddd, eeeee].join("\t")
+#		puts [aaaaa, bbbbb, ccccc, ddddd, eeeee].join("\t")
 		temp = template
 		temp.gsub!(/AAAAA/, aaaaa)
 		temp.gsub!(/BBBBB/, bbbbb)
