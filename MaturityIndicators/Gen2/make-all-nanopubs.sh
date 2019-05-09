@@ -6,4 +6,4 @@ for I in Gen2_MI_*.pre; do O=${I%".pre"}; ./np mktrusty -o $O $I; done
 
 rm *.pre
 
-ls Gen2_MI_* | grep -v .md | awk '{print "cat "$1}' | bash > nanopubs.trig
+#ls Gen2_MI_* | grep -v .md | awk '{print "cat "$1}' | bash > nanopubs.trig
