@@ -29,7 +29,7 @@ template = <<END
  }
  
 :assertion {
- fairmi:AAAAA a fair:FAIR-Metric ;
+ fairmi:AAAAA a fairmi:FAIR-Maturity-Indicator ;
   foaf:primaryTopic fair:BBBBB .
 
  }
@@ -40,7 +40,7 @@ template = <<END
  dcat:distribution _:dist1 ;
  prov:wasGeneratedBy "FAIR Metrics Working Group" .
  
- _:dist1 dcelem:format "application/x-texinfo" ;
+ _:dist1 dcelem:format "text/markdown" ;
 	rdf:type <http://rdfs.org/ns/void#Dataset> ;
 	rdf:type <http://www.w3.org/ns/dcat#Distribution> ;
 	dcat:downloadURL <https://w3id.org/fair/maturity_indicator/Gen2/AAAAA.md> .

@@ -1,0 +1,367 @@
+@prefix this: <https://w3id.org/fair/maturity_indicator/np/Gen2/Vocabulary/RABojlumxBgs8OOrWR1M53NbWKsXtoav55cE7qxFbrj-k> .
+@prefix sub: <https://w3id.org/fair/maturity_indicator/np/Gen2/Vocabulary/RABojlumxBgs8OOrWR1M53NbWKsXtoav55cE7qxFbrj-k#> .
+@prefix fairmi: <https://w3id.org/fair/maturity_indicator/terms/Gen2/> .
+@prefix np: <http://www.nanopub.org/nschema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix orcid: <https://orcid.org/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+
+sub:Head {
+  this: np:hasAssertion sub:assertion;
+    np:hasProvenance sub:provenance;
+    np:hasPublicationInfo sub:pubinfo;
+    a np:Nanopublication .
+}
+
+sub:assertion {
+  fairmi:Vocabulary dct:creator orcid:0000-0001-5306-5690, orcid:0000-0001-6960-357X,
+      orcid:0000-0001-8888-635X, orcid:0000-0002-1164-1351, orcid:0000-0002-1267-0234, orcid:0000-0003-4727-9435;
+    dct:description "This is the formal vocabulary (ontology) describing the FAIR maturity indicators.";
+    dct:rights <https://creativecommons.org/publicdomain/zero/1.0>;
+    dct:title "FAIR Maturity Indicator Vocabulary";
+    vann:preferredNamespacePrefix "fairmi";
+    vann:preferredNamespaceUri "https://w3id.org/fair/maturity_indicator/terms/Gen2/";
+    a owl:Ontology;
+    foaf:primaryTopic fairmi:FAIR-Maturity-Indicator .
+}
+
+sub:provenance {
+  sub:assertion dct:author orcid:0000-0001-5306-5690, orcid:0000-0001-6960-357X, orcid:0000-0001-8888-635X,
+      orcid:0000-0002-1164-1351, orcid:0000-0002-1267-0234, orcid:0000-0003-4727-9435 .
+}
+
+sub:pubinfo {
+  this: dct:created "2019-05-09T12:59:51.453+02:00"^^xsd:dateTime;
+    dct:creator orcid:0000-0001-6960-357X, orcid:0000-0002-1267-0234;
+    dct:rights <https://creativecommons.org/publicdomain/zero/1.0>;
+    dct:rightsHolder <http://go-fair.org> .
+}
+@prefix this: <https://w3id.org/fair/maturity_indicator/np/Gen2/FAIR-Maturity-Indicator/RAP41Y2vTjCKhSlnOdLUeqAO1WfkKP7LccDktDAaKFUvk> .
+@prefix sub: <https://w3id.org/fair/maturity_indicator/np/Gen2/FAIR-Maturity-Indicator/RAP41Y2vTjCKhSlnOdLUeqAO1WfkKP7LccDktDAaKFUvk#> .
+@prefix fairmi: <https://w3id.org/fair/maturity_indicator/terms/Gen2/> .
+@prefix fair: <https://w3id.org/fair/principles/terms/> .
+@prefix np: <http://www.nanopub.org/nschema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix orcid: <https://orcid.org/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+sub:Head {
+  this: np:hasAssertion sub:assertion;
+    np:hasProvenance sub:provenance;
+    np:hasPublicationInfo sub:pubinfo;
+    a np:Nanopublication .
+}
+
+sub:assertion {
+  fairmi:FAIR-Maturity-Indicator a owl:Class;
+    rdfs:label "FAIR Maturity Indicator"@en;
+    skos:definition "A FAIR metric is a measure of the FAIRness of a digital resource."@en;
+    foaf:primaryTopic fair:FAIR .
+}
+
+sub:provenance {
+  sub:assertion dct:author orcid:0000-0001-5306-5690, orcid:0000-0001-6960-357X, orcid:0000-0001-8888-635X,
+      orcid:0000-0002-1164-1351, orcid:0000-0002-1267-0234, orcid:0000-0003-4727-9435 .
+}
+
+sub:pubinfo {
+  this: dct:created "2019-05-09T12:59:51.453+02:00"^^xsd:dateTime;
+    dct:creator orcid:0000-0001-6960-357X, orcid:0000-0002-1267-0234;
+    dct:rights <https://creativecommons.org/publicdomain/zero/1.0>;
+    dct:rightsHolder <http://go-fair.org> .
+}
+@prefix this: <https://w3id.org/fair/maturity_indicator/np/Gen2/measuring/RAPYeyDbYkOitTsQ7smjKDaOpeJ_LtV5kpmoleIfsrcPQ> .
+@prefix sub: <https://w3id.org/fair/maturity_indicator/np/Gen2/measuring/RAPYeyDbYkOitTsQ7smjKDaOpeJ_LtV5kpmoleIfsrcPQ#> .
+@prefix fairmi: <https://w3id.org/fair/maturity_indicator/terms/Gen2/> .
+@prefix np: <http://www.nanopub.org/nschema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix orcid: <https://orcid.org/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+sub:Head {
+  this: np:hasAssertion sub:assertion;
+    np:hasProvenance sub:provenance;
+    np:hasPublicationInfo sub:pubinfo;
+    a np:Nanopublication .
+}
+
+sub:assertion {
+  fairmi:measuring a owl:DatatypeProperty;
+    rdfs:domain fairmi:FAIR-Maturity-Indicator;
+    rdfs:label "What is being measured?"@en;
+    skos:definition "A description of what is being measured by the metric."@en .
+}
+
+sub:provenance {
+  sub:assertion dct:author orcid:0000-0001-5306-5690, orcid:0000-0001-6960-357X, orcid:0000-0001-8888-635X,
+      orcid:0000-0002-1164-1351, orcid:0000-0002-1267-0234, orcid:0000-0003-4727-9435 .
+}
+
+sub:pubinfo {
+  this: dct:created "2019-05-09T12:59:51.453+02:00"^^xsd:dateTime;
+    dct:creator orcid:0000-0001-6960-357X, orcid:0000-0002-1267-0234;
+    dct:rights <https://creativecommons.org/publicdomain/zero/1.0>;
+    dct:rightsHolder <http://go-fair.org> .
+}
+@prefix this: <https://w3id.org/fair/maturity_indicator/np/Gen2/rationale/RA43Fq5cSgj975CzrlplnEzU20HCTYcFrd5L5UaOMqrmY> .
+@prefix sub: <https://w3id.org/fair/maturity_indicator/np/Gen2/rationale/RA43Fq5cSgj975CzrlplnEzU20HCTYcFrd5L5UaOMqrmY#> .
+@prefix fairmi: <https://w3id.org/fair/maturity_indicator/terms/Gen2/> .
+@prefix np: <http://www.nanopub.org/nschema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix orcid: <https://orcid.org/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+sub:Head {
+  this: np:hasAssertion sub:assertion;
+    np:hasProvenance sub:provenance;
+    np:hasPublicationInfo sub:pubinfo;
+    a np:Nanopublication .
+}
+
+sub:assertion {
+  fairmi:rationale a owl:DatatypeProperty;
+    rdfs:domain fairmi:FAIR-Maturity-Indicator;
+    rdfs:label "Why should we measure it?"@en;
+    skos:definition "A description of why this is being measured."@en .
+}
+
+sub:provenance {
+  sub:assertion dct:author orcid:0000-0001-5306-5690, orcid:0000-0001-6960-357X, orcid:0000-0001-8888-635X,
+      orcid:0000-0002-1164-1351, orcid:0000-0002-1267-0234, orcid:0000-0003-4727-9435 .
+}
+
+sub:pubinfo {
+  this: dct:created "2019-05-09T12:59:51.453+02:00"^^xsd:dateTime;
+    dct:creator orcid:0000-0001-6960-357X, orcid:0000-0002-1267-0234;
+    dct:rights <https://creativecommons.org/publicdomain/zero/1.0>;
+    dct:rightsHolder <http://go-fair.org> .
+}
+@prefix this: <https://w3id.org/fair/maturity_indicator/np/Gen2/requirements/RAHOoYjEauO8RABO_uet9ZbFnYS9HbU4TiZ8I1knGt0eQ> .
+@prefix sub: <https://w3id.org/fair/maturity_indicator/np/Gen2/requirements/RAHOoYjEauO8RABO_uet9ZbFnYS9HbU4TiZ8I1knGt0eQ#> .
+@prefix fairmi: <https://w3id.org/fair/maturity_indicator/terms/Gen2/> .
+@prefix np: <http://www.nanopub.org/nschema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix orcid: <https://orcid.org/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+sub:Head {
+  this: np:hasAssertion sub:assertion;
+    np:hasProvenance sub:provenance;
+    np:hasPublicationInfo sub:pubinfo;
+    a np:Nanopublication .
+}
+
+sub:assertion {
+  fairmi:requirements a owl:DatatypeProperty;
+    rdfs:domain fairmi:FAIR-Maturity-Indicator;
+    rdfs:label "What must be provided?"@en;
+    skos:definition "A description of what requirements need to be met for the measure to be considered successful."@en .
+}
+
+sub:provenance {
+  sub:assertion dct:author orcid:0000-0001-5306-5690, orcid:0000-0001-6960-357X, orcid:0000-0001-8888-635X,
+      orcid:0000-0002-1164-1351, orcid:0000-0002-1267-0234, orcid:0000-0003-4727-9435 .
+}
+
+sub:pubinfo {
+  this: dct:created "2019-05-09T12:59:51.453+02:00"^^xsd:dateTime;
+    dct:creator orcid:0000-0001-6960-357X, orcid:0000-0002-1267-0234;
+    dct:rights <https://creativecommons.org/publicdomain/zero/1.0>;
+    dct:rightsHolder <http://go-fair.org> .
+}
+@prefix this: <https://w3id.org/fair/maturity_indicator/np/Gen2/procedure/RAYK0HekgSd0Ki2Xnm8YIfMgg31v90BHh6JAHpHJYDY0A> .
+@prefix sub: <https://w3id.org/fair/maturity_indicator/np/Gen2/procedure/RAYK0HekgSd0Ki2Xnm8YIfMgg31v90BHh6JAHpHJYDY0A#> .
+@prefix fairmi: <https://w3id.org/fair/maturity_indicator/terms/Gen2/> .
+@prefix np: <http://www.nanopub.org/nschema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix orcid: <https://orcid.org/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+sub:Head {
+  this: np:hasAssertion sub:assertion;
+    np:hasProvenance sub:provenance;
+    np:hasPublicationInfo sub:pubinfo;
+    a np:Nanopublication .
+}
+
+sub:assertion {
+  fairmi:procedure a owl:DatatypeProperty;
+    rdfs:domain fairmi:FAIR-Maturity-Indicator;
+    rdfs:label "How do we measure it?"@en;
+    skos:definition "A description of how the requirements are to be measured."@en .
+}
+
+sub:provenance {
+  sub:assertion dct:author orcid:0000-0001-5306-5690, orcid:0000-0001-6960-357X, orcid:0000-0001-8888-635X,
+      orcid:0000-0002-1164-1351, orcid:0000-0002-1267-0234, orcid:0000-0003-4727-9435 .
+}
+
+sub:pubinfo {
+  this: dct:created "2019-05-09T12:59:51.453+02:00"^^xsd:dateTime;
+    dct:creator orcid:0000-0001-6960-357X, orcid:0000-0002-1267-0234;
+    dct:rights <https://creativecommons.org/publicdomain/zero/1.0>;
+    dct:rightsHolder <http://go-fair.org> .
+}
+@prefix this: <https://w3id.org/fair/maturity_indicator/np/Gen2/validation/RAbY8f_H_9L9JwK-IaEZDnqo5ki58HhB64uGiAU7tLXHc> .
+@prefix sub: <https://w3id.org/fair/maturity_indicator/np/Gen2/validation/RAbY8f_H_9L9JwK-IaEZDnqo5ki58HhB64uGiAU7tLXHc#> .
+@prefix fairmi: <https://w3id.org/fair/maturity_indicator/terms/Gen2/> .
+@prefix np: <http://www.nanopub.org/nschema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix orcid: <https://orcid.org/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+sub:Head {
+  this: np:hasAssertion sub:assertion;
+    np:hasProvenance sub:provenance;
+    np:hasPublicationInfo sub:pubinfo;
+    a np:Nanopublication .
+}
+
+sub:assertion {
+  fairmi:validation a owl:DatatypeProperty;
+    rdfs:domain fairmi:FAIR-Maturity-Indicator;
+    rdfs:label "What is a valid result?"@en;
+    skos:definition "A description of what constitutes a valid result."@en .
+}
+
+sub:provenance {
+  sub:assertion dct:author orcid:0000-0001-5306-5690, orcid:0000-0001-6960-357X, orcid:0000-0001-8888-635X,
+      orcid:0000-0002-1164-1351, orcid:0000-0002-1267-0234, orcid:0000-0003-4727-9435 .
+}
+
+sub:pubinfo {
+  this: dct:created "2019-05-09T12:59:51.453+02:00"^^xsd:dateTime;
+    dct:creator orcid:0000-0001-6960-357X, orcid:0000-0002-1267-0234;
+    dct:rights <https://creativecommons.org/publicdomain/zero/1.0>;
+    dct:rightsHolder <http://go-fair.org> .
+}
+@prefix this: <https://w3id.org/fair/maturity_indicator/np/Gen2/relevance/RAo_eOJtZA6NjPrDvpcI0cVDWxDkvAOZKJfGLBmKT9epU> .
+@prefix sub: <https://w3id.org/fair/maturity_indicator/np/Gen2/relevance/RAo_eOJtZA6NjPrDvpcI0cVDWxDkvAOZKJfGLBmKT9epU#> .
+@prefix fairmi: <https://w3id.org/fair/maturity_indicator/terms/Gen2/> .
+@prefix np: <http://www.nanopub.org/nschema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix orcid: <https://orcid.org/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+sub:Head {
+  this: np:hasAssertion sub:assertion;
+    np:hasProvenance sub:provenance;
+    np:hasPublicationInfo sub:pubinfo;
+    a np:Nanopublication .
+}
+
+sub:assertion {
+  fairmi:relevance a owl:DatatypeProperty;
+    rdfs:domain fairmi:FAIR-Maturity-Indicator;
+    rdfs:label "For which digital resource(s) is this relevant?"@en;
+    skos:definition "A description of digital resources for which this measure is relevant."@en .
+}
+
+sub:provenance {
+  sub:assertion dct:author orcid:0000-0001-5306-5690, orcid:0000-0001-6960-357X, orcid:0000-0001-8888-635X,
+      orcid:0000-0002-1164-1351, orcid:0000-0002-1267-0234, orcid:0000-0003-4727-9435 .
+}
+
+sub:pubinfo {
+  this: dct:created "2019-05-09T12:59:51.453+02:00"^^xsd:dateTime;
+    dct:creator orcid:0000-0001-6960-357X, orcid:0000-0002-1267-0234;
+    dct:rights <https://creativecommons.org/publicdomain/zero/1.0>;
+    dct:rightsHolder <http://go-fair.org> .
+}
+@prefix this: <https://w3id.org/fair/maturity_indicator/np/Gen2/examples/RAE3Fw5kP89OCSz_BlPdVMNrq0lmQ3hCzz17E1EqqeK3Y> .
+@prefix sub: <https://w3id.org/fair/maturity_indicator/np/Gen2/examples/RAE3Fw5kP89OCSz_BlPdVMNrq0lmQ3hCzz17E1EqqeK3Y#> .
+@prefix fairmi: <https://w3id.org/fair/maturity_indicator/terms/Gen2/> .
+@prefix np: <http://www.nanopub.org/nschema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix orcid: <https://orcid.org/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+sub:Head {
+  this: np:hasAssertion sub:assertion;
+    np:hasProvenance sub:provenance;
+    np:hasPublicationInfo sub:pubinfo;
+    a np:Nanopublication .
+}
+
+sub:assertion {
+  fairmi:examples a owl:DatatypeProperty;
+    rdfs:domain fairmi:FAIR-Maturity-Indicator;
+    rdfs:label "Examples of their application across types of digital resource"@en;
+    skos:definition "A description of applications across different types of digital resources."@en .
+}
+
+sub:provenance {
+  sub:assertion dct:author orcid:0000-0001-5306-5690, orcid:0000-0001-6960-357X, orcid:0000-0001-8888-635X,
+      orcid:0000-0002-1164-1351, orcid:0000-0002-1267-0234, orcid:0000-0003-4727-9435 .
+}
+
+sub:pubinfo {
+  this: dct:created "2019-05-09T12:59:51.453+02:00"^^xsd:dateTime;
+    dct:creator orcid:0000-0001-6960-357X, orcid:0000-0002-1267-0234;
+    dct:rights <https://creativecommons.org/publicdomain/zero/1.0>;
+    dct:rightsHolder <http://go-fair.org> .
+}
+@prefix this: <https://w3id.org/fair/maturity_indicator/np/Gen2/comments/RAhtCKxX_wKiD0N7QTk8APUVFSGfwOpjCMOlVUfn4oXo8> .
+@prefix sub: <https://w3id.org/fair/maturity_indicator/np/Gen2/comments/RAhtCKxX_wKiD0N7QTk8APUVFSGfwOpjCMOlVUfn4oXo8#> .
+@prefix fairmi: <https://w3id.org/fair/maturity_indicator/terms/Gen2/> .
+@prefix np: <http://www.nanopub.org/nschema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix orcid: <https://orcid.org/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+sub:Head {
+  this: np:hasAssertion sub:assertion;
+    np:hasProvenance sub:provenance;
+    np:hasPublicationInfo sub:pubinfo;
+    a np:Nanopublication .
+}
+
+sub:assertion {
+  fairmi:comments a owl:DatatypeProperty;
+    rdfs:domain fairmi:FAIR-Maturity-Indicator;
+    rdfs:label "Comments"@en;
+    skos:definition "Additional comments on the described metric."@en .
+}
+
+sub:provenance {
+  sub:assertion dct:author orcid:0000-0001-5306-5690, orcid:0000-0001-6960-357X, orcid:0000-0001-8888-635X,
+      orcid:0000-0002-1164-1351, orcid:0000-0002-1267-0234, orcid:0000-0003-4727-9435 .
+}
+
+sub:pubinfo {
+  this: dct:created "2019-05-09T12:59:51.453+02:00"^^xsd:dateTime;
+    dct:creator orcid:0000-0001-6960-357X, orcid:0000-0002-1267-0234;
+    dct:rights <https://creativecommons.org/publicdomain/zero/1.0>;
+    dct:rightsHolder <http://go-fair.org> .
+}
