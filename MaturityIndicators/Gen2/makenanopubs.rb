@@ -43,7 +43,7 @@ template = <<END
  _:dist1 dcelem:format "text/markdown" ;
 	rdf:type <http://rdfs.org/ns/void#Dataset> ;
 	rdf:type <http://www.w3.org/ns/dcat#Distribution> ;
-	dcat:downloadURL <https://w3id.org/fair/maturity_indicator/Gen2/AAAAA.md> .
+	dcat:downloadURL <https://w3id.org/fair/maturity_indicator/terms/Gen2/AAAAA.md> .
 
 }
 

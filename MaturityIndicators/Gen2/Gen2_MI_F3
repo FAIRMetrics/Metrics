@@ -1,5 +1,5 @@
-@prefix this: <https://w3id.org/fair/maturity_indicator/np/Gen2/Gen2_MI_F3/RAgNZQ_7y8Gik_sc4mAm3cZNSOGV8K6WwsAMZ5kxjsxqI> .
-@prefix sub: <https://w3id.org/fair/maturity_indicator/np/Gen2/Gen2_MI_F3/RAgNZQ_7y8Gik_sc4mAm3cZNSOGV8K6WwsAMZ5kxjsxqI#> .
+@prefix this: <https://w3id.org/fair/maturity_indicator/np/Gen2/Gen2_MI_F3/RAWF0a36t_wK7MJYK6afwWlPfWX6o_y5bA0ccqhcDUgI0> .
+@prefix sub: <https://w3id.org/fair/maturity_indicator/np/Gen2/Gen2_MI_F3/RAWF0a36t_wK7MJYK6afwWlPfWX6o_y5bA0ccqhcDUgI0#> .
 @prefix fairmi: <https://w3id.org/fair/maturity_indicator/terms/Gen2/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix dcelem: <http://purl.org/dc/elements/1.1/> .
@@ -28,7 +28,7 @@ sub:assertion {
 sub:provenance {
   sub:_1 dcelem:format "text/markdown";
     a <http://rdfs.org/ns/void#Dataset>, dcat:Distribution;
-    dcat:downloadURL <https://w3id.org/fair/maturity_indicator/Gen2/Gen2_MI_F3.md> .
+    dcat:downloadURL fairmi:Gen2_MI_F3.md .
   
   sub:assertion dcterms:author orcid:0000-0001-5306-5690, orcid:0000-0001-6960-357X,
       orcid:0000-0001-8888-635X, orcid:0000-0002-1164-1351, orcid:0000-0003-4727-9435;
