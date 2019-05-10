@@ -9,9 +9,20 @@ default: &default
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   timeout: 5000
 
+#development:
+#  <<: *default
+#  database: db/development.sqlite3
+
 development:
-  <<: *default
-  database: db/development.sqlite3
+  adapter: mysql2
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  timeout: 5000
+  database: evaluator_production
+  username: markw
+  password: markwongcloudapp
+  socket: /cloudsql/ejp-evaluator:europe-west3:evaluator-mysql
+
+
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -25,6 +36,6 @@ production:
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   timeout: 5000
   database: evaluator_production
-  username: root
-  password: ENV.fetch("MYSQL_ROOT")
-  socket:   "/cloudsql/ejp-evaluator:europe-west3:evaluator-mysql"
+  username: markw
+  password: markwongcloudapp
+  socket: /cloudsql/ejp-evaluator:europe-west3:evaluator-mysql
