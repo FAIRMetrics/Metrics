@@ -94,14 +94,14 @@ class Utils
           if k == "inchi" and regex.match(guid)
             metadata = Utils::resolve_inchi(guid, meta)
             return metadata
-          elsif k == "doi" and regex.match(guid)
-            metadata = Utils::resolve_doi(guid, meta)
-            return metadata
           elsif k == "handle" and regex.match(guid)
             metadata = Utils::resolve_handle(guid, meta)
             return metadata
           elsif k == "uri" and regex.match(guid)
             metadata = Utils::resolve_uri(guid, meta)
+            return metadata
+          elsif k == "doi" and regex.match(guid)
+            metadata = Utils::resolve_doi(guid, meta)
             return metadata
           end
       end
@@ -270,6 +270,7 @@ class Utils
           meta.comments << "INFO: parsing as HTML. \n"
           #$stderr.puts "\n\nPARSING HTML\n\n"
           Utils::do_extruct(meta, guid)
+    	  Utils::do_distiller(meta, guid)
         when Utils::XML_FORMATS.keys.include?(parser)
           meta.comments << "INFO: parsing as XML. \n"
           #$stderr.puts "\n\nPARSING XML\n\n"
@@ -383,7 +384,9 @@ class Utils
         meta.comments << "INFO: Using 'Kellog's Distiller' to try to extract metadata from return value (message body) of #{uri}.\n"
         # $stderr.puts uri
         urlparam = CGI::escape(uri.to_s)
-        head, body = Utils::fetch("http://rdf.greggkellogg.net/distiller?command=serialize&url=#{urlparam}&output_format=turtle", {"Accept" => "*/*"}, meta)
+        $stderr.puts "http://rdf.greggkellogg.net/distiller?command=serialize&format=rdfa&url=#{urlparam}&output_format=turtle"
+        
+        head, body = Utils::fetch("http://rdf.greggkellogg.net/distiller?command=serialize&format=rdfa&url=#{urlparam}&output_format=turtle", {"Accept" => "*/*"}, meta)
         # need to do some error checking here!
         if head[:content_type] =~ /html/   # this is an HTML failure message
               meta.comments << "WARN: The Distiller tool failed to find parseable data at #{uri}.\n"
@@ -402,7 +405,12 @@ class Utils
         result = %x{#{Utils::ExtructCommand} #{uri} 2>&1}
         #$stderr.puts "\n\n\n\n\n\n\n#{result.class}\n\n#{result.to_s}\n\n#{@extruct_command} #{uri} 2>&1\n\n"
         # need to do some error checking here!
-        if result.to_s.match(/^\s+?\{/) or result.to_s.match(/^\s+\[/) # this is JSON
+        if result.to_s.match(/(Failed\sto\sextract.*?)\n/)
+            meta.comments << "WARN: extruct threw an error #{$1} when attempting to parse return value (message body) of #{uri}.\n"
+            if result.to_s.match(/(ValueError\:.*?)\n/)
+                meta.comments << "WARN: extruct error was #{$1}\n"
+            end
+        elsif result.to_s.match(/^\s+?\{/) or result.to_s.match(/^\s+\[/) # this is JSON
           json = JSON.parse result
           #$stderr.puts "\n\n\n\nFOUND JSON\n\n\n"
           #$stderr.puts "\n\n\n\nFOUND JSON-LD\n#{json["json-ld"]} content\n\n\n"

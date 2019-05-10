@@ -69,8 +69,7 @@ def testGUID
 					@identifier=results.first[:o].value
 					@swagger.addComment "INFO: found identifier #{@identifier} using Schema.org distribution property.\n"
 				end
-				query = SPARQL.parse("select ?o where {?s <#{prop}> ?b .
-									 ?b  <https://schema.org/contentUrl> ?o}")
+				query = SPARQL.parse("select ?o where {?s <#{prop}> ?o}")
 				results = query.execute(g)
 				if  results.any?
 					@identifier=results.first[:o].value

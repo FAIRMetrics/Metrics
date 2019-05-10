@@ -1,52 +1,48 @@
-@prefix : <https://w3id.org/fair/maturity_indicator/mi/Gen2/Gen2_MI_A1.1> .  # canonical URI for the metric
-@prefix fairmi: <https://w3id.org/fair/maturity_indicator/terms/> .
+@prefix this: <https://w3id.org/fair/maturity_indicator/np/Gen2/Gen2_MI_F3/RAWF0a36t_wK7MJYK6afwWlPfWX6o_y5bA0ccqhcDUgI0> .
+@prefix sub: <https://w3id.org/fair/maturity_indicator/np/Gen2/Gen2_MI_F3/RAWF0a36t_wK7MJYK6afwWlPfWX6o_y5bA0ccqhcDUgI0#> .
+@prefix fairmi: <https://w3id.org/fair/maturity_indicator/terms/Gen2/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix dcelem: <http://purl.org/dc/elements/1.1/> .
 @prefix np: <http://www.nanopub.org/nschema#> .
-@prefix nx: <http://www.nextprot.org/db/search#> .
 @prefix pav: <http://swan.mindinformatics.org/ontologies/1.2/pav/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
-@prefix prv: <http://purl.org/net/provenance/ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix ro: <http://purl.org/obo/owl/OBO_REL#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@prefix fair: <http://purl.org/fair-ontology#> . 
+@prefix fair: <https://w3id.org/fair/principles/terms/> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix dcat: <http://www.w3.org/ns/dcat#> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix orcid: <https://orcid.org/> .
 
-:Head {
-  : np:hasAssertion :assertion ;
-       np:hasProvenance :provenance ;
-       np:hasPublicationInfo :pubinfo ;
-       a np:Nanopublication .
- }
- 
-:assertion {
- fairmi:Gen2_MI_A1.1 a fair:FAIR-Metric ;
-  foaf:primaryTopic fair:A1.1 .
-
- }
- 
-:provenance {
- :assertion dcterms:author  "Mark D. Wilkinson", "Susanna-Assunta Sansone", "Erik Schultes", "Luiz Olavo Bonino da Silva Santos", "Michel Dumontier" ;
- rdfs:comment "FAIR Metric Gen2-MI-I3"^^xsd:string ;
- dcat:distribution _:dist1 ;
- prov:wasGeneratedBy "FAIR Metrics Working Group" .
- 
- _:dist1 dcelem:format "application/x-texinfo" ;
-	rdf:type <http://rdfs.org/ns/void#Dataset> ;
-	rdf:type <http://www.w3.org/ns/dcat#Distribution> ;
-	dcat:downloadURL <https://w3id.org/fair/maturity_indicator/Gen2/Gen2_MI_A1.1.md> .
-
+sub:Head {
+  this: np:hasAssertion sub:assertion;
+    np:hasProvenance sub:provenance;
+    np:hasPublicationInfo sub:pubinfo;
+    a np:Nanopublication .
 }
 
- 
-:pubinfo {
- : dcterms:created "2019-02-26"^^xsd:dateTime ;
- dcterms:rights <https://creativecommons.org/publicdomain/zero/1.0> ;
- dcterms:rightsHolder <http://fairmetrics.org> ;
- pav:authoredBy "Mark Wilkinson" , <https://orcid.org/0000-0001-6960-357X> ;
- pav:versionNumber "1" ;
+sub:assertion {
+  fairmi:Gen2_MI_F3 a fairmi:FAIR-Maturity-Indicator;
+    foaf:primaryTopic fair:F3 .
 }
 
+sub:provenance {
+  sub:_1 dcelem:format "text/markdown";
+    a <http://rdfs.org/ns/void#Dataset>, dcat:Distribution;
+    dcat:downloadURL fairmi:Gen2_MI_F3.md .
+  
+  sub:assertion dcterms:author orcid:0000-0001-5306-5690, orcid:0000-0001-6960-357X,
+      orcid:0000-0001-8888-635X, orcid:0000-0002-1164-1351, orcid:0000-0003-4727-9435;
+    rdfs:comment "FAIR Maturity Indicator Gen2-MI-F3";
+    dcat:distribution sub:_1;
+    prov:wasGeneratedBy "FAIR Metrics Working Group" .
+}
+
+sub:pubinfo {
+  orcid:0000-0001-6960-357X foaf:name "Mark Wilkinson" .
+  
+  this: dcterms:created "2019-02-26"^^xsd:dateTime;
+    dcterms:rights <https://creativecommons.org/publicdomain/zero/1.0>;
+    dcterms:rightsHolder <http://fairmetrics.org>;
+    pav:authoredBy orcid:0000-0001-6960-357X;
+    pav:versionNumber "1" .
+}

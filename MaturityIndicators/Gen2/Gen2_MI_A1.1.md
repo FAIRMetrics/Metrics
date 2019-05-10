@@ -12,7 +12,7 @@ Michel Dumontier, ORCID:0000-0003-4727-9435
 #### Accepted: pending
 
 
-### Maturity Indicator Identifier: Gen2_MI_A1.1 [https://w3id.org/fair/maturity_indicator/Gen2/Gen2_MI_A1.1](https://w3id.org/fair/maturity_indicator/Gen2/Gen2_MI_A1.1)
+### Maturity Indicator Identifier: Gen2_MI_A1.1 [https://w3id.org/fair/maturity_indicator/terms/Gen2/Gen2_MI_A1.1](https://w3id.org/fair/maturity_indicator/terms/Gen2/Gen2_MI_A1.1)
 
 ### Maturity Indicator Name:   Open protocol for (meta)data retrieval
 

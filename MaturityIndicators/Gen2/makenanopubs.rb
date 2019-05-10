@@ -3,8 +3,8 @@
 require 'rdf'
 
 template = <<END
-@prefix : <https://w3id.org/fair/maturity_indicator/mi/Gen2/AAAAA> .  # canonical URI for the metric
-@prefix fairmi: <https://w3id.org/fair/maturity_indicator/terms/> .
+@prefix : <https://w3id.org/fair/maturity_indicator/np/Gen2/AAAAA/> .  # canonical URIs for the nanopublications
+@prefix fairmi: <https://w3id.org/fair/maturity_indicator/terms/Gen2/> .  # canonical URIs for the indicators
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix dcelem: <http://purl.org/dc/elements/1.1/> .
 @prefix np: <http://www.nanopub.org/nschema#> .
@@ -15,10 +15,11 @@ template = <<END
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix ro: <http://purl.org/obo/owl/OBO_REL#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@prefix fair: <http://purl.org/fair-ontology#> . 
+@prefix fair: <https://w3id.org/fair/principles/terms/> . 
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix dcat: <http://www.w3.org/ns/dcat#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix orcid: <https://orcid.org/> .
 
 :Head {
   : np:hasAssertion :assertion ;
@@ -28,7 +29,7 @@ template = <<END
  }
  
 :assertion {
- fairmi:AAAAA a fair:FAIR-Metric ;
+ fairmi:AAAAA a fairmi:FAIR-Maturity-Indicator ;
   foaf:primaryTopic fair:BBBBB .
 
  }
@@ -39,10 +40,10 @@ template = <<END
  dcat:distribution _:dist1 ;
  prov:wasGeneratedBy "FAIR Metrics Working Group" .
  
- _:dist1 dcelem:format "application/x-texinfo" ;
+ _:dist1 dcelem:format "text/markdown" ;
 	rdf:type <http://rdfs.org/ns/void#Dataset> ;
 	rdf:type <http://www.w3.org/ns/dcat#Distribution> ;
-	dcat:downloadURL <https://w3id.org/fair/maturity_indicator/Gen2/AAAAA.md> .
+	dcat:downloadURL <https://w3id.org/fair/maturity_indicator/terms/Gen2/AAAAA.md> .
 
 }
 
@@ -51,8 +52,9 @@ template = <<END
  : dcterms:created "EEEEE"^^xsd:dateTime ;
  dcterms:rights <https://creativecommons.org/publicdomain/zero/1.0> ;
  dcterms:rightsHolder <http://fairmetrics.org> ;
- pav:authoredBy "Mark Wilkinson" , <https://orcid.org/0000-0001-6960-357X> ;
- pav:versionNumber "1" ;
+ pav:authoredBy <https://orcid.org/0000-0001-6960-357X> ;
+ pav:versionNumber "1" .
+<https://orcid.org/0000-0001-6960-357X> foaf:name "Mark Wilkinson" .
 }
 
 END
@@ -73,8 +75,8 @@ def authors(c)
 	c =~ /Authors:\s+?(.*?)###/mi
 	authorlines = $1
 	authorlines.split("\n").each do |a|
-		if a =~ /^\s?+([^\,]+)\,/
-			authors << '"' + $1 + '"'
+		if a =~ /^\s?+([^\,]+)\, ORCID:([0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9X]{4})/
+			authors << 'orcid:' + $2
 		end
 	end
 	return authors.join(', ')
@@ -100,7 +102,7 @@ ARGV.each do |file|
 		ccccc = authors(c)
 		ddddd = title(c)
 		eeeee = date(c)
-		puts [aaaaa, bbbbb, ccccc, ddddd, eeeee].join("\t")
+#		puts [aaaaa, bbbbb, ccccc, ddddd, eeeee].join("\t")
 		temp = template
 		temp.gsub!(/AAAAA/, aaaaa)
 		temp.gsub!(/BBBBB/, bbbbb)
