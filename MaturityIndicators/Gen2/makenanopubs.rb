@@ -3,7 +3,7 @@
 require 'rdf'
 
 template = <<END
-@prefix : <https://w3id.org/fair/maturity_indicator/np/Gen2/AAAAA/> .  # canonical URIs for the nanopublications
+@prefix : <https://w3id.org/fair/maturity_indicator/np/Gen2/@IDENTIFIER@/> .  # canonical URIs for the nanopublications
 @prefix fairmi: <https://w3id.org/fair/maturity_indicator/terms/Gen2/> .  # canonical URIs for the indicators
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix dcelem: <http://purl.org/dc/elements/1.1/> .
@@ -29,32 +29,29 @@ template = <<END
  }
  
 :assertion {
- fairmi:AAAAA a fairmi:FAIR-Maturity-Indicator ;
-  foaf:primaryTopic fair:BBBBB .
-
- }
+  fairmi:@IDENTIFIER@ a fairmi:FAIR-Maturity-Indicator ;
+    rdfs:label "@TITLE@"^^xsd:string ;
+    foaf:primaryTopic fair:@PRINCIPLE@ .
+}
  
 :provenance {
- :assertion dcterms:author  CCCCC ;
- rdfs:comment "DDDDD"^^xsd:string ;
- dcat:distribution _:dist1 ;
- prov:wasGeneratedBy "FAIR Metrics Working Group" .
- 
- _:dist1 dcelem:format "text/markdown" ;
-	rdf:type <http://rdfs.org/ns/void#Dataset> ;
-	rdf:type <http://www.w3.org/ns/dcat#Distribution> ;
-	dcat:downloadURL <https://w3id.org/fair/maturity_indicator/terms/Gen2/AAAAA.md> .
+  :assertion dcterms:author  @AUTHORS@ ;
+    dcat:distribution _:dist1 .
 
+  _:dist1 dcelem:format "text/markdown" ;
+    rdf:type <http://rdfs.org/ns/void#Dataset> ;
+    rdf:type <http://www.w3.org/ns/dcat#Distribution> ;
+    dcat:downloadURL <https://w3id.org/fair/maturity_indicator/terms/Gen2/@IDENTIFIER@.md> .
 }
 
  
 :pubinfo {
- : dcterms:created "EEEEE"^^xsd:dateTime ;
- dcterms:rights <https://creativecommons.org/publicdomain/zero/1.0> ;
- dcterms:rightsHolder <http://fairmetrics.org> ;
- pav:authoredBy <https://orcid.org/0000-0001-6960-357X> ;
- pav:versionNumber "1" .
-<https://orcid.org/0000-0001-6960-357X> foaf:name "Mark Wilkinson" .
+  : dcterms:created "@DATE@"^^xsd:dateTime ;
+    dcterms:rights <https://creativecommons.org/publicdomain/zero/1.0> ;
+    dcterms:rightsHolder <http://fairmetrics.org> ;
+    pav:authoredBy <https://orcid.org/0000-0001-6960-357X> ;
+    pav:versionNumber "1" .
+  <https://orcid.org/0000-0001-6960-357X> foaf:name "Mark Wilkinson" .
 }
 
 END
@@ -97,20 +94,14 @@ end
 ARGV.each do |file|
 	File.open(file) do |content|
 		c = content.read
-		aaaaa = identifier(c)
-		bbbbb = principle(c)
-		ccccc = authors(c)
-		ddddd = title(c)
-		eeeee = date(c)
-#		puts [aaaaa, bbbbb, ccccc, ddddd, eeeee].join("\t")
 		temp = template
-		temp.gsub!(/AAAAA/, aaaaa)
-		temp.gsub!(/BBBBB/, bbbbb)
-		temp.gsub!(/CCCCC/, ccccc)
-		temp.gsub!(/DDDDD/, ddddd)
-		temp.gsub!(/EEEEE/, eeeee)
+		temp.gsub!(/@IDENTIFIER@/, identifier(c))
+		temp.gsub!(/@PRINCIPLE@/, principle(c))
+		temp.gsub!(/@AUTHORS@/, authors(c))
+		temp.gsub!(/@TITLE@/, title(c))
+		temp.gsub!(/@DATE@/, date(c))
 		puts temp
-		f = File.open(aaaaa, "w")
+		f = File.open(identifier(c), "w")
 		f.write temp
 		f.close
 	end

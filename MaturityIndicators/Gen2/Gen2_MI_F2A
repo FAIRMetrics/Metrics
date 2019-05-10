@@ -1,11 +1,10 @@
-@prefix this: <https://w3id.org/fair/maturity_indicator/np/Gen2/Gen2_MI_F2A/RAGHmXb-sL3o2m-KHGJ49NiePhsUuy0uk-_xtZ6E1udeg> .
-@prefix sub: <https://w3id.org/fair/maturity_indicator/np/Gen2/Gen2_MI_F2A/RAGHmXb-sL3o2m-KHGJ49NiePhsUuy0uk-_xtZ6E1udeg#> .
+@prefix this: <https://w3id.org/fair/maturity_indicator/np/Gen2/Gen2_MI_F2A/RAff-8jdGR7CAaObs-mD3RRJfycMDRa8TCBbfSOyNHWrU> .
+@prefix sub: <https://w3id.org/fair/maturity_indicator/np/Gen2/Gen2_MI_F2A/RAff-8jdGR7CAaObs-mD3RRJfycMDRa8TCBbfSOyNHWrU#> .
 @prefix fairmi: <https://w3id.org/fair/maturity_indicator/terms/Gen2/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix dcelem: <http://purl.org/dc/elements/1.1/> .
 @prefix np: <http://www.nanopub.org/nschema#> .
 @prefix pav: <http://swan.mindinformatics.org/ontologies/1.2/pav/> .
-@prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix fair: <https://w3id.org/fair/principles/terms/> .
@@ -22,6 +21,7 @@ sub:Head {
 
 sub:assertion {
   fairmi:Gen2_MI_F2A a fairmi:FAIR-Maturity-Indicator;
+    rdfs:label "FAIR Maturity Indicator Gen2-MI-F2A";
     foaf:primaryTopic fair:F2 .
 }
 
@@ -32,9 +32,7 @@ sub:provenance {
   
   sub:assertion dcterms:author orcid:0000-0001-5306-5690, orcid:0000-0001-6960-357X,
       orcid:0000-0001-8888-635X, orcid:0000-0002-1164-1351, orcid:0000-0003-4727-9435;
-    rdfs:comment "FAIR Maturity Indicator Gen2-MI-F2A";
-    dcat:distribution sub:_1;
-    prov:wasGeneratedBy "FAIR Metrics Working Group" .
+    dcat:distribution sub:_1 .
 }
 
 sub:pubinfo {
