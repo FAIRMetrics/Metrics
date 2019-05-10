@@ -1,5 +1,5 @@
-@prefix this: <https://w3id.org/fair/maturity_indicator/np/Gen2/Gen2_MI_F1B/RAAgXzEpUpE8se3QYwsFiwxzzBB0iOkJ6imdItPPmAebg> .
-@prefix sub: <https://w3id.org/fair/maturity_indicator/np/Gen2/Gen2_MI_F1B/RAAgXzEpUpE8se3QYwsFiwxzzBB0iOkJ6imdItPPmAebg#> .
+@prefix this: <https://w3id.org/fair/maturity_indicator/np/Gen2/Gen2_MI_F1B/RAG-MgjAAOpysB9rgoEfz8ZqChG2XGvO4CVQNEK2OKt88> .
+@prefix sub: <https://w3id.org/fair/maturity_indicator/np/Gen2/Gen2_MI_F1B/RAG-MgjAAOpysB9rgoEfz8ZqChG2XGvO4CVQNEK2OKt88#> .
 @prefix fairmi: <https://w3id.org/fair/maturity_indicator/terms/Gen2/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix dcelem: <http://purl.org/dc/elements/1.1/> .
@@ -22,7 +22,39 @@ sub:Head {
 sub:assertion {
   fairmi:Gen2_MI_F1B a fairmi:FAIR-Maturity-Indicator;
     rdfs:label "FAIR Maturity Indicator Gen2-MI-F1B";
-    foaf:primaryTopic fair:F1 .
+    foaf:primaryTopic fair:F1;
+    fairmi:comments "";
+    fairmi:examples "";
+    fairmi:measuring """Whether the GUID matches (regexp) a GUID scheme recognized as being persistent.
+This includes identifiers in the FAIRSharing registry that are known to be persistent:
+ * InChI Keys
+ * DOIs
+ * Handles
+
+For URLs, we test widely-used PURLs, currently:
+ * purl
+ * oclc
+ * fdlp
+ * purlz
+ * w3id
+ * ark
+
+If you want an additional identifier scheme added to this Maturity Indicator, please let us know, and please register it with FAIRSharing.""";
+    fairmi:procedure """Identifier scheme of the GUID is determined by pattern-match for Handle, DOI, InChI.  For URLs
+ we do further pattern-matches to determine if it matches the pattern for:
+ * purl
+ * oclc
+ * fdlp
+ * purlz
+ * w3id
+ * ark""";
+    fairmi:rationale """The change to an identifier scheme will have widespread implications for resource lookup,
+linking, and data sharing. Providers of digital resources must try to use GUID types that
+are guaranteed, by stable third-parties, to be persistent.  This includes stable providers of
+PURLs.""";
+    fairmi:relevance "All";
+    fairmi:requirements "The Metadata GUID.";
+    fairmi:validation "match successful" .
 }
 
 sub:provenance {

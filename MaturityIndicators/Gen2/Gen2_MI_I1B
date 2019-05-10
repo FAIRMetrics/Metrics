@@ -1,5 +1,5 @@
-@prefix this: <https://w3id.org/fair/maturity_indicator/np/Gen2/Gen2_MI_I1B/RA2RIE3LUtv986Rz1InVICpJA1oexm5A_aBI0QGrKd7Sw> .
-@prefix sub: <https://w3id.org/fair/maturity_indicator/np/Gen2/Gen2_MI_I1B/RA2RIE3LUtv986Rz1InVICpJA1oexm5A_aBI0QGrKd7Sw#> .
+@prefix this: <https://w3id.org/fair/maturity_indicator/np/Gen2/Gen2_MI_I1B/RAyE9sFo0YLYUHQLoe34VfNdBwLvRQ_oMCQFZbNLEbyXg> .
+@prefix sub: <https://w3id.org/fair/maturity_indicator/np/Gen2/Gen2_MI_I1B/RAyE9sFo0YLYUHQLoe34VfNdBwLvRQ_oMCQFZbNLEbyXg#> .
 @prefix fairmi: <https://w3id.org/fair/maturity_indicator/terms/Gen2/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix dcelem: <http://purl.org/dc/elements/1.1/> .
@@ -22,7 +22,19 @@ sub:Head {
 sub:assertion {
   fairmi:Gen2_MI_I1B a fairmi:FAIR-Maturity-Indicator;
     rdfs:label "FAIR Maturity Indicator Gen2-MI-I1B";
-    foaf:primaryTopic fair:I1 .
+    foaf:primaryTopic fair:I1;
+    fairmi:comments "";
+    fairmi:examples "";
+    fairmi:measuring "use of a formal, accessible, shared, and broadly applicable language for knowledge representation.";
+    fairmi:procedure "The GUID is resolved.  Any Linked Data that can be found is considered a success.";
+    fairmi:rationale """The unambiguous communication of knowledge and meaning (what symbols are, and how they relate to one another) necessitates the use of languages that are capable of representing these concepts in a machine-readable manner.
+
+There is debate in the community about what languages would be considered \"knowledge representation languages\", as such
+this Maturity Indicator is broken into two sub-MIs (Gen2-FM-I1A and Gen2-FM-I1B).  This MI takes a strict interpretation,
+accepting only formats that are ontologically-grounded and machine-resolvable.""";
+    fairmi:relevance "All";
+    fairmi:requirements "The Metadata GUID.";
+    fairmi:validation "The presence of linked data" .
 }
 
 sub:provenance {

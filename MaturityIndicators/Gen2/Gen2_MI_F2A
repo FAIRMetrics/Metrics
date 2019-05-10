@@ -1,5 +1,5 @@
-@prefix this: <https://w3id.org/fair/maturity_indicator/np/Gen2/Gen2_MI_F2A/RAff-8jdGR7CAaObs-mD3RRJfycMDRa8TCBbfSOyNHWrU> .
-@prefix sub: <https://w3id.org/fair/maturity_indicator/np/Gen2/Gen2_MI_F2A/RAff-8jdGR7CAaObs-mD3RRJfycMDRa8TCBbfSOyNHWrU#> .
+@prefix this: <https://w3id.org/fair/maturity_indicator/np/Gen2/Gen2_MI_F2A/RAAKNiWm_tOvu3caJimdVYujMCwCOvit1gHfw1BP5o0Ec> .
+@prefix sub: <https://w3id.org/fair/maturity_indicator/np/Gen2/Gen2_MI_F2A/RAAKNiWm_tOvu3caJimdVYujMCwCOvit1gHfw1BP5o0Ec#> .
 @prefix fairmi: <https://w3id.org/fair/maturity_indicator/terms/Gen2/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix dcelem: <http://purl.org/dc/elements/1.1/> .
@@ -22,7 +22,27 @@ sub:Head {
 sub:assertion {
   fairmi:Gen2_MI_F2A a fairmi:FAIR-Maturity-Indicator;
     rdfs:label "FAIR Maturity Indicator Gen2-MI-F2A";
-    foaf:primaryTopic fair:F2 .
+    foaf:primaryTopic fair:F2;
+    fairmi:comments "";
+    fairmi:examples "";
+    fairmi:measuring """Whether the metadata of the record contains \"structured\" elements.
+These may be in the form of hash-like content (micrograph, JSON),
+or in one of the various forms of linked data (JSON-LD, RDFa, etc.)""";
+    fairmi:procedure """Metadata is harvested by:
+1) resolving the GUID (following all redirects) with a Content-Type header specifically searching for some form of structured data.  e.g.
+   'Accept: text/turtle, application/n3, application/rdf+n3, application/turtle, application/x-turtle,text/n3,text/turtle, text/rdf+n3, text/rdf+turtle,application/json+ld, text/xhtml+xml,application/rdf+xml,application/n-triples'
+2) resolving any Link 'meta' HTTP Headers (processed independently according to this same process, but not iteratively)
+3) parsing the response body either as a hash (for non-linked data) or as a Graph for linked data, or both.
+4) All other data is passed to the 'extruct' tool (https://github.com/scrapinghub/extruct) or to the Apache Tika tool (https://tika.apache.org/) for deep exploration
+5) Any linked or hash-type data found by those tools are merged with the existing Hash or Graph data
+6) The Hash and Graph are interrogated v.v. if they contain any data""";
+    fairmi:rationale """Structured data is inherently easier for machines to accurately process and
+interpret.  Even loosely structured metadata can have reliable parsers built
+to consume it, including those of major search engines.  Thus, it improves
+the findability of the record.""";
+    fairmi:relevance "All";
+    fairmi:requirements "The Metadata GUID.";
+    fairmi:validation "Hash or Graph contains data." .
 }
 
 sub:provenance {

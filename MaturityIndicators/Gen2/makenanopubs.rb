@@ -31,7 +31,15 @@ template = <<END
 :assertion {
   fairmi:@IDENTIFIER@ a fairmi:FAIR-Maturity-Indicator ;
     rdfs:label "@TITLE@"^^xsd:string ;
-    foaf:primaryTopic fair:@PRINCIPLE@ .
+    foaf:primaryTopic fair:@PRINCIPLE@ ;
+    fairmi:measuring """@MEASURING@""" ;
+    fairmi:rationale """@RATIONALE@""" ;
+    fairmi:requirements """@REQUIREMENTS@""" ;
+    fairmi:procedure """@PROCEDURE@""" ;
+    fairmi:validation """@VALIDATION@""" ;
+    fairmi:relevance """@RELEVANCE@""" ;
+    fairmi:examples """@EXAMPLES@""" ;
+    fairmi:comments """@COMMENTS@""" .
 }
  
 :provenance {
@@ -89,6 +97,46 @@ def date(c)
 	return $1
 end
 
+def measuring(c)
+	c =~ /### What is being measured\?([^#]+)/mi
+	return $1.strip
+end
+
+def rationale(c)
+	c =~ /### Why should we measure it\?([^#]+)/mi
+	return $1.strip
+end
+
+def requirements(c)
+	c =~ /### What must be provided for the measurement\?([^#]+)/mi
+	return $1.strip
+end
+
+def procedure(c)
+	c =~ /### How is the measurement executed\?([^#]+)/mi
+	return $1.strip
+end
+
+def validation(c)
+	c =~ /### What is.are considered valid result.s.\?([^#]+)/mi
+	return $1.strip
+end
+
+def relevance(c)
+	c =~ /### For which digital resource.s. is this relevant\? .or 'all'.([^#]+)/mi
+	return $1.strip
+end
+
+def examples(c)
+	c =~ /### Examples of good practices .that would score well on this assessment.([^#]+)/mi
+	return $1.strip
+end
+
+def comments(c)
+	c =~ /### Comments([^#]+)/mi
+	return $1.strip
+end
+
 
 
 ARGV.each do |file|
@@ -100,6 +148,14 @@ ARGV.each do |file|
 		temp.gsub!(/@AUTHORS@/, authors(c))
 		temp.gsub!(/@TITLE@/, title(c))
 		temp.gsub!(/@DATE@/, date(c))
+		temp.gsub!(/@MEASURING@/, measuring(c))
+		temp.gsub!(/@RATIONALE@/, rationale(c))
+		temp.gsub!(/@REQUIREMENTS@/, requirements(c))
+		temp.gsub!(/@PROCEDURE@/, procedure(c))
+		temp.gsub!(/@VALIDATION@/, validation(c))
+		temp.gsub!(/@RELEVANCE@/, relevance(c))
+		temp.gsub!(/@EXAMPLES@/, examples(c))
+		temp.gsub!(/@COMMENTS@/, comments(c))
 		puts temp
 		f = File.open(identifier(c), "w")
 		f.write temp

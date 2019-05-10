@@ -1,5 +1,5 @@
-@prefix this: <https://w3id.org/fair/maturity_indicator/np/Gen2/Gen2_MI_I2B/RAqB0IH7vqKkq_gFkM8Xeuv9YoLW_ZL6-p3iynlf54Ex0> .
-@prefix sub: <https://w3id.org/fair/maturity_indicator/np/Gen2/Gen2_MI_I2B/RAqB0IH7vqKkq_gFkM8Xeuv9YoLW_ZL6-p3iynlf54Ex0#> .
+@prefix this: <https://w3id.org/fair/maturity_indicator/np/Gen2/Gen2_MI_I2B/RAcG6Hsxa55vLDYlBvpFDfn1AMjNKet5BX4TC_3cE4aKs> .
+@prefix sub: <https://w3id.org/fair/maturity_indicator/np/Gen2/Gen2_MI_I2B/RAcG6Hsxa55vLDYlBvpFDfn1AMjNKet5BX4TC_3cE4aKs#> .
 @prefix fairmi: <https://w3id.org/fair/maturity_indicator/terms/Gen2/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix dcelem: <http://purl.org/dc/elements/1.1/> .
@@ -22,7 +22,19 @@ sub:Head {
 sub:assertion {
   fairmi:Gen2_MI_I2B a fairmi:FAIR-Maturity-Indicator;
     rdfs:label "FAIR Maturity Indicator Gen2-MI-I2B";
-    foaf:primaryTopic fair:I2 .
+    foaf:primaryTopic fair:I2;
+    fairmi:comments "";
+    fairmi:examples "";
+    fairmi:measuring "If the (meta)data uses vocabularies that are, themselves, FAIR";
+    fairmi:procedure """Any Linked Data that can be found after resolution of the GUID is tested for the resolution of a subset of properties (predicates) present in it.
+Some proportion of these should resolve to Linked Data via content-negotiation (the creator of the associated Maturity Test will decide what that
+proportion should be)""";
+    fairmi:rationale """It is not possible to unambiguously interpret metadata represented as simple keywords or other non-qualified symbols. For interoperability, it must be possible to identify data that can be integrated like-with-like. This requires that the data, and the provenance descriptors of the data, should (where reasonable) use vocabularies and terminologies that are, themselves, FAIR.
+
+In this strict Maturity Indicator, we test if the vocabulary terms resolve to machine-readable linked data. A second Maturity Indicator (Gen2-FM-I2A) is looser than this MI.""";
+    fairmi:relevance "All";
+    fairmi:requirements "The Metadata GUID.";
+    fairmi:validation "Successful resolution of a proportion of predicates in Linked Data to more linked data" .
 }
 
 sub:provenance {

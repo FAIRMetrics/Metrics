@@ -1,5 +1,5 @@
-@prefix this: <https://w3id.org/fair/maturity_indicator/np/Gen2/Gen2_MI_F2B/RACwdKXah9enRN5P6oZDvXoBTi2y9L_C8DmkUz8PRKLm4> .
-@prefix sub: <https://w3id.org/fair/maturity_indicator/np/Gen2/Gen2_MI_F2B/RACwdKXah9enRN5P6oZDvXoBTi2y9L_C8DmkUz8PRKLm4#> .
+@prefix this: <https://w3id.org/fair/maturity_indicator/np/Gen2/Gen2_MI_F2B/RAUKPWYPnJsK2bCqO3zaBlFBlCftxnCYl7RZAGG6lPhdA> .
+@prefix sub: <https://w3id.org/fair/maturity_indicator/np/Gen2/Gen2_MI_F2B/RAUKPWYPnJsK2bCqO3zaBlFBlCftxnCYl7RZAGG6lPhdA#> .
 @prefix fairmi: <https://w3id.org/fair/maturity_indicator/terms/Gen2/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix dcelem: <http://purl.org/dc/elements/1.1/> .
@@ -22,7 +22,28 @@ sub:Head {
 sub:assertion {
   fairmi:Gen2_MI_F2B a fairmi:FAIR-Maturity-Indicator;
     rdfs:label "FAIR Maturity Indicator Gen2-MI-F2B";
-    foaf:primaryTopic fair:F2 .
+    foaf:primaryTopic fair:F2;
+    fairmi:comments """BEWARE:  Apache Tika is capable of extracting metadata, in the form of Linked Data, from a wide range of opaue file-types such as PDFs and images.
+This process will therefore return Linked Data that can only be found using a special tool.  Therefore, passing this
+Maturity Indicator does not mean that the publisher has *actively* made grounded metadata available.""";
+    fairmi:examples "";
+    fairmi:measuring """Whether the metadata of the record contains \"structured\" elements that are
+\"grounded\" in shared vocabularies.  For example, in one of the various forms
+of linked data (JSON-LD, RDFa, Turtle, etc.)""";
+    fairmi:procedure """Metadata is harvested by:
+1) resolving the GUID (following all redirects) with a Content-Type header specifically searching for some form of structured data.  e.g.
+   'Accept: text/turtle, application/n3, application/rdf+n3, application/turtle, application/x-turtle,text/n3,text/turtle, text/rdf+n3, text/rdf+turtle,application/json+ld, text/xhtml+xml,application/rdf+xml,application/n-triples'
+2) resolving any Link 'meta' HTTP Headers (processed independently according to this same process, but not iteratively)
+3) parsing the response body either as a hash (for non-linked data) or as a Graph for linked data, or both.
+4) All other data is passed to the 'extruct' tool (https://github.com/scrapinghub/extruct) or to the Apache Tika tool (https://tika.apache.org/) for deep exploration
+5) Any linked or hash-type data found by those tools are merged with the existing Hash or Graph data
+6) The Graph is interrogated v.v. if it contains any data""";
+    fairmi:rationale """Structured, grounded data is inherently easier for machines to accurately process and
+interpret, in particular by generic agents, who are able to precisely determine the
+meaning of an element based on it being a GUID (and thus, more FAIR)""";
+    fairmi:relevance "All";
+    fairmi:requirements "The Metadata GUID.";
+    fairmi:validation "Graph contains data." .
 }
 
 sub:provenance {

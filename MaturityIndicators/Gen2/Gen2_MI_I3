@@ -1,5 +1,5 @@
-@prefix this: <https://w3id.org/fair/maturity_indicator/np/Gen2/Gen2_MI_I3/RAny3E_5jEBHVl5V4f0MVwrB6e-1-qbpeF_jkEPvs2V-E> .
-@prefix sub: <https://w3id.org/fair/maturity_indicator/np/Gen2/Gen2_MI_I3/RAny3E_5jEBHVl5V4f0MVwrB6e-1-qbpeF_jkEPvs2V-E#> .
+@prefix this: <https://w3id.org/fair/maturity_indicator/np/Gen2/Gen2_MI_I3/RAQIe39FtzBIO45Owt2rKtJ8Hkv46LARnycA7ZNMzmWdw> .
+@prefix sub: <https://w3id.org/fair/maturity_indicator/np/Gen2/Gen2_MI_I3/RAQIe39FtzBIO45Owt2rKtJ8Hkv46LARnycA7ZNMzmWdw#> .
 @prefix fairmi: <https://w3id.org/fair/maturity_indicator/terms/Gen2/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix dcelem: <http://purl.org/dc/elements/1.1/> .
@@ -22,7 +22,19 @@ sub:Head {
 sub:assertion {
   fairmi:Gen2_MI_I3 a fairmi:FAIR-Maturity-Indicator;
     rdfs:label "FAIR Maturity Indicator Gen2-MI-I3";
-    foaf:primaryTopic fair:I3 .
+    foaf:primaryTopic fair:I3;
+    fairmi:comments "";
+    fairmi:examples "";
+    fairmi:measuring "Does the linked data metadata contain links that are not from the same source (domain/host)";
+    fairmi:procedure """The URI-representation of the priovided GUID is examined for its domain name.
+Any Linked Data that can be found after resolution of the GUID is parsed
+to determine the hostname of the object-resources.  A count is made of the number of objects
+that have a different domain from that of the originating host.  This Maturity Indicator could be made quantitative
+if a test wanted to be very strict.""";
+    fairmi:rationale "Data silos thwart interoperability. Thus, we should reasonably expect that some of the references/relations point outwards to other resources, owned by third-parties; this is one of the requirements for 5 star linked data.";
+    fairmi:relevance "All";
+    fairmi:requirements "The Metadata GUID.";
+    fairmi:validation "Discovery of third-party URIs as objets of triples" .
 }
 
 sub:provenance {
