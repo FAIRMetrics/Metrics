@@ -58,7 +58,7 @@ group :development, :test do
   # Use Passenger as the app server
   # gem 'passenger'
   # Use Puma as the app server
-  # gem 'puma', '~> 3.7'
+   gem 'puma', '~> 3.7'
 end
 
 group :development do

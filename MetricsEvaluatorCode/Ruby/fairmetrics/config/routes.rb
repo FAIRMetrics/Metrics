@@ -51,6 +51,7 @@ Rails.application.routes.draw do
     get 'searches/:id', to: 'searches#show'
     
     get 'schema', to: 'static_pages#schema'
+    get 'schema.json', to: 'static_pages#schema'
     
     # API methods
     namespace :v1, defaults: {format: 'json'} do

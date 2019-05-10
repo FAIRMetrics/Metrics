@@ -42,19 +42,36 @@ class SearchesController < ApiController
   
   # POST /searches/1
   def execute
-    logger.debug "BODY: #{request.body}\n\n\n"
+    #logger.debug "BODY: #{request.body}\n\n\n"
     keywords = search_params[:keywords]
     allkeys = keywords.split(",")
     @metrics = Array.new
     @collections = Array.new
+    @evaluations = Array.new
+    @evals_by_id = Array.new
+    
     @URL = request.original_url
     allkeys.each do |key|
       key.strip!
+      next unless key =~ /\w/
       @metrics.concat(Metric.where("description LIKE ?", "%#{key}%"))
+      @metrics.concat(Metric.where("name LIKE ?", "%#{key}%"))
     end
     allkeys.each do |key|
       key.strip!
+      next unless key =~ /\w/
       @collections.concat(Collection.where("description LIKE ?", "%#{key}%"))
+      @collections.concat(Collection.where("name LIKE ?", "%#{key}%"))
+    end
+    allkeys.each do |key|
+      key.strip!
+      next unless key =~ /\w/
+      @evaluations.concat(Evaluation.where("title LIKE ?", "%#{key}%"))
+    end
+    allkeys.each do |key|
+      key.strip!
+      next unless key =~ /\w/
+      @evals_by_id.concat(Evaluation.where("resource LIKE ?", "%#{key}%"))
     end
     
     respond_to do |format|

@@ -53,7 +53,7 @@ Rails.application.configure do
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
   config.web_console.whitelisted_ips = '138.4.137.74'
   
-  config.action_controller.default_url_options = { host: 'localhost', protocol: 'http', port: 3000}
+  config.action_controller.default_url_options = { host: 'localhost', protocol: 'http', port: 8080}
 
   
 end
