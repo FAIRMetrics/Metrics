@@ -55,7 +55,7 @@ template = <<END
  
 :pubinfo {
   : dcterms:created "@DATE@"^^xsd:dateTime ;
-    dcterms:rights <https://creativecommons.org/publicdomain/zero/1.0> ;
+    dcterms:rights <https://creativecommons.org/publicdomain/zero/1.0/> ;
     dcterms:rightsHolder <http://fairmetrics.org> ;
     pav:authoredBy <https://orcid.org/0000-0001-6960-357X> ;
     pav:versionNumber "1" .

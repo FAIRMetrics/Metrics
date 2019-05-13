@@ -1,5 +1,5 @@
-@prefix this: <https://w3id.org/fair/maturity_indicator/np/Gen2/Gen2_MI_A2/RAN32cjizvimVDIveEeCvEovfC9-t-eHOItQzc-xUW6VM> .
-@prefix sub: <https://w3id.org/fair/maturity_indicator/np/Gen2/Gen2_MI_A2/RAN32cjizvimVDIveEeCvEovfC9-t-eHOItQzc-xUW6VM#> .
+@prefix this: <https://w3id.org/fair/maturity_indicator/np/Gen2/Gen2_MI_A2/RAht9B3clKopJ1IoNHsIlf2bB4moLGIHZ-FHNHE7IIos8> .
+@prefix sub: <https://w3id.org/fair/maturity_indicator/np/Gen2/Gen2_MI_A2/RAht9B3clKopJ1IoNHsIlf2bB4moLGIHZ-FHNHE7IIos8#> .
 @prefix fairmi: <https://w3id.org/fair/maturity_indicator/terms/Gen2/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix dcelem: <http://purl.org/dc/elements/1.1/> .
@@ -48,7 +48,7 @@ sub:pubinfo {
   orcid:0000-0001-6960-357X foaf:name "Mark Wilkinson" .
   
   this: dcterms:created "2019-02-26"^^xsd:dateTime;
-    dcterms:rights <https://creativecommons.org/publicdomain/zero/1.0>;
+    dcterms:rights <https://creativecommons.org/publicdomain/zero/1.0/>;
     dcterms:rightsHolder <http://fairmetrics.org>;
     pav:authoredBy orcid:0000-0001-6960-357X;
     pav:versionNumber "1" .
