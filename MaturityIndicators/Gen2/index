@@ -1,5 +1,5 @@
-@prefix this: <https://w3id.org/fair/maturity_indicator/np/Gen2/index/RAMeiTIafRDIHAJ2zD-JFnUTKqYM0cDKyTBcj3vfBXTnw> .
-@prefix sub: <https://w3id.org/fair/maturity_indicator/np/Gen2/index/RAMeiTIafRDIHAJ2zD-JFnUTKqYM0cDKyTBcj3vfBXTnw#> .
+@prefix this: <https://w3id.org/fair/maturity_indicator/np/Gen2/index/RAQCPwk4zp_W4E7uOxgud5z-FMfg-KuaJnTdrW57IgA4c> .
+@prefix sub: <https://w3id.org/fair/maturity_indicator/np/Gen2/index/RAQCPwk4zp_W4E7uOxgud5z-FMfg-KuaJnTdrW57IgA4c#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix dct: <http://purl.org/dc/terms/> .
@@ -16,7 +16,8 @@ sub:Head {
 }
 
 sub:assertion {
-  this: npx:includesElement <https://w3id.org/fair/maturity_indicator/np/Gen2/Gen2_MI_A1.1/RAGZvCG6cZ1v37XGth1SRhUCoobYz6O6GFlcrsB9xmPds>,
+  this: npx:includesElement <https://w3id.org/fair/maturity_indicator/np/Gen2/FAIR-Maturity-Indicator/RAP41Y2vTjCKhSlnOdLUeqAO1WfkKP7LccDktDAaKFUvk>,
+      <https://w3id.org/fair/maturity_indicator/np/Gen2/Gen2_MI_A1.1/RAGZvCG6cZ1v37XGth1SRhUCoobYz6O6GFlcrsB9xmPds>,
       <https://w3id.org/fair/maturity_indicator/np/Gen2/Gen2_MI_A1.2/RANum2UJ4GTutMiCJcbkcEu_ODIqEu3CzfPllfErr_h0c>,
       <https://w3id.org/fair/maturity_indicator/np/Gen2/Gen2_MI_A2/RAht9B3clKopJ1IoNHsIlf2bB4moLGIHZ-FHNHE7IIos8>,
       <https://w3id.org/fair/maturity_indicator/np/Gen2/Gen2_MI_F1A/RAx1dL1AMeEbBdoB5Pikx2yaJ94Ud7e6VwKJt_BJyYRs8>,
@@ -30,7 +31,16 @@ sub:assertion {
       <https://w3id.org/fair/maturity_indicator/np/Gen2/Gen2_MI_I2A/RAXGk8RkkUPfuXhl_gqh65eC1Z2oLwuQX7uDc_fdsXsRY>,
       <https://w3id.org/fair/maturity_indicator/np/Gen2/Gen2_MI_I2B/RAsiFMnfxg39Wcua4U2AoDlpfWjT1d2eTa5A3Fn1SA-w0>,
       <https://w3id.org/fair/maturity_indicator/np/Gen2/Gen2_MI_I3/RAvwJ3f7mqJu4iojAqIBvZYbU7YUJEDurZNUYN78jWgRw>,
-      <https://w3id.org/fair/maturity_indicator/np/Gen2/Gen2_MI_R1.1/RAcEODhAitpeyIJHn15kkBrAZ_qeFVNIi9NzMGGKXkLDI> .
+      <https://w3id.org/fair/maturity_indicator/np/Gen2/Gen2_MI_R1.1/RAcEODhAitpeyIJHn15kkBrAZ_qeFVNIi9NzMGGKXkLDI>,
+      <https://w3id.org/fair/maturity_indicator/np/Gen2/Vocabulary/RABojlumxBgs8OOrWR1M53NbWKsXtoav55cE7qxFbrj-k>,
+      <https://w3id.org/fair/maturity_indicator/np/Gen2/comments/RAhtCKxX_wKiD0N7QTk8APUVFSGfwOpjCMOlVUfn4oXo8>,
+      <https://w3id.org/fair/maturity_indicator/np/Gen2/examples/RAE3Fw5kP89OCSz_BlPdVMNrq0lmQ3hCzz17E1EqqeK3Y>,
+      <https://w3id.org/fair/maturity_indicator/np/Gen2/measuring/RAPYeyDbYkOitTsQ7smjKDaOpeJ_LtV5kpmoleIfsrcPQ>,
+      <https://w3id.org/fair/maturity_indicator/np/Gen2/procedure/RAYK0HekgSd0Ki2Xnm8YIfMgg31v90BHh6JAHpHJYDY0A>,
+      <https://w3id.org/fair/maturity_indicator/np/Gen2/rationale/RA43Fq5cSgj975CzrlplnEzU20HCTYcFrd5L5UaOMqrmY>,
+      <https://w3id.org/fair/maturity_indicator/np/Gen2/relevance/RAo_eOJtZA6NjPrDvpcI0cVDWxDkvAOZKJfGLBmKT9epU>,
+      <https://w3id.org/fair/maturity_indicator/np/Gen2/requirements/RAHOoYjEauO8RABO_uet9ZbFnYS9HbU4TiZ8I1knGt0eQ>,
+      <https://w3id.org/fair/maturity_indicator/np/Gen2/validation/RAbY8f_H_9L9JwK-IaEZDnqo5ki58HhB64uGiAU7tLXHc> .
 }
 
 sub:provenance {
@@ -39,7 +49,7 @@ sub:provenance {
 
 sub:pubinfo {
   this: dce:title "Nanopublications representing the FAIR Maturity Indicators, version 1";
-    dct:created "2019-05-13T07:19:08.257+02:00"^^xsd:dateTime;
+    dct:created "2019-05-13T08:26:12.692+02:00"^^xsd:dateTime;
     dct:license <https://creativecommons.org/publicdomain/zero/1.0/>;
     npx:supersedes <http://purl.org/np/RArp89NoE0geulP2hbChcLYpMs-M1HzY8P3vl-_b3poPE>;
     pav:createdBy <https://orcid.org/0000-0001-6960-357X>, <https://orcid.org/0000-0002-1267-0234>;
