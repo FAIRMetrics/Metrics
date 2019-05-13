@@ -53,6 +53,10 @@ Rails.application.routes.draw do
     get 'schema', to: 'static_pages#schema'
     get 'schema.json', to: 'static_pages#schema'
     
+    # CRON JOBS
+    get 'crons/clearcache', to: 'crons#clearcache'
+    
+    
     # API methods
     namespace :v1, defaults: {format: 'json'} do
       scope '/users' do

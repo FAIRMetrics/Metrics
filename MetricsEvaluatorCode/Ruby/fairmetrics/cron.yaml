@@ -1,0 +1,4 @@
+cron:
+- description: "half hourly clear of cache"
+  url: /tasks/clearcache/
+  schedule: every 30 mins

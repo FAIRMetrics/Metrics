@@ -50,6 +50,9 @@ gem 'appengine', "~> 0.4.1"
 
 # security patches
 gem "actionview", ">= 5.1.6.2"
+gem "rubyzip", ">= 1.2.2"
+gem "ffi", ">= 1.9.24"
+
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

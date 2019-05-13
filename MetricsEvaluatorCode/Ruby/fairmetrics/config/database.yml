@@ -9,18 +9,18 @@ default: &default
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   timeout: 5000
 
-#development:
-#  <<: *default
-#  database: db/development.sqlite3
-
 development:
-  adapter: mysql2
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  timeout: 5000
-  database: evaluator_production
-  username: markw
-  password: markwongcloudapp
-  socket: /cloudsql/ejp-evaluator:europe-west3:evaluator-mysql
+  <<: *default
+  database: db/development.sqlite3
+
+#development:
+#  adapter: mysql2
+#  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+#  timeout: 5000
+#  database: evaluator_production
+#  username: markw
+#  password: markwongcloudapp
+# socket: /cloudsql/ejp-evaluator:europe-west3:evaluator-mysql
 
 
 
@@ -36,11 +36,6 @@ production:
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   timeout: 5000
   database: evaluator_production
-<<<<<<< c803068fb7fdec0b9972dc2331079f9a389f3b6d
-  username: markw
-  password: markwongcloudapp
-=======
   username: root
   password: fail
->>>>>>> starting expanded search.  FAILS in rendering
   socket: /cloudsql/ejp-evaluator:europe-west3:evaluator-mysql
