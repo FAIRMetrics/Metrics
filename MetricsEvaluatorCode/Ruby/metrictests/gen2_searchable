@@ -132,7 +132,7 @@ def testGUID
 			if h["webPages"]   # are there results
 				@swagger.addComment "INFO: Bing found results for#{title}.  Checking for results that match #{finalURI}.\n"
 				h["webPages"]["value"].each do |p|  # for each matching pge do
-					if p["url"] == finalURI  # compare to the final URI from the Utils::fetch routine (the page of metadata)
+					if finalURI.include?(p["url"]) ==   # compare to the final URI from the Utils::fetch routine (the page of metadata)
 						@swagger.addComment "SUCCESS: found a metadata record based on its title in linked data.\n  "
 						@swagger.score = 1
 					end
@@ -158,7 +158,7 @@ def testGUID
 			if h["webPages"]   # are there results
 				@swagger.addComment "INFO: Bing found results for#{title}.  Checking for results that match #{finalURI}.\n"
 				h["webPages"]["value"].each do |p|  # for each matching pge do
-					if p["url"] == finalURI  # compare to the final URI from the Utils::fetch routine (the page of metadata)
+					if finalURI.include?(p["url"])  # compare to the final URI from the Utils::fetch routine (the page of metadata)
 						@swagger.addComment "SUCCESS: found a metadata record based on its title in linked data.\n  "
 						@swagger.score = 1
 					end
@@ -195,7 +195,7 @@ def testGUID
 			if h["webPages"]   # are there results
 				@swagger.addComment "INFO: Bing found matches using #{keywords}. Testing matches for a reference to #{finalURI}\n"
 				h["webPages"]["value"].each do |p|  # for each matching pge do
-					if p["url"] == finalURI  # compare to the final URI from the Utils::fetch routine (the page of metadata)
+					if finalURI.include?(p["url"])  # compare to the final URI from the Utils::fetch routine (the page of metadata)
 						@swagger.addComment "SUCCESS: found a metadata record based on its keywords in linked data.\n"
 						@swagger.score = 1
 					end

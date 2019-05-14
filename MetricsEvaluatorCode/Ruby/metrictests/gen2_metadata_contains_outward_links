@@ -44,12 +44,15 @@ def testGUID
 	success = 0  # we will accept 5/10 failures
 	count = 0
 	@swagger.addComment("INFO: Now testing for any triples whose Object is an outward link (i.e. not #{finalURI.host}).\n")
+
+	hosts = Arrah.new
+	finalURI.each {|uri| this = URI(uri); hosts << this.host}  #fill the list of domains that this resource is found in
 	g.each do |stm|
 		object = stm.object
 		next unless object.resource? && !object.anonymous?
 		thisuri = URI(object.value)
 		@swagger.addComment("INFO: Testing #{thisuri}.\n")
-		success += 1 if finalURI.host != thisuri.host # note that we're checking for outward links
+		success += 1 unless hosts.include?(thisuri.host) # note that we're checking for outward links
 		count+=1
 	end
 	
