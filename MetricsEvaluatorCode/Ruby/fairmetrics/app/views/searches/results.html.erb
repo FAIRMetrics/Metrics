@@ -3,6 +3,8 @@
 <ul>
 <li><a href="#collections">Matched Collections</a></li>
 <li><a href="#metrics">Matched Maturity Indicator Tests</a></li>
+<li><a href="#evals_by_id">Matched Evaluations (by URI tested)</a></li>
+<li><a href="#evaluations">Matched Evaluations (by match against Title)</a></li>
 </ul>
 
 <a name="collections"><H3>Collections matching search terms</H3></a>
@@ -115,6 +117,99 @@
 <br/><br/>
 
 <hr/>
+
+
+<a name="evals_by_guid"><H3>Evaluations matched by GUID</H3></a>
+
+<div style="padding-left: 50px;">
+<% unless @evals_by_id.any? %>
+  <strong>NO MATCHES</strong>
+<% end %>
+
+<% @evals_by_id.each do |evalid| %>
+
+<p>
+  <strong>Evaluation Identifier:</strong>
+  Evaluation #<a href="<%= evaluation_url(evalid.id)  %>"><%= evalid.id %></a>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= evalid.title %>
+</p>
+
+<p>
+  <strong>GUID:</strong>
+  <%= evalid.resource %>
+</p>
+
+<p>
+  <strong>Contact:</strong>
+  <a href="https://orcid.org/<%= evalid.executor %>"><%= evalid.executor %></a>
+</p>
+
+
+
+<br/><br/>
+<% end %>
+</div>
+
+<br/><br/>
+
+
+<hr/>
+
+
+
+<a name="evals_by_guid"><H3>Evaluations matched by Title</H3></a>
+
+<div style="padding-left: 50px;">
+<% unless @evaluations.any? %>
+  <strong>NO MATCHES</strong>
+<% end %>
+
+<% @evaluations.each do |evalz| %>
+
+<p>
+  <strong>Evaluation Identifier:</strong>
+  Evaluation #<a href="<%= evaluation_url(evalz.id)  %>"><%= evalz.id %></a>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= eval.title %>
+</p>
+
+<p>
+  <strong>GUID:</strong>
+  <%= eval.resource %>
+</p>
+
+<p>
+  <strong>Contact:</strong>
+  <a href="https://orcid.org/<%= evalz.executor %>"><%= evalz.executor %></a>
+</p>
+
+
+
+<br/><br/>
+<% end %>
+</div>
+
+<br/><br/>
+
+<hr/>
+
+
+
+
+
+
+
+
+
+
+
 
 
 

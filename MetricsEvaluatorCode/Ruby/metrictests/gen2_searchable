@@ -144,6 +144,33 @@ def testGUID
 				@swagger.addComment "INFO: No search results from Bing\n  "
 			end
 		end
+		query = SPARQL.parse("select ?o where {?s ?p ?o  FILTER(CONTAINS(lcase(str(?p)), 'name'))}") # find predicate containing "title", take object
+		results = query.execute(g)
+		if results.any?
+			@swagger.addComment "INFO: found title predicate.\n "
+			title = results.first[:o].to_s  # get the title
+			@swagger.addComment "INFO: found Title:  #{title}.\n "
+			#$stderr.puts "looking for #{title}"
+			@swagger.addComment "INFO: Calling Bing search using #{title}.\n "
+			searchresults = callBing(title)  # search bing
+			#$stderr.puts JSON::pretty_generate(JSON(searchresults))
+			h = JSON.parse(searchresults)  # parse json
+			if h["webPages"]   # are there results
+				@swagger.addComment "INFO: Bing found results for#{title}.  Checking for results that match #{finalURI}.\n"
+				h["webPages"]["value"].each do |p|  # for each matching pge do
+					if p["url"] == finalURI  # compare to the final URI from the Utils::fetch routine (the page of metadata)
+						@swagger.addComment "SUCCESS: found a metadata record based on its title in linked data.\n  "
+						@swagger.score = 1
+					end
+				end
+				unless @swagger.score == 1
+					@swagger.addComment "INFO: No results from Bing included #{finalURI}.\n"
+				end
+			else
+				@swagger.addComment "INFO: No search results from Bing\n  "
+			end
+		end
+
 	end
 
 #######  keywords in graph

@@ -20,6 +20,9 @@
 /node_modules
 /yarn-error.log
 /config/secrets.yml
+/app.yaml
+/config/database.yml
+/config/google_app_creds.json
 
 .byebug_history
 Passengerfile.json

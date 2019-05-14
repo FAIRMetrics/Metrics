@@ -1,0 +1,59 @@
+#!/bin/bash
+
+set -e
+
+function download-nanopub-jar {
+  >&2 echo "Getting latest nanopub version..."
+  NANOPUB_VERSION=$(
+    curl --head -s https://github.com/Nanopublication/nanopub-java/releases/latest \
+    | egrep '^Location:' \
+    | sed -r 's/^.*-([.0-9]*)\s*$/\1/'
+  )
+  >&2 echo "Downloading nanopub jar file version $NANOPUB_VERSION..."
+  curl -L --output "$SCRIPTDIR/nanopub-${NANOPUB_VERSION}-jar-with-dependencies.jar" "https://github.com/Nanopublication/nanopub-java/releases/download/nanopub-${NANOPUB_VERSION}/nanopub-${NANOPUB_VERSION}-jar-with-dependencies.jar"
+}
+
+WORKINGDIR=`pwd`
+cd "$( dirname "${BASH_SOURCE[0]}" )"
+SCRIPTDIR=`pwd`
+
+if [ "$1" == "--download" ]; then
+  download-nanopub-jar
+  exit
+fi
+
+cd -P ..
+PROJECTDIR=`pwd`
+# for Cygwin:
+PROJECTDIR=${PROJECTDIR#/cygdrive/?}
+cd $WORKINGDIR
+
+NANOPUBJAR=$(find $SCRIPTDIR -maxdepth 1 -name "nanopub-*-jar-with-dependencies.jar" 2>/dev/null | sort -n | tail -1)
+
+if [ ! -z "$NANOPUBJAR" ]; then
+  exec java -jar $NANOPUBJAR "$@"
+fi
+
+NANOPUBJAR=$(find /usr/share/java/ -maxdepth 1 -name "nanopub-*-jar-with-dependencies.jar" 2>/dev/null | sort -n | tail -1)
+
+if [ ! -z "$NANOPUBJAR" ]; then
+  exec java -jar $NANOPUBJAR "$@"
+fi
+
+NANOPUBJAR=$(find $PROJECTDIR/target/ -maxdepth 1 -name "nanopub-*-jar-with-dependencies.jar" 2>/dev/null | sort -n | tail -1)
+
+if [ ! -z "$NANOPUBJAR" ]; then
+  exec java -jar $NANOPUBJAR "$@"
+fi
+
+>&2 echo "No nanopub jar file found. Downloading it from the web..."
+download-nanopub-jar
+
+NANOPUBJAR=$(find $SCRIPTDIR -maxdepth 1 -name "nanopub-*-jar-with-dependencies.jar" 2>/dev/null | sort -n | tail -1)
+
+if [ ! -z "$NANOPUBJAR" ]; then
+  exec java -jar $NANOPUBJAR "$@"
+fi
+
+>&2 echo "ERROR: Failed to find or download nanopub jar file."
+exit 1

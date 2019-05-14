@@ -13,7 +13,7 @@ Michel Dumontier, ORCID:0000-0003-4727-9435
 
 
 
-### Maturity Indicator Identifier: Gen2_MI_F1A [https://w3id.org/fair/maturity_indicator/Gen2/Gen2_MI_F1A](https://w3id.org/fair/maturity_indicator/Gen2/Gen2_MI_F1A)
+### Maturity Indicator Identifier: Gen2_MI_F1A [https://w3id.org/fair/maturity_indicator/terms/Gen2/Gen2_MI_F1A](https://w3id.org/fair/maturity_indicator/terms/Gen2/Gen2_MI_F1A)
 
 ### Maturity Indicator Name:   Identifier Uniqueness
 

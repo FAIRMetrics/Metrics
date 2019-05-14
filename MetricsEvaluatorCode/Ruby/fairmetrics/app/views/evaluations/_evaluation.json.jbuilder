@@ -9,7 +9,7 @@ type2 = fairont + "FAIR-Evaluation-Output"
 
 
 json.set! '@id', evaluation_url(evaluation)
-json.set! '@context', "https://w3id.org/FAIR_Evaluator/schema"
+json.set! '@context', "https://w3id.org/FAIR_Evaluator/schema#"
 
 json.set! '@type' do
 	json.array! [type1, type2]

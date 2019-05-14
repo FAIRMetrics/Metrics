@@ -1,52 +1,98 @@
-@prefix : <https://w3id.org/fair/maturity_indicator/mi/Gen2/Gen2_MI_A1.1> .  # canonical URI for the metric
-@prefix fairmi: <https://w3id.org/fair/maturity_indicator/terms/> .
+@prefix this: <https://w3id.org/fair/maturity_indicator/np/Gen2/Gen2_MI_F3/RAH50KFVHppzxfi0F0uk6SbDXHPsGLJzuEjvhYN6UrA8k> .
+@prefix sub: <https://w3id.org/fair/maturity_indicator/np/Gen2/Gen2_MI_F3/RAH50KFVHppzxfi0F0uk6SbDXHPsGLJzuEjvhYN6UrA8k#> .
+@prefix fairmi: <https://w3id.org/fair/maturity_indicator/terms/Gen2/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix dcelem: <http://purl.org/dc/elements/1.1/> .
 @prefix np: <http://www.nanopub.org/nschema#> .
-@prefix nx: <http://www.nextprot.org/db/search#> .
 @prefix pav: <http://swan.mindinformatics.org/ontologies/1.2/pav/> .
-@prefix prov: <http://www.w3.org/ns/prov#> .
-@prefix prv: <http://purl.org/net/provenance/ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix ro: <http://purl.org/obo/owl/OBO_REL#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@prefix fair: <http://purl.org/fair-ontology#> . 
+@prefix fair: <https://w3id.org/fair/principles/terms/> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix dcat: <http://www.w3.org/ns/dcat#> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix orcid: <https://orcid.org/> .
 
-:Head {
-  : np:hasAssertion :assertion ;
-       np:hasProvenance :provenance ;
-       np:hasPublicationInfo :pubinfo ;
-       a np:Nanopublication .
- }
- 
-:assertion {
- fairmi:Gen2_MI_A1.1 a fair:FAIR-Metric ;
-  foaf:primaryTopic fair:A1.1 .
-
- }
- 
-:provenance {
- :assertion dcterms:author  "Mark D. Wilkinson", "Susanna-Assunta Sansone", "Erik Schultes", "Luiz Olavo Bonino da Silva Santos", "Michel Dumontier" ;
- rdfs:comment "FAIR Metric Gen2-MI-I3"^^xsd:string ;
- dcat:distribution _:dist1 ;
- prov:wasGeneratedBy "FAIR Metrics Working Group" .
- 
- _:dist1 dcelem:format "application/x-texinfo" ;
-	rdf:type <http://rdfs.org/ns/void#Dataset> ;
-	rdf:type <http://www.w3.org/ns/dcat#Distribution> ;
-	dcat:downloadURL <https://w3id.org/fair/maturity_indicator/Gen2/Gen2_MI_A1.1.md> .
-
+sub:Head {
+  this: np:hasAssertion sub:assertion;
+    np:hasProvenance sub:provenance;
+    np:hasPublicationInfo sub:pubinfo;
+    a np:Nanopublication .
 }
 
- 
-:pubinfo {
- : dcterms:created "2019-02-26"^^xsd:dateTime ;
- dcterms:rights <https://creativecommons.org/publicdomain/zero/1.0> ;
- dcterms:rightsHolder <http://fairmetrics.org> ;
- pav:authoredBy "Mark Wilkinson" , <https://orcid.org/0000-0001-6960-357X> ;
- pav:versionNumber "1" ;
+sub:assertion {
+  fairmi:Gen2_MI_F3 a fairmi:FAIR-Maturity-Indicator;
+    rdfs:label "FAIR Maturity Indicator Gen2-MI-F3";
+    foaf:primaryTopic fair:F3;
+    fairmi:comments """A future iteration of this MI will require the use of specific predicates such as schema:identifier to
+point to the GUID of the Metadata document itself.""";
+    fairmi:examples "";
+    fairmi:measuring """Whether the metadata document contains both its own GUID (which may be different from its address),
+and whether it also explicitly contains the GUID for the data resource it describes.""";
+    fairmi:procedure """Metadata is harvested by:
+1) resolving the GUID (following all redirects) with a Content-Type header specifically searching for some form of structured data.  e.g.
+   'Accept: text/turtle, application/n3, application/rdf+n3, application/turtle, application/x-turtle,text/n3,text/turtle, text/rdf+n3, text/rdf+turtle,application/json+ld, text/xhtml+xml,application/rdf+xml,application/n-triples'
+2) resolving any Link 'meta' HTTP Headers (processed independently according to this same process, but not iteratively)
+3) parsing the response body either as a hash (for non-linked data) or as a Graph for linked data, or both.
+4) All other data is passed to the 'extruct' tool (https://github.com/scrapinghub/extruct) or to the Apache Tika tool (https://tika.apache.org/) for deep exploration
+5) Any linked or hash-type data found by those tools are merged with the existing Hash or Graph data
+
+To locate the data identifier, hash data is tested for the keys:
+ * codeRepository
+ * mainEntity
+ * primaryTopic
+ * IAO:0000136 (is about)
+ * IAO_0000136
+ * SIO:000332 (is about)
+ * SIO_000332
+ * distribution
+ * contains
+
+Graph data is tested for the properties:
+ * schema:codeRepository
+ * schema:mainEntity
+ * foaf:primaryTopic
+ * IAO:0000136 (information artifact ontology 'is about')
+ * SIO:000332 (SemanticScience Integrated Ontology 'is about')
+ * schema:distribution
+ * DCAT:distribution (Data Catalogue vocabulary)
+ * ldp:contains (Linked Data Platform)
+
+To locate the Metadata's GUID:
+1) The values of all Hash keys are compared to the GUID provided to the test
+(this is not a rigorous test, but the key name cannot be
+predicted)
+2) The Graph metadata is explored for the \"objects\" of each triple pattern-matching or exact-matching the provided GUID.""";
+    fairmi:rationale """The discovery of digital object should be possible from its metadata. For this to happen,
+the metadata must explicitly contain the identifier for the digital resource it describes,
+and this should be present in the form of a qualified reference, indicating some manner of
+\"about\" relationship, to distinguish this identifier from the numerous others that will
+be present in the metadata.
+
+In addition, since many digital objects cannot be arbitrarily extended to
+include references to their metadata, in many cases the only means to
+discover the metadata related to a digital object will be to search based
+on the GUID of the digital object itself.""";
+    fairmi:relevance "All";
+    fairmi:requirements "The Metadata GUID.";
+    fairmi:validation "Match found" .
 }
 
+sub:provenance {
+  sub:_1 dcelem:format "text/markdown";
+    a <http://rdfs.org/ns/void#Dataset>, dcat:Distribution;
+    dcat:downloadURL fairmi:Gen2_MI_F3.md .
+  
+  sub:assertion dcterms:author orcid:0000-0001-5306-5690, orcid:0000-0001-6960-357X,
+      orcid:0000-0001-8888-635X, orcid:0000-0002-1164-1351, orcid:0000-0003-4727-9435;
+    dcat:distribution sub:_1 .
+}
+
+sub:pubinfo {
+  orcid:0000-0001-6960-357X foaf:name "Mark Wilkinson" .
+  
+  this: dcterms:created "2019-02-26"^^xsd:dateTime;
+    dcterms:rights <https://creativecommons.org/publicdomain/zero/1.0/>;
+    dcterms:rightsHolder <http://fairmetrics.org>;
+    pav:authoredBy orcid:0000-0001-6960-357X;
+    pav:versionNumber "1" .
+}

@@ -12,7 +12,7 @@ Michel Dumontier, ORCID:0000-0003-4727-9435
 #### Accepted: pending
 
 
-### Maturity Indicator Identifier: Gen2_MI_I3 [https://w3id.org/fair/maturity_indicator/Gen2/Gen2_MI_I3](https://w3id.org/fair/maturity_indicator/Gen2/Gen2_MI_I3)
+### Maturity Indicator Identifier: Gen2_MI_I3 [https://w3id.org/fair/maturity_indicator/terms/Gen2/Gen2_MI_I3](https://w3id.org/fair/maturity_indicator/terms/Gen2/Gen2_MI_I3)
 
 ### Maturity Indicator Name:   Qualified outward links
 
