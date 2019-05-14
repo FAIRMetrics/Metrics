@@ -61,20 +61,28 @@ def testGUID
 		@swagger.addComment("INFO: Searching Linked Data metadata for predicates indicating a pointer to data.\n")
 		Utils::DATA_PREDICATES.each do |prop|
 			@swagger.addComment("INFO: SPARQLing for #{prop}.\n")
-			if prop =~ /schema\.org/
-				query = SPARQL.parse("select ?o where {?s <#{prop}> ?b .
-									 ?b  <http://schema.org/contentUrl> ?o}")
-				results = query.execute(g)
-				if  results.any?
-					@identifier=results.first[:o].value
-					@swagger.addComment "INFO: found identifier #{@identifier} using Schema.org distribution property.\n"
-				end
-				query = SPARQL.parse("select ?o where {?s <#{prop}> ?o}")
-				results = query.execute(g)
-				if  results.any?
-					@identifier=results.first[:o].value
-					@swagger.addComment "INFO: found identifier #{@identifier} using Schema.org distribution property.\n"
-				end
+			if prop =~ /schema\.org\/distribution/
+					query = SPARQL.parse("select ?o where {?s <#{prop}> ?b .
+															 ?b  <http://schema.org/contentUrl> ?o}")
+					results = query.execute(g)
+					if  results.any?
+							@identifier=results.first[:o].value
+							@swagger.addComment "INFO: found identifier #{@identifier} using Schema.org distribution property.\n"
+					end
+					query = SPARQL.parse("select ?o where {?s <#{prop}> ?b .
+															 ?b  <https://schema.org/contentUrl> ?o}")
+					results = query.execute(g)
+					if  results.any?
+							@identifier=results.first[:o].value
+							@swagger.addComment "INFO: found identifier #{@identifier} using Schema.org distribution property.\n"
+					end
+			elsif prop =~ /schema\.org/
+					query = SPARQL.parse("select ?o where {?s <#{prop}> ?o}")
+					results = query.execute(g)
+					if  results.any?
+							@identifier=results.first[:o].value
+							@swagger.addComment "INFO: found identifier #{@identifier} using Schema.org distribution property.\n"
+					end
 			elsif prop =~ /dcat\#/
 				query = SPARQL.parse("select ?o where {?s <#{prop}> ?b .
 									 ?b  <http://www.w3.org/ns/dcat#accessURL> ?o}")
