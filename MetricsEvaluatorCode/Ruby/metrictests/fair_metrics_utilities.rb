@@ -553,7 +553,7 @@ class Utils
 
         head, body, finalURI = Utils::checkCache(url, headers)
         if meta and finalURI
-            meta.finalURI = finalURI unless meta.finalURI =~ /\w/
+            meta.finalURI << finalURI
         end
         if head and body
             $stderr.puts "Retrieved from cache, returning data to code"
@@ -567,8 +567,8 @@ class Utils
 					#user: user,
 					#password: pass,
 					headers: headers})
-			if meta
-    			meta.finalURI = response.request.url unless meta.finalURI =~ /\w/
+            if meta
+    			meta.finalURI << response.request.url
             end
 			Utils::writeToCache(url, headers, response.headers, response.body, response.request.url)
 			return [response.headers, response.body]
@@ -598,11 +598,6 @@ class Utils
         if head[:content_length] and head[:content_length].to_f > 300000 and meta
             meta.comments << "WARN: The size of the content at #{url} reports itself to be >300kb.  This service will not download something so large.  This does not mean that the content is not FAIR, only that this service will not test it.  Sorry!\n"
             return false
-        end
-
-        if head and body
-            $stderr.puts "Retrieved from cache, returning data to code"
-            return [head, body]
         end
 
 		begin
@@ -985,7 +980,7 @@ class MetadataObject
     @comments = Array.new
     @guidtype = "unknown"
     @full_response = Array.new
-    @finalURI = ""
+    @finalURI = Array.new
   end
   
   def merge_hash(hash)
