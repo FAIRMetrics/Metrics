@@ -145,7 +145,7 @@ def testIdentifier(guid)
 		@swagger.score = 1
 	else
 		@swagger.addComment("FAILURE: The resolved data, after both parsing and content-negotiation, appears to have no linked data.\n")
-		@swagger.score = 1
+		@swagger.score = 0
 	end
 
 end

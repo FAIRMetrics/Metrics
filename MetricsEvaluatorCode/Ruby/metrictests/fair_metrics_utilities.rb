@@ -386,7 +386,7 @@ class Utils
         urlparam = CGI::escape(uri.to_s)
         $stderr.puts "http://rdf.greggkellogg.net/distiller?command=serialize&format=rdfa&url=#{urlparam}&output_format=turtle"
         
-        head, body = Utils::fetch("http://rdf.greggkellogg.net/distiller?command=serialize&format=rdfa&url=#{urlparam}&output_format=turtle", {"Accept" => "*/*"}, meta)
+        head, body = Utils::simplefetch("http://rdf.greggkellogg.net/distiller?command=serialize&format=rdfa&url=#{urlparam}&output_format=turtle", {"Accept" => "*/*"}, meta)
         # need to do some error checking here!
         if head[:content_type] =~ /html/   # this is an HTML failure message
               meta.comments << "WARN: The Distiller tool failed to find parseable data at #{uri}.\n"
@@ -454,7 +454,7 @@ class Utils
     
     def Utils::parse_link_meta_headers(headers)
       # we can be sure that a Link header is a URL
-      # code stolen from https://gist.github.com/thesowah/0ca5e1b4b3c61bfe8e13
+      # code stolen from https://gist.github.com/thesowah/0ca5e1b4b3c61bfe8e13 with a few tweaks
 
 
       links = headers[:link]
@@ -469,7 +469,7 @@ class Utils
         next unless section[0]
         url = section[0][/<(.*)>/,1]
         next unless section[1]
-        type = section[1][/rel="(.*)"/,1].to_sym
+        type = section[1][/rel="?(.*)"?/,1]
         next unless type == "meta"  # only keep meta headers
         links << url
       end
@@ -535,6 +535,12 @@ class Utils
   end
     
     
+    
+    
+    
+    
+    
+    
 
   def Utils::fetch(url, headers = Utils::AcceptHeader, meta=nil)  #we will try to retrieve turtle whenever possible
 
@@ -546,7 +552,9 @@ class Utils
         end
 
         head, body, finalURI = Utils::checkCache(url, headers)
-        meta.finalURI = finalURI if meta and finalURI
+        if meta and finalURI
+            meta.finalURI = finalURI unless meta.finalURI =~ /\w/
+        end
         if head and body
             $stderr.puts "Retrieved from cache, returning data to code"
             return [head, body]
@@ -559,8 +567,51 @@ class Utils
 					#user: user,
 					#password: pass,
 					headers: headers})
-			meta.finalURI = response.request.url if meta
+			if meta
+    			meta.finalURI = response.request.url unless meta.finalURI =~ /\w/
+            end
 			Utils::writeToCache(url, headers, response.headers, response.body, response.request.url)
+			return [response.headers, response.body]
+		rescue RestClient::ExceptionWithResponse => e
+			$stderr.puts e.response
+			response = false
+			return response  # now we are returning 'False', and we will check that with an \"if\" statement in our main code
+		rescue RestClient::Exception => e
+			$stderr.puts e.response
+			response = false
+			return response  # now we are returning 'False', and we will check that with an \"if\" statement in our main code
+		rescue Exception => e
+			$stderr.puts e
+			response = false
+			return response  # now we are returning 'False', and we will check that with an \"if\" statement in our main code
+		end		  # you can capture the Exception and do something useful with it!\n",
+
+
+  end
+
+
+
+  def Utils::simplefetch(url, headers = Utils::AcceptHeader, meta=nil)  #we will try to retrieve turtle whenever possible
+
+        head = Utils::head(url, headers)
+        #$stderr.puts "content length " + head[:content_length].to_s
+        if head[:content_length] and head[:content_length].to_f > 300000 and meta
+            meta.comments << "WARN: The size of the content at #{url} reports itself to be >300kb.  This service will not download something so large.  This does not mean that the content is not FAIR, only that this service will not test it.  Sorry!\n"
+            return false
+        end
+
+        if head and body
+            $stderr.puts "Retrieved from cache, returning data to code"
+            return [head, body]
+        end
+
+		begin
+			response = RestClient::Request.execute({
+					method: :get,
+					url: url.to_s,
+					#user: user,
+					#password: pass,
+					headers: headers})
 			return [response.headers, response.body]
 		rescue RestClient::ExceptionWithResponse => e
 			$stderr.puts e.response
@@ -934,7 +985,7 @@ class MetadataObject
     @comments = Array.new
     @guidtype = "unknown"
     @full_response = Array.new
-    @finalURI = "http://example.org"
+    @finalURI = ""
   end
   
   def merge_hash(hash)
