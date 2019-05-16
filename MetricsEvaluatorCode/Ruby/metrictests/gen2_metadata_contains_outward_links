@@ -20,7 +20,7 @@ def testGUID
 	end
 	@swagger.score = 0
 	
-	finalURI = URI(metadata.finalURI)
+	finalURI = metadata.finalURI
 	
 	
 	if metadata.guidtype == "unknown"
@@ -43,10 +43,13 @@ def testGUID
 
 	success = 0  # we will accept 5/10 failures
 	count = 0
-	@swagger.addComment("INFO: Now testing for any triples whose Object is an outward link (i.e. not #{finalURI.host}).\n")
+	finalURI.each do |uri|
+		next unless uri.kind_of?(URI::HTTP)
+		@swagger.addComment("INFO: Now testing for any triples whose Object is an outward link (i.e. not #{uri.host})\n")		
+	end
 
-	hosts = Arrah.new
-	finalURI.each {|uri| this = URI(uri); hosts << this.host}  #fill the list of domains that this resource is found in
+	hosts = Array.new
+	finalURI.each {|uri| next unless uri =~ /http/; this = URI(uri); hosts << this.host}  #fill the list of domains that this resource is found i
 	g.each do |stm|
 		object = stm.object
 		next unless object.resource? && !object.anonymous?

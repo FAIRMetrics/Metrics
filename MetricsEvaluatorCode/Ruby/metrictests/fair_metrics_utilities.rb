@@ -227,7 +227,7 @@ class Utils
       meta.comments << "INFO: Found a URI.\n"
       meta.comments << "INFO:  Attempting to resolve #{guid} using HTTP Headers #{Utils::AcceptHeader.to_s}.\n"
       Utils::resolve_url(guid, meta, false)
-      meta.comments << "INFO:  Attempting to #{guid} using HTTP Headers #{Utils::AcceptHeader.to_s}.\n"
+      meta.comments << "INFO:  Attempting to resolve #{guid} using HTTP Headers 'Accept: */*'.\n"
       Utils::resolve_url(guid, meta, false, {"Accept" => "*/*"})
       return meta
 
@@ -545,6 +545,12 @@ class Utils
   def Utils::fetch(url, headers = Utils::AcceptHeader, meta=nil)  #we will try to retrieve turtle whenever possible
 
         head = Utils::head(url, headers)
+        unless head  # returns false for a 404
+            if meta
+                meta.comments << "WARN: The URL: #{url} doesn't exist (returns 404 or other HTTP error)"
+                return false
+            end
+        end
         #$stderr.puts "content length " + head[:content_length].to_s
         if head[:content_length] and head[:content_length].to_f > 300000 and meta
             meta.comments << "WARN: The size of the content at #{url} reports itself to be >300kb.  This service will not download something so large.  This does not mean that the content is not FAIR, only that this service will not test it.  Sorry!\n"
