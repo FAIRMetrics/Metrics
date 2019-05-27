@@ -54,7 +54,8 @@ template = <<END
   : dct:created "@DATE@"^^xsd:dateTime ;
     dct:rights <https://creativecommons.org/publicdomain/zero/1.0/> ;
     dct:rightsHolder <http://fairmetrics.org> ;
-    pav:authoredBy orcid:0000-0001-6960-357X .
+    pav:authoredBy orcid:0000-0001-6960-357X ;
+    pav:createdBy orcid:0000-0002-1267-0234 .
   orcid:0000-0001-6960-357X foaf:name "Mark Wilkinson" .
 }
 

@@ -1,5 +1,5 @@
-@prefix this: <https://w3id.org/fair/maturity_indicator/np/Gen2/Gen2_MI_A2/RANu5CNXgWZq_Hpbza_o5IibVLTvA0ljxmGD9qDTX2jNQ> .
-@prefix sub: <https://w3id.org/fair/maturity_indicator/np/Gen2/Gen2_MI_A2/RANu5CNXgWZq_Hpbza_o5IibVLTvA0ljxmGD9qDTX2jNQ#> .
+@prefix this: <https://w3id.org/fair/maturity_indicator/np/Gen2/Gen2_MI_A2/RA9l3h00UhF0Z5UJQXxC01l1E2DoIjQkhc6IBJpxssM6s> .
+@prefix sub: <https://w3id.org/fair/maturity_indicator/np/Gen2/Gen2_MI_A2/RA9l3h00UhF0Z5UJQXxC01l1E2DoIjQkhc6IBJpxssM6s#> .
 @prefix fairmi: <https://w3id.org/fair/maturity_indicator/terms/Gen2/> .
 @prefix dct: <http://purl.org/dc/terms/> .
 @prefix dce: <http://purl.org/dc/elements/1.1/> .
@@ -51,5 +51,6 @@ sub:pubinfo {
   this: dct:created "2019-02-26"^^xsd:dateTime;
     dct:rights <https://creativecommons.org/publicdomain/zero/1.0/>;
     dct:rightsHolder <http://fairmetrics.org>;
-    pav:authoredBy orcid:0000-0001-6960-357X .
+    pav:authoredBy orcid:0000-0001-6960-357X;
+    pav:createdBy orcid:0000-0002-1267-0234 .
 }
