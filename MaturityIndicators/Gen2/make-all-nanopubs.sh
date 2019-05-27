@@ -9,7 +9,7 @@ rm *.pre
 cat Vocabulary > nanopubs.trig
 ls Gen2_MI_* | grep -v .md | awk '{print "cat "$1}' | bash >> nanopubs.trig
 
-LASTINDEX=http://purl.org/np/RArp89NoE0geulP2hbChcLYpMs-M1HzY8P3vl-_b3poPE
+LASTINDEX=https://w3id.org/fair/maturity_indicator/np/Gen2/index/RAJJ4LkNqXUFKBW-712NAztJf_ogxsFCGil74yLuRNFdw
 VERSION=2-SNAPSHOT
 
 ./np mkindex \
