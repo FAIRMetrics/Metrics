@@ -898,15 +898,13 @@ EOF_EOF
       end
   
       unless o.respond_to?('uri')
-        self.debug and $stderr.puts "|#{o}| #{o.class}"
         if o.to_s =~ /^\w+:\/?\/?[^\s]+/
                 o = RDF::URI.new(o.to_s)
         elsif o.to_s =~ /^\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d/
                 o = RDF::Literal.new(o.to_s, :datatype => RDF::XSD.date)
-        elsif o.to_s =~ /^\d\.\d/
-        self.debug and $stderr.puts "\n\n\n\nFOUND FLOAT\n\n\n\n"
+        elsif o.to_s =~ /^[+-]?\d+\.\d+/
                 o = RDF::Literal.new(o.to_s, :datatype => RDF::XSD.float)
-        elsif o.to_s =~ /^[0-9]+$/
+        elsif o.to_s =~ /^[+-]?[0-9]+$/
                 o = RDF::Literal.new(o.to_s, :datatype => RDF::XSD.int)
         else
                 o = RDF::Literal.new(o.to_s, :language => :en)
