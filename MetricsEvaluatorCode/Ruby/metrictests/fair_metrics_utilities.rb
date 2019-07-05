@@ -415,7 +415,7 @@ class Utils
         file.write(body)
         file.rewind
         meta.comments << "INFO: The message body is being examined by Apache Tika\n"
-        result =  %x{rdf serialize --output-format turtle -e #{file.path}}
+        result =  %x{rdf serialize --input-format rdfa --output-format turtle #{file.path}}
         #head, body = Utils::simplefetch("http://rdf.greggkellogg.net/distiller?command=serialize&format=rdfa&url=#{urlparam}&output_format=turtle", {"Accept" => "*/*"}, meta)
         # need to do some error checking here!
         if result =~ /\w/  # failure returns nil
