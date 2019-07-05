@@ -422,7 +422,7 @@ class Utils
         
         #head, body = Utils::simplefetch("http://rdf.greggkellogg.net/distiller?command=serialize&format=rdfa&url=#{urlparam}&output_format=turtle", {"Accept" => "*/*"}, meta)
         # need to do some error checking here!
-        if result =~ /\w/  # failure returns nil
+        if !(result =~ /\w/)  # failure returns nil
               meta.comments << "WARN: The Distiller tool failed to find parseable data in the body.\n"
         else          
           meta.comments << "INFO: The Distiller found parseable data.  Parsing as RDF\n"
