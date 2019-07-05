@@ -84,7 +84,14 @@ class Utils
                         'uri' => Regexp.new(/^\w+:\/?\/?[^\s]+$/)
     }
         
-                       
+    @@distillerknown = {}  # global, hash of sha256 keys of message bodies - have they been seen before t/f
+
+
+
+
+
+
+
 
     def Utils::resolveit(guid)
 
@@ -406,6 +413,15 @@ class Utils
     
     
     def Utils::do_distiller(meta, body)
+        
+        bhash = Digest::SHA256.hexdigest(body)
+        if @@distillerknown[bhash]
+            meta.comments << "INFO: Cached data is already parsed.  Returning\n"
+            return
+        end
+        @@distillerknown[bhash] = true
+        
+        
         meta.comments << "INFO: Using 'Kellog's Distiller' to try to extract metadata from return value (message body).\n"
         # $stderr.puts uri
         #urlparam = CGI::escape(uri.to_s)
