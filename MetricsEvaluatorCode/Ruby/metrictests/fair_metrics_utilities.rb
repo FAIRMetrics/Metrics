@@ -261,7 +261,7 @@ class Utils
           meta.comments << "WARN: Unable to resolve #{guid} using HTTP Accept header #{header.to_s}.\n"
           return meta
       end
-      me
+      
       meta.comments << "INFO: following redirection using this header led to the following URL: #{meta.finalURI.last}.  Using the output from this URL for the next few tests..."
       meta.full_response << body
 
@@ -295,7 +295,7 @@ class Utils
               url = guid
           end
           Utils::do_extruct(meta, url ) 
-    	  Utils::do_distiller(meta, url)
+    	  Utils::do_distiller(meta, body)
         when Utils::XML_FORMATS.keys.include?(parser)
           meta.comments << "INFO: parsing as XML. \n"
           #$stderr.puts "\n\nPARSING XML\n\n"
@@ -310,9 +310,9 @@ class Utils
           meta.comments << "INFO:  Metadata may be embedded, now searching using the Apache 'tika' tool.\n"
           Utils::do_tika(meta, body)  # this expects a string, not an Net::HTTP
           meta.comments << "INFO:  Metadata may be embedded, now searching using the 'Distiller' tool.\n"
-    	  Utils::do_distiller(meta, guid)
+    	  Utils::do_distiller(meta, body)
           meta.comments << "INFO: Metadata may be embedded, now searching using the 'extruct' tool.\n"
-          Utils::do_extruct(meta, guid)
+          Utils::do_extruct(meta, url)
         end
         
         #curl -X GET http://localhost:9998/tika
@@ -405,19 +405,24 @@ class Utils
     end
     
     
-    def Utils::do_distiller(meta, uri)
-        meta.comments << "INFO: Using 'Kellog's Distiller' to try to extract metadata from return value (message body) of #{uri}.\n"
+    def Utils::do_distiller(meta, body)
+        meta.comments << "INFO: Using 'Kellog's Distiller' to try to extract metadata from return value (message body).\n"
         # $stderr.puts uri
-        urlparam = CGI::escape(uri.to_s)
-        $stderr.puts "http://rdf.greggkellogg.net/distiller?command=serialize&format=rdfa&url=#{urlparam}&output_format=turtle"
-        
-        head, body = Utils::simplefetch("http://rdf.greggkellogg.net/distiller?command=serialize&format=rdfa&url=#{urlparam}&output_format=turtle", {"Accept" => "*/*"}, meta)
+        #urlparam = CGI::escape(uri.to_s)
+        #$stderr.puts "http://rdf.greggkellogg.net/distiller?command=serialize&format=rdfa&url=#{urlparam}&output_format=turtle"
+        file = Tempfile.new('foo')
+        file.binmode
+        file.write(body)
+        file.rewind
+        meta.comments << "INFO: The message body is being examined by Apache Tika\n"
+        result =  %x{rdf serialize --output-format turtle -e #{file.path}}
+        #head, body = Utils::simplefetch("http://rdf.greggkellogg.net/distiller?command=serialize&format=rdfa&url=#{urlparam}&output_format=turtle", {"Accept" => "*/*"}, meta)
         # need to do some error checking here!
-        if head[:content_type] =~ /html/   # this is an HTML failure message
-              meta.comments << "WARN: The Distiller tool failed to find parseable data at #{uri}.\n"
+        if result =~ /\w/  # failure returns nil
+              meta.comments << "WARN: The Distiller tool failed to find parseable data in the body.\n"
         else          
+          meta.comments << "INFO: The Distiller found parseable data.  Parsing as RDF\n"
           Utils::parse_rdf(meta, body, "text/turtle")
-          meta.comments << "INFO: The Distiller found parseable data at #{uri}.  Parsing as RDF\n"
         end
  
     end
