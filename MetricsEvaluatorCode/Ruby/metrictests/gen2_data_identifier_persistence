@@ -104,15 +104,16 @@ def testGUID
 		# hopefully we have it by now... if not... we fail!
 		#$stderr.puts "\n\nfound identifier #{@identifier} \n\n"
 
-		unless @identifier =~ /\w+/
+	end
+	unless @identifier =~ /\w+/
 			@swagger.score = 0
-			@swagger.addComment "FAILURE: Was unable to locate the data identifier in the metadata using any (common) property/predicate reserved for this purpose.  Tested the following #{Utils::DATA_PREDICATES}\n"
-		else
+			@swagger.addComment "FAILURE: Was unable to locate the data identifier in the metadata using any (common) property/predicate reserved" +
+" for this purpose."
+			@swagger.addComment "Tested the following #{Utils::DATA_PREDICATES}(or their plain JSON hash-key equivalents)\n"
+	else
 			@swagger.addComment "INFO: Now resolving #{@identifier} to test its properties.\n"
 			testIdentifier(@identifier) # this will add more comments and a score to @swagger
-		end
 	end
-
 	return @swagger.createEvaluationResponse
 end
 

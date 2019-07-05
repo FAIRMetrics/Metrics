@@ -206,6 +206,17 @@ class Utils
       Utils::resolve_url("https://doi.org/#{guid}", meta, false)  # specifically metadata
       meta.comments << "INFO:  Attempting to resolve https://doi.org/#{guid} using HTTP Headers #{{"Accept" => "*/*"}.to_s}.\n"
       Utils::resolve_url("https://doi.org/#{guid}", meta, false, {"Accept" => "*/*"}) # whatever is default
+
+        # CrossRef and DataCite both "intercept" the normal redirect process, when a URI has a content-type
+        # Accept header that they understand.  This prevents the owner of the data from providing their own
+        # metadata of that type, when using the DOI as their GUID.  Here
+        # we have let the redirect process go all the way to the final URL, and we then
+        # treat that as a new GUID.
+      finalURI = meta.finalURI
+      if finalURI =~ /\w+\:\/\//
+        meta.comments << "INFO:  DOI resolution captures content-negotiation before reaching final data owner.  Now re-attempting the full suite of content negotiation on final redirect URI #{finalURI}.\n"
+        Utils::resolve_uri(finalURI, meta, false) 
+      end
       
       return meta      
     end
@@ -218,9 +229,9 @@ class Utils
       meta.guidtype = "handle"
       meta.comments << "INFO: Found a non-DOI Handle.\n"
       meta.comments << "INFO:  Attempting to resolve http://hdl.handle.net/#{guid} using HTTP Headers #{Utils::AcceptHeader.to_s}.\n"
-      Utils::resolve_url("http://hdl.handle.net/#{guid}", meta, false)
-      meta.comments << "INFO:  Attempting to resolve http://hdl.handle.net/#{guid} using HTTP Headers #{{"Accept" => "*/*"}.to_s}.\n"
-      Utils::resolve_url("http://hdl.handle.net/#{guid}", meta, false, {"Accept" => "*/*"})
+      Utils::resolve_uri("http://hdl.handle.net/#{guid}", meta, false)
+#      meta.comments << "INFO:  Attempting to resolve http://hdl.handle.net/#{guid} using HTTP Headers #{{"Accept" => "*/*"}.to_s}.\n"
+#      Utils::resolve_url("http://hdl.handle.net/#{guid}", meta, false, {"Accept" => "*/*"})
       return meta
 
     end
@@ -231,6 +242,10 @@ class Utils
       meta.comments << "INFO: Found a URI.\n"
       meta.comments << "INFO:  Attempting to resolve #{guid} using HTTP Headers #{Utils::AcceptHeader.to_s}.\n"
       Utils::resolve_url(guid, meta, false)
+      meta.comments << "INFO:  Attempting to resolve #{guid} using HTTP Headers #{Utils::XML_FORMATS['xml'].join(",")}.\n"
+      Utils::resolve_url(guid, meta, false, {"Accept" => "#{Utils::XML_FORMATS['xml'].join(",")}"})
+      meta.comments << "INFO:  Attempting to resolve #{guid} using HTTP Headers #{Utils::JSON_FORMATS['json'].join(",")}.\n"
+      Utils::resolve_url(guid, meta, false, {"Accept" => "#{Utils::JSON_FORMATS['json'].join(",")}"})
       meta.comments << "INFO:  Attempting to resolve #{guid} using HTTP Headers 'Accept: */*'.\n"
       Utils::resolve_url(guid, meta, false, {"Accept" => "*/*"})
       return meta
@@ -246,7 +261,8 @@ class Utils
           meta.comments << "WARN: Unable to resolve #{guid} using HTTP Accept header #{header.to_s}.\n"
           return meta
       end
-                                       
+      me
+      meta.comments << "INFO: following redirection using this header led to the following URL: #{meta.finalURI.last}.  Using the output from this URL for the next few tests..."
       meta.full_response << body
 
       links = Array.new
@@ -273,8 +289,13 @@ class Utils
         when Utils::HTML_FORMATS.keys.include?(parser)
           meta.comments << "INFO: parsing as HTML. \n"
           #$stderr.puts "\n\nPARSING HTML\n\n"
-          Utils::do_extruct(meta, guid)
-    	  Utils::do_distiller(meta, guid)
+          if meta.finalURI.last =~ /^\w+\:\/\//
+              url = meta.finalURI.last
+          else
+              url = guid
+          end
+          Utils::do_extruct(meta, url ) 
+    	  Utils::do_distiller(meta, url)
         when Utils::XML_FORMATS.keys.include?(parser)
           meta.comments << "INFO: parsing as XML. \n"
           #$stderr.puts "\n\nPARSING XML\n\n"
@@ -833,7 +854,7 @@ paths:
    produces:  
      - application/json
    responses:
-     200:
+     "200":
        description: >-
         #{@response_description}
 definitions:
