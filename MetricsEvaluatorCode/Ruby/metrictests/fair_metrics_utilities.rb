@@ -79,7 +79,8 @@ class Utils
 
     Utils::GUID_TYPES = {'inchi' => Regexp.new(/^\w{14}\-\w{10}\-\w$/),
                         'doi' => Regexp.new(/^10.\d{4,9}\/[-._;()\/:A-Z0-9]+$/i),
-                        'handle' => Regexp.new(/^[2-9]0.\d{4,9}\/[-._;()\/:A-Z0-9]+$/i),
+                        'handle1' => Regexp.new(/^[2-9]0.\d{4,9}\/[-._;()\/:A-Z0-9]+$/i),
+                        'handle2' => Regexp.new(/^\d{4,5}\/[-._;()\/:A-Z0-9]+$/i), # legacy style  12345/AGB47A
                         'uri' => Regexp.new(/^\w+:\/?\/?[^\s]+$/)
     }
         
@@ -94,7 +95,10 @@ class Utils
           if k == "inchi" and regex.match(guid)
             metadata = Utils::resolve_inchi(guid, meta)
             return metadata
-          elsif k == "handle" and regex.match(guid)
+          elsif k == "handle1" and regex.match(guid)
+            metadata = Utils::resolve_handle(guid, meta)
+            return metadata
+          elsif k == "handle2" and regex.match(guid)
             metadata = Utils::resolve_handle(guid, meta)
             return metadata
           elsif k == "uri" and regex.match(guid)
@@ -202,6 +206,17 @@ class Utils
       Utils::resolve_url("https://doi.org/#{guid}", meta, false)  # specifically metadata
       meta.comments << "INFO:  Attempting to resolve https://doi.org/#{guid} using HTTP Headers #{{"Accept" => "*/*"}.to_s}.\n"
       Utils::resolve_url("https://doi.org/#{guid}", meta, false, {"Accept" => "*/*"}) # whatever is default
+
+        # CrossRef and DataCite both "intercept" the normal redirect process, when a URI has a content-type
+        # Accept header that they understand.  This prevents the owner of the data from providing their own
+        # metadata of that type, when using the DOI as their GUID.  Here
+        # we have let the redirect process go all the way to the final URL, and we then
+        # treat that as a new GUID.
+      finalURI = meta.finalURI
+      if finalURI =~ /\w+\:\/\//
+        meta.comments << "INFO:  DOI resolution captures content-negotiation before reaching final data owner.  Now re-attempting the full suite of content negotiation on final redirect URI #{finalURI}.\n"
+        Utils::resolve_uri(finalURI, meta, false) 
+      end
       
       return meta      
     end
@@ -214,9 +229,9 @@ class Utils
       meta.guidtype = "handle"
       meta.comments << "INFO: Found a non-DOI Handle.\n"
       meta.comments << "INFO:  Attempting to resolve http://hdl.handle.net/#{guid} using HTTP Headers #{Utils::AcceptHeader.to_s}.\n"
-      Utils::resolve_url("http://hdl.handle.net/#{guid}", meta, false)
-      meta.comments << "INFO:  Attempting to resolve http://hdl.handle.net/#{guid} using HTTP Headers #{{"Accept" => "*/*"}.to_s}.\n"
-      Utils::resolve_url("http://hdl.handle.net/#{guid}", meta, false, {"Accept" => "*/*"})
+      Utils::resolve_uri("http://hdl.handle.net/#{guid}", meta, false)
+#      meta.comments << "INFO:  Attempting to resolve http://hdl.handle.net/#{guid} using HTTP Headers #{{"Accept" => "*/*"}.to_s}.\n"
+#      Utils::resolve_url("http://hdl.handle.net/#{guid}", meta, false, {"Accept" => "*/*"})
       return meta
 
     end
@@ -227,6 +242,10 @@ class Utils
       meta.comments << "INFO: Found a URI.\n"
       meta.comments << "INFO:  Attempting to resolve #{guid} using HTTP Headers #{Utils::AcceptHeader.to_s}.\n"
       Utils::resolve_url(guid, meta, false)
+      meta.comments << "INFO:  Attempting to resolve #{guid} using HTTP Headers #{Utils::XML_FORMATS['xml'].join(",")}.\n"
+      Utils::resolve_url(guid, meta, false, {"Accept" => "#{Utils::XML_FORMATS['xml'].join(",")}"})
+      meta.comments << "INFO:  Attempting to resolve #{guid} using HTTP Headers #{Utils::JSON_FORMATS['json'].join(",")}.\n"
+      Utils::resolve_url(guid, meta, false, {"Accept" => "#{Utils::JSON_FORMATS['json'].join(",")}"})
       meta.comments << "INFO:  Attempting to resolve #{guid} using HTTP Headers 'Accept: */*'.\n"
       Utils::resolve_url(guid, meta, false, {"Accept" => "*/*"})
       return meta
@@ -242,7 +261,8 @@ class Utils
           meta.comments << "WARN: Unable to resolve #{guid} using HTTP Accept header #{header.to_s}.\n"
           return meta
       end
-                                       
+      me
+      meta.comments << "INFO: following redirection using this header led to the following URL: #{meta.finalURI.last}.  Using the output from this URL for the next few tests..."
       meta.full_response << body
 
       links = Array.new
@@ -269,8 +289,13 @@ class Utils
         when Utils::HTML_FORMATS.keys.include?(parser)
           meta.comments << "INFO: parsing as HTML. \n"
           #$stderr.puts "\n\nPARSING HTML\n\n"
-          Utils::do_extruct(meta, guid)
-    	  Utils::do_distiller(meta, guid)
+          if meta.finalURI.last =~ /^\w+\:\/\//
+              url = meta.finalURI.last
+          else
+              url = guid
+          end
+          Utils::do_extruct(meta, url ) 
+    	  Utils::do_distiller(meta, url)
         when Utils::XML_FORMATS.keys.include?(parser)
           meta.comments << "INFO: parsing as XML. \n"
           #$stderr.puts "\n\nPARSING XML\n\n"
@@ -829,7 +854,7 @@ paths:
    produces:  
      - application/json
    responses:
-     200:
+     "200":
        description: >-
         #{@response_description}
 definitions:
@@ -894,15 +919,13 @@ EOF_EOF
       end
   
       unless o.respond_to?('uri')
-        self.debug and $stderr.puts "|#{o}| #{o.class}"
         if o.to_s =~ /^\w+:\/?\/?[^\s]+/
                 o = RDF::URI.new(o.to_s)
         elsif o.to_s =~ /^\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d/
                 o = RDF::Literal.new(o.to_s, :datatype => RDF::XSD.date)
-        elsif o.to_s =~ /^\d\.\d/
-        self.debug and $stderr.puts "\n\n\n\nFOUND FLOAT\n\n\n\n"
+        elsif o.to_s =~ /^[+-]?\d+\.\d+/
                 o = RDF::Literal.new(o.to_s, :datatype => RDF::XSD.float)
-        elsif o.to_s =~ /^[0-9]+$/
+        elsif o.to_s =~ /^[+-]?[0-9]+$/
                 o = RDF::Literal.new(o.to_s, :datatype => RDF::XSD.int)
         else
                 o = RDF::Literal.new(o.to_s, :language => :en)

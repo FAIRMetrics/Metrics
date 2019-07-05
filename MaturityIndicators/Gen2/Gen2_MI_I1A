@@ -1,16 +1,17 @@
-@prefix this: <https://w3id.org/fair/maturity_indicator/np/Gen2/Gen2_MI_I1A/RAiMiTradtlDhxcsQ-mUDUoTLVUMTAxwbYcmOAU21hMrg> .
-@prefix sub: <https://w3id.org/fair/maturity_indicator/np/Gen2/Gen2_MI_I1A/RAiMiTradtlDhxcsQ-mUDUoTLVUMTAxwbYcmOAU21hMrg#> .
+@prefix this: <https://w3id.org/fair/maturity_indicator/np/Gen2/Gen2_MI_I1A/RAwLWHMBFaASrq-q9De9jC2O7hflUaT1sP5n-siIJ6DOI> .
+@prefix sub: <https://w3id.org/fair/maturity_indicator/np/Gen2/Gen2_MI_I1A/RAwLWHMBFaASrq-q9De9jC2O7hflUaT1sP5n-siIJ6DOI#> .
 @prefix fairmi: <https://w3id.org/fair/maturity_indicator/terms/Gen2/> .
-@prefix dcterms: <http://purl.org/dc/terms/> .
-@prefix dcelem: <http://purl.org/dc/elements/1.1/> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix dce: <http://purl.org/dc/elements/1.1/> .
 @prefix np: <http://www.nanopub.org/nschema#> .
-@prefix pav: <http://swan.mindinformatics.org/ontologies/1.2/pav/> .
+@prefix pav: <http://purl.org/pav/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix fair: <https://w3id.org/fair/principles/terms/> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix dcat: <http://www.w3.org/ns/dcat#> .
 @prefix orcid: <https://orcid.org/> .
+@prefix void: <http://rdfs.org/ns/void#> .
 
 sub:Head {
   this: np:hasAssertion sub:assertion;
@@ -38,11 +39,11 @@ that any kind of structured information is sufficient.""";
 }
 
 sub:provenance {
-  sub:_1 dcelem:format "text/markdown";
-    a <http://rdfs.org/ns/void#Dataset>, dcat:Distribution;
+  sub:_1 dce:format "text/markdown";
+    a void:Dataset, dcat:Distribution;
     dcat:downloadURL fairmi:Gen2_MI_I1A.md .
   
-  sub:assertion dcterms:author orcid:0000-0001-5306-5690, orcid:0000-0001-6960-357X,
+  sub:assertion pav:authoredBy orcid:0000-0001-5306-5690, orcid:0000-0001-6960-357X,
       orcid:0000-0001-8888-635X, orcid:0000-0002-1164-1351, orcid:0000-0003-4727-9435;
     dcat:distribution sub:_1 .
 }
@@ -50,9 +51,9 @@ sub:provenance {
 sub:pubinfo {
   orcid:0000-0001-6960-357X foaf:name "Mark Wilkinson" .
   
-  this: dcterms:created "2019-02-26"^^xsd:dateTime;
-    dcterms:rights <https://creativecommons.org/publicdomain/zero/1.0/>;
-    dcterms:rightsHolder <http://fairmetrics.org>;
+  this: dct:created "2019-02-26"^^xsd:dateTime;
+    dct:rights <https://creativecommons.org/publicdomain/zero/1.0/>;
+    dct:rightsHolder <http://fairmetrics.org>;
     pav:authoredBy orcid:0000-0001-6960-357X;
-    pav:versionNumber "1" .
+    pav:createdBy orcid:0000-0002-1267-0234 .
 }

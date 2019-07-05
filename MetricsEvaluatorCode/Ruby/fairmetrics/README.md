@@ -252,7 +252,7 @@ Returns a 201 CREATED header, with a Location tag indicating the location of you
 
 ## <a name="postsearch2"> /searches/{Location}
 
-Searches are executed by POSTing to the URL provided to you in the "Location" tag of the response to the call above.  POST of a correctly formatted block of JSON returns a block of JSON-LD containing a list of matching Maturity Indicator (based on their 'description' property), and a list of matching Collections (based on their 'description' property).  The format of the list members is identical to the format of an individual Maturity Indicator or Collection descriptor (e.g. [Maturity Indicator](#getmetric); [COLLECTION](#getcollection) )
+Searches are executed by POSTing to the URL provided to you in the "Location" tag of the response to the call above.  POST of a correctly formatted block of JSON returns a block of JSON-LD containing a list of matching Maturity Indicator (based on their 'description' property), a list of matching Collections (based on their 'description' property),  a list of matching Evaluations (based on their 'description' property), and separately, a list of Evaluations matching based on the GUID that was evaluated (these latter two are not documented in the examples below - I will fix this when I have time!  Sorry!).  The format of the list members is identical to the format of an individual Maturity Indicator or Collection descriptor (e.g. [Maturity Indicator](#getmetric); [COLLECTION](#getcollection) )
 
 Sample JSON
 

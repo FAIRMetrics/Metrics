@@ -166,8 +166,8 @@ class EvaluationsController < ApiController
           
           # Create the HTTP objects  -execute the test!!!!!!!!
           http = Net::HTTP.new(uri.host, uri.port)
-          http.read_timeout = 300  # set to 300 seconds, because some services may be very
-          http.open_timeout = 300  # set to 300 seconds, because some services may be very
+          http.read_timeout = 600  # set to 300 seconds, because some services may be very
+          http.open_timeout = 600  # set to 300 seconds, because some services may be very
 
           request = Net::HTTP::Post.new(uri.request_uri, httpheader)
           request.body = json_to_pass.to_json
@@ -177,7 +177,7 @@ class EvaluationsController < ApiController
           begin
             response = http.request(request)
           rescue
-              @evaluation.errors[:not_json] << " - No response from #{uri}.  Aborting this test  "
+              @evaluation.errors[:not_json] << " - No response from #{uri} after 600 seconds.  Aborting this test  "
               bailout=true
           end
           
