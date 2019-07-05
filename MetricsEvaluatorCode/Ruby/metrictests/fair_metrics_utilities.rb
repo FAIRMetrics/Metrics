@@ -414,8 +414,9 @@ class Utils
         file.binmode
         file.write(body)
         file.rewind
-        meta.comments << "INFO: The message body is being examined by Apache Tika\n"
+        meta.comments << "INFO: The message body is being examined by Distiller\n"
         result =  %x{rdf serialize --input-format rdfa --output-format turtle #{file.path}}
+        $stderr.puts "RESULT #{result}\n\n\n"
         file.close
         file.unlink
         
@@ -425,7 +426,7 @@ class Utils
               meta.comments << "WARN: The Distiller tool failed to find parseable data in the body.\n"
         else          
           meta.comments << "INFO: The Distiller found parseable data.  Parsing as RDF\n"
-          Utils::parse_rdf(meta, body, "text/turtle")
+          Utils::parse_rdf(meta, result, "text/turtle")
         end
  
     end
