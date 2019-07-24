@@ -56,50 +56,12 @@ def testGUID
 	
 	if g.size > 0  # have we found anything yet?
 		@swagger.addComment("INFO: Searching Linked Data metadata for predicates indicating a pointer to data.\n")
-		Utils::DATA_PREDICATES.each do |prop|
-			@swagger.addComment("INFO: SPARQLing for #{prop}.\n")
-			if prop =~ /schema\.org/
-				query = SPARQL.parse("select ?o where {?s <#{prop}> ?b .
-									 ?b  <http://schema.org/contentUrl> ?o}")
-				results = query.execute(g)
-				if  results.any?
-					dataGUID=results.first[:o].value
-					@swagger.addComment "INFO: found identifier #{results.first[:o].value} using Schema.org distribution property.\n"
-				end
-				query = SPARQL.parse("select ?o where {?s <#{prop}> ?b .
-									 ?b  <https://schema.org/contentUrl> ?o}")
-				results = query.execute(g)
-				if  results.any?
-					dataGUID=results.first[:o].value
-					@swagger.addComment "INFO: found identifier #{results.first[:o].value} using Schema.org distribution property.\n"
-				end
-			elsif prop =~ /dcat\#/
-				query = SPARQL.parse("select ?o where {?s <#{prop}> ?b .
-									 ?b  <http://www.w3.org/ns/dcat#accessURL> ?o}")
-				results = query.execute(g)
-				if  results.any?
-					dataGUID=results.first[:o].value
-					@swagger.addComment "INFO: found identifier #{results.first[:o].value} using DCAT distribution property.\n"
-				end
-				query = SPARQL.parse("select ?o where {?s <#{prop}> ?b .
-									 ?b  <https://www.w3.org/ns/dcat#accessURL> ?o}")
-				results = query.execute(g)
-				if  results.any?
-					dataGUID=results.first[:o].value
-					@swagger.addComment "INFO: found identifier #{results.first[:o].value} using DCAT distribution property.\n"
-				end
-			else 
-				query = SPARQL.parse("select ?o where {?s <#{prop}> ?o}")
-				results = query.execute(g)
-				if results.any?
-					dataGUID=results.first[:o].value
-					@swagger.addComment "INFO: found identifier #{results.first[:o].value} using #{prop}.\n"
-				end
-			end
-		end
+		@identifier = CommonQueries::GetDataIdentifier(g, @swagger)		
+		# hopefully we have it by now... if not... we fail!
+		#$stderr.puts "\n\nfound identifier #{@identifier} \n\n"
 	end
 
-	if (dataGUID == "") or (!dataGUID.is_a?String) 
+	if (@identifier == "") or (!@identifier.is_a?String) 
 		@swagger.score = 0
 		@swagger.addComment "FAILURE: Was unable to locate the data identifier in the metadata using any (common) property/predicate reserved for this purpose.  Tested #{Utils::DATA_PREDICATES.join(" & ")} as both keys, and linked data predicates  "
 		return @swagger.createEvaluationResponse
@@ -109,14 +71,14 @@ def testGUID
 	# Let's now run it through the metadata collection routine
 	# to see what it is
 
-	metadata2 = Utils::typeit(dataGUID)  # this is where the magic happens!
+	metadata2 = Utils::typeit(@identifier)  # this is where the magic happens!
 
 	if !metadata2
-		@swagger.addComment("FAILURE: The identifier #{dataGUID} did not match any known identification system.\n")
+		@swagger.addComment("FAILURE: The identifier #{@identifier} did not match any known identification system.\n")
 		@swagger.score = 0
 		return @swagger.createEvaluationResponse
 	else
-		@swagger.addComment("SUCCESS: The identifier #{dataGUID} is recognized as a #{metadata2}, which is resolvable by an open and free protocol.\n")
+		@swagger.addComment("SUCCESS: The identifier #{@identifier} is recognized as a #{metadata2}, which is resolvable by an open and free protocol.\n")
 		@swagger.score = 1
 		return @swagger.createEvaluationResponse
 	end

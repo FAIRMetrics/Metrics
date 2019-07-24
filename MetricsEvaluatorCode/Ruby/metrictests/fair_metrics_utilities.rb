@@ -62,7 +62,7 @@ class Utils
     Utils::DATA_PREDICATES = [
         'http://www.w3.org/ns/ldp#contains',
         'http://xmlns.com/foaf/0.1/primaryTopic',
-        'http://schema.org/about', # inverse 'http://schema.org/subjectOf',
+        # 'http://schema.org/about', # removed for being too general
         'http://schema.org/mainEntity',
         'http://schema.org/codeRepository',
         'http://www.w3.org/ns/dcat#distribution',
@@ -73,7 +73,7 @@ class Utils
         'http://purl.obolibrary.org/obo/IAO:0000136', # is about (not the valid URL...)
         'https://www.w3.org/ns/ldp#contains',
         'https://xmlns.com/foaf/0.1/primaryTopic',
-        'https://schema.org/about', # inverse 'http://schema.org/subjectOf',
+        # 'https://schema.org/about', #removed for being too general
         'https://schema.org/mainEntity',
         'https://schema.org/codeRepository',
         'https://www.w3.org/ns/dcat#distribution',
@@ -81,6 +81,11 @@ class Utils
         'https://semanticscience.org/resource/SIO_000332', # is about
         'https://semanticscience.org/resource/is-about', # is about
         'https://purl.obolibrary.org/obo/IAO_0000136', # is about
+        ]
+
+    Utils::SELF_IDENTIFIER_PREDICATES = [
+        'http://purl.org/dc/terms/identifier',
+        'http://schema.org/identifier',
         ]
 
     Utils::GUID_TYPES = {'inchi' => Regexp.new(/^\w{14}\-\w{10}\-\w$/),
@@ -456,7 +461,7 @@ class Utils
         file.rewind
         meta.comments << "INFO: The message body is being examined by Distiller\n"
         result =  %x{LANG=en_US.UTF-8 #{Utils::RDFCommand} serialize --input-format rdfa --output-format turtle #{file.path} 2>/dev/null}
-        $stderr.puts "RESULT #{result}\n\n\n"
+        #$stderr.puts "RESULT #{result}\n\n\n"
         file.close
         file.unlink
 
@@ -1081,5 +1086,103 @@ class MetadataObject
     return self.graph
   end
   
+end
+
+
+
+
+# ======================================================================================
+# ======================================================================================
+# ======================================================================================
+# ======================================================================================
+# ======================================================================================
+# ======================================================================================
+# ======================================================================================
+
+class CommonQueries
+    
+    def CommonQueries::GetSelfIdentifier(g, swagger)
+ 
+ 		Utils::SELF_IDENTIFIER_PREDICATES.each do |prop|
+   
+			if prop =~ /schema\.org\/identifier/
+                # test 1 - this assumes that the identifier node attached to "root" is the one we are looking for
+                # and assumes the PropertyValue schema for the value of identifier
+                query = SPARQL.parse("select * where {
+                                    VALUES ?predi {<http://schema.org/identifier> <https://schema.org/identifier>}
+                                    VALUES ?predpv {<http://schema.org/PropertyValue> <https://schema.org/PropertyValue>}
+                                    VALUES ?predval {<http://schema.org/value> <https://schema.org/value>}
+                                    ?s ?predi ?i .
+                                    ?i a ?predpv .
+                                    ?i ?predval ?identifier .
+                                    FILTER NOT EXISTS {?sub ?pred ?s} }")
+                results = query.execute(g)
+                if  results.any?
+                        @identifier=results.first[:identifier].value
+                        swagger.addComment "INFO: found identifier #{@identifier} using Schema.org identifier as PropertyValue.\n"
+                        return @identifier
+                end
+        
+                # test 2 - a simple URL or a value from schema
+                query = SPARQL.parse("select ?o where {?s <#{prop}> ?o}")
+                results = query.execute(g)
+                if  results.any?
+                        @identifier=results.first[:o].value
+                        swagger.addComment "INFO: found identifier #{@identifier} using Schema.org identifier property as a simple URL or string value.\n"
+                        return @identifier
+                end
+            else
+                query = SPARQL.parse("select ?o where {?s <#{prop}> ?o}")
+				results = query.execute(g)
+				if results.any?
+					@identifier=results.first[:o].value
+					swagger.addComment "INFO: found identifier #{@identifier} using #{prop}.\n"
+					return @identifier
+				end
+			end
+        end
+    end
+ 		
+    
+    def CommonQueries::GetDataIdentifier(g, swagger)  # send it the graph
+        @identifier = nil
+
+		Utils::DATA_PREDICATES.each do |prop|
+			swagger.addComment("INFO: SPARQLing for #{prop}.\n")
+			if prop =~ /schema\.org\/distribution/
+					query = SPARQL.parse("select ?o where {
+                                         VALUES ?schemaurl {<http://schema.org/contentUrl> <https://schema.org/contentUrl>}
+                                         ?s <#{prop}> ?b .
+										 ?b  ?schemaurl ?o}")
+					results = query.execute(g)
+					if  results.any?
+							@identifier=results.first[:o].value
+							swagger.addComment "INFO: found identifier #{@identifier} using Schema.org distribution property.\n"
+							return @identifier
+
+					end
+			elsif prop =~ /dcat\#/
+				query = SPARQL.parse("select ?o where {
+                                     VALUES ?dcataccess {<http://www.w3.org/ns/dcat#accessURL> <http://www.w3.org/ns/dcat#accessURL>}
+                                     ?s <#{prop}> ?b .
+									 ?b  ?dcataccess ?o}")
+				results = query.execute(g)
+				if  results.any?
+					@identifier=results.first[:o].value
+					swagger.addComment "INFO: found identifier #{@identifier} using DCAT distribution property.\n"
+					return @identifier
+				end
+			else 
+				query = SPARQL.parse("select ?o where {?s <#{prop}> ?o}")
+				results = query.execute(g)
+				if results.any?
+					@identifier=results.first[:o].value
+					swagger.addComment "INFO: found identifier #{@identifier} using #{prop}.\n"
+                    return @identifier
+				end
+			end
+		end
+        
+    end
 end
 

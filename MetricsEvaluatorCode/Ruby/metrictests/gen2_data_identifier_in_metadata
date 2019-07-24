@@ -59,55 +59,7 @@ def testGUID
 	
 	if g.size > 0  # have we found anything yet?
 		@swagger.addComment("INFO: Searching Linked Data metadata for predicates indicating a pointer to data.\n")
-		Utils::DATA_PREDICATES.each do |prop|
-			@swagger.addComment("INFO: SPARQLing for #{prop}.\n")
-			if prop =~ /schema\.org\/distribution/
-					query = SPARQL.parse("select ?o where {?s <#{prop}> ?b .
-															 ?b  <http://schema.org/contentUrl> ?o}")
-					results = query.execute(g)
-					if  results.any?
-							@identifier=results.first[:o].value
-							@swagger.addComment "INFO: found identifier #{@identifier} using Schema.org distribution property.\n"
-					end
-					query = SPARQL.parse("select ?o where {?s <#{prop}> ?b .
-															 ?b  <https://schema.org/contentUrl> ?o}")
-					results = query.execute(g)
-					if  results.any?
-							@identifier=results.first[:o].value
-							@swagger.addComment "INFO: found identifier #{@identifier} using Schema.org distribution property.\n"
-					end
-			elsif prop =~ /schema\.org/
-					query = SPARQL.parse("select ?o where {?s <#{prop}> ?o}")
-					results = query.execute(g)
-					if  results.any?
-							@identifier=results.first[:o].value
-							@swagger.addComment "INFO: found identifier #{@identifier} using Schema.org distribution property.\n"
-					end
-			elsif prop =~ /dcat\#/
-				query = SPARQL.parse("select ?o where {?s <#{prop}> ?b .
-									 ?b  <http://www.w3.org/ns/dcat#accessURL> ?o}")
-				results = query.execute(g)
-				if  results.any?
-					@identifier=results.first[:o].value
-					@swagger.addComment "INFO: found identifier #{@identifier} using DCAT distribution property.\n"
-				end
-				query = SPARQL.parse("select ?o where {?s <#{prop}> ?b .
-									 ?b  <https://www.w3.org/ns/dcat#accessURL> ?o}")
-				results = query.execute(g)
-				if  results.any?
-					@identifier=results.first[:o].value
-					@swagger.addComment "INFO: found identifier #{@identifier} using DCAT distribution property.\n"
-				end
-			else 
-				query = SPARQL.parse("select ?o where {?s <#{prop}> ?o}")
-				results = query.execute(g)
-				if results.any?
-					@identifier=results.first[:o].value
-					@swagger.addComment "INFO: found identifier #{@identifier} using #{prop}.\n"
-				end
-			end
-		end
-		
+		@identifier = CommonQueries::GetDataIdentifier(g, @swagger)		
 		# hopefully we have it by now... if not... we fail!
 		#$stderr.puts "\n\nfound identifier #{@identifier} \n\n"
 
@@ -127,14 +79,14 @@ end
 
 
 if debug
-	@input = '{"subject": "10.5281/zenodo.1147435"}'  # doi fail
+#	@input = '{"subject": "10.5281/zenodo.1147435"}'  # doi fail
 #	@input = '{"subject": "10.5281/zenodo.1065973"}'  # doi fail
 #	@input = '{"subject": "BSYNRYMUTXBXSQ-UHFFFAOYSA-N"}' # inchi
 #	@input = '{"subject": "LFQSCWFLJHTTHZ-UHFFFAOYSA-N"}' # another inchi
 #	@input = '{"subject": "20.1000/105"}'  # handle (fail)
 #	@input = '{"subject": "http://linkeddata.systems/Magnaporthe/polyA_Sites"}'  # handle
 #	@input = '{"subject": "10.5440/1185213"}'  # doi fail
-
+	@input = '{"subject": "https://explore.openaire.eu/search/dataset?datasetId=r37980778c78::f9238306682bb3e6f158e0654a120d42"}'
 else 
 	@input = $stdin.read
 end
