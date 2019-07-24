@@ -3,3 +3,6 @@ command="LD_LIBRARY_PATH='/usr/lib/x86_64-linux-gnu/' /usr/local/bin/extruct"
 
 [bing]
 accessKey="YOUR KEY HERE"
+
+[rdf]
+command="/home/mark_moby_wilkinson/.rvm/gems/ruby-2.5.1/bin/rdf"
