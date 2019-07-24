@@ -298,7 +298,11 @@ class Utils
         when Utils::RDF_FORMATS.keys.include?(parser)
           #$stderr.puts "\n\nPARSING RDF\n\n"
           meta.comments << "INFO: parsing as linked data. \n"
-          Utils::parse_rdf(meta, body)
+          if contenttype == 'application/trig'
+            Utils::parse_rdf(meta, body, contenttype)
+          else
+            Utils::parse_rdf(meta, body)
+          end
         when Utils::HTML_FORMATS.keys.include?(parser)
           meta.comments << "INFO: parsing as HTML. \n"
           #$stderr.puts "\n\nPARSING HTML\n\n"
@@ -382,8 +386,15 @@ class Utils
           meta.comments << "CRITICAL: The response message body component appears to have no content.\n"
           return meta
       end
-
-      formattype = RDF::Format.for({:sample => body[0..100]})
+      formattype = nil
+      $stderr.puts "\n\n\ndeclared format #{format}\n\n"
+      if !format.nil?
+          $stderr.puts "\n\n\ntesting declared format #{format}\n\n"
+          formattype = RDF::Format.for(content_type: format)
+          $stderr.puts "\n\n\nfound format #{formattype}\n\n"
+      else
+          formattype = RDF::Format.for({:sample => body[0..3000]})
+      end
 
       if !formattype
         meta.comments << "CRITICAL: Unable to find an RDF reader type that matches the content that was returned from resolution.  Here is a sample #{body[0..100]}  Please send your GUID to the dev team so we can investigate!\n"
