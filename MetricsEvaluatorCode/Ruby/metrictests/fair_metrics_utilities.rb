@@ -2,6 +2,7 @@ require 'json'
 require 'rdf'
 require 'rdf/json'
 require 'json/ld'
+require 'rdf/trig'
 require 'rdf/raptor'
 require 'net/http'
 require 'net/https' # for openssl
@@ -19,10 +20,15 @@ require 'digest'
 
 class Utils
     config = ParseConfig.new('config.conf')
+    
     @extruct_command = "extruct" unless config
     @extruct_command = config['extruct']['command'] if config['extruct'] && config['extruct']['command'] && !config['extruct']['command'].empty?
     #$stderr.puts "EXTRUCT #{@extruct_command}\n\n"
     Utils::ExtructCommand = @extruct_command
+
+    @rdf_command = "rdf" unless config
+    @rdf_command = config['rdf']['command'] if config['rdf'] && config['rdf']['command'] && !config['rdf']['command'].empty?
+    Utils::RDFCommand = @rdf_command
 
     Utils::AcceptHeader = {'Accept' => 'text/turtle, application/ld+json, application/rdf+xml, text/xhtml+xml, application/n3, application/rdf+n3, application/turtle, application/x-turtle, text/n3, text/turtle, text/rdf+n3, text/rdf+turtle, application/n-triples' }
 
@@ -37,7 +43,7 @@ class Utils
                    'text/rdf+n3', 'text/rdf+turtle'],
       'rdfa'    => ['text/xhtml+xml', 'application/xhtml+xml'],
       'rdfxml'  => ['application/rdf+xml'],
-      'triples' => ['application/n-triples',]
+      'triples' => ['application/n-triples','application/n-quads', 'application/trig']
     }
 
     Utils::XML_FORMATS = {
@@ -296,6 +302,7 @@ class Utils
         when Utils::HTML_FORMATS.keys.include?(parser)
           meta.comments << "INFO: parsing as HTML. \n"
           #$stderr.puts "\n\nPARSING HTML\n\n"
+          url = ""
           if meta.finalURI.last =~ /^\w+\:\/\//
               url = meta.finalURI.last
           else
@@ -313,6 +320,12 @@ class Utils
           Utils::parse_json(meta, body)
         else
           #$stderr.puts "\n\nPARSING UNKNOWN\n\n"
+          url = ""
+          if meta.finalURI.last =~ /^\w+\:\/\//
+              url = meta.finalURI.last
+          else
+              url = guid
+          end
           meta.comments << "WARN: parser could not be found. \n"
           meta.comments << "INFO:  Metadata may be embedded, now searching using the Apache 'tika' tool.\n"
           Utils::do_tika(meta, body)  # this expects a string, not an Net::HTTP
@@ -413,36 +426,38 @@ class Utils
     
     
     def Utils::do_distiller(meta, body)
-        
+
         bhash = Digest::SHA256.hexdigest(body)
         if @@distillerknown[bhash]
             meta.comments << "INFO: Cached data is already parsed.  Returning\n"
             return
         end
         @@distillerknown[bhash] = true
+
+
         
         
         meta.comments << "INFO: Using 'Kellog's Distiller' to try to extract metadata from return value (message body).\n"
-        # $stderr.puts uri
-        #urlparam = CGI::escape(uri.to_s)
-        #$stderr.puts "http://rdf.greggkellogg.net/distiller?command=serialize&format=rdfa&url=#{urlparam}&output_format=turtle"
-        file = Tempfile.new('foo')
-        file.binmode
+#         $stderr.puts "BODY: \n\n #{body}"
+
+        file = Tempfile.new('foo', :encoding => 'UTF-8')
         file.write(body)
         file.rewind
         meta.comments << "INFO: The message body is being examined by Distiller\n"
-        result =  %x{rdf serialize --input-format rdfa --output-format turtle #{file.path}}
+        result =  %x{LANG=en_US.UTF-8 #{Utils::RDFCommand} serialize --input-format rdfa --output-format turtle #{file.path} 2>/dev/null}
         $stderr.puts "RESULT #{result}\n\n\n"
         file.close
         file.unlink
-        
+
+       
+        result = result.force_encoding('UTF-8')        
         #head, body = Utils::simplefetch("http://rdf.greggkellogg.net/distiller?command=serialize&format=rdfa&url=#{urlparam}&output_format=turtle", {"Accept" => "*/*"}, meta)
         # need to do some error checking here!
         if !(result =~ /\w/)  # failure returns nil
-              meta.comments << "WARN: The Distiller tool failed to find parseable data in the body.\n"
-        else          
-          meta.comments << "INFO: The Distiller found parseable data.  Parsing as RDF\n"
-          Utils::parse_rdf(meta, result, "text/turtle")
+            meta.comments << "WARN: The Distiller tool failed to find parseable data in the body.\n"
+        else
+            meta.comments << "INFO: The Distiller found parseable data.  Parsing as RDF\n"
+            Utils::parse_rdf(meta, result, "text/turtle")
         end
  
     end
@@ -562,6 +577,10 @@ class Utils
 
   def Utils::figure_out_type(head)
     type = head[:content_type]
+    if type.nil?        
+        $stderr.puts "\n\nSTRANGE - headers had no content-type\n\n"
+        return nil,nil
+    end
     type.match(/([\w\+]+\/[\w\+]+):?/im)
     type = $1
     #$stderr.puts "\n\nsearching for #{type}\n\n"
