@@ -46,6 +46,7 @@ def testGUID
 			@swagger.addComment("INFO: Searching for key: #{prop}.\n")
 			if key == prop
 				@swagger.addComment "INFO: found '#{prop}' in metadata.  Setting data GUID to #{value} for next test.\n"
+				$stderr.puts "INFO: found '#{prop}' in metadata.  Setting data GUID to #{value} for next test.\n"
 				@identifier=value.to_s
 			end
 		end
@@ -61,10 +62,10 @@ def testGUID
 		@swagger.addComment("INFO: Searching Linked Data metadata for predicates indicating a pointer to data.\n")
 		@identifier = CommonQueries::GetDataIdentifier(g, @swagger)		
 		# hopefully we have it by now... if not... we fail!
-		#$stderr.puts "\n\nfound identifier #{@identifier} \n\n"
+		$stderr.puts "\n\nfound identifier #{@identifier} \n\n"
 	end
 		
-	metadata2 = Utils::typeit(@identifier)  
+	metadata2 = Utils::typeit(@identifier.last)  
 
 	if !metadata2
 		@swagger.addComment("FAILURE: The identifier #{@identifier} did not match any known identification system.\n")
