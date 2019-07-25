@@ -1181,6 +1181,10 @@ class CommonQueries
                     return @identifier
 				end
 			end
+
+            swagger.addComment "INFO: No data identifier found in this chunk of metadata.\n"
+			
+			return @identifier  # returns nil if we get to this line
 		end
         
     end
