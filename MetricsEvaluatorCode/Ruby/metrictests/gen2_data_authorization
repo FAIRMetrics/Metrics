@@ -64,9 +64,14 @@ def testGUID
 		# hopefully we have it by now... if not... we fail!
 		$stderr.puts "\n\nfound identifier #{@identifier} \n\n"
 	end
-		
-	metadata2 = Utils::typeit(@identifier.last)  
-
+	
+	if @identifier.nil? 
+	metadata2 = Utils::typeit(@identifier)  
+		@swagger.addComment("FAILURE: No data identifier was found in the metadata record.\n")
+		@swagger.score = 0
+		return @swagger.createEvaluationResponse
+	end
+	
 	if !metadata2
 		@swagger.addComment("FAILURE: The identifier #{@identifier} did not match any known identification system.\n")
 		@swagger.score = 0
