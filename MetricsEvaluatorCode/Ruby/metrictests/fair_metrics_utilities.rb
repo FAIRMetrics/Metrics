@@ -41,7 +41,7 @@ class Utils
       'turtle'  => ['text/turtle','application/n3','application/rdf+n3',
                    'application/turtle', 'application/x-turtle','text/n3','text/turtle',
                    'text/rdf+n3', 'text/rdf+turtle'],
-      'rdfa'    => ['text/xhtml+xml', 'application/xhtml+xml'],
+      #'rdfa'    => ['text/xhtml+xml', 'application/xhtml+xml'],
       'rdfxml'  => ['application/rdf+xml'],
       'triples' => ['application/n-triples','application/n-quads', 'application/trig']
     }
@@ -51,7 +51,7 @@ class Utils
     }
     
     Utils::HTML_FORMATS = {
-      'html' => ['text/html',]
+      'html' => ['text/html','text/xhtml+xml', 'application/xhtml+xml']
     }
     
     Utils::JSON_FORMATS = {
@@ -247,7 +247,7 @@ class Utils
       meta.guidtype = "handle"
       meta.comments << "INFO: Found a non-DOI Handle.\n"
       meta.comments << "INFO:  Attempting to resolve http://hdl.handle.net/#{guid} using HTTP Headers #{Utils::AcceptHeader.to_s}.\n"
-      Utils::resolve_uri("http://hdl.handle.net/#{guid}", meta, false)
+      Utils::resolve_uri("http://hdl.handle.net/#{guid}", meta)
 #      meta.comments << "INFO:  Attempting to resolve http://hdl.handle.net/#{guid} using HTTP Headers #{{"Accept" => "*/*"}.to_s}.\n"
 #      Utils::resolve_url("http://hdl.handle.net/#{guid}", meta, false, {"Accept" => "*/*"})
       return meta
@@ -297,11 +297,11 @@ class Utils
         
         case
         when Utils::TEXT_FORMATS.keys.include?(parser)
-          #$stderr.puts "\n\nPARSING TEXT\n\n"
+          $stderr.puts "\n\nPARSING TEXT\n\n"
           meta.comments << "INFO: parsing as plaintext. \n"
           Utils::parse_text(meta, body)
         when Utils::RDF_FORMATS.keys.include?(parser)
-          #$stderr.puts "\n\nPARSING RDF\n\n"
+          $stderr.puts "\n\nPARSING RDF\n\n"
           meta.comments << "INFO: parsing as linked data. \n"
           if contenttype == 'application/trig'
             Utils::parse_rdf(meta, body, contenttype)
@@ -310,7 +310,7 @@ class Utils
           end
         when Utils::HTML_FORMATS.keys.include?(parser)
           meta.comments << "INFO: parsing as HTML. \n"
-          #$stderr.puts "\n\nPARSING HTML\n\n"
+          $stderr.puts "\n\nPARSING HTML\n\n"
           url = ""
           if meta.finalURI.last =~ /^\w+\:\/\//
               url = meta.finalURI.last
@@ -321,14 +321,14 @@ class Utils
     	  Utils::do_distiller(meta, body)
         when Utils::XML_FORMATS.keys.include?(parser)
           meta.comments << "INFO: parsing as XML. \n"
-          #$stderr.puts "\n\nPARSING XML\n\n"
+          $stderr.puts "\n\nPARSING XML\n\n"
           Utils::parse_xml(meta, body)
         when Utils::JSON_FORMATS.keys.include?(parser)
           meta.comments << "INFO: parsing as JSON. \n"
-          #$stderr.puts "\n\nPARSING JSON\n\n"
+          $stderr.puts "\n\nPARSING JSON\n\n"
           Utils::parse_json(meta, body)
         else
-          #$stderr.puts "\n\nPARSING UNKNOWN\n\n"
+          $stderr.puts "\n\nPARSING UNKNOWN\n\n"
           url = ""
           if meta.finalURI.last =~ /^\w+\:\/\//
               url = meta.finalURI.last
@@ -399,7 +399,9 @@ class Utils
           $stderr.puts "\n\n\nfound format #{formattype}\n\n"
       else
           formattype = RDF::Format.for({:sample => body[0..3000]})
+          $stderr.puts "\n\n\ndetected format #{formattype}\n\n"          
       end
+      $stderr.puts "\n\n\nfinal format #{formattype}\n\n"          
 
       if !formattype
         meta.comments << "CRITICAL: Unable to find an RDF reader type that matches the content that was returned from resolution.  Here is a sample #{body[0..100]}  Please send your GUID to the dev team so we can investigate!\n"
