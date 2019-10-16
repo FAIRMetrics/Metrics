@@ -33,17 +33,17 @@ def testGUID
 	@swagger.score = 0
 
 	queries = %W(
-	<http://www.w3.org/1999/xhtml/vocab#license> <https://www.w3.org/1999/xhtml/vocab#license>
-	<http://purl.org/ontology/dvia#hasLicense>	<https://purl.org/ontology/dvia#hasLicense>
-	<http://purl.org/dc/terms/license>	<https://purl.org/dc/terms/license>
-	<http://creativecommons.org/ns#license>	<https://creativecommons.org/ns#license>
-	<http://reference.data.gov.au/def/ont/dataset#hasLicense>	<https://reference.data.gov.au/def/ont/dataset#hasLicense>
+	http://www.w3.org/1999/xhtml/vocab#license https://www.w3.org/1999/xhtml/vocab#license
+	http://purl.org/ontology/dvia#hasLicense	https://purl.org/ontology/dvia#hasLicense
+	http://purl.org/dc/terms/license	https://purl.org/dc/terms/license
+	http://creativecommons.org/ns#license	https://creativecommons.org/ns#license
+	http://reference.data.gov.au/def/ont/dataset#hasLicense	https://reference.data.gov.au/def/ont/dataset#hasLicense
 	)
 	if g.size > 0  # have we found anything yet?
 		@swagger.addComment("INFO: Linked data found.  Testing for one of the following predicates: #{queries}.\n")
 		queries.each do |predicate|
 #			$stderr.puts "\n\nPREDICATE #{predicate}\n\n"
-			query = SPARQL.parse("select ?o where {?s " + predicate + " ?o}")
+			query = SPARQL.parse("select ?o where {?s <" + predicate + "> ?o}")
 			results = query.execute(g)
 			if results.any?
 				object = results.first[:o]

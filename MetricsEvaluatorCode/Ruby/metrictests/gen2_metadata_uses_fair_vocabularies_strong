@@ -42,7 +42,7 @@ def testGUID
 	count = 0
 	seen = Array.new
 	g.each do |stm|
-		break if count>=6
+		break if count>=8
 		next if seen.include?stm.predicate.value
 		seen << stm.predicate.value
 		next if stm.predicate.value =~ /www\.w3\.org\/1999\/xhtml\/vocab/  # this is a very problematic site!
@@ -58,7 +58,7 @@ def testGUID
 		count += 1
 	end
 	
-	if success > count * 0.5
+	if success >= count * 0.5
 		@swagger.addComment("SUCCESS: #{success} of the first #{count} predicates discovered in the metadata resolved to Linked Data data.  This is sufficient to pass the test.\n")
 		@swagger.score = 1
 	else

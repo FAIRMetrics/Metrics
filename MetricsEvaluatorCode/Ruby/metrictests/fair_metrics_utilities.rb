@@ -457,6 +457,7 @@ class Utils
 #         $stderr.puts "BODY: \n\n #{body}"
 
         file = Tempfile.new('foo', :encoding => 'UTF-8')
+        body = body.force_encoding('UTF-8')
         file.write(body)
         file.rewind
         meta.comments << "INFO: The message body is being examined by Distiller\n"
@@ -1182,10 +1183,10 @@ class CommonQueries
 				end
 			end
 
-            swagger.addComment "INFO: No data identifier found in this chunk of metadata.\n"
-			
-			return @identifier  # returns nil if we get to this line
 		end
+        swagger.addComment "INFO: No data identifier found in this chunk of metadata.\n"
+        
+        return @identifier  # returns nil if we get to this line
         
     end
 end
