@@ -233,7 +233,7 @@ class Utils
       finalURI = meta.finalURI
       if finalURI =~ /\w+\:\/\//
         meta.comments << "INFO:  DOI resolution captures content-negotiation before reaching final data owner.  Now re-attempting the full suite of content negotiation on final redirect URI #{finalURI}.\n"
-        Utils::resolve_uri(finalURI, meta, false) 
+        Utils::resolve_uri(finalURI, meta) 
       end
       
       return meta      
