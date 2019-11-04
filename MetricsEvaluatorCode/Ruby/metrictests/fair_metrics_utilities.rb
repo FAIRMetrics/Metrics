@@ -90,7 +90,7 @@ class Utils
 
     Utils::GUID_TYPES = {'inchi' => Regexp.new(/^\w{14}\-\w{10}\-\w$/),
                         'doi' => Regexp.new(/^10.\d{4,9}\/[-._;()\/:A-Z0-9]+$/i),
-                        'handle1' => Regexp.new(/^[2-9]0.\d{4,9}\/[-._;()\/:A-Z0-9]+$/i),
+                        'handle1' => Regexp.new(/^[2-9][0-9].\d{4,9}\/[-._;()\/:A-Z0-9]+$/i),
                         'handle2' => Regexp.new(/^\d{4,5}\/[-._;()\/:A-Z0-9]+$/i), # legacy style  12345/AGB47A
                         'uri' => Regexp.new(/^\w+:\/?\/?[^\s]+$/)
     }
