@@ -90,7 +90,7 @@ class Utils
 
     Utils::GUID_TYPES = {'inchi' => Regexp.new(/^\w{14}\-\w{10}\-\w$/),
                         'doi' => Regexp.new(/^10.\d{4,9}\/[-._;()\/:A-Z0-9]+$/i),
-                        'handle1' => Regexp.new(/^[2-9]0.\d{4,9}\/[-._;()\/:A-Z0-9]+$/i),
+                        'handle1' => Regexp.new(/^[2-9][0-9].\d{4,9}\/[-._;()\/:A-Z0-9]+$/i),
                         'handle2' => Regexp.new(/^\d{4,5}\/[-._;()\/:A-Z0-9]+$/i), # legacy style  12345/AGB47A
                         'uri' => Regexp.new(/^\w+:\/?\/?[^\s]+$/)
     }
@@ -233,7 +233,7 @@ class Utils
       finalURI = meta.finalURI
       if finalURI =~ /\w+\:\/\//
         meta.comments << "INFO:  DOI resolution captures content-negotiation before reaching final data owner.  Now re-attempting the full suite of content negotiation on final redirect URI #{finalURI}.\n"
-        Utils::resolve_uri(finalURI, meta, false) 
+        Utils::resolve_uri(finalURI, meta) 
       end
       
       return meta      
