@@ -1033,6 +1033,7 @@ EOF_EOF
     triplify(meURI, "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "http://fairmetrics.org/resources/metric_evaluation_result", g );
     triplify(meURI, "http://semanticscience.org/resource/SIO_000300", self.score, g )
     triplify(meURI, "http://purl.obolibrary.org/obo/date", dt, g )
+    triplify(meURI, "http://schema.org/softwareVersion", VERSION, g )
     triplify(meURI,"http://semanticscience.org/resource/SIO_000332", uri, g)
     
     comments = "no comments received.  "
