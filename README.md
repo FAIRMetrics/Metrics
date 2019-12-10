@@ -70,6 +70,12 @@ Might return the following result:
               "@type": "http://www.w3.org/2001/XMLSchema#date"
             }
           ],
+          "http://schema.org/softwareVersion": [
+           {
+             "@value": "0.2",
+             "@type": "http://www.w3.org/2001/XMLSchema#float"
+           }
+          ],
           "http://schema.org/comment": [
             {
               "@value": "Found a Crossref DOI - pass",
