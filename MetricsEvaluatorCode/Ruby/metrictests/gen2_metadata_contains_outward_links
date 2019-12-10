@@ -8,8 +8,13 @@ require 'rdf/turtle'
 require 'sparql'
 
 debug = false
+VERSION = "0.2"
+
 
 def testGUID
+
+	@swagger.addComment("INFO: TEST VERSION '#{VERSION}'\n")
+	
 	
 	guid = @swagger.testedGUID
 	
@@ -92,6 +97,7 @@ schemas = {'subject' => ['string', "the GUID being tested"]}
 			:title => "FAIR Metrics Gen2 - Metadata contains qualified outward references)",
 			:description => "Maturity Indicator to test if the metadata links outward to third-party resources.  It only tests metadata that can be represented as Linked Data.  ",
 			:tests_metric => 'https://purl.org/fair-metrics/Gen2_FM_I3A',
+			:version => VERSION,
 			:applies_to_principle => "I3",
 			:organization => 'FAIR Metrics Authoring Group',
 			:org_url => 'http://fairmetrics.org',

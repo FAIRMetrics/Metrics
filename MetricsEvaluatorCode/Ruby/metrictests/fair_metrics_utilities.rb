@@ -851,6 +851,7 @@ class Swagger
     @tests_metric = params.fetch(:tests_metric)
     @description = params.fetch(:description, 'default_description')
     @applies_to_principle = params.fetch(:applies_to_principle, 'some principle')
+    @version = params.fetch(:version, "0.1")
     @organization = params.fetch(:organization, 'Some Organization')
     @org_url = params.fetch(:org_url)
     @responsible_develper = params.fetch(:responsible_developer, 'Some Person')
@@ -886,7 +887,7 @@ class Swagger
 message = <<"EOF_EOF"
 swagger: '2.0'
 info:
- version: '0.1'
+ version: '#{@version}'
  title: "#{@title}"
  x-tests_metric: '#{@tests_metric}'
  description: >-

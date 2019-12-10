@@ -8,8 +8,12 @@ require 'rdf/turtle'
 require 'sparql'
 
 debug = false
+VERSION = "0.2"
 
 def testGUID
+
+	@swagger.addComment("INFO: TEST VERSION '#{VERSION}'\n")
+	
 	
 	guid = @swagger.testedGUID
 	
@@ -73,6 +77,7 @@ schemas = {'subject' => ['string', "the GUID being tested"]}
 			:description => "Tests whether a machine is able to find structured metadata.  This could be (for example) RDFa, embedded json, json-ld, or content-negotiated structured metadata such as RDF Turtle",
 			:tests_metric => 'https://purl.org/fair-metrics/Gen2_FM_F2A',
 			:applies_to_principle => "F2",
+			:version => VERSION,
 			:organization => 'FAIR Metrics Authoring Group',
 			:org_url => 'http://fairmetrics.org',
 			:responsible_developer => "Mark D Wilkinson",

@@ -9,11 +9,16 @@ require 'sparql'
 require 'net/https'
 
 debug = false
+VERSION = "0.2"
+
 
 config = ParseConfig.new('config.conf')
 @accessKey = config['bing']['accessKey'] if config['bing'] && config['bing']['accessKey'] && !config['bing']['accessKey'].empty?
 
 def testGUID
+
+	@swagger.addComment("INFO: TEST VERSION '#{VERSION}'\n")
+	
 	
 	guid = @swagger.testedGUID
 	
@@ -264,6 +269,7 @@ schemas = {'subject' => ['string', "the GUID being tested"]}
 			:title => "FAIR Metrics Gen2 - Searchable in major search engine",
 			:description => "Tests whether a machine is able to discover the resource by search, using Microsoft Bing",
 			:tests_metric => 'https://purl.org/fair-metrics/Gen2_FM_F4',
+			:version => VERSION,
 			:applies_to_principle => "F4",
 			:organization => 'FAIR Metrics Authoring Group',
 			:org_url => 'http://fairmetrics.org',

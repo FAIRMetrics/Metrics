@@ -8,8 +8,13 @@ require 'rdf/turtle'
 require 'sparql'
 
 debug = false
+VERSION = "0.2"
+
 
 def testGUID
+
+	@swagger.addComment("INFO: TEST VERSION '#{VERSION}'\n")
+	
 	
 	guid = @swagger.testedGUID
 	
@@ -100,6 +105,7 @@ schemas = {'subject' => ['string', "the GUID being tested"]}
 			:title => "FAIR Metrics Gen2 - Data Identifier Explicitly In Metadata",
 			:description => "Metric to test if the metadata contains the unique identifier to the data. This is done by searching for a variety of properties, including foaf:primaryTopic, schema:mainEntity, schema:distribution, sio:is-about, and iao:is-about. schema codeRepository is used for software releases.",
 			:tests_metric => 'https://purl.org/fair-metrics/Gen2_FM_F3',
+			:version => VERSION,
 			:applies_to_principle => "F3",
 			:organization => 'FAIR Metrics Authoring Group',
 			:org_url => 'http://fairmetrics.org',

@@ -8,8 +8,13 @@ require 'rdf/turtle'
 require 'sparql'
 
 debug = false
+VERSION = "0.2"
+
 
 def testGUID
+
+	@swagger.addComment("INFO: TEST VERSION '#{VERSION}'\n")
+	
 	
 	guid = @swagger.testedGUID
 	
@@ -64,6 +69,7 @@ schemas = {'subject' => ['string', "the GUID being tested"]}
 			:title => "FAIR Metrics Gen2 - Metadata Knowledge Representation Language (strong)",
 			:description => "Maturity Indicator to test if the metadata uses a formal language broadly applicable for knowledge representation.  This particular test takes a broad view of what defines a 'knowledge representation language'; in this evaluation, a knowledge representation language is interpreted as one in which terms are semantically-grounded in ontologies.  Any form of RDF will pass this test (including RDF that is automatically extracted by third-party parsers such as Apache Tika)",
 			:tests_metric => 'https://purl.org/fair-metrics/Gen2_FM_I1B',
+			:version => VERSION,
 			:applies_to_principle => "I1",
 			:organization => 'FAIR Metrics Authoring Group',
 			:org_url => 'http://fairmetrics.org',

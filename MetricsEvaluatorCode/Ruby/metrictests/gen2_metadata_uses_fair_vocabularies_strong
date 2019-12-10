@@ -8,8 +8,12 @@ require 'rdf/turtle'
 require 'sparql'
 
 debug = false
+VERSION = "0.2"
 
 def testGUID
+
+	@swagger.addComment("INFO: TEST VERSION '#{VERSION}'\n")
+	
 	
 	guid = @swagger.testedGUID
 	
@@ -98,6 +102,7 @@ schemas = {'subject' => ['string', "the GUID being tested"]}
 			:title => "FAIR Metrics Gen2 - Metadata uses FAIR vocabularies (strong)",
 			:description => "Maturity Indicator to test if the linked data metadata uses terms that resolve to linked (FAIR) data.  ",
 			:tests_metric => 'https://purl.org/fair-metrics/Gen2_FM_I2B',
+			:version => VERSION,
 			:applies_to_principle => "I2",
 			:organization => 'FAIR Metrics Authoring Group',
 			:org_url => 'http://fairmetrics.org',

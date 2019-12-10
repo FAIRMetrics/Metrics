@@ -5,8 +5,13 @@ require 'json'
 require 'uri'
 
 debug = false
+VERSION = "0.2"
+
 
 def testGUID
+
+	@swagger.addComment("INFO: TEST VERSION '#{VERSION}'\n")
+	
 	
 	guid = @swagger.testedGUID
 	
@@ -55,6 +60,7 @@ schemas = {'subject' => ['string', "the GUID being tested"]}
 			:title => "FAIR Metrics Gen2 - Identifier Persistence",
 			:description => "Metric to test if the unique identifier of the metadata resource is likely to be persistent. Known schema are registered in FAIRSharing (https://fairsharing.org/standards/?q=&selected_facets=type_exact:identifier%20schema). For URLs that don't follow a schema in FAIRSharing we test known URL persistence schemas (purl, oclc, fdlp, purlz, w3id, ark).  ",
 			:tests_metric => 'https://purl.org/fair-metrics/Gen2_FM_F1B',
+			:version => VERSION,
 			:applies_to_principle => "F1",
 			:organization => 'FAIR Metrics Authoring Group',
 			:org_url => 'http://fairmetrics.org',

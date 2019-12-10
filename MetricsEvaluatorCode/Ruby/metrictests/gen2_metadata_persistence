@@ -5,8 +5,13 @@ require 'json'
 require 'uri'
 
 debug = false
+VERSION = "0.2"
+
 
 def testGUID
+
+	@swagger.addComment("INFO: TEST VERSION '#{VERSION}'\n")
+	
 	
 	guid = @swagger.testedGUID
 	metadata = Utils::resolveit(guid)  # this is where the magic happens!
@@ -102,6 +107,7 @@ schemas = {'subject' => ['string', "the GUID being tested"]}
 			:title => "FAIR Metrics Gen2 - Metadata Persistence",
 			:description => "Metric to test if the metadata contains a persistence policy, explicitly identified by a persistencePolicy key (in hashed data) or a http://www.w3.org/2000/10/swap/pim/doc#persistencePolicy predicate in Linked Data.",
 			:tests_metric => 'https://purl.org/fair-metrics/Gen2_FM_FA2',
+			:version => VERSION,
 			:applies_to_principle => "A2",
 			:organization => 'FAIR Metrics Authoring Group',
 			:org_url => 'http://fairmetrics.org',

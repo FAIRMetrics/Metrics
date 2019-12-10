@@ -9,8 +9,13 @@ require 'sparql'
 require 'net/https'
 
 debug = false
+VERSION = "0.2"
+
 
 def testGUID
+
+	@swagger.addComment("INFO: TEST VERSION '#{VERSION}'\n")
+	
 	
 	guid = @swagger.testedGUID
 	
@@ -57,6 +62,7 @@ schemas = {'subject' => ['string', "the GUID being tested"]}
 			:title => "FAIR Metrics Gen2 - Uses open free protocol for metadata retrieval",
 			:description => "Metadata may be retrieved by an open and free protocol.  Tests metadata GUID for its resolution protocol.  Currently passes InChI Keys, DOIs, Handles, and URLs.  Recognition of other identifiers will be added upon request by the community.",
 			:tests_metric => 'https://purl.org/fair-metrics/Gen2_FM_A1.1',
+			:version => VERSION,
 			:applies_to_principle => "A1.1",
 			:organization => 'FAIR Metrics Authoring Group',
 			:org_url => 'http://fairmetrics.org',

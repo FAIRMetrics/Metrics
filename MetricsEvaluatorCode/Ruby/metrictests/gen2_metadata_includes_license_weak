@@ -8,8 +8,13 @@ require 'rdf/turtle'
 require 'sparql'
 
 debug = false
+VERSION = "0.2"
+
 
 def testGUID
+
+	@swagger.addComment("INFO: TEST VERSION '#{VERSION}'\n")
+	
 	
 	guid = @swagger.testedGUID
 	
@@ -130,6 +135,7 @@ schemas = {'subject' => ['string', "the GUID being tested"]}
 			:title => "FAIR Metrics Gen2 - Metadata Includes License (weak)",
 			:description => "Maturity Indicator to test if the metadata contains an explicit pointer to the license.  This 'weak' test will use a case-insensitive regular expression, and scan both key/value style metadata, as well as linked data metadata.  Tests: xhtml, dvia, dcterms, cc, data.gov.au, and Schema license predicates in linked data, and validates the value of those properties . ",
 			:tests_metric => 'https://purl.org/fair-metrics/Gen2_FM_R1.1',
+			:version => VERSION,
 			:applies_to_principle => "R1.1",
 			:organization => 'FAIR Metrics Authoring Group',
 			:org_url => 'http://fairmetrics.org',

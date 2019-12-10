@@ -9,8 +9,13 @@ require 'sparql'
 
 
 debug = false
+VERSION = "0.2"
+
 
 def testGUID
+
+	@swagger.addComment("INFO: TEST VERSION '#{VERSION}'\n")
+	
 	guid = @swagger.testedGUID
 	
 	metadata = Utils::resolveit(guid)  # this is where the magic happens!
@@ -129,6 +134,7 @@ schemas = {'subject' => ['string', "the GUID being tested"]}
 			:title => "FAIR Metrics Gen2- Metadata Identifier Explicitly In Metadata",
 			:description => "Metric to test if the metadata contains the unique identifier to the metadata itself.  This is done using a variety of 'scraping' tools, including DOI metadata resolution, the use of the 'extruct' Python tool, and others...",
 			:tests_metric => 'https://purl.org/fair-metrics/Gen2_FM_F3',
+			:version => VERSION,
 			:applies_to_principle => "F3",
 			:organization => 'FAIR Metrics Authoring Group',
 			:org_url => 'http://fairmetrics.org',
