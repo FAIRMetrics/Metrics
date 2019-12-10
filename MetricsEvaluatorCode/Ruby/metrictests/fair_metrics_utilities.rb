@@ -647,7 +647,7 @@ class Utils
 
         head, body, finalURI = Utils::checkCache(url, headers)
         if meta and finalURI
-            meta.finalURI |= finalURI
+            meta.finalURI |= [finalURI]
         end
         if head and body
             $stderr.puts "Retrieved from cache, returning data to code"
@@ -662,7 +662,7 @@ class Utils
 					#password: pass,
 					headers: headers})
             if meta
-    			meta.finalURI |= response.request.url
+    			meta.finalURI |= [response.request.url]
             end
 			Utils::writeToCache(url, headers, response.headers, response.body, response.request.url)
 			return [response.headers, response.body]

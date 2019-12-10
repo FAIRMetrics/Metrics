@@ -8,7 +8,7 @@ require 'rdf/turtle'
 require 'sparql'
 require 'net/https'
 
-debug = false
+debug = true
 VERSION = "0.21"
 
 
@@ -83,7 +83,7 @@ def testGUID
 		term = flatlist[x-1]
 		#$stderr.puts term
 		next if !term.is_a?String
-		if term.match(/keywords?$/i) # in a flattened hash, find something matching 'title' at the end of the term
+		if term.match(/keywords?$/i) # in a flattened hash, find something matching 'keywords?' at the end of the term
 			keywords = flatlist[x]  # the next thing should be the keywords
 			break
 		end
