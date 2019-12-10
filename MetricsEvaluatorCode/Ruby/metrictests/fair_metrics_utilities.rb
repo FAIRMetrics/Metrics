@@ -230,7 +230,7 @@ class Utils
         # metadata of that type, when using the DOI as their GUID.  Here
         # we have let the redirect process go all the way to the final URL, and we then
         # treat that as a new GUID.
-      finalURI = meta.finalURI
+      finalURI = meta.finalURI.last
       if finalURI =~ /\w+\:\/\//
         meta.comments << "INFO:  DOI resolution captures content-negotiation before reaching final data owner.  Now re-attempting the full suite of content negotiation on final redirect URI #{finalURI}.\n"
         Utils::resolve_uri(finalURI, meta) 
