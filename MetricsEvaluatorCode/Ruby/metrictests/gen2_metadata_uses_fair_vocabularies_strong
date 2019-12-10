@@ -58,9 +58,12 @@ def testGUID
 		count += 1
 	end
 	
-	if success >= count * 0.5
+	if count > 0 and success >= count * 0.5
 		@swagger.addComment("SUCCESS: #{success} of the first #{count} predicates discovered in the metadata resolved to Linked Data data.  This is sufficient to pass the test.\n")
 		@swagger.score = 1
+	elsif count ==  0 
+		@swagger.addComment("FAILURE: No predicates were found that resolved to Linked Data.\n")
+		@swagger.score = 0
 	else
 		@swagger.addComment("FAILURE: #{success} of the first #{count} predicates discovered in the metadata resolved to Linked Data data.  The minimum to pass this test is 50%.\n")
 		@swagger.score = 0		
@@ -77,7 +80,8 @@ if debug
 #	@input = '{"subject": "LFQSCWFLJHTTHZ-UHFFFAOYSA-N"}' # another inchi
 #	@input = '{"subject": "20.1000/105"}'  # handle (fail)
 #	@input = '{"subject": "http://linkeddata.systems/Magnaporthe/polyA_Sites"}'  # handle#
-	@input = '{"subject": "10.25504/FAIRsharing.6k0kwd"}'  # doi fail
+	@input = '{"subject": "http://hdl.handle.net/11250/2631642"}'  # doi 
+#	@input = '{"subject": "10.25504/FAIRsharing.6k0kwd"}'  # doi fail
 #        @input = '{"subject": "https://www.ebi.ac.uk/arrayexpress/"}' 
 #	@input = '{"subject": "https://catalogue.bbmri.nl/menu/main/app-molgenis-app-biobank-explorer/biobank/report/bbmri-eric:ID:NL_AAAACXPAWTUFCACQK2ME25QAAM"}'
 
