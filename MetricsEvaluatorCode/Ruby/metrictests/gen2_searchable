@@ -8,8 +8,8 @@ require 'rdf/turtle'
 require 'sparql'
 require 'net/https'
 
-debug = true
-VERSION = "0.21"
+debug = false
+VERSION = "0.22"
 
 
 config = ParseConfig.new('config.conf')
