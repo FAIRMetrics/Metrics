@@ -47,9 +47,12 @@ def testGUID
 		count+=1
 	end
 	
-	if success > count * 0.5
+	if count > 0 and success > count * 0.5
 		@swagger.addComment("SUCCESS: #{success} of the first #{count} predicates discovered in the linked data could be resolved.  This is sufficient to pass this test.\n")
 		@swagger.score = 1
+	elsif count == 0
+		@swagger.addComment("FAILURE: no resolvable predicates were found\n")
+		@swagger.score = 0		
 	else
 		@swagger.addComment("FAILURE: #{success} of the first #{count} predicates discovered in the linked data could be resolved.  The minimum to pass this test is 50%.\n")
 		@swagger.score = 0		
