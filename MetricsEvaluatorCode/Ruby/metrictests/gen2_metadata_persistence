@@ -5,7 +5,7 @@ require 'json'
 require 'uri'
 
 debug = false
-VERSION = "0.2"
+VERSION = HARVESTER_VERSION + ":" + "Tst-0.2.1"
 
 
 def testGUID

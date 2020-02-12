@@ -9,7 +9,7 @@ require 'sparql'
 require 'net/https'
 
 debug = false
-VERSION = "0.22"
+VERSION = HARVESTER_VERSION + ":" + "Tst-0.2.3"
 
 
 config = ParseConfig.new('config.conf')

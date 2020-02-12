@@ -17,6 +17,7 @@ require 'rest-client'
 require 'cgi'
 require 'digest'
 
+HARVESTER_VERSION="Hvst-1.0.0"
 
 class Utils
     config = ParseConfig.new('config.conf')
