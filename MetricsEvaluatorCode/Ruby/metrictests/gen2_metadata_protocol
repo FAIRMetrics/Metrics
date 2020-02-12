@@ -46,7 +46,7 @@ if debug
 #	@input = '{"subject": "BSYNRYMUTXBXSQ-UHFFFAOYSA-N"}' # inchi
 #	@input = '{"subject": "LFQSCWFLJHTTHZ-UHFFFAOYSA-N"}' # another inchi
 #	@input = '{"subject": "20.1000/105"}'  # handle (fail)
-	@input = '{"subject": "http://linkeddata.systems/Magnaporthe/polyA_Sites"}'  # handle
+	@input = '{"subject": "http://w3id.org/Magnaporthe/polyA_Sites"}'  # handle
 # @input = '{"subject": "https://www.go-fair.org/fair-principles/"}'
 
 else 
@@ -69,10 +69,10 @@ schemas = {'subject' => ['string', "the GUID being tested"]}
 			:responsible_developer => "Mark D Wilkinson",
 			:email => 'markw@illuminae.com',
 			:developer_ORCiD => '0000-0001-6960-357X',
-			:protocol => 'http',
-			:host => 'linkeddata.systems',
-			:basePath => '/cgi-bin',
-			:path => '/FAIR_Tests/gen2_metadata_protocol',
+			:protocol => 'https',
+			:host => 'w3id.org',
+			:basePath => '/FAIR_Tests/tests/',
+			:path => 'gen2_metadata_protocol',
 			:response_description => 'The response is a binary (1/0), success or failure',
 			:schemas => schemas,
 			:fairsharing_key_location => '../fairsharing.key',
