@@ -53,14 +53,14 @@ A Maturity Indicator Test is a Web API that has the following features:
 
 For example
 
-    curl -X POST -D -L -H "Content-Type: application/json" -H "Accept: application/json" -d '{"subject": "10.5281/zenodo.1147435"}' http://linkeddata.systems/cgi-bin/FAIR_Tests/gen2_unique_identifier
+    curl -L -X POST -H "Content-Type: application/json" -H "Accept: application/json" -d '{"subject": "10.5281/zenodo.1147435"}' http://w3id.org/FAIR_Tests/gen2_unique_identifier
 
 Might return the following result:
 
 
       [
         {
-          "@id": "http://linkeddata.systems/cgi-bin/FAIR_Tests/gen2_unique_identifier#10.5281/zenodo.1147435/result-2018-12-31T13:32:43+00:00",
+          "@id": "http://w3id.org/FAIR_Tests/gen2_unique_identifier#10.5281/zenodo.1147435/result-2018-12-31T13:32:43+00:00",
           "@type": [
             "http://fairmetrics.org/resources/metric_evaluation_result"
           ],
