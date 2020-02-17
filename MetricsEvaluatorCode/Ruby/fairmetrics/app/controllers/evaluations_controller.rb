@@ -160,40 +160,43 @@ class EvaluationsController < ApiController
           
           
           #$stderr.puts "ADDRESS " + http.to_s + "://" + domain.to_s + basepath.to_s  + path.to_s
-          uri = URI.parse(http.to_s + "://" + domain.to_s + basepath.to_s + path.to_s)
-
-          httpheader["Content-Type"] = 'application/json'
+          uri = http.to_s + "://" + domain.to_s + basepath.to_s + path.to_s
           
-          # Create the HTTP objects  -execute the test!!!!!!!!
-          http = Net::HTTP.new(uri.host, uri.port)
-          http.read_timeout = 600  # set to 300 seconds, because some services may be very
-          http.open_timeout = 600  # set to 300 seconds, because some services may be very
 
-          request = Net::HTTP::Post.new(uri.request_uri, httpheader)
-          request.body = json_to_pass.to_json
-          # request.body = '"sub": "cnn"}' ############## UNCOMMENT TO FORCE A SERVICE FAILURE FOR TEST PURPOSES
-          # $stderr.puts json_to_pass.to_json
           bailout = false
+          final_response = ""
           begin
-            response = http.request(request)
-          rescue
-              @evaluation.errors[:not_json] << " - No response from #{uri} after 600 seconds.  Aborting this test  "
+            success = false
+            until success do
+              RestClient::Request.execute(method: :post, url: uri, payload: json_to_pass.to_json, 
+                                timeout: 600, headers: {"content-type": "application/json", "accept": "application/json"}) do |response, request, result|
+                  if [301, 302, 307].include? response.code
+                    uri = response.headers[:location]
+                    $stderr.puts "redirecting to #{uri}"
+                  else
+                    final_response = response
+                    success = true
+                  end
+              end
+            end
+
+          rescue RestClient::ExceptionWithResponse => e
+              @evaluation.errors[:not_json] << " - Response #{e.response} from #{uri} with payload #{json_to_pass.to_json} .  Aborting this test  "
+              $stderr.puts " - Response #{e.response} from #{uri} with payload #{json_to_pass.to_json} .  Aborting this test  "
               bailout=true
           end
-          
+
           unless bailout
-            $stderr.puts response.inspect
-            if response.kind_of? Net::HTTPSuccess
-              if response.header['content-type'] =~ /json/          
-                body = JSON.parse(response.body)  # create a hash
+            $stderr.puts final_response.inspect
+              if final_response.headers[:content_type] =~ /json/i          
+                body = JSON.parse(final_response.body)  # create a hash
                 metricurl = metric_url(metric)
                 result_for_db[metricurl] = body   # this is a has of the metric id and the hash of the JSON string from the evaluation service
               else
-                @evaluation.errors[:not_json] << " - Response message from FAIR Metrics Test service #{uri} was not JSON.  "
+                @evaluation.errors[:not_json] << " - Response message from FAIR Metrics Test service #{uri} was not JSON. Cannot continue. "
               end
-            else
-              @evaluation.errors[:not_success_code] << " - FAIR Testing service at #{uri} returned a failure code.  "
-            end
+          else
+            @evaluation.errors[:not_success_code] << " - FAIR Testing service at #{uri} returned a failure code.  "
           end
         end
       end
@@ -281,7 +284,7 @@ class EvaluationsController < ApiController
 #        format.html { redirect_to "/evaluations/#{params[:id]}/error", notice: "no smartAPI found for #{metric.to_s}"}
 #        return
       end
-      smartapi = resolve(smartapi)
+      #smartapi = resolve(smartapi)
       interface = fetch(smartapi)
       unless (interface)
 #        format.html { redirect_to "/evaluations/#{params[:id]}/error", notice: "the SmartAPI definition at #{smartapi} could not be retrieved. Please chck and edit evaluation if necessary"}
