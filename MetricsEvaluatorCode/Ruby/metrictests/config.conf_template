@@ -6,3 +6,6 @@ accessKey="YOUR KEY HERE"
 
 [rdf]
 command="/home/mark_moby_wilkinson/.rvm/gems/ruby-2.5.1/bin/rdf"
+
+[tika]
+command="http://tika:9998/meta"

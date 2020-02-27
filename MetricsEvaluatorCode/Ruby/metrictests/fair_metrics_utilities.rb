@@ -2,6 +2,7 @@ require 'json'
 require 'rdf'
 require 'rdf/json'
 require 'json/ld'
+require 'json/ld/preloaded'
 require 'rdf/trig'
 require 'rdf/raptor'
 require 'net/http'
@@ -17,19 +18,24 @@ require 'rest-client'
 require 'cgi'
 require 'digest'
 
-HARVESTER_VERSION="Hvst-1.0.0"
+HARVESTER_VERSION="Hvst-1.0.1"
 
 class Utils
     config = ParseConfig.new('config.conf')
     
-    @extruct_command = "extruct" unless config
     @extruct_command = config['extruct']['command'] if config['extruct'] && config['extruct']['command'] && !config['extruct']['command'].empty?
-    #$stderr.puts "EXTRUCT #{@extruct_command}\n\n"
+    @extruct_command = "extruct" unless @extruct_command
     Utils::ExtructCommand = @extruct_command
 
-    @rdf_command = "rdf" unless config
     @rdf_command = config['rdf']['command'] if config['rdf'] && config['rdf']['command'] && !config['rdf']['command'].empty?
+    @rdf_command = "rdf" unless @rdf_command
     Utils::RDFCommand = @rdf_command
+
+    @tika_command = config['tika']['command'] if config['tika'] && config['tika']['command'] && !config['tika']['command'].empty?
+    @tika_command = "http://localhost:9998/meta" unless @tika_command
+    Utils::TikaCommand = @tika_command
+
+
 
     Utils::AcceptHeader = {'Accept' => 'text/turtle, application/ld+json, application/rdf+xml, text/xhtml+xml, application/n3, application/rdf+n3, application/turtle, application/x-turtle, text/n3, text/turtle, text/rdf+n3, text/rdf+turtle, application/n-triples' }
 
@@ -435,7 +441,7 @@ class Utils
         file.rewind
         meta.comments << "INFO: The message body is being examined by Apache Tika\n"
         
-        result = %x{curl --silent -T #{file.path} http://localhost:9998/meta --header "Accept: application/rdf+xml" 2>&1}
+        result = %x{curl --silent -T #{file.path} #{Utils::TikaCommand} --header "Accept: application/rdf+xml" 2>&1}
         file.close
         file.unlink    # deletes the temp file
         meta.comments << "INFO: The response from Apache Tika is being parsed\n"
@@ -461,11 +467,12 @@ class Utils
 
         file = Tempfile.new('foo', :encoding => 'UTF-8')
         body = body.force_encoding('UTF-8')
+        body = body.gsub(/"\@context"\s*\:\s*"https?\:\/\/schema.org\/?"/, '"@context": "https://schema.org/docs/jsonldcontext.json"')
         file.write(body)
         file.rewind
         meta.comments << "INFO: The message body is being examined by Distiller\n"
-        result =  %x{LANG=en_US.UTF-8 #{Utils::RDFCommand} serialize --input-format rdfa --output-format turtle #{file.path} 2>/dev/null}
-        #$stderr.puts "RESULT #{result}\n\n\n"
+        command = "LANG=en_US.UTF-8 #{Utils::RDFCommand} serialize --input-format rdfa --output-format turtle #{file.path} 2>/dev/null"
+        result =  %x{#{command}}
         file.close
         file.unlink
 

@@ -35,6 +35,8 @@ json.set! 'http://www.w3.org/ns/dcat#identifier', evaluation_url(evaluation)
 
 json.set! 'http://www.w3.org/ns/dcat#publisher', "http://fairmetrics.org"
 
+json.set! 'http://purl.org/dc/elements/1.1/date', evaluation.created_at.to_time.iso8601
+
 unless @brief
 	json.set! 'evaluationInput', evaluation.body.to_s
 
