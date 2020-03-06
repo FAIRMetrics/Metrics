@@ -53,14 +53,14 @@ A Maturity Indicator Test is a Web API that has the following features:
 
 For example
 
-    curl -L -X POST -H "Content-Type: application/json" -H "Accept: application/json" -d '{"subject": "10.5281/zenodo.1147435"}' http://w3id.org/FAIR_Tests/gen2_unique_identifier
+    curl -L -X POST -H "Content-Type: application/json" -H "Accept: application/json" -d '{"subject": "10.5281/zenodo.1147435"}' https://w3id.org/FAIR_Tests/tests/gen2_unique_identifier
 
 Might return the following result:
 
 
       [
         {
-          "@id": "http://w3id.org/FAIR_Tests/gen2_unique_identifier#10.5281/zenodo.1147435/result-2018-12-31T13:32:43+00:00",
+          "@id": "http://w3id.org/FAIR_Tests/tests/gen2_unique_identifier#10.5281/zenodo.1147435/result-2018-12-31T13:32:43+00:00",
           "@type": [
             "http://fairmetrics.org/resources/metric_evaluation_result"
           ],
@@ -72,13 +72,13 @@ Might return the following result:
           ],
           "http://schema.org/softwareVersion": [
            {
-             "@value": "0.2",
+             "@value": "Hvst-1.0.1:Tst-0.2.2",
              "@type": "http://www.w3.org/2001/XMLSchema#float"
            }
           ],
           "http://schema.org/comment": [
             {
-              "@value": "Found a Crossref DOI - pass",
+              "@value": "Found a DOI - pass",
               "@language": "en"
             }
           ],
@@ -98,7 +98,7 @@ Might return the following result:
       ]
 
 
-The "score" of the Maturity Indicator Test is the value of the "SIO:000300" (has_value) predicate, and must be a floating-point value between 0 and 1.  The precise meaning of that value should be explained in the Comments (schema:comment) section, along wth, for example, explanations for failure.  Other metadata is provided, as shown (all shown fields are required!).
+The "score" of the Maturity Indicator Test is the value of the "SIO:000300" (has_value) predicate, and must be binary 0 or 1.  The precise meaning of that value should be explained in the Comments (schema:comment) section, along wth, for example, explanations for failure.  Other metadata is provided, as shown (all shown fields are required!).
 
 **NOTE** No other information may be provided to the Maturity Indicator Test beyond the **metadata** GUID.  The purpose of FAIR Maturity Indicator Tests is to determine if machines can find, access, and "interpret" (meta)data, thus it is a firm requirement that only the metadata GUID may be given to the test.  The aspect of FAIRness being evaluated **must** be automatically discernable using that metadata.
 
