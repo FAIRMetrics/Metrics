@@ -18,7 +18,7 @@ require 'rest-client'
 require 'cgi'
 require 'digest'
 
-HARVESTER_VERSION="Hvst-1.0.1"
+HARVESTER_VERSION="Hvst-1.0.3"
 
 class Utils
     config = ParseConfig.new('config.conf')
@@ -467,6 +467,7 @@ class Utils
 
         file = Tempfile.new('foo', :encoding => 'UTF-8')
         body = body.force_encoding('UTF-8')
+	body.scrub!
         body = body.gsub(/"\@context"\s*\:\s*"https?\:\/\/schema.org\/?"/, '"@context": "https://schema.org/docs/jsonldcontext.json"')
         file.write(body)
         file.rewind
@@ -873,8 +874,8 @@ class Swagger
     @schemas = params.fetch(:schemas, [])
     @comments = params.fetch(:comments, [])
     @fairsharing_key_location = params.fetch(:fairsharing_key_location)
-  	@score = params.fetch(:score, 0)
-  	@testedGUID = params.fetch(:testedGUID, "")
+    @score = params.fetch(:score, 0)
+    @testedGUID = params.fetch(:testedGUID, "")
 	
 
 	
@@ -883,9 +884,7 @@ class Swagger
 	
 
   def fairsharing_key 
-      key = File.readlines(self.fairsharing_key_location)
-      key.strip!
-      return key 
+      return @fairsharing_key_location
   end
   
 
