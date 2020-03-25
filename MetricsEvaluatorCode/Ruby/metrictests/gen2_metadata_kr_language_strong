@@ -76,13 +76,13 @@ schemas = {'subject' => ['string', "the GUID being tested"]}
 			:responsible_developer => "Mark D Wilkinson",
 			:email => 'markw@illuminae.com',
 			:developer_ORCiD => '0000-0001-6960-357X',
-			:protocol => 'https',
-			:host => 'w3id.org',
-			:basePath => '/FAIR_Tests/tests/',
+			:protocol => ENV['TEST_PROTOCOL'],
+			:host => ENV['TEST_HOST'],
+			:basePath => ENV['TEST_PATH'],
 			:path => 'gen2_metadata_kr_language_strong',
 			:response_description => 'The response is a binary (1/0), success or failure',
 			:schemas => schemas,
-			:fairsharing_key_location => '../fairsharing.key',
+			:fairsharing_key_location => ENV['FAIRSHARING_KEY'],
 			:debug => false				 				 
 })
 

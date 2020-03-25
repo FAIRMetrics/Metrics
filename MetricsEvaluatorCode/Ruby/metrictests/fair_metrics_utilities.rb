@@ -18,7 +18,7 @@ require 'rest-client'
 require 'cgi'
 require 'digest'
 
-HARVESTER_VERSION="Hvst-1.0.3"
+HARVESTER_VERSION="Hvst-1.0.4"
 
 class Utils
     config = ParseConfig.new('config.conf')
@@ -1184,6 +1184,20 @@ class CommonQueries
 					swagger.addComment "INFO: found identifier #{@identifier} using DCAT distribution property.\n"
 					return @identifier
 				end
+			elsif prop =~ /mainEntity/
+				query = SPARQL.parse("select ?o where {
+                                     VALUES ?schemaidentifier {<http://schema.org/identifier> <https://schema.org/identifier>}
+                                     ?s <#{prop}> ?entity .
+									 ?entity  ?schemaidentifier ?o}")
+				results = query.execute(g)
+                if  results.any?
+					@identifier=results.first[:o].value
+					swagger.addComment "INFO: found identifier #{@identifier} using schema:mainEntity containing a schema:identifier clause.\n"
+					return @identifier
+                else
+					swagger.addComment "INFO: found schema:mainEntity, however it did not contain a schema:identifier.  Giving up.\n"
+                end
+				
 			else 
 				query = SPARQL.parse("select ?o where {?s <#{prop}> ?o}")
 				results = query.execute(g)

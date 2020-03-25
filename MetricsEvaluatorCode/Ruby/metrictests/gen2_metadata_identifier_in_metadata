@@ -9,7 +9,7 @@ require 'sparql'
 
 
 debug = false
-VERSION = "0.2"
+VERSION = HARVESTER_VERSION + ":" + "Tst-0.2.1"
 
 
 def testGUID
@@ -141,14 +141,14 @@ schemas = {'subject' => ['string', "the GUID being tested"]}
 			:responsible_developer => "Mark D Wilkinson",
 			:email => 'markw@illuminae.com',
 			:developer_ORCiD => '0000-0001-6960-357X',
-			:protocol => 'https',
-			:host => 'w3id.org',
-			:basePath => '/FAIR_Tests/tests/',
+			:protocol => ENV['TEST_PROTOCOL'],
+			:host => ENV['TEST_HOST'],
+			:basePath => ENV['TEST_PATH'],
 			:path => 'gen2_metadata_identifier_in_metadata',
-			:response_description => 'The response is a value between 0 and 1, depending on the precision of the match found (regexp match scores slightly lower)',
+			:response_description => 'The response is a binary (1/0), success or failure',
 			:schemas => schemas,
-			:fairsharing_key_location => '../fairsharing.key',
-				 				 
+			:fairsharing_key_location => ENV['FAIRSHARING_KEY'],
+			:debug => false			 				 
 })
 
 if (!cgi.request_method or cgi.request_method == "GET") and !debug

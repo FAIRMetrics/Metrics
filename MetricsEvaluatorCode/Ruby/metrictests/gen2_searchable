@@ -12,8 +12,9 @@ debug = false
 VERSION = HARVESTER_VERSION + ":" + "Tst-0.2.3"
 
 
-config = ParseConfig.new('config.conf')
-@accessKey = config['bing']['accessKey'] if config['bing'] && config['bing']['accessKey'] && !config['bing']['accessKey'].empty?
+#config = ParseConfig.new('config.conf')
+#@accessKey = config['bing']['accessKey'] if config['bing'] && config['bing']['accessKey'] && !config['bing']['accessKey'].empty?
+@accessKey = ENV['BING_API']
 
 def testGUID
 
@@ -31,6 +32,11 @@ def testGUID
 	@swagger.score = 0
 	if metadata.guidtype == "unknown"
 		@swagger.addComment("FAILURE: The identifier #{guid} did not match any known identification system (tested inchi, doi, handle, uri) and therefore did not pass this metric.  If you think this is an error, please contact the FAIR Metrics group (http://fairmetrics.org).\n")
+		return @swagger.createEvaluationResponse
+	end
+
+	unless @accessKey 
+		@swagger.addComment("NO ACCESS KEY CONFIGURED FOR BING. This test will now abort with failure")
 		return @swagger.createEvaluationResponse
 	end
 
@@ -276,13 +282,13 @@ schemas = {'subject' => ['string', "the GUID being tested"]}
 			:responsible_developer => "Mark D Wilkinson",
 			:email => 'markw@illuminae.com',
 			:developer_ORCiD => '0000-0001-6960-357X',
-			:protocol => 'https',
-			:host => 'w3id.org',
-			:basePath => '/FAIR_Tests/tests/',
+			:protocol => ENV['TEST_PROTOCOL'],
+			:host => ENV['TEST_HOST'],
+			:basePath => ENV['TEST_PATH'],
 			:path => 'gen2_searchable',
 			:response_description => 'The response is a binary (1/0), success or failure',
 			:schemas => schemas,
-			:fairsharing_key_location => '../fairsharing.key',
+			:fairsharing_key_location => ENV['FAIRSHARING_KEY'],
 			:debug => false				 				 
 })
 
