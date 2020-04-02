@@ -18,7 +18,7 @@ require 'rest-client'
 require 'cgi'
 require 'digest'
 
-HARVESTER_VERSION="Hvst-1.0.4"
+HARVESTER_VERSION="Hvst-1.0.5"
 
 class Utils
     config = ParseConfig.new('config.conf')
@@ -93,6 +93,8 @@ class Utils
     Utils::SELF_IDENTIFIER_PREDICATES = [
         'http://purl.org/dc/terms/identifier',
         'http://schema.org/identifier',
+        'https://purl.org/dc/terms/identifier',
+        'https://schema.org/identifier'
         ]
 
     Utils::GUID_TYPES = {'inchi' => Regexp.new(/^\w{14}\-\w{10}\-\w$/),
@@ -415,8 +417,20 @@ class Utils
         return meta
       end
       meta.comments << "INFO: The response message body component appears to contain #{formattype.to_s}.\n"
-      reader = formattype.reader.new(body)
+      reader = ""
+      begin
+          reader = formattype.reader.new(body)
+      rescue
+          meta.comments << "WARN: Though linked data was found, it failed to parse.  This likely indicates some syntax error in the data.  As a result, no metadata will be extracted from this message.\n"
+          return
+      end
+          
       #$stderr.puts "Reader Class #{reader.class}\n\n #{reader.inspect}"
+      if reader.size == 0
+          meta.comments << "WARN: Though linked data was found, it failed to parse.  This likely indicates some syntax error in the data.  As a result, no metadata will be extracted from this message.\n"
+          return
+      end
+          
       meta.merge_rdf(reader.to_a)
 
     end
