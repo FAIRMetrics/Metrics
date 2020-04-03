@@ -8,7 +8,7 @@ require 'rdf/turtle'
 require 'sparql'
 
 debug = false
-VERSION = HARVESTER_VERSION + ":" + "Tst-0.2.1"
+VERSION = HARVESTER_VERSION + ":" + "Tst-0.2.2"
 
 
 def testGUID
@@ -56,6 +56,8 @@ def testGUID
 	hosts = Array.new
 	finalURI.each {|uri| next unless uri =~ /http/; this = URI(uri); hosts << this.host}  #fill the list of domains that this resource is found i
 	g.each do |stm|
+		predicate = stm.predicate
+		next if predicate.to_s =~ /1999\/xhtml/  # ignore XHTML structural triples like buttons
 		object = stm.object
 		next unless object.resource? && !object.anonymous?
 		thisuri = URI(object.value)
@@ -64,7 +66,7 @@ def testGUID
 		count+=1
 	end
 	
-	if success 
+	if success > 1   # this is a very weak test!
 		@swagger.addComment("SUCCESS: #{success} of the #{count} triples discovered in the linked metadata pointed to resources hosted elsewhere.  ")
 		@swagger.score = 1
 	else

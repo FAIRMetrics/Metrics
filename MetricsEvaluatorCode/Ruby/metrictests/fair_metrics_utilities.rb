@@ -17,8 +17,9 @@ require 'parseconfig'
 require 'rest-client'
 require 'cgi'
 require 'digest'
+require 'open3'
 
-HARVESTER_VERSION="Hvst-1.0.5"
+HARVESTER_VERSION="Hvst-1.0.6"
 
 class Utils
     config = ParseConfig.new('config.conf')
@@ -430,6 +431,9 @@ class Utils
           meta.comments << "WARN: Though linked data was found, it failed to parse.  This likely indicates some syntax error in the data.  As a result, no metadata will be extracted from this message.\n"
           return
       end
+        #       reader.rewind!
+        # for some reason, the rewind method isn't working here...??
+      reader = formattype.reader.new(body)  # have to re-read it here, but now its safe because we have already caught errors
           
       meta.merge_rdf(reader.to_a)
 
@@ -508,8 +512,13 @@ class Utils
     def Utils::do_extruct(meta, uri)
       
         meta.comments << "INFO:  Using 'extruct' to try to extract metadata from return value (message body) of #{uri}.\n"
-        
-        result = %x{#{Utils::ExtructCommand} #{uri} 2>&1}
+        stdin, stdout, stderr, wait_thr = Open3.popen3('extruct', uri)
+        result = stderr.read # absurd that the output comes over stderr!  LOL!
+        stdin.close
+        stdout.close
+        stderr.close
+       
+        #result = %x{#{Utils::ExtructCommand} #{uri} 2>&1}
         #$stderr.puts "\n\n\n\n\n\n\n#{result.class}\n\n#{result.to_s}\n\n#{@extruct_command} #{uri} 2>&1\n\n"
         # need to do some error checking here!
         if result.to_s.match(/(Failed\sto\sextract.*?)\n/)
