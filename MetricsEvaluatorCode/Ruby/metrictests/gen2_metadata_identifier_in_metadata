@@ -9,7 +9,7 @@ require 'sparql'
 
 
 debug = false
-VERSION = HARVESTER_VERSION + ":" + "Tst-0.3.0"
+VERSION = HARVESTER_VERSION + ":" + "Tst-0.3.1"
 
 
 def testGUID
@@ -33,24 +33,14 @@ def testGUID
 	if metadata.graph.size > 0
 		@swagger.addComment("INFO: Linked Data Found.  Now searching for the metadata identifier using appropriate linked data predicates\n")
 		
+		foundID = CommonQueries::GetSelfIdentifier(metadata.graph, @swagger)
 		# query pattern-match in an object position
-		Utils::SELF_IDENTIFIER_PREDICATES.each do |p|
-			@swagger.addComment("INFO: testing predicate #{p.to_s}\n")
-
-			query = SPARQL.parse("select ?s ?o where {?s <#{p.to_s}> ?o}")
-			results = query.execute(metadata.graph)	
-			if results.any?
-				f = results.first
-				@swagger.addComment("SUCCESS: Found identifier #{f[:o].to_s} using predicate #{p.to_s} .")		
-				@swagger.score = 1.0
-			end
+		if not foundID.first.empty?
+			@swagger.score = 1.0
+		else 
+			@swagger.addComment("FAILURE: The identifier of the metadata record could not be found in the metadata\n")
 		end
 	end
-	
-
-	if @swagger.score == 0
-		@swagger.addComment("FAILURE: The identifier #{guid} was not found in the metadata using any appropriate predicate.\n")
-	end		
 	return @swagger.createEvaluationResponse  # release the result from all other tests
 	
 end
@@ -62,12 +52,13 @@ end
 
 if debug
 #       @input = '{"subject": "10.5281/zenodo.1147435"}'  # doi
-#       @input = '{"subject": "http://cnn.com"}'  # url
+       @input = '{"subject": "https://www.gbif.org/dataset/67c54f85-7910-4cbf-8de4-6f0b136a0e34"}'  # url
 #       @input = '{"subject": "BSYNRYMUTXBXSQ-UHFFFAOYSA-N"}' # inchi
 #       @input = '{"subject": "LFQSCWFLJHTTHZ-UHFFFAOYSA-N"}' # another inchi
 #       @input = '{"subject": "20.1000/105"}'  # handle
 #       @input = '{"subject": "10.25504/FAIRsharing.z4xpxx"}'  # handle
-        @input = '{"subject": "https://doi.org/10.5281/zenodo.3349821"}'  # contains identifier clause
+#        @input = '{"subject": "https://doi.org/10.5281/zenodo.3349821"}'  # contains identifier clause
+
 else
 	@input = $stdin.read
 end

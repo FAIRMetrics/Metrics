@@ -19,7 +19,7 @@ require 'cgi'
 require 'digest'
 require 'open3'
 
-HARVESTER_VERSION="Hvst-1.0.6"
+HARVESTER_VERSION="Hvst-1.0.7"
 
 class Utils
     config = ParseConfig.new('config.conf')
@@ -1139,8 +1139,8 @@ class CommonQueries
     def CommonQueries::GetSelfIdentifier(g, swagger)
  
  		Utils::SELF_IDENTIFIER_PREDICATES.each do |prop|
-   
-			if prop =~ /schema\.org\/identifier/
+            identifiers = Array.new()
+            if prop =~ /schema\.org\/identifier/
                 # test 1 - this assumes that the identifier node attached to "root" is the one we are looking for
                 # and assumes the PropertyValue schema for the value of identifier
                 query = SPARQL.parse("select * where {
@@ -1150,32 +1150,40 @@ class CommonQueries
                                     ?s ?predi ?i .
                                     ?i a ?predpv .
                                     ?i ?predval ?identifier .
-                                    FILTER NOT EXISTS {?sub ?pred ?s} }")
+                                    FILTER NOT EXISTS {?sub ?pred ?s} } #must be the root, if not, we don't know what id it is!
+                ")
                 results = query.execute(g)
                 if  results.any?
-                        @identifier=results.first[:identifier].value
+                    results.each do |r|
+                        @identifier=r[:identifier].value
                         swagger.addComment "INFO: found identifier #{@identifier} using Schema.org identifier as PropertyValue.\n"
-                        return @identifier
-                end
-        
-                # test 2 - a simple URL or a value from schema
-                query = SPARQL.parse("select ?o where {?s <#{prop}> ?o}")
-                results = query.execute(g)
-                if  results.any?
-                        @identifier=results.first[:o].value
-                        swagger.addComment "INFO: found identifier #{@identifier} using Schema.org identifier property as a simple URL or string value.\n"
-                        return @identifier
+                        identifiers << @identifier
+                    end
+                else 
+                    # test 2 - a simple URL or a value from schema
+                    query = SPARQL.parse("select ?o where {?s <#{prop}> ?o}")
+                    results = query.execute(g)
+                    if  results.any?
+                        results.each do |r|
+                            @identifier=r[:identifier].value
+                            swagger.addComment "INFO: found identifier #{@identifier} using Schema.org identifier as with a string or URI value.\n"
+                            identifiers << @identifier
+                        end
+                    end
                 end
             else
                 query = SPARQL.parse("select ?o where {?s <#{prop}> ?o}")
 				results = query.execute(g)
 				if results.any?
-					@identifier=results.first[:o].value
-					swagger.addComment "INFO: found identifier #{@identifier} using #{prop}.\n"
-					return @identifier
+                    results.each do |r|
+                        @identifier=r[:identifier].value
+                        swagger.addComment "INFO: found identifier #{@identifier} using #{prop} as a string or URI.\n"
+                        identifiers << @identifier
+                    end
 				end
-			end
+            end
         end
+ 		
     end
  		
     
