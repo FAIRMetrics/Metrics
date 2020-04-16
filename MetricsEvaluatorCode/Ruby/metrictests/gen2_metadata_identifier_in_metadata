@@ -9,7 +9,7 @@ require 'sparql'
 
 
 debug = false
-VERSION = HARVESTER_VERSION + ":" + "Tst-0.3.1"
+VERSION = HARVESTER_VERSION + ":" + "Tst-0.4.0"
 
 
 def testGUID
@@ -30,17 +30,26 @@ def testGUID
 		return @swagger.createEvaluationResponse
 	end	
 
+	foundID = []
 	if metadata.graph.size > 0
 		@swagger.addComment("INFO: Linked Data Found.  Now searching for the metadata identifier using appropriate linked data predicates\n")
 		
 		foundID = CommonQueries::GetSelfIdentifier(metadata.graph, @swagger)
 		# query pattern-match in an object position
-		if not foundID.first.empty?
-			@swagger.score = 1.0
-		else 
-			@swagger.addComment("FAILURE: The identifier of the metadata record could not be found in the metadata\n")
+		if foundID.first.empty?
+			@swagger.score = 0
+			@swagger.addComment("FAILURE: No metadata identifiers were found in the metadata record\n")
+			return @swagger.createEvaluationResponse  # release the result from all other tests
 		end
 	end
+	if foundID.include?(guid)
+			@swagger.score = 1
+			@swagger.addComment("SUCCESS: the starting identifier (#{guid}) was found in the structured metadata\n")
+	else	
+			@swagger.score = 0
+			@swagger.addComment("FAILURE: While (apparent) metadata record identifiers were found (#{foundID.join(',')}) none of them matched the initial GUID provided to the test (#{guid}).  Exact identifier match is required.\n")
+	end
+
 	return @swagger.createEvaluationResponse  # release the result from all other tests
 	
 end
@@ -52,7 +61,8 @@ end
 
 if debug
 #       @input = '{"subject": "10.5281/zenodo.1147435"}'  # doi
-       @input = '{"subject": "https://www.gbif.org/dataset/67c54f85-7910-4cbf-8de4-6f0b136a0e34"}'  # url
+#		@input = '{"subject": "https://www.gbif.org/dataset/67c54f85-7910-4cbf-8de4-6f0b136a0e34"}'  # url
+@input = '{"subject": "https://ortus.rtu.lv/science/lv/datamodule/303"}'  # url
 #       @input = '{"subject": "BSYNRYMUTXBXSQ-UHFFFAOYSA-N"}' # inchi
 #       @input = '{"subject": "LFQSCWFLJHTTHZ-UHFFFAOYSA-N"}' # another inchi
 #       @input = '{"subject": "20.1000/105"}'  # handle

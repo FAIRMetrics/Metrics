@@ -18,18 +18,36 @@ require 'rest-client'
 require 'cgi'
 require 'digest'
 require 'open3'
+require 'metainspector'
 
-HARVESTER_VERSION="Hvst-1.0.7"
+
+HARVESTER_VERSION="Hvst-1.0.8"
 
 class Utils
     config = ParseConfig.new('config.conf')
     
     @extruct_command = config['extruct']['command'] if config['extruct'] && config['extruct']['command'] && !config['extruct']['command'].empty?
     @extruct_command = "extruct" unless @extruct_command
+    @extruct_command.strip!
+    case @extruct_command
+    when /[&\|\;\`\$\s]/
+        abort "The Extruct command in the config file appears to be subject to command injection.  I will not continue"
+    when /echo/i
+        abort "The Extruct command in the config file appears to be subject to command injection.  I will not continue"
+    end
     Utils::ExtructCommand = @extruct_command
 
     @rdf_command = config['rdf']['command'] if config['rdf'] && config['rdf']['command'] && !config['rdf']['command'].empty?
     @rdf_command = "rdf" unless @rdf_command
+    @rdf_command.strip
+    case @rdf_command
+    when /[&\|\;\`\$\s]/
+        abort "The RDF command in the config file appears to be subject to command injection.  I will not continue"
+    when /echo/i
+        abort "The RDF command in the config file appears to be subject to command injection.  I will not continue"
+    when !(/rdf$/)
+        abort "this software requires that Kelloggs Distiller tool is used. The distiller command must end in 'rdf'"
+    end
     Utils::RDFCommand = @rdf_command
 
     @tika_command = config['tika']['command'] if config['tika'] && config['tika']['command'] && !config['tika']['command'].empty?
@@ -174,7 +192,7 @@ class Utils
 #$stderr.puts "4"
       
       (parser, type) = Utils::figure_out_type(head)
-      unless parser
+      unless parser and type
         meta.comments << "CRITICAL: Couldn't find a parser for the data returned from https://pubchem.ncbi.nlm.nih.gov/rest/rdf/inchikey/#{guid}. Halting. \n"
         return meta
       end
@@ -294,9 +312,13 @@ class Utils
       meta.full_response << body
 
       links = Array.new
-      links = Utils::parse_link_meta_headers(head) unless nolinkheaders
+      links << Utils::parse_link_http_headers(head) unless nolinkheaders
+      links << Utils::parse_link_body_headers(guid, body) unless nolinkheaders
+      links.flatten!
+      links.compact!
+      $stderr.puts "\n\n\nLINKS TO FOLLOW: #{links}\n\n\n"
       links.each do |link|
-          meta.comments << "INFO: a Link 'meta' header was found: #{link}, and is now being followed as an independent URI that may contain metadata.\n"
+          meta.comments << "INFO: a Link 'alternate' or 'meta' header was found: #{link}, and is now being followed as an independent URI that may contain metadata.\n"
           Utils::resolve_url(link, meta, true)
       end  # this fills the metadata object with the content from Link headers, but not recursively
       
@@ -304,6 +326,16 @@ class Utils
       
       meta.comments << "INFO: Found #{parser} #{contenttype} type of content when resolving #{guid} using HTTP Accept header #{header.to_s}.\n"
       #$stderr.puts "\n\nFound #{parser} type of file by resolving GUID #{guid}.  BODY:  #{response.body}  \n\n"
+        
+        
+        
+        #  DO SAMPLING FIRSY TO FIND A MATCH
+        
+        
+        
+        
+        
+        
         
         case
         when Utils::TEXT_FORMATS.keys.include?(parser)
@@ -353,10 +385,7 @@ class Utils
           meta.comments << "INFO: Metadata may be embedded, now searching using the 'extruct' tool.\n"
           Utils::do_extruct(meta, url)
         end
-        
-        #curl -X GET http://localhost:9998/tika
-        #curl -T polyA http://localhost:9998/meta --header "Accept: application/rdf+xml" --header "Content-Type: application/xhtml+xml"
-  
+          
       return meta
 
     end
@@ -485,10 +514,11 @@ class Utils
 
         file = Tempfile.new('foo', :encoding => 'UTF-8')
         body = body.force_encoding('UTF-8')
-	body.scrub!
+        body.scrub!
         body = body.gsub(/"\@context"\s*\:\s*"https?\:\/\/schema.org\/?"/, '"@context": "https://schema.org/docs/jsonldcontext.json"')
         file.write(body)
         file.rewind
+        #$stderr.puts "\n\nBODY IS #{body}\n\n"
         meta.comments << "INFO: The message body is being examined by Distiller\n"
         command = "LANG=en_US.UTF-8 #{Utils::RDFCommand} serialize --input-format rdfa --output-format turtle #{file.path} 2>/dev/null"
         result =  %x{#{command}}
@@ -497,8 +527,7 @@ class Utils
 
        
         result = result.force_encoding('UTF-8')        
-        #head, body = Utils::simplefetch("http://rdf.greggkellogg.net/distiller?command=serialize&format=rdfa&url=#{urlparam}&output_format=turtle", {"Accept" => "*/*"}, meta)
-        # need to do some error checking here!
+       
         if !(result =~ /\w/)  # failure returns nil
             meta.comments << "WARN: The Distiller tool failed to find parseable data in the body.\n"
         else
@@ -513,6 +542,7 @@ class Utils
       
         meta.comments << "INFO:  Using 'extruct' to try to extract metadata from return value (message body) of #{uri}.\n"
         stdin, stdout, stderr, wait_thr = Open3.popen3('extruct', uri)
+        $stderr.puts "open3 status: #{wait_thr.value}"
         result = stderr.read # absurd that the output comes over stderr!  LOL!
         stdin.close
         stdout.close
@@ -568,7 +598,7 @@ class Utils
     
 
     
-    def Utils::parse_link_meta_headers(headers)
+    def Utils::parse_link_http_headers(headers)
       # we can be sure that a Link header is a URL
       # code stolen from https://gist.github.com/thesowah/0ca5e1b4b3c61bfe8e13 with a few tweaks
 
@@ -578,7 +608,7 @@ class Utils
       
       parts = links.split(',')
 
-      links = Array.new
+      urls = Array.new
       # Parse each part into a named link
       parts.each do |part, index|
         section = part.split(';')
@@ -586,13 +616,29 @@ class Utils
         url = section[0][/<(.*)>/,1]
         next unless section[1]
         type = section[1][/rel="?(.*)"?/,1]
-        next unless type == "meta"  # only keep meta headers
-        links << url
+        next unless ["meta", "alternate"].include?(type.downcase)  # "meta" headers are for old versions of Virtuoso LDP - not in link relations standared
+        urls << url
       end
       return links
       
     end
     
+    def Utils::parse_link_body_headers(url, body)
+         
+	    m = MetaInspector.new(url, document: body)
+	    # accept any alternate that is in structured data format
+        ls = m.head_links.select {|l|  l[:rel]=="alternate" and
+                                    [Utils::RDF_FORMATS.values,
+                                     Utils::XML_FORMATS.values,
+                                     Utils::JSON_FORMATS.values].flatten
+                                     .include?(l[:type])}
+        # ls is an array of elements that look like this: [{:rel=>"alternate", :type=>"application/ld+json", :href=>"http://scidata.vitk.lv/dataset/303.jsonld"}]
+        urls = ls.map{|l| l[:href]}
+        urls.compact
+        $stderr.puts "\n\nGOT BODY LINKS #{urls}\n\n"
+        return urls
+      
+    end
     
     
     
@@ -1138,8 +1184,9 @@ class CommonQueries
     
     def CommonQueries::GetSelfIdentifier(g, swagger)
  
+        identifiers = Array.new()
+
  		Utils::SELF_IDENTIFIER_PREDICATES.each do |prop|
-            identifiers = Array.new()
             if prop =~ /schema\.org\/identifier/
                 # test 1 - this assumes that the identifier node attached to "root" is the one we are looking for
                 # and assumes the PropertyValue schema for the value of identifier
@@ -1156,7 +1203,7 @@ class CommonQueries
                 if  results.any?
                     results.each do |r|
                         @identifier=r[:identifier].value
-                        swagger.addComment "INFO: found identifier #{@identifier} using Schema.org identifier as PropertyValue.\n"
+                        swagger.addComment "INFO: found identifier '#{@identifier}' using Schema.org identifier as PropertyValue.\n"
                         identifiers << @identifier
                     end
                 else 
@@ -1166,24 +1213,25 @@ class CommonQueries
                     if  results.any?
                         results.each do |r|
                             @identifier=r[:identifier].value
-                            swagger.addComment "INFO: found identifier #{@identifier} using Schema.org identifier as with a string or URI value.\n"
+                            swagger.addComment "INFO: found identifier '#{@identifier}' using Schema.org identifier as with a string or URI value.\n"
                             identifiers << @identifier
                         end
                     end
                 end
             else
-                query = SPARQL.parse("select ?o where {?s <#{prop}> ?o}")
+                query = SPARQL.parse("select ?identifier where {?s <#{prop}> ?identifier}")
 				results = query.execute(g)
 				if results.any?
                     results.each do |r|
                         @identifier=r[:identifier].value
-                        swagger.addComment "INFO: found identifier #{@identifier} using #{prop} as a string or URI.\n"
+                        swagger.addComment "INFO: found identifier '#{@identifier}' using #{prop} as a string or URI.\n"
                         identifiers << @identifier
                     end
 				end
             end
         end
  		
+ 		return identifiers
     end
  		
     
@@ -1200,7 +1248,7 @@ class CommonQueries
 					results = query.execute(g)
 					if  results.any?
 							@identifier=results.first[:o].value
-							swagger.addComment "INFO: found identifier #{@identifier} using Schema.org distribution property.\n"
+							swagger.addComment "INFO: found identifier '#{@identifier}' using Schema.org distribution property.\n"
 							return @identifier
 
 					end
@@ -1212,7 +1260,7 @@ class CommonQueries
 				results = query.execute(g)
 				if  results.any?
 					@identifier=results.first[:o].value
-					swagger.addComment "INFO: found identifier #{@identifier} using DCAT distribution property.\n"
+					swagger.addComment "INFO: found identifier '#{@identifier}' using DCAT distribution property.\n"
 					return @identifier
 				end
 			elsif prop =~ /mainEntity/
@@ -1223,7 +1271,7 @@ class CommonQueries
 				results = query.execute(g)
                 if  results.any?
 					@identifier=results.first[:o].value
-					swagger.addComment "INFO: found identifier #{@identifier} using schema:mainEntity containing a schema:identifier clause.\n"
+					swagger.addComment "INFO: found identifier '#{@identifier}' using schema:mainEntity containing a schema:identifier clause.\n"
 					return @identifier
                 else
 					swagger.addComment "INFO: found schema:mainEntity, however it did not contain a schema:identifier.  Giving up.\n"
@@ -1234,7 +1282,7 @@ class CommonQueries
 				results = query.execute(g)
 				if results.any?
 					@identifier=results.first[:o].value
-					swagger.addComment "INFO: found identifier #{@identifier} using #{prop}.\n"
+					swagger.addComment "INFO: found identifier '#{@identifier}' using #{prop}.\n"
                     return @identifier
 				end
 			end
