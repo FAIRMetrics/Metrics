@@ -8,7 +8,7 @@ require 'rdf/turtle'
 require 'sparql'
 
 debug = false
-VERSION = HARVESTER_VERSION + ":" + "Tst-0.2.1"
+VERSION = HARVESTER_VERSION + ":" + "Tst-0.2.3"
 
 def testGUID
 
@@ -49,7 +49,31 @@ def testGUID
 		break if count>=8
 		next if seen.include?stm.predicate.value
 		seen << stm.predicate.value
-		next if stm.predicate.value =~ /www\.w3\.org\/1999\/xhtml\/vocab/  # this is a very problematic site!
+		next if stm.predicate.value =~ /1999\/xhtml\//  # this is a very problematic site!
+		next if stm.predicate.value =~ /rdf-syntax-ns/  # skip rdf structural elements
+		case stm.predicate.value
+		when /purl.org\/dc\//  # these resolve very slowly, so just accept that they are ok!
+			@swagger.addComment "INFO:  testing resolution of predicate #{stm.predicate.value}\n"
+			success += 1
+			count += 1
+			next
+		when /\/vcard\//   # these resolve very slowly, so just accept that they are ok!
+			@swagger.addComment "INFO:  testing resolution of predicate #{stm.predicate.value}\n"
+			success += 1
+			count += 1
+			next
+		when /w3\.org\/ns\/dcat/
+			@swagger.addComment "INFO:  testing resolution of predicate #{stm.predicate.value}\n"
+			success += 1
+			count += 1
+			next
+		when /xmlns\.com\/foaf\//
+			@swagger.addComment "INFO:  testing resolution of predicate #{stm.predicate.value}\n"
+			success += 1
+			count += 1
+			next			
+		end
+		
 		@swagger.addComment "INFO:  testing resolution of predicate #{stm.predicate.value}\n"
 		metadata2 = Utils::resolveit(stm.predicate.value)  # this  sends the content-negotiation for linked data
 		g2 = metadata2.graph
@@ -83,9 +107,9 @@ if debug
 #	@input = '{"subject": "BSYNRYMUTXBXSQ-UHFFFAOYSA-N"}' # inchi
 #	@input = '{"subject": "LFQSCWFLJHTTHZ-UHFFFAOYSA-N"}' # another inchi
 #	@input = '{"subject": "20.1000/105"}'  # handle (fail)
-#	@input = '{"subject": "http://w3id.org/Magnaporthe/polyA_Sites"}'  # handle#
+	@input = '{"subject": "https://ortus.rtu.lv/science/lv/datamodule/303"}'  # handle#
 #	@input = '{"subject": "http://hdl.handle.net/11250/2631642"}'  # doi 
-	@input = '{"subject": "10.25504/FAIRsharing.6k0kwd"}'  # doi fail
+#	@input = '{"subject": "10.25504/FAIRsharing.6k0kwd"}'  # doi fail
 #        @input = '{"subject": "https://www.ebi.ac.uk/arrayexpress/"}' 
 #	@input = '{"subject": "https://catalogue.bbmri.nl/menu/main/app-molgenis-app-biobank-explorer/biobank/report/bbmri-eric:ID:NL_AAAACXPAWTUFCACQK2ME25QAAM"}'
 

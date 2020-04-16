@@ -46,7 +46,36 @@ def testGUID
 	success = 0  # we will accept 5/10 failures
 	count = 0
 	g.each do |stm|
-		break if count>=6
+		
+		
+		break if count>=8
+		
+		seen << stm.predicate.value
+		next if stm.predicate.value =~ /1999\/xhtml\//  # this is a very problematic site!
+		next if stm.predicate.value =~ /rdf-syntax-ns/  # skip rdf structural elements
+		case stm.predicate.value
+		when /purl.org\/dc\//  # these resolve very slowly, so just accept that they are ok!
+			@swagger.addComment "INFO:  testing resolution of predicate #{stm.predicate.value}\n"
+			success += 1
+			count += 1
+			next
+		when /\/vcard\//   # these resolve very slowly, so just accept that they are ok!
+			@swagger.addComment "INFO:  testing resolution of predicate #{stm.predicate.value}\n"
+			success += 1
+			count += 1
+			next
+		when /w3\.org\/ns\/dcat/
+			@swagger.addComment "INFO:  testing resolution of predicate #{stm.predicate.value}\n"
+			success += 1
+			count += 1
+			next
+		when /xmlns\.com\/foaf\//
+			@swagger.addComment "INFO:  testing resolution of predicate #{stm.predicate.value}\n"
+			success += 1
+			count += 1
+			next			
+		end
+
 		check = Utils::resolve(stm.predicate)  # this only does URL resolution, no retrieval - returns a string or false
 		success += 1 if check
 		count+=1
