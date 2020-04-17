@@ -8,7 +8,7 @@ require 'rdf/turtle'
 require 'sparql'
 
 debug = false
-VERSION = HARVESTER_VERSION + ":" + "Tst-0.2.3"
+VERSION = HARVESTER_VERSION + ":" + "Tst-0.2.5"
 
 
 def testGUID
@@ -45,6 +45,8 @@ def testGUID
 
 	success = 0  # we will accept 5/10 failures
 	count = 0
+	seen = Array.new
+
 	g.each do |stm|
 		
 		

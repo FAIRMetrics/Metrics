@@ -21,7 +21,7 @@ require 'open3'
 require 'metainspector'
 
 
-HARVESTER_VERSION="Hvst-1.0.8"
+HARVESTER_VERSION="Hvst-1.1.0"
 
 class Utils
     config = ParseConfig.new('config.conf')
@@ -421,51 +421,67 @@ class Utils
     
     def Utils::parse_rdf(meta, body, format=nil)
 
-      #$stderr.puts "\n\n\nSampling \n\n#{body[0..2000]}\n\n"
-      unless body
-          meta.comments << "CRITICAL: The response message body component appears to have no content.\n"
-          return meta
-      end
-      unless body.match(/\w/)
-          meta.comments << "CRITICAL: The response message body component appears to have no content.\n"
-          return meta
-      end
-      formattype = nil
-      $stderr.puts "\n\n\ndeclared format #{format}\n\n"
-      if !format.nil?
-          $stderr.puts "\n\n\ntesting declared format #{format}\n\n"
-          formattype = RDF::Format.for(content_type: format)
-          $stderr.puts "\n\n\nfound format #{formattype}\n\n"
-      else
-          formattype = RDF::Format.for({:sample => body[0..3000]})
-          $stderr.puts "\n\n\ndetected format #{formattype}\n\n"          
-      end
-      $stderr.puts "\n\n\nfinal format #{formattype}\n\n"          
-
-      if !formattype
-        meta.comments << "CRITICAL: Unable to find an RDF reader type that matches the content that was returned from resolution.  Here is a sample #{body[0..100]}  Please send your GUID to the dev team so we can investigate!\n"
-        return meta
-      end
-      meta.comments << "INFO: The response message body component appears to contain #{formattype.to_s}.\n"
-      reader = ""
-      begin
-          reader = formattype.reader.new(body)
-      rescue
-          meta.comments << "WARN: Though linked data was found, it failed to parse.  This likely indicates some syntax error in the data.  As a result, no metadata will be extracted from this message.\n"
-          return
-      end
+        unless body
+            meta.comments << "CRITICAL: The response message body component appears to have no content.\n"
+            return meta
+        end
+        unless body.match(/\w/)
+            meta.comments << "CRITICAL: The response message body component appears to have no content.\n"
+            return meta
+        end
+        
+        
+        $stderr.puts "\n\n\nSANITY CHECK \n\n#{body[0..30]}\n\n"
+        sanitycheck = RDF::Format.for({:sample => body[0..5000]})
+        unless sanitycheck
+            meta.comments << "CRITICAL: The Evaluator found what it believed to be RDF, but it could not find a parser.  Please report this error, along with the GUID of the resource, to the maintainer of the system.\n"
+            return meta
+        end
           
-      #$stderr.puts "Reader Class #{reader.class}\n\n #{reader.inspect}"
-      if reader.size == 0
-          meta.comments << "WARN: Though linked data was found, it failed to parse.  This likely indicates some syntax error in the data.  As a result, no metadata will be extracted from this message.\n"
-          return
-      end
-        #       reader.rewind!
-        # for some reason, the rewind method isn't working here...??
-      reader = formattype.reader.new(body)  # have to re-read it here, but now its safe because we have already caught errors
-          
-      meta.merge_rdf(reader.to_a)
+        graph = Utils::checkRDFCache(body)
+        if graph
+          $stderr.puts "\n\n\nunmarshalling graph from cache\n\n"
+          meta.merge_rdf(graph)
+        else
+    
+          formattype = nil
+          $stderr.puts "\n\n\ndeclared format #{format}\n\n"
+          if !format.nil?
+              $stderr.puts "\n\n\ntesting declared format #{format}\n\n"
+              formattype = RDF::Format.for(content_type: format)
+              $stderr.puts "\n\n\nfound format #{formattype}\n\n"
+          else
+              formattype = RDF::Format.for({:sample => body[0..3000]})
+              $stderr.puts "\n\n\ndetected format #{formattype}\n\n"          
+          end
+          $stderr.puts "\n\n\nfinal format #{formattype}\n\n"          
+    
+          if !formattype
+            meta.comments << "CRITICAL: Unable to find an RDF reader type that matches the content that was returned from resolution.  Here is a sample #{body[0..100]}  Please send your GUID to the dev team so we can investigate!\n"
+            return meta
+          end
+          meta.comments << "INFO: The response message body component appears to contain #{formattype.to_s}.\n"
+          reader = ""
+          begin
+              reader = formattype.reader.new(body)
+          rescue
+              meta.comments << "WARN: Though linked data was found, it failed to parse.  This likely indicates some syntax error in the data.  As a result, no metadata will be extracted from this message.\n"
+              return
+          end
+              
+          #$stderr.puts "Reader Class #{reader.class}\n\n #{reader.inspect}"
+          if reader.size == 0
+              meta.comments << "WARN: Though linked data was found, it failed to parse.  This likely indicates some syntax error in the data.  As a result, no metadata will be extracted from this message.\n"
+              return
+          end
+            #       reader.rewind!
+            # for some reason, the rewind method isn't working here...??
+          reader = formattype.reader.new(body)  # have to re-read it here, but now its safe because we have already caught errors
+          Utils::writeRDFCache(reader, body)  # write to the special RDF graph cache
+          meta.merge_rdf(reader.to_a)
 
+        end
+      
     end
     
     
@@ -710,6 +726,15 @@ class Utils
 
   def Utils::fetch(url, headers = Utils::AcceptHeader, meta=nil)  #we will try to retrieve turtle whenever possible
 
+        head, body, finalURI = Utils::checkCache(url, headers)
+        if meta and finalURI
+            meta.finalURI |= [finalURI]
+        end
+        if head and body
+            $stderr.puts "Retrieved from cache, returning data to code"
+            return [head, body]
+        end
+
         head = Utils::head(url, headers)
         unless head  # returns false for a 404
             if meta
@@ -723,14 +748,6 @@ class Utils
             return false
         end
 
-        head, body, finalURI = Utils::checkCache(url, headers)
-        if meta and finalURI
-            meta.finalURI |= [finalURI]
-        end
-        if head and body
-            $stderr.puts "Retrieved from cache, returning data to code"
-            return [head, body]
-        end
 
 		begin
 			response = RestClient::Request.execute({
@@ -854,6 +871,31 @@ class Utils
 
   end
   
+  
+    def Utils::checkRDFCache(body)
+        filename = Digest::MD5.hexdigest body
+        g = RDF::Graph.new()
+        if File.exist?("/tmp/#{filename}_graph")
+    
+            graph = Marshal.load(File.read("/tmp/#{filename}_graph"))
+            graph.each do |statement|
+                    g << statement
+            end
+        end
+        
+        return g
+    end
+    
+    
+    def Utils::writeRDFCache(reader, body)
+        filename = Digest::MD5.hexdigest body
+        
+        graph = RDF::Graph.new()
+        reader.each_statement {|s| graph << s}
+        File.open("/tmp/#{filename}_graph", 'wb') { |f| f.write(Marshal.dump(graph)) }
+    end
+            
+    
   
     def Utils::checkCache(uri, headers)
        filename = Digest::MD5.hexdigest uri + headers.to_s
