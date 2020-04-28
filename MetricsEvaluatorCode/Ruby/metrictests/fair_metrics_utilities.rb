@@ -21,7 +21,7 @@ require 'open3'
 require 'metainspector'
 
 
-HARVESTER_VERSION="Hvst-1.1.0"
+HARVESTER_VERSION="Hvst-1.1.3"
 
 class Utils
     config = ParseConfig.new('config.conf')
@@ -175,7 +175,7 @@ class Utils
     
     
     def Utils::resolve_inchi(guid, meta)
-      meta.guidtype = "inchi"
+      meta.guidtype = "inchi" if meta.guidtype.nil?
       
       meta.comments << "INFO: Found an InChI Key GUID.\n"
 #$stderr.puts "1"
@@ -245,7 +245,7 @@ class Utils
     
     
     def Utils::resolve_doi(guid, meta)
-      meta.guidtype = "doi"
+      meta.guidtype = "doi" if meta.guidtype.nil?
       meta.comments << "INFO:  Found a DOI.\n"
 
       meta.comments << "INFO:  Attempting to resolve https://doi.org/#{guid} using HTTP Headers #{Utils::AcceptHeader.to_s}.\n"
@@ -272,7 +272,7 @@ class Utils
     
     def Utils::resolve_handle(guid, meta)
       
-      meta.guidtype = "handle"
+      meta.guidtype = "handle" if meta.guidtype.nil?
       meta.comments << "INFO: Found a non-DOI Handle.\n"
       meta.comments << "INFO:  Attempting to resolve http://hdl.handle.net/#{guid} using HTTP Headers #{Utils::AcceptHeader.to_s}.\n"
       Utils::resolve_uri("http://hdl.handle.net/#{guid}", meta)
@@ -284,7 +284,7 @@ class Utils
       
     def Utils::resolve_uri(guid, meta)
       
-      meta.guidtype = "uri"
+      meta.guidtype = "uri" if meta.guidtype.nil?
       meta.comments << "INFO: Found a URI.\n"
       meta.comments << "INFO:  Attempting to resolve #{guid} using HTTP Headers #{Utils::AcceptHeader.to_s}.\n"
       Utils::resolve_url(guid, meta, false)
@@ -300,7 +300,7 @@ class Utils
     
     
     def Utils::resolve_url(guid, meta, nolinkheaders=false, header=Utils::AcceptHeader)
-      meta.guidtype = "uri" if meta.guidtype == "unknown"  # might have been set already, e.g. to 'handle' or 'doi'
+      meta.guidtype = "uri" if meta.guidtype.nil?
       $stderr.puts "\n\n FETCHING #{guid} #{header}\n\n"
       head, body = Utils::fetch(guid, header, meta)
       if !head
@@ -439,9 +439,10 @@ class Utils
         end
           
         graph = Utils::checkRDFCache(body)
-        if graph
+        if graph.size > 0
           $stderr.puts "\n\n\nunmarshalling graph from cache\n\n"
-          meta.merge_rdf(graph)
+          $stderr.puts "\n\ngraph size #{graph.size} #{graph.inspect}\n\n"
+          meta.merge_rdf(graph.to_a)
         else
     
           formattype = nil
@@ -477,7 +478,10 @@ class Utils
             #       reader.rewind!
             # for some reason, the rewind method isn't working here...??
           reader = formattype.reader.new(body)  # have to re-read it here, but now its safe because we have already caught errors
+          $stderr.puts "WRITING TO CACHE"
           Utils::writeRDFCache(reader, body)  # write to the special RDF graph cache
+          $stderr.puts "WRITING DONE"
+          reader = formattype.reader.new(body)
           meta.merge_rdf(reader.to_a)
 
         end
@@ -631,11 +635,11 @@ class Utils
         next unless section[0]
         url = section[0][/<(.*)>/,1]
         next unless section[1]
-        type = section[1][/rel="?(.*)"?/,1]
+        type = section[1][/rel="?(\w+)"?/,1]
         next unless ["meta", "alternate"].include?(type.downcase)  # "meta" headers are for old versions of Virtuoso LDP - not in link relations standared
         urls << url
       end
-      return links
+      return urls
       
     end
     
@@ -727,6 +731,10 @@ class Utils
   def Utils::fetch(url, headers = Utils::AcceptHeader, meta=nil)  #we will try to retrieve turtle whenever possible
 
         head, body, finalURI = Utils::checkCache(url, headers)
+        if head and head== "ERROR"
+            return false
+        end
+        
         if meta and finalURI
             meta.finalURI |= [finalURI]
         end
@@ -734,22 +742,24 @@ class Utils
             $stderr.puts "Retrieved from cache, returning data to code"
             return [head, body]
         end
-
-        head = Utils::head(url, headers)
-        unless head  # returns false for a 404
-            if meta
-                meta.comments << "WARN: The URL: #{url} doesn't exist (returns 404 or other HTTP error)"
-                return false
-            end
-        end
+        $stderr.puts "In fetch routine now.  "
+        
+#        head = Utils::head(url, headers)
+#        unless head  # returns false for a 404
+#            if meta
+#                meta.comments << "WARN: The URL: #{url} doesn't exist (returns 404 or other HTTP error)"
+#                return false
+#            end
+#        end
         #$stderr.puts "content length " + head[:content_length].to_s
-        if head[:content_length] and head[:content_length].to_f > 300000 and meta
-            meta.comments << "WARN: The size of the content at #{url} reports itself to be >300kb.  This service will not download something so large.  This does not mean that the content is not FAIR, only that this service will not test it.  Sorry!\n"
-            return false
-        end
+#        if head[:content_length] and head[:content_length].to_f > 300000 and meta
+#            meta.comments << "WARN: The size of the content at #{url} reports itself to be >300kb.  This service will not download something so large.  This does not mean that the content is not FAIR, only that this service will not test it.  Sorry!\n"
+#            return false
+#        end
 
 
 		begin
+            $stderr.puts "executing call over the Web to #{url.to_s}"
 			response = RestClient::Request.execute({
 					method: :get,
 					url: url.to_s,
@@ -759,18 +769,22 @@ class Utils
             if meta
     			meta.finalURI |= [response.request.url]
             end
+            $stderr.puts "There was a response to the call #{url.to_s}"
 			Utils::writeToCache(url, headers, response.headers, response.body, response.request.url)
 			return [response.headers, response.body]
 		rescue RestClient::ExceptionWithResponse => e
-			$stderr.puts e.response
+			$stderr.puts "ERROR! " + e.response
+			Utils::writeErrorToCache(url, headers)
 			response = false
 			return response  # now we are returning 'False', and we will check that with an \"if\" statement in our main code
 		rescue RestClient::Exception => e
-			$stderr.puts e.response
+			$stderr.puts "ERROR! " + e.response
+			Utils::writeErrorToCache(url, headers)
 			response = false
 			return response  # now we are returning 'False', and we will check that with an \"if\" statement in our main code
 		rescue Exception => e
-			$stderr.puts e
+			$stderr.puts "ERROR! " + e.class.to_s + ": " + e.message.to_s
+			Utils::writeErrorToCache(url, headers)
 			response = false
 			return response  # now we are returning 'False', and we will check that with an \"if\" statement in our main code
 		end		  # you can capture the Exception and do something useful with it!\n",
@@ -782,12 +796,12 @@ class Utils
 
   def Utils::simplefetch(url, headers = Utils::AcceptHeader, meta=nil)  #we will try to retrieve turtle whenever possible
 
-        head = Utils::head(url, headers)
+        #head = Utils::head(url, headers)
         #$stderr.puts "content length " + head[:content_length].to_s
-        if head[:content_length] and head[:content_length].to_f > 300000 and meta
-            meta.comments << "WARN: The size of the content at #{url} reports itself to be >300kb.  This service will not download something so large.  This does not mean that the content is not FAIR, only that this service will not test it.  Sorry!\n"
-            return false
-        end
+        #if head[:content_length] and head[:content_length].to_f > 300000 and meta
+        #    meta.comments << "WARN: The size of the content at #{url} reports itself to be >300kb.  This service will not download something so large.  This does not mean that the content is not FAIR, only that this service will not test it.  Sorry!\n"
+        #    return false
+        #end
 
 		begin
 			response = RestClient::Request.execute({
@@ -873,55 +887,80 @@ class Utils
   
   
     def Utils::checkRDFCache(body)
-        filename = Digest::MD5.hexdigest body
+
+        fs = File.join("/tmp/", "*_graphbody")
+        bodies = Dir.glob(fs)
         g = RDF::Graph.new()
-        if File.exist?("/tmp/#{filename}_graph")
-    
-            graph = Marshal.load(File.read("/tmp/#{filename}_graph"))
-            graph.each do |statement|
-                    g << statement
+        bodies.each do |bodyfile|
+            next unless File.size(bodyfile) == body.bytesize  # compare body size
+            next unless bodyfile.match(/(.*)_graphbody$/)  # continue if there's no match
+            filename = $1
+            $stderr.puts "Regexp match for #{filename} FOUND"
+            if File.exist?("#{filename}_graph")  #@ get the associated graph file
+                $stderr.puts "RDF Cache File #{filename} FOUND"
+                graph = Marshal.load(File.read("#{filename}_graph"))  # unmarshal it
+                graph.each do |statement|
+                        g << statement  # need to do this because the unmarshalled object isn't entirely functional as an RDF::Graph object
+                end
+                $stderr.puts "returning a graph of #{g.size}"
+                break
             end
         end
-        
+        # return an empty graph otherwise
         return g
     end
     
     
     def Utils::writeRDFCache(reader, body)
-        filename = Digest::MD5.hexdigest body
         
+        filename = Digest::MD5.hexdigest body
         graph = RDF::Graph.new()
         reader.each_statement {|s| graph << s}
+        $stderr.puts "WRITING RDF TO CACHE #{filename}"
         File.open("/tmp/#{filename}_graph", 'wb') { |f| f.write(Marshal.dump(graph)) }
+        File.open("/tmp/#{filename}_graphbody", 'wb') { |f| f.write(body) }
+        $stderr.puts "wrote RDF filename: #{filename}"
     end
             
     
   
     def Utils::checkCache(uri, headers)
        filename = Digest::MD5.hexdigest uri + headers.to_s
-    #$stderr.puts "Checking cache for #{filename}"
+        $stderr.puts "Checking Error cache for #{filename}"
+        if File.exist?("/tmp/#{filename}_error")
+            $stderr.puts "Error file found in cache... returning"
+            return ["ERROR", nil, nil]
+        end
        if File.exist?("/tmp/#{filename}_head") and File.exist?("/tmp/#{filename}_body")
-    #$stderr.puts "FOUND"
+    $stderr.puts "FOUND data in cache"
            head = Marshal.load(File.read("/tmp/#{filename}_head"))
            body = Marshal.load(File.read("/tmp/#{filename}_body"))
            finalURI = ""
            if File.exist?("/tmp/#{filename}_uri")
                finalURI = Marshal.load(File.read("/tmp/#{filename}_uri"))
            end
+    $stderr.puts "Returning...."
            return [head, body, finalURI]
        end
+    $stderr.puts "Not Found in Cache"
        
     end
 
     def Utils::writeToCache(uri, headers, head, body, finalURI)
         filename = Digest::MD5.hexdigest uri + headers.to_s
-    #$stderr.puts "Writing cache for #{filename}"
+    $stderr.puts "in writeToCache Writing to cache for #{filename}"
         headfilename = filename + "_head"
         bodyfilename = filename + "_body"
         urifilename = filename + "_uri"
         File.open("/tmp/#{headfilename}", 'wb') { |f| f.write(Marshal.dump(head)) }
         File.open("/tmp/#{bodyfilename}", 'wb') { |f| f.write(Marshal.dump(body)) }
         File.open("/tmp/#{urifilename}", 'wb') { |f| f.write(Marshal.dump(finalURI)) }
+    end
+
+    def Utils::writeErrorToCache(uri, headers)
+        filename = Digest::MD5.hexdigest uri + headers.to_s
+        $stderr.puts "in writeErrorToCache Writing error to cache for #{filename}"
+        File.open("/tmp/#{filename}_error", 'wb') { |f| f.write("ERROR") }
     end
   
 end   # END OF Utils CLASS
@@ -1190,7 +1229,7 @@ class MetadataObject
     @hash = Hash.new
     @graph = RDF::Graph.new
     @comments = Array.new
-    @guidtype = "unknown"
+    #@guidtype = "unknown"
     @full_response = Array.new
     @finalURI = Array.new
   end
@@ -1232,7 +1271,7 @@ class CommonQueries
             if prop =~ /schema\.org\/identifier/
                 # test 1 - this assumes that the identifier node attached to "root" is the one we are looking for
                 # and assumes the PropertyValue schema for the value of identifier
-                query = SPARQL.parse("select * where {
+                query = SPARQL.parse("select ?identifier where {
                                     VALUES ?predi {<http://schema.org/identifier> <https://schema.org/identifier>}
                                     VALUES ?predpv {<http://schema.org/PropertyValue> <https://schema.org/PropertyValue>}
                                     VALUES ?predval {<http://schema.org/value> <https://schema.org/value>}
@@ -1244,19 +1283,22 @@ class CommonQueries
                 results = query.execute(g)
                 if  results.any?
                     results.each do |r|
-                        @identifier=r[:identifier].value
-                        swagger.addComment "INFO: found identifier '#{@identifier}' using Schema.org identifier as PropertyValue.\n"
-                        identifiers << @identifier
+                        identifier=r[:identifier].value
+                        swagger.addComment "INFO: found identifier '#{identifier}' using Schema.org identifier as PropertyValue.\n"
+                        identifiers << identifier
                     end
                 else 
+                    #g.each_statement {|s| $stderr.puts s.subject, s.predicate, s.object, "\n"}    
                     # test 2 - a simple URL or a value from schema
-                    query = SPARQL.parse("select ?o where {?s <#{prop}> ?o}")
+                    #$stderr.puts "QUEWRY: select ?identifier where {?s <#{prop}> ?identifier}"
+                    query = SPARQL.parse("select ?identifier where {?s <#{prop}> ?identifier}")
                     results = query.execute(g)
                     if  results.any?
                         results.each do |r|
-                            @identifier=r[:identifier].value
-                            swagger.addComment "INFO: found identifier '#{@identifier}' using Schema.org identifier as with a string or URI value.\n"
-                            identifiers << @identifier
+                            #$stderr.puts "inspecting results from query #{r.inspect}"
+                            identifier=r[:identifier].value
+                            swagger.addComment "INFO: found identifier '#{identifier}' using Schema.org identifier as with a string or URI value.\n"
+                            identifiers << identifier
                         end
                     end
                 end
@@ -1265,9 +1307,9 @@ class CommonQueries
 				results = query.execute(g)
 				if results.any?
                     results.each do |r|
-                        @identifier=r[:identifier].value
-                        swagger.addComment "INFO: found identifier '#{@identifier}' using #{prop} as a string or URI.\n"
-                        identifiers << @identifier
+                        identifier=r[:identifier].value
+                        swagger.addComment "INFO: found identifier '#{identifier}' using #{prop} as a string or URI.\n"
+                        identifiers << identifier
                     end
 				end
             end
