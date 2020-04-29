@@ -9,7 +9,7 @@ require 'sparql'
 
 
 debug = false
-VERSION = HARVESTER_VERSION + ":" + "Tst-0.4.0"
+VERSION = HARVESTER_VERSION + ":" + "Tst-0.4.2"
 
 
 def testGUID
@@ -32,13 +32,18 @@ def testGUID
 
 	foundID = []
 	if metadata.graph.size > 0
-		@swagger.addComment("INFO: Linked Data Found.  Now searching for the metadata identifier using appropriate linked data predicates\n")
+		@swagger.addComment("INFO: Linked Data Found.  Now searching for the metadata identifier using appropriate linked data predicates (#{Utils::SELF_IDENTIFIER_PREDICATES}).\n")
 		
 		foundID = CommonQueries::GetSelfIdentifier(metadata.graph, @swagger)
 		# query pattern-match in an object position
-		if foundID.first.empty?
+		if !foundID.first
 			@swagger.score = 0
 			@swagger.addComment("FAILURE: No metadata identifiers were found in the metadata record\n")
+			return @swagger.createEvaluationResponse  # release the result from all other tests
+		end
+		if foundID.first.empty?
+			@swagger.score = 0
+			@swagger.addComment("FAILURE: No metadata identifiers were found in the metadata record using predicates #{Utils::SELF_IDENTIFIER_PREDICATES}. \n")
 			return @swagger.createEvaluationResponse  # release the result from all other tests
 		end
 	end
