@@ -19,9 +19,13 @@ require 'cgi'
 require 'digest'
 require 'open3'
 require 'metainspector'
+#require 'pry'
 
-
-HARVESTER_VERSION="Hvst-1.1.3"
+HARVESTER_VERSION="Hvst-1.2.0"
+# better output,
+# different dealing with DataCite (they have a unique type header)
+# handle large extruct output,
+# deal correctly with unknown identifier types
 
 class Utils
     config = ParseConfig.new('config.conf')
@@ -63,7 +67,7 @@ class Utils
     }
 
     Utils::RDF_FORMATS = {
-      'jsonld'  => ['application/ld+json'],
+      'jsonld'  => ['application/ld+json', 'application/vnd.schemaorg.ld+json'],  # NEW FOR DATACITE
       'turtle'  => ['text/turtle','application/n3','application/rdf+n3',
                    'application/turtle', 'application/x-turtle','text/n3','text/turtle',
                    'text/rdf+n3', 'text/rdf+turtle'],
@@ -110,6 +114,8 @@ class Utils
         ]
 
     Utils::SELF_IDENTIFIER_PREDICATES = [
+        'http://purl.org/dc/elements/1.1/',
+        'https://purl.org/dc/elements/1.1/',
         'http://purl.org/dc/terms/identifier',
         'http://schema.org/identifier',
         'https://purl.org/dc/terms/identifier',
@@ -155,11 +161,31 @@ class Utils
             return metadata
           end
       end
+      meta.guidtype = "unknown"
       meta.comments << "CRITICAL: The guid did not correspond to any known GUID. Tested #{Utils::GUID_TYPES.keys.to_s}. Halting.\n"
       return meta
       
     end
                        
+    def Utils::convertToURL(guid)
+      
+      Utils::GUID_TYPES.each do |pair|
+          k,regex = pair
+          if k == "inchi" and regex.match(guid)
+            return "inchi", "https://pubchem.ncbi.nlm.nih.gov/rest/rdf/inchikey/#{guid}"
+          elsif k == "handle1" and regex.match(guid)
+            return "handle", "http://hdl.handle.net/#{guid}"
+          elsif k == "handle2" and regex.match(guid)
+            return "handle", "http://hdl.handle.net/#{guid}"
+          elsif k == "uri" and regex.match(guid)
+            return "uri", guid
+          elsif k == "doi" and regex.match(guid)
+            return "doi", "https://doi.org/#{guid}"
+          end
+      end
+      return nil, nil
+      
+    end                   
                        
     
     def Utils::typeit(guid)
@@ -232,7 +258,7 @@ class Utils
       (parser, type) = Utils::figure_out_type(head2)
       # this next operation is safe because we know that pubchem does in fact return Turtle
       unless parser.eql?"turtle"
-        meta.comments << "CRITICAL: Expected turtle format from #{cpd}.  Halting. \n"
+        meta.comments << "CRITICAL: Expected turtle format from #{cpd}.  Giving up. \n"
         return meta   # simply fail if they asked for HTML or something else
       end
 #$stderr.puts "9"
@@ -319,23 +345,20 @@ class Utils
       $stderr.puts "\n\n\nLINKS TO FOLLOW: #{links}\n\n\n"
       links.each do |link|
           meta.comments << "INFO: a Link 'alternate' or 'meta' header was found: #{link}, and is now being followed as an independent URI that may contain metadata.\n"
-          Utils::resolve_url(link, meta, true)
+          Utils::resolve_url(link, meta, true)  # the true is to prevent recursive pursuit of link headers
+          meta.comments << "INFO: parsing of Link #{link} complete.\n"
       end  # this fills the metadata object with the content from Link headers, but not recursively
+      meta.comments << "INFO: Link Header and Meta Link parsing complete.  Back in main thread.\n"
       
       parser, contenttype = Utils::figure_out_type(head)
       
       meta.comments << "INFO: Found #{parser} #{contenttype} type of content when resolving #{guid} using HTTP Accept header #{header.to_s}.\n"
-      #$stderr.puts "\n\nFound #{parser} type of file by resolving GUID #{guid}.  BODY:  #{response.body}  \n\n"
+      $stderr.puts "\n\nFound #{parser} type of file by resolving GUID #{guid}. \n\n"
         
         
         
         #  DO SAMPLING FIRSY TO FIND A MATCH
-        
-        
-        
-        
-        
-        
+
         
         case
         when Utils::TEXT_FORMATS.keys.include?(parser)
@@ -359,7 +382,10 @@ class Utils
           else
               url = guid
           end
+          meta.comments << "INFO: Now attempting to use the extruct parser. \n"
           Utils::do_extruct(meta, url ) 
+          meta.comments << "INFO: Now attempting to use the Kellogg's Distiller parser. \n"
+          meta.comments << "INFO: Note that, if the Distiller fails, you can view the output of its parse by visiting http://rdf.greggkellogg.net/distiller?command=serialize&url=#{URI::encode(url)}. \n"
     	  Utils::do_distiller(meta, body)
         when Utils::XML_FORMATS.keys.include?(parser)
           meta.comments << "INFO: parsing as XML. \n"
@@ -370,6 +396,7 @@ class Utils
           $stderr.puts "\n\nPARSING JSON\n\n"
           Utils::parse_json(meta, body)
         else
+          meta.comments << "INFO: Body of the message did not match known structured data types. \n"
           $stderr.puts "\n\nPARSING UNKNOWN\n\n"
           url = ""
           if meta.finalURI.last =~ /^\w+\:\/\//
@@ -377,11 +404,15 @@ class Utils
           else
               url = guid
           end
+          $stderr.puts "\n\nPARSING UNKNOWN from #{url}\n\n"
           meta.comments << "WARN: parser could not be found. \n"
+          $stderr.puts "\n\nPARSING WITH TIKA\n\n"
           meta.comments << "INFO:  Metadata may be embedded, now searching using the Apache 'tika' tool.\n"
           Utils::do_tika(meta, body)  # this expects a string, not an Net::HTTP
+          $stderr.puts "\n\nPARSING WITH DISTILLER\n\n"
           meta.comments << "INFO:  Metadata may be embedded, now searching using the 'Distiller' tool.\n"
     	  Utils::do_distiller(meta, body)
+          $stderr.puts "\n\nPARSING WITH EXTRUCT\n\n"
           meta.comments << "INFO: Metadata may be embedded, now searching using the 'extruct' tool.\n"
           Utils::do_extruct(meta, url)
         end
@@ -401,10 +432,9 @@ class Utils
         meta.comments << "WARTN: Plain Text cannot be mapped to any parser.  No structured metadata found.\n"
         meta.comments << "INFO: Using Apache Tika to attempt to extract metadata from plaintext.\n"
         
-        return Utils::do_tika(meta, body)
-    
-        
+        return Utils::do_tika(meta, body)        
     end
+    
     
     def Utils::parse_json(meta,body)
       hash = JSON.parse(body)
@@ -414,7 +444,7 @@ class Utils
       
     
     def Utils::parse_html(meta, body)
-       # just use extruct instead
+       # just use extruct and distiller instead
     end
     
     
@@ -434,13 +464,13 @@ class Utils
         $stderr.puts "\n\n\nSANITY CHECK \n\n#{body[0..30]}\n\n"
         sanitycheck = RDF::Format.for({:sample => body[0..5000]})
         unless sanitycheck
-            meta.comments << "CRITICAL: The Evaluator found what it believed to be RDF, but it could not find a parser.  Please report this error, along with the GUID of the resource, to the maintainer of the system.\n"
+            meta.comments << "CRITICAL: The Evaluator found what it believed to be RDF (sample:  #{body[0..300].delete!("\n")}), but it could not find a parser.  Please report this error, along with the GUID of the resource, to the maintainer of the system.\n"
             return meta
         end
           
         graph = Utils::checkRDFCache(body)
         if graph.size > 0
-          $stderr.puts "\n\n\nunmarshalling graph from cache\n\n"
+          $stderr.puts "\n\n\n unmarshalling graph from cache\n\n"
           $stderr.puts "\n\ngraph size #{graph.size} #{graph.inspect}\n\n"
           meta.merge_rdf(graph.to_a)
         else
@@ -456,6 +486,7 @@ class Utils
               $stderr.puts "\n\n\ndetected format #{formattype}\n\n"          
           end
           $stderr.puts "\n\n\nfinal format #{formattype}\n\n"          
+          #$stderr.puts "\n\n\nBODY #{body}\n\n"          
     
           if !formattype
             meta.comments << "CRITICAL: Unable to find an RDF reader type that matches the content that was returned from resolution.  Here is a sample #{body[0..100]}  Please send your GUID to the dev team so we can investigate!\n"
@@ -469,20 +500,33 @@ class Utils
               meta.comments << "WARN: Though linked data was found, it failed to parse.  This likely indicates some syntax error in the data.  As a result, no metadata will be extracted from this message.\n"
               return
           end
-              
-          #$stderr.puts "Reader Class #{reader.class}\n\n #{reader.inspect}"
-          if reader.size == 0
-              meta.comments << "WARN: Though linked data was found, it failed to parse.  This likely indicates some syntax error in the data.  As a result, no metadata will be extracted from this message.\n"
-              return
-          end
-            #       reader.rewind!
-            # for some reason, the rewind method isn't working here...??
-          reader = formattype.reader.new(body)  # have to re-read it here, but now its safe because we have already caught errors
-          $stderr.puts "WRITING TO CACHE"
-          Utils::writeRDFCache(reader, body)  # write to the special RDF graph cache
-          $stderr.puts "WRITING DONE"
-          reader = formattype.reader.new(body)
-          meta.merge_rdf(reader.to_a)
+          
+            begin
+                #$stderr.puts "Reader Class #{reader.class}\n\n #{reader.inspect}"
+                if reader.size == 0
+                    meta.comments << "WARN: Though linked data was found, it failed to parse.  This likely indicates some syntax error in the data.  As a result, no metadata will be extracted from this message.\n"
+                    return
+                end
+                  #       reader.rewind!
+                  # for some reason, the rewind method isn't working here...??
+                reader = formattype.reader.new(body)  # have to re-read it here, but now its safe because we have already caught errors
+                $stderr.puts "WRITING TO CACHE"
+                Utils::writeRDFCache(reader, body)  # write to the special RDF graph cache
+                $stderr.puts "WRITING DONE"
+                reader = formattype.reader.new(body)
+                $stderr.puts "RE-READING DONE"
+                meta.merge_rdf(reader.to_a)
+                $stderr.puts "MERGE DONE"
+            rescue RDF::ReaderError => e
+                meta.comments << "CRITICAL: The Linked Data was malformed and caused the parser to crash with error message: #{e.message} ||  (sample of what was parsed:  #{body[0..300].delete("\n")})\n"
+                $stderr.puts "CRITICAL: The Linked Data was malformed and caused the parser to crash with error message: #{e.message} ||  (sample of what was parsed:  #{body[0..300].delete("\n")})\n"
+                return
+            rescue Exception => e
+                meta.comments << "CRITICAL: An unknown error occurred while parsing the (apparent) Linked Data (sample of what was parsed:  #{body[0..300].delete("\n")}).  Moving on...\n"
+                $stderr.puts "\n\nCRITICAL: #{e.inspect} An unknown error occurred while parsing the (apparent) Linked Data (full body:  #{body}).  Moving on...\n\n"
+                return
+            end
+            
 
         end
       
@@ -544,12 +588,11 @@ class Utils
         result =  %x{#{command}}
         file.close
         file.unlink
-
        
         result = result.force_encoding('UTF-8')        
        
-        if !(result =~ /\w/)  # failure returns nil
-            meta.comments << "WARN: The Distiller tool failed to find parseable data in the body.\n"
+        if !(result =~ /rdf/)  # failure returns nil
+            meta.comments << "WARN: The Distiller tool failed to find parseable data in the body, perhaps due to incorrectly formatted HTML..\n"
         else
             meta.comments << "INFO: The Distiller found parseable data.  Parsing as RDF\n"
             Utils::parse_rdf(meta, result, "text/turtle")
@@ -561,12 +604,15 @@ class Utils
     def Utils::do_extruct(meta, uri)
       
         meta.comments << "INFO:  Using 'extruct' to try to extract metadata from return value (message body) of #{uri}.\n"
-        stdin, stdout, stderr, wait_thr = Open3.popen3('extruct', uri)
-        $stderr.puts "open3 status: #{wait_thr.value}"
-        result = stderr.read # absurd that the output comes over stderr!  LOL!
-        stdin.close
-        stdout.close
-        stderr.close
+        $stderr.puts "begin open3"
+        #binding.pry
+        stdout, stderr, status = Open3.capture3(Utils::ExtructCommand + " " + uri); puts ""; $stderr.puts "";
+        #sleep 5
+        $stderr.puts "open3 status: #{status} #{stdout}"
+        result = stderr # absurd that the output comes over stderr!  LOL!
+        #stdin.close
+        #stdout.close
+        #stderr.close
        
         #result = %x{#{Utils::ExtructCommand} #{uri} 2>&1}
         #$stderr.puts "\n\n\n\n\n\n\n#{result.class}\n\n#{result.to_s}\n\n#{@extruct_command} #{uri} 2>&1\n\n"
@@ -698,7 +744,7 @@ class Utils
         $stderr.puts "\n\nSTRANGE - headers had no content-type\n\n"
         return nil,nil
     end
-    type.match(/([\w\+]+\/[\w\+]+):?/im)
+    type.match(/([\w\+\.]+\/[\w\+\.]+):?;?/im)
     type = $1
     #$stderr.puts "\n\nsearching for #{type}\n\n"
     

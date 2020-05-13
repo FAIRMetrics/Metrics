@@ -7,8 +7,9 @@ require 'rdf'
 require 'rdf/turtle'
 require 'sparql'
 
-debug = false
-VERSION = HARVESTER_VERSION + ":" + "Tst-0.2.5"
+debug = true
+VERSION = HARVESTER_VERSION + ":" + "Tst-0.3.0"
+# 0.3.0 totally new algorithm for testing - checks only one pred from each domain, in alphbetidcal order
 
 
 def testGUID
@@ -26,7 +27,7 @@ def testGUID
 	@swagger.score = 0
 	
 	if metadata.guidtype == "unknown"
-		@swagger.addComment("FAILURE: The identifier #{guid} did not match any known identification system.\n")
+		@swagger.addComment("FAILURE: The identifier #{guid} did not match any known identification system\n")
 		return @swagger.createEvaluationResponse
 	end
 	
@@ -36,61 +37,72 @@ def testGUID
 	end
 	
 	if g.size > 0  # have we found anything yet?
-		@swagger.addComment("INFO:  Linked data was found.\n")
+		@swagger.addComment("INFO: Linked data was found.  Test proceeding\n")
 	else
-		@swagger.addComment("FAILURE: No linked data was found, so cannot proceed to a test of the metadata vocabularies.\n")
+		@swagger.addComment("FAILURE: No linked data metadata was found.  Test is exiting.\n")
 		@swagger.score = 0
 		return @swagger.createEvaluationResponse
 	end
 
-	success = 0  # we will accept 5/10 failures
+	success = 0  
 	count = 0
-	seen = Array.new
+	
+	hosthash = Hash.new()
+	$stderr.puts hosthash
+	preds = g.map {|s| s.predicate unless (s.predicate.value =~ /1999\/xhtml\// or s.predicate.value =~ /rdf-syntax-ns/) }
+	
+	preds.compact!
+	#$stderr.puts preds
+	preds.each {|p| (hosthash[p.host] ||=[]) << p}
+	#$stderr.puts hosthash
 
-	g.each do |stm|
+	hosthash.keys.each do |host|
+		predicate = hosthash[host].sort.first
+		@swagger.addComment "INFO:  Testing resolution of predicates from the domain #{host}\n"
+		$stderr.puts "testing host #{host}"
+
+		count += hosthash[host].uniq.count
 		
-		
-		break if count>=8
-		
-		seen << stm.predicate.value
-		next if stm.predicate.value =~ /1999\/xhtml\//  # this is a very problematic site!
-		next if stm.predicate.value =~ /rdf-syntax-ns/  # skip rdf structural elements
-		case stm.predicate.value
+		case predicate.value
 		when /purl.org\/dc\//  # these resolve very slowly, so just accept that they are ok!
-			@swagger.addComment "INFO:  testing resolution of predicate #{stm.predicate.value}\n"
-			success += 1
-			count += 1
+			@swagger.addComment "INFO:  resolution of DC predicate #{predicate.value} accepted\n"
+			$stderr.puts "adding #{hosthash[host].uniq.count} to successes"
+			success += hosthash[host].uniq.count
 			next
 		when /\/vcard\//   # these resolve very slowly, so just accept that they are ok!
-			@swagger.addComment "INFO:  testing resolution of predicate #{stm.predicate.value}\n"
-			success += 1
-			count += 1
+			@swagger.addComment "INFO:  resolution of VCARD predicate #{predicate.value} accepted\n"
+			$stderr.puts "adding #{hosthash[host].uniq.count} to successes"
+			success += hosthash[host].uniq.count
 			next
 		when /w3\.org\/ns\/dcat/
-			@swagger.addComment "INFO:  testing resolution of predicate #{stm.predicate.value}\n"
-			success += 1
-			count += 1
+			@swagger.addComment "INFO:  resolution of DCAT predicate #{predicate.value} accepted\n"
+			$stderr.puts "adding #{hosthash[host].uniq.count} to successes"
+			success += hosthash[host].uniq.count
 			next
 		when /xmlns\.com\/foaf\//
-			@swagger.addComment "INFO:  testing resolution of predicate #{stm.predicate.value}\n"
-			success += 1
-			count += 1
+			@swagger.addComment "INFO:  resolution of FOAF predicate #{predicate.value} accepted\n"
+			$stderr.puts "adding #{hosthash[host].uniq.count} to successes"
+			success += hosthash[host].uniq.count
 			next			
 		end
-
-		check = Utils::resolve(stm.predicate)  # this only does URL resolution, no retrieval - returns a string or false
-		success += 1 if check
-		count+=1
+		
+		@swagger.addComment "INFO:  testing resolution of predicate #{predicate.value}\n"
+		check = Utils::resolve(predicate.value)  # this  sends the content-negotiation for linked data
+		if check
+			@swagger.addComment "INFO: #{predicate.value} resolved.\n"
+			$stderr.puts "adding #{hosthash[host].uniq.count} to successes"
+			success += hosthash[host].uniq.count
+		end
 	end
 	
-	if count > 0 and success > count * 0.5
-		@swagger.addComment("SUCCESS: #{success} of the first #{count} predicates discovered in the linked data could be resolved.  This is sufficient to pass this test.\n")
+	if count > 0 and success >= count * 0.66
+		@swagger.addComment("SUCCESS: #{success} of a total of #{count} predicates discovered in the metadata resolved to Linked Data data.  This is sufficient to pass the test.\n")
 		@swagger.score = 1
-	elsif count == 0
-		@swagger.addComment("FAILURE: no resolvable predicates were found\n")
-		@swagger.score = 0		
+	elsif count ==  0 
+		@swagger.addComment("FAILURE: No predicates were found that resolved to Linked Data.\n")
+		@swagger.score = 0
 	else
-		@swagger.addComment("FAILURE: #{success} of the first #{count} predicates discovered in the linked data could be resolved.  The minimum to pass this test is 50%.\n")
+		@swagger.addComment("FAILURE: #{success} of a total of #{count} predicates discovered in the metadata resolved to Linked Data data.  The minimum to pass this test is 2/3 (with a minimum of 3 predicates in total).\n")
 		@swagger.score = 0		
 	end
 	
@@ -106,7 +118,9 @@ if debug
 #	@input = '{"subject": "20.1000/105"}'  # handle (fail)
 #	@input = '{"subject": "http://w3id.org/Magnaporthe/polyA_Sites"}'  # handle
 #	@input = '{"subject": "10.25504/FAIRsharing.6k0kwd"}'  # doi 
-	@input = '{"subject": "http://hdl.handle.net/11250/2631642"}'  # doi 
+#	@input = '{"subject": "http://hdl.handle.net/11250/2631642"}'  # doi
+#	@input = '{"subject": "10.18710/3PKATY"}'  # doi bit data
+	@input = '{"subject": "10.23698/aida/lnco"}'
 #	@input = '{"subject": "http://csarven.ca/dokieli-rww"}'
 
 else 
@@ -120,7 +134,7 @@ schemas = {'subject' => ['string', "the GUID being tested"]}
 
 @swagger = Swagger.new({
 			:title => "FAIR Metrics Gen2 - Metadata uses FAIR vocabularies (weak)",
-			:description => "Maturity Indicator to test if the linked data metadata uses terms that resolve.  This tests only if they resolve, not if they resolve to FAIR data, therefore is a somewhat weak test. ",
+			:description => "Maturity Indicator to test if the linked data metadata uses terms that resolve.  One predicate from each hostname is tested as 'representative' of the remainder from that hostname, in alphabetical order.  This tests only if they resolve, not if they resolve to FAIR data, therefore is a somewhat weak test. ",
 			:tests_metric => 'https://purl.org/fair-metrics/Gen2_FM_I2A',
 			:version => VERSION,
 			:applies_to_principle => "I2",

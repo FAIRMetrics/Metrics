@@ -7,8 +7,9 @@ require 'rdf'
 require 'rdf/turtle'
 require 'sparql'
 
-debug = false
-VERSION = HARVESTER_VERSION + ":" + "Tst-0.2.3"
+debug = true
+VERSION = HARVESTER_VERSION + ":" + "Tst-0.3.0"
+# 0.3.0 totally new algorithm for testing - checks only one pred from each domain, in alphbetidcal order
 
 def testGUID
 
@@ -42,58 +43,68 @@ def testGUID
 		return @swagger.createEvaluationResponse
 	end
 
-	success = 0  # we will accept 5/10 failures
+	success = 0  
 	count = 0
-	seen = Array.new
-	g.each do |stm|
-		break if count>=8
-		next if seen.include?stm.predicate.value
-		seen << stm.predicate.value
-		next if stm.predicate.value =~ /1999\/xhtml\//  # this is a very problematic site!
-		next if stm.predicate.value =~ /rdf-syntax-ns/  # skip rdf structural elements
-		case stm.predicate.value
+	
+	hosthash = Hash.new()
+	$stderr.puts hosthash
+	preds = g.map {|s| s.predicate unless (s.predicate.value =~ /1999\/xhtml\// or s.predicate.value =~ /rdf-syntax-ns/) }
+	
+	preds.compact!
+	#$stderr.puts preds
+	preds.each {|p| (hosthash[p.host] ||=[]) << p}
+	#$stderr.puts hosthash
+
+	hosthash.keys.each do |host|
+		predicate = hosthash[host].sort.first
+		@swagger.addComment "INFO:  Testing resolution of predicates from the domain #{host}\n"
+		$stderr.puts "testing host #{host}"
+
+		count += hosthash[host].uniq.count
+		
+		case predicate.value
 		when /purl.org\/dc\//  # these resolve very slowly, so just accept that they are ok!
-			@swagger.addComment "INFO:  testing resolution of predicate #{stm.predicate.value}\n"
-			success += 1
-			count += 1
+			@swagger.addComment "INFO:  resolution of DC predicate #{predicate.value} accepted\n"
+			$stderr.puts "adding #{hosthash[host].uniq.count} to successes"
+			success += hosthash[host].uniq.count
 			next
 		when /\/vcard\//   # these resolve very slowly, so just accept that they are ok!
-			@swagger.addComment "INFO:  testing resolution of predicate #{stm.predicate.value}\n"
-			success += 1
-			count += 1
+			@swagger.addComment "INFO:  resolution of VCARD predicate #{predicate.value} accepted\n"
+			$stderr.puts "adding #{hosthash[host].uniq.count} to successes"
+			success += hosthash[host].uniq.count
 			next
 		when /w3\.org\/ns\/dcat/
-			@swagger.addComment "INFO:  testing resolution of predicate #{stm.predicate.value}\n"
-			success += 1
-			count += 1
+			@swagger.addComment "INFO:  resolution of DCAT predicate #{predicate.value} accepted\n"
+			$stderr.puts "adding #{hosthash[host].uniq.count} to successes"
+			success += hosthash[host].uniq.count
 			next
 		when /xmlns\.com\/foaf\//
-			@swagger.addComment "INFO:  testing resolution of predicate #{stm.predicate.value}\n"
-			success += 1
-			count += 1
+			@swagger.addComment "INFO:  resolution of FOAF predicate #{predicate.value} accepted\n"
+			$stderr.puts "adding #{hosthash[host].uniq.count} to successes"
+			success += hosthash[host].uniq.count
 			next			
 		end
 		
-		@swagger.addComment "INFO:  testing resolution of predicate #{stm.predicate.value}\n"
-		metadata2 = Utils::resolveit(stm.predicate.value)  # this  sends the content-negotiation for linked data
+		@swagger.addComment "INFO:  testing resolution of predicate #{predicate.value}\n"
+		metadata2 = Utils::resolveit(predicate.value)  # this  sends the content-negotiation for linked data
 		g2 = metadata2.graph
-		query = SPARQL.parse("select * where {<#{stm.predicate.value}> ?p ?o}")
+		query = SPARQL.parse("select * where {<#{predicate.value}> ?p ?o}")
 		results = query.execute(g2)
 		if  results.any?
-			@swagger.addComment "INFO: Resolving #{stm.predicate.value}returned linked data, including that URI as a triple Subject.\n"
-			success += 1
+			@swagger.addComment "INFO: Resolving #{predicate.value}returned linked data, including that URI as a triple Subject.\n"
+			$stderr.puts "adding #{hosthash[host].uniq.count} to successes"
+			success += hosthash[host].uniq.count
 		end
-		count += 1
 	end
 	
-	if count > 0 and success >= count * 0.5
-		@swagger.addComment("SUCCESS: #{success} of the first #{count} predicates discovered in the metadata resolved to Linked Data data.  This is sufficient to pass the test.\n")
+	if count > 0 and success >= count * 0.66
+		@swagger.addComment("SUCCESS: #{success} of a total of #{count} predicates discovered in the metadata resolved to Linked Data data.  This is sufficient to pass the test.\n")
 		@swagger.score = 1
 	elsif count ==  0 
 		@swagger.addComment("FAILURE: No predicates were found that resolved to Linked Data.\n")
 		@swagger.score = 0
 	else
-		@swagger.addComment("FAILURE: #{success} of the first #{count} predicates discovered in the metadata resolved to Linked Data data.  The minimum to pass this test is 50%.\n")
+		@swagger.addComment("FAILURE: #{success} of a total of #{count} predicates discovered in the metadata resolved to Linked Data data.  The minimum to pass this test is 2/3 (with a minimum of 3 predicates in total).\n")
 		@swagger.score = 0		
 	end
 	
@@ -107,7 +118,10 @@ if debug
 #	@input = '{"subject": "BSYNRYMUTXBXSQ-UHFFFAOYSA-N"}' # inchi
 #	@input = '{"subject": "LFQSCWFLJHTTHZ-UHFFFAOYSA-N"}' # another inchi
 #	@input = '{"subject": "20.1000/105"}'  # handle (fail)
-	@input = '{"subject": "https://ortus.rtu.lv/science/lv/datamodule/303"}'  # handle#
+#	@input = '{"subject": "https://ortus.rtu.lv/science/lv/datamodule/303"}'  # handle#
+#	@input = '{"subject": "10.18710/3PKATY"}'  # doi fail
+#	@input = '{"subject": "10.23698/aida/lnco"}'
+	@input = '{"subject": "10.17045/sthlmuni.9907991.v1"}'
 #	@input = '{"subject": "http://hdl.handle.net/11250/2631642"}'  # doi 
 #	@input = '{"subject": "10.25504/FAIRsharing.6k0kwd"}'  # doi fail
 #        @input = '{"subject": "https://www.ebi.ac.uk/arrayexpress/"}' 

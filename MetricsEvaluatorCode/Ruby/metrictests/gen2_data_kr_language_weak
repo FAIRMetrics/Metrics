@@ -7,8 +7,8 @@ require 'rdf'
 require 'rdf/turtle'
 require 'sparql'
 
-debug = false
-VERSION = HARVESTER_VERSION + ":" + "Tst-0.2.1"
+debug = true
+VERSION = HARVESTER_VERSION + ":" + "Tst-0.3.0"
 
 
 def testGUID
@@ -83,50 +83,83 @@ end
 
 def testIdentifier(guid)
 	
-	# This is verbatim from the gen2_metadata_identifier_persistence
-	datametadata = Utils::resolveit(guid)  # this is where the magic happens!
-
-	datametadata.comments.each do |c|
-		@swagger.addComment(c)
-	end
-
-	if datametadata.guidtype == "unknown"
+	type, url = Utils::convertToURL(guid)
+	if url.nil?
 		@swagger.addComment("INFO: The GUID identifier of the data #{guid} did not match any known identification system (tested inchi, doi, handle, uri) and therefore did not pass this metric.  If you think this is an error, please contact the FAIR Metrics group (http://fairmetrics.org).")
-	elsif datametadata.guidtype == "handle"
-		@swagger.addComment("INFO: The GUID of the data is a Handle.\n")
-	elsif datametadata.guidtype == "doi"
-		@swagger.addComment("INFO: The GUID of the data is a DOI.\n")
-	elsif datametadata.guidtype == "inchi"
-		@swagger.addComment("INFO: The GUID of the data is a InChI.\n")
-	else
-		@swagger.addComment("INFO: The GUID of the data appears to be a URL.\n")
+		@swagger.score = 0
+		return
 	end
 
-	hash = datametadata.hash
-	graph = datametadata.graph
-	
-	if hash.any?
-		@swagger.addComment("SUCCESS: The data was found to have at least some structured format. ")
-		@swagger.score = 1
-	elsif graph.size > 0
-		@swagger.addComment("SUCCESS: The data was found to have at least some structured format. ")
-		@swagger.score = 1
+	if type == "handle"
+		@swagger.addComment("INFO: The GUID of the data is a Handle.\n")
+	elsif type == "doi"
+		@swagger.addComment("INFO: The GUID of the data is a DOI.\n")
+	elsif type == "inchi"
+		@swagger.addComment("INFO: The GUID of the data is a InChI.\n")
+	elsif type == "uri"
+		@swagger.addComment("INFO: The GUID of the data appears to be a URI/URL.\n")
 	else
-		@swagger.addComment("FAILURE: The resolved data, after both parsing and content-negotiation, appears to have no structured data.  ")
+		@swagger.addComment("INFO: The GUID of the data could not be typed, therefore it cannot be tested.\n")
 		@swagger.score = 0
+		return
 	end
+	headers = Utils::head(url, Utils::AcceptHeader) # returns headers or false
+	if headers
+		if headers.keys.include?(:content_type)
+			ct = headers[:content_type]
+			type = ""
+			if m = ct.match(/(\S+\/[^;]+)/)
+				type = m[1]
+			else
+				@swagger.addComment("FAILURE: The reported content-type header (#{ct}) could not be parsed\n")
+				@swagger.score = 0
+				return
+			end
+				
+			rdfformats = Utils::RDF_FORMATS.values.flatten
+			if rdfformats.include?(type)
+				@swagger.addComment("SUCCESS: The reported content-type of the data is [#{type}] which is a known Linked Data format\n")
+				@swagger.score = 1
+				return
+			else 
+				@swagger.addComment("FAILURE: The reported content-type of the data is [#{type}] which is not a known Linked Data format\n")
+				@swagger.score = 0
+				return
+			end
+			structuredformats = Utils::RDF_FORMATS.values.append Utils::XML_FORMATS.values.append Utils::JSON_FORMATS.values.append ['text/xhtml+xml', 'application/xhtml+xml']
+			structuredformats.flatten!
+			if structuredformats.include?(type)
+				@swagger.addComment("SUCCESS: The reported content-type of the data is [#{type}] which is, or is likely to contain, structured data\n")
+				@swagger.score = 1
+				return
+			else 
+				@swagger.addComment("FAILURE: The reported content-type of the data is [#{type}] which is not likely to contain structured data\n")
+				@swagger.score = 0
+				return
+			end
+		else
+			@swagger.addComment("FAILURE: The URL to the data is not reporting a Content-Type in its headers.  This test will now halt.\n")
+			@swagger.score = 0
+			return
+		end
+	else
+		@swagger.addComment("FAILURE: The url #{url} failed to resolve via a HEAD call with headers #{Utils::AcceptHeader}, therefore we cannot continue\n")
+		@swagger.score = 0
+		return
+	end
+		
 
 end
 
 
 if debug
 #	@input = '{"subject": "10.5281/zenodo.1147435"}'  # doi fail
-#	@input = '{"subject": "10.5281/zenodo.1065973"}'  # doi fail
+	@input = '{"subject": "10.5281/zenodo.1065973"}'  # doi fail
 #	@input = '{"subject": "10.25504/FAIRsharing.6k0kwd"}'  # doi fail
 #	@input = '{"subject": "BSYNRYMUTXBXSQ-UHFFFAOYSA-N"}' # inchi
 #	@input = '{"subject": "LFQSCWFLJHTTHZ-UHFFFAOYSA-N"}' # another inchi
 #	@input = '{"subject": "20.1000/105"}'  # handle (fail)
-	@input = '{"subject": "http://w3id.org/Magnaporthe/polyA_Sites"}'  # handle
+#	@input = '{"subject": "http://w3id.org/Magnaporthe/polyA_Sites"}'  # handle
 
 else 
 	@input = $stdin.read
