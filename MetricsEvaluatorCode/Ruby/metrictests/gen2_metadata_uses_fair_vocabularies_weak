@@ -7,7 +7,7 @@ require 'rdf'
 require 'rdf/turtle'
 require 'sparql'
 
-debug = true
+debug = false
 VERSION = HARVESTER_VERSION + ":" + "Tst-0.3.0"
 # 0.3.0 totally new algorithm for testing - checks only one pred from each domain, in alphbetidcal order
 
