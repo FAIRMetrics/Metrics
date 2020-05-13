@@ -1,6 +1,7 @@
 require 'json'
 require 'rdf'
 require 'rdf/json'
+require 'rdf/rdfa'
 require 'json/ld'
 require 'json/ld/preloaded'
 require 'rdf/trig'
@@ -582,20 +583,26 @@ class Utils
         body = body.gsub(/"\@context"\s*\:\s*"https?\:\/\/schema.org\/?"/, '"@context": "https://schema.org/docs/jsonldcontext.json"')
         file.write(body)
         file.rewind
-        #$stderr.puts "\n\nBODY IS #{body}\n\n"
+        #`cp #{file.path} /tmp/foooo`
         meta.comments << "INFO: The message body is being examined by Distiller\n"
-        command = "LANG=en_US.UTF-8 #{Utils::RDFCommand} serialize --input-format rdfa --output-format turtle #{file.path} 2>/dev/null"
-        result =  %x{#{command}}
+#        command = "LANG=en_US.UTF-8 #{Utils::RDFCommand} serialize --input-format rdfa --output-format turtle #{file.path} 2>/dev/null"
+        #command = "LANG=en_US.UTF-8 #{Utils::RDFCommand} serialize --input-format rdfa --output-format jsonld #{file.path}"
+        command = "LANG=en_US.UTF-8 /usr/local/bin/ruby /usr/local/bundle/bin/rdf serialize --input-format rdfa --output-format jsonld #{file.path}"
+        $stderr.puts "distiller command: " + command
+        result, stderr, status = Open3.capture3(command); $stderr.puts "";
+        stderr = stderr # silnece debugger
+        status = status
+        $stderr.puts "distiller errors: #{stderr}"
         file.close
         file.unlink
        
         result = result.force_encoding('UTF-8')        
-       
-        if !(result =~ /rdf/)  # failure returns nil
+        $stderr.puts "DIST RESULT: #{result}"
+        if !(result =~ /\@context/i)  # failure returns nil
             meta.comments << "WARN: The Distiller tool failed to find parseable data in the body, perhaps due to incorrectly formatted HTML..\n"
         else
             meta.comments << "INFO: The Distiller found parseable data.  Parsing as RDF\n"
-            Utils::parse_rdf(meta, result, "text/turtle")
+            Utils::parse_rdf(meta, result, "application/ld+json")
         end
  
     end
@@ -606,7 +613,7 @@ class Utils
         meta.comments << "INFO:  Using 'extruct' to try to extract metadata from return value (message body) of #{uri}.\n"
         $stderr.puts "begin open3"
         #binding.pry
-        stdout, stderr, status = Open3.capture3(Utils::ExtructCommand + " " + uri); puts ""; $stderr.puts "";
+        stdout, stderr, status = Open3.capture3(Utils::ExtructCommand + " " + uri); $stderr.puts "";
         #sleep 5
         $stderr.puts "open3 status: #{status} #{stdout}"
         result = stderr # absurd that the output comes over stderr!  LOL!

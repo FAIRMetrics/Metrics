@@ -9,7 +9,7 @@ require 'sparql'
 require 'net/https'
 
 debug = false
-VERSION = HARVESTER_VERSION + ":" + "Tst-0.2.3"
+VERSION = HARVESTER_VERSION + ":" + "Tst-0.2.5"
 
 
 #config = ParseConfig.new('config.conf')
@@ -235,8 +235,8 @@ def callBing(phrase)
 	path = "/bing/v7.0/search"
 	
 	if @accessKey.length != 32 then
-			puts "Invalid Bing Search API subscription key!"
-			puts "Please paste yours into the source code."
+			$stderr.puts "Invalid Bing Search API subscription key!"
+			$stderr.puts "Please add this to your environment."
 			abort
 	end
 	
