@@ -4,4 +4,4 @@ This repository contains the Maturity Indicator Compliance tests that were writt
 
 The Evaluator software is avalable in the https://github.com/FAIRMetrics/Metrics/edit/master/MetricsEvaluatorCode/Ruby/fairmetrics folder  see the ReadMe in that folder for instructions on use.
 
-**A public demonstration server for The Evaluator** is available at:  https://w3id.org/FAIR_Evaluator  see above for instructions.
+**A public demonstration server for The Evaluator** is available at:  https://w3id.org/AmIFAIR  see above for instructions.
