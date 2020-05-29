@@ -5,7 +5,7 @@ The folder ['MaturityIndicators'](https://github.com/FAIRMetrics/Metrics/tree/ma
 * Generation-1 (Gen1) questionnaire-style Maturity Indicator tests
 * Generation-2 (Gen2) automatable Maturity Indicator tests.
 
-Only Gen2 tests function with the current version of the [Evaluator software](https://w3id.org/FAIR_Evaluator).
+Only Gen2 tests function with the current version of the [Evaluator software](https://w3id.org/AmIFAIR).
 
 ## Directly Related Work
 * [FAIR Metrics Group](http://www.fairmetrics.org/)
