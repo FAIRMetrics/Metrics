@@ -8,7 +8,7 @@ require 'rdf/turtle'
 require 'sparql'
 
 debug = false
-VERSION = HARVESTER_VERSION + ":" + "Tst-0.3.0"
+VERSION = HARVESTER_VERSION + ":" + "Tst-0.3.1"
 # 0.3.0  completely changed method - now checks the content-type header of the resource
 
 def testGUID
@@ -76,6 +76,10 @@ def testGUID
 			testIdentifier(@identifier) # this will add more comments and a score to @swagger
 		end
 	end
+	
+	if @swagger.score == 0
+		@swagger.addComment "FAILURE: the data could not be found, or does not appear to be in a recognized knowledge representation language.\n"
+	end
 
 	return @swagger.createEvaluationResponse
 end
@@ -140,7 +144,8 @@ if debug
 #	@input = '{"subject": "20.1000/105"}'  # handle (fail)
 #	@input = '{"subject": "http://w3id.org/Magnaporthe/polyA_Sites"}'  # handle
 #	@input = '{"subject": "10.25504/FAIRsharing.6k0kwd"}'  # doi fail
-	@input = '{"subject": "10.17045/sthlmuni.9907991.v1"}'
+#	@input = '{"subject": "11676/tG1ftg14-_ipJY7UgUTqvVy3"}'
+	@input = '{"subject": "http://www.daim.snm.ku.dk/Flora-Danica-details-en?auto_id=3982"}'
 
 
 

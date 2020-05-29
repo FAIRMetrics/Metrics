@@ -8,7 +8,7 @@ require 'rdf/turtle'
 require 'sparql'
 
 debug = false
-VERSION = HARVESTER_VERSION + ":" + "Tst-0.2.1"
+VERSION = HARVESTER_VERSION + ":" + "Tst-0.2.2"
 
 
 def testGUID
@@ -92,7 +92,7 @@ def testGUID
 	end
 
 	if @swagger.score == 0
-		@swagger.addComment "No License property was found in the metadata.  "
+		@swagger.addComment "FAILURE: No License property was found in the metadata.  "
 	end
 
 	return @swagger.createEvaluationResponse

@@ -36,7 +36,7 @@ def testGUID
 	end
 
 	unless @accessKey 
-		@swagger.addComment("NO ACCESS KEY CONFIGURED FOR BING. This test will now abort with failure")
+		@swagger.addComment("FAILURE: NO ACCESS KEY CONFIGURED FOR BING. This test will now abort with failure")
 		return @swagger.createEvaluationResponse
 	end
 

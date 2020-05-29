@@ -8,7 +8,7 @@ require 'rdf/turtle'
 require 'sparql'
 
 debug = false
-VERSION = HARVESTER_VERSION + ":" + "Tst-0.2.2"
+VERSION = HARVESTER_VERSION + ":" + "Tst-0.2.3"
 
 
 def testGUID
@@ -66,7 +66,7 @@ def testGUID
 		count+=1
 	end
 	
-	if success > 1   # this is a very weak test!
+	if success >= 1   # this is a very weak test!
 		@swagger.addComment("SUCCESS: #{success} of the #{count} triples discovered in the linked metadata pointed to resources hosted elsewhere.  ")
 		@swagger.score = 1
 	else

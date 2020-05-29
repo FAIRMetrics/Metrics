@@ -20,9 +20,10 @@ require 'cgi'
 require 'digest'
 require 'open3'
 require 'metainspector'
+require 'rdf/xsd'
 #require 'pry'
 
-HARVESTER_VERSION="Hvst-1.2.0"
+HARVESTER_VERSION="Hvst-1.2.1"
 # better output,
 # different dealing with DataCite (they have a unique type header)
 # handle large extruct output,
@@ -826,17 +827,20 @@ class Utils
 			Utils::writeToCache(url, headers, response.headers, response.body, response.request.url)
 			return [response.headers, response.body]
 		rescue RestClient::ExceptionWithResponse => e
-			$stderr.puts "ERROR! " + e.response
+			$stderr.puts "ERROR! #{e.response}"
 			Utils::writeErrorToCache(url, headers)
+			meta.comments << "WARN: HTTP error #{e} encountered when trying to resolve #{url.to_s}\n" if meta
 			response = false
 			return response  # now we are returning 'False', and we will check that with an \"if\" statement in our main code
 		rescue RestClient::Exception => e
-			$stderr.puts "ERROR! " + e.response
+			$stderr.puts "ERROR! #{e}"
+			meta.comments << "WARN: HTTP error #{e} encountered when trying to resolve #{url.to_s}\n" if meta
 			Utils::writeErrorToCache(url, headers)
 			response = false
 			return response  # now we are returning 'False', and we will check that with an \"if\" statement in our main code
 		rescue Exception => e
-			$stderr.puts "ERROR! " + e.class.to_s + ": " + e.message.to_s
+			$stderr.puts "ERROR! #{e}"
+			meta.comments << "WARN: HTTP error #{e} encountered when trying to resolve #{url.to_s}\n" if meta
 			Utils::writeErrorToCache(url, headers)
 			response = false
 			return response  # now we are returning 'False', and we will check that with an \"if\" statement in our main code

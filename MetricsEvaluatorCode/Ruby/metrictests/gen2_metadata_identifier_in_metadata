@@ -9,7 +9,7 @@ require 'sparql'
 
 
 debug = false
-VERSION = HARVESTER_VERSION + ":" + "Tst-0.4.2"
+VERSION = HARVESTER_VERSION + ":" + "Tst-0.4.4"
 
 
 def testGUID
@@ -35,6 +35,7 @@ def testGUID
 		@swagger.addComment("INFO: Linked Data Found.  Now searching for the metadata identifier using appropriate linked data predicates (#{Utils::SELF_IDENTIFIER_PREDICATES}).\n")
 		
 		foundID = CommonQueries::GetSelfIdentifier(metadata.graph, @swagger)
+
 		# query pattern-match in an object position
 		if !foundID.first
 			@swagger.score = 0
@@ -46,13 +47,24 @@ def testGUID
 			@swagger.addComment("FAILURE: No metadata identifiers were found in the metadata record using predicates #{Utils::SELF_IDENTIFIER_PREDICATES}. \n")
 			return @swagger.createEvaluationResponse  # release the result from all other tests
 		end
+		unless foundID.first =~ /\w/
+			@swagger.score = 0
+			@swagger.addComment("FAILURE: No metadata identifiers were found in the metadata record using predicates #{Utils::SELF_IDENTIFIER_PREDICATES}. \n")
+			return @swagger.createEvaluationResponse  # release the result from all other tests
+		end
+
+	else
+		@swagger.score = 0
+		@swagger.addComment("FAILURE: linked data metadata was not found, so its identifier could not be located. \n")
+		return @swagger.createEvaluationResponse
 	end
+	
 	if foundID.include?(guid)
 			@swagger.score = 1
 			@swagger.addComment("SUCCESS: the starting identifier (#{guid}) was found in the structured metadata\n")
 	else	
 			@swagger.score = 0
-			@swagger.addComment("FAILURE: While (apparent) metadata record identifiers were found (#{foundID.join(',')}) none of them matched the initial GUID provided to the test (#{guid}).  Exact identifier match is required.\n")
+			@swagger.addComment("FAILURE: While (apparent) metadata record identifiers were found (#{foundID}) none of them matched the initial GUID provided to the test (#{guid}).  Exact identifier match is required.\n")
 	end
 
 	return @swagger.createEvaluationResponse  # release the result from all other tests
@@ -67,7 +79,7 @@ end
 if debug
 #       @input = '{"subject": "10.5281/zenodo.1147435"}'  # doi
 #		@input = '{"subject": "https://www.gbif.org/dataset/67c54f85-7910-4cbf-8de4-6f0b136a0e34"}'  # url
-@input = '{"subject": "https://ortus.rtu.lv/science/lv/datamodule/303"}'  # url
+@input = '{"subject": "https://www.nb.no/sprakbanken/show?serial=oai%3Anb.no%3Asbr-49&lang=nb"}'  # url
 #       @input = '{"subject": "BSYNRYMUTXBXSQ-UHFFFAOYSA-N"}' # inchi
 #       @input = '{"subject": "LFQSCWFLJHTTHZ-UHFFFAOYSA-N"}' # another inchi
 #       @input = '{"subject": "20.1000/105"}'  # handle

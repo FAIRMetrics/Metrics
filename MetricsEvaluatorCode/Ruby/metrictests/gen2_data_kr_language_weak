@@ -8,7 +8,7 @@ require 'rdf/turtle'
 require 'sparql'
 
 debug = false
-VERSION = HARVESTER_VERSION + ":" + "Tst-0.3.0"
+VERSION = HARVESTER_VERSION + ":" + "Tst-0.3.1"
 
 
 def testGUID
@@ -52,6 +52,7 @@ def testGUID
 			if key == prop
 				@swagger.addComment "INFO: found '#{prop}' in metadata.  Setting data GUID to #{value} for next test.\n"
 				@identifier=value.to_s
+				testIdentifier(@identifier) # this will add more comments and a score to @swagger
 			end
 		end
 	end
@@ -70,12 +71,17 @@ def testGUID
 
 		unless @identifier =~ /\w+/
 			@swagger.score = 0
-			@swagger.addComment "FAILURE: Was unable to locate the data identifier in the metadata using any (common) property/predicate reserved for this purpose.  Tested the following #{Utils::DATA_PREDICATES}\n"
+			@swagger.addComment "WARN: Was unable to locate the data identifier in the metadata using any (common) property/predicate reserved for this purpose.  Tested the following #{Utils::DATA_PREDICATES}\n"
 		else
 			@swagger.addComment "INFO: Now resolving #{@identifier} to test its response body.\n"
 			testIdentifier(@identifier) # this will add more comments and a score to @swagger
 		end
 	end
+	
+	if @swagger.score == 0
+		@swagger.addComment "FAILURE: the data could not be found, or does not appear to be in a recognized knowledge representation language.\n"
+	end
+
 
 	return @swagger.createEvaluationResponse
 end
