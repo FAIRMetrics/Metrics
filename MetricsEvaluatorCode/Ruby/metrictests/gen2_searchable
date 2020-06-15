@@ -9,7 +9,7 @@ require 'sparql'
 require 'net/https'
 
 debug = false
-VERSION = HARVESTER_VERSION + ":" + "Tst-0.2.5"
+VERSION = HARVESTER_VERSION + ":" + "Tst-0.2.6"
 
 
 #config = ParseConfig.new('config.conf')
@@ -201,8 +201,16 @@ def testGUID
 			@swagger.addComment "INFO: found keywords #{keywords}.\n "
 			@swagger.addComment "INFO: Calling Bing search using #{keywords}.\n "
 			searchresults = callBing(keywords)  # search bing
-			#$stderr.puts JSON::pretty_generate(JSON(searchresults))
-			h = JSON.parse(searchresults)  # parse json
+			#$stderr.puts "keywords #{keywords}"
+			#$stderr.puts "results: #{searchresults}"
+			h = Hash.new
+			begin
+				h = JSON.parse(searchresults)  # parse json
+			rescue
+				$stderr.puts "whatever came back from Bing was not parsable JSON"
+				@swagger.addComment "INFO: Bing returned a non-JSON response, indicating that the request failed for some reason\n"
+			end
+
 			if h["webPages"]   # are there results
 				@swagger.addComment "INFO: Bing found matches using #{keywords}. Testing matches for a reference to #{finalURI.map{|b| b.to_s}}\n"
 				h["webPages"]["value"].each do |p|  # for each matching pge do
@@ -239,8 +247,15 @@ def callBing(phrase)
 			$stderr.puts "Please add this to your environment."
 			abort
 	end
+	escapedphrase = URI.escape(phrase)
+	if escapedphrase.length > 1500
+		escapedphrase = escapedphrase[0..1500] # microsoft suggested maximum query length
+		match = escapedphrase.match(/(.*)(\%.*)/)  # trim off any partially escaped things at the end
+		escapedphrase = match[1] if match[1]
+	end
 	
-	uri = URI(uri + path + "?q=" + URI.escape(phrase) + "&count=50")
+	uri = URI(uri + path + "?q=#{escapedphrase}&count=50")
+#$stderr.puts "HTTP URI: #{uri}"
 	
 	request = Net::HTTP::Get.new(uri)
 	request['Ocp-Apim-Subscription-Key'] = @accessKey
@@ -248,13 +263,14 @@ def callBing(phrase)
 	response = Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') do |http|
 			http.request(request)
 	end
-
+#$stderr.puts "HTTP response: #{response.inspect}"
 	return response.body
 
 end
 
 if debug
-	@input = '{"subject": "10.5281/zenodo.1147435"}'  # doi fail
+#	@input = '{"subject": "10.5281/zenodo.1147435"}'  # doi fail
+	@input = '{"subject": "10.5878/6ctk-2b56"}'  # doi fail
 #	@input = '{"subject": "10.5281/zenodo.1065973"}'  # doi fail
 #	@input = '{"subject": "BSYNRYMUTXBXSQ-UHFFFAOYSA-N"}' # inchi
 #	@input = '{"subject": "LFQSCWFLJHTTHZ-UHFFFAOYSA-N"}' # another inchi
