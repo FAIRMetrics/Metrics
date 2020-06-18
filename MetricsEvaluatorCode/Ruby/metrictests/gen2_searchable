@@ -9,7 +9,7 @@ require 'sparql'
 require 'net/https'
 
 debug = false
-VERSION = HARVESTER_VERSION + ":" + "Tst-0.2.6"
+VERSION = HARVESTER_VERSION + ":" + "Tst-0.2.7"
 
 
 #config = ParseConfig.new('config.conf')
@@ -129,56 +129,67 @@ def testGUID
 	
 	if g.size > 0  # have we found anything
 		@swagger.addComment "INFO: Testing Linked Data-formatted metadata for any predicate that contains 'title' in any case.\n "
-		query = SPARQL.parse("select ?o where {?s ?p ?o  FILTER(CONTAINS(lcase(str(?p)), 'title'))}") # find predicate containing "title", take object
+		query = SPARQL.parse("select distinct ?o where {?s ?p ?o  FILTER(CONTAINS(lcase(str(?p)), 'title'))}") # find predicate containing "title", take object
 		results = query.execute(g)
 		if results.any?
 			@swagger.addComment "INFO: found title predicate.\n "
-			title = results.first[:o].to_s  # get the title
-			@swagger.addComment "INFO: found Title:  #{title}.\n "
-			#$stderr.puts "looking for #{title}"
-			@swagger.addComment "INFO: Calling Bing search using #{title}.\n "
-			searchresults = callBing(title)  # search bing
-			#$stderr.puts JSON::pretty_generate(JSON(searchresults))
-			h = JSON.parse(searchresults)  # parse json
-			if h["webPages"]   # are there results
-				@swagger.addComment "INFO: Bing found results for#{title}.  Checking for results that match #{finalURI.map{|b| b.to_s}}.\n"
-				h["webPages"]["value"].each do |p|  # for each matching pge do
-					if finalURI.include?(p["url"])   # compare to the final URI from the Utils::fetch routine (the page of metadata)
-						@swagger.addComment "SUCCESS: found a search record referencing #{p["url"]} based on an exact-match title search against Bing.\n  "
-						@swagger.score = 1
+			seen = Hash.new(false)  # appaerntly, distinct isn't working in the sparql...??
+			results.each do |res|
+				next if seen[res[:o].to_s]
+				seen[res[:o].to_s] = true
+	
+				title = res[:o].to_s  # get the title
+				@swagger.addComment "INFO: found possible Title:  #{title}.\n "
+				#$stderr.puts "looking for #{title}"
+				@swagger.addComment "INFO: Calling Bing search using #{title}.\n "
+				searchresults = callBing(title)  # search bing
+				#$stderr.puts JSON::pretty_generate(JSON(searchresults))
+				h = JSON.parse(searchresults)  # parse json
+				if h["webPages"]   # are there results
+					@swagger.addComment "INFO: Bing found results for#{title}.  Checking for results that match #{finalURI.map{|b| b.to_s}}.\n"
+					h["webPages"]["value"].each do |p|  # for each matching pge do
+						if finalURI.include?(p["url"])   # compare to the final URI from the Utils::fetch routine (the page of metadata)
+							@swagger.addComment "SUCCESS: found a search record referencing #{p["url"]} based on an exact-match title search against Bing.\n  "
+							@swagger.score = 1
+						end
 					end
+					unless @swagger.score == 1
+						@swagger.addComment "INFO: No results from Bing included any of #{finalURI.map{|b| b.to_s}}.\n"
+					end
+				else
+					@swagger.addComment "INFO: No search results from Bing using the title of the record\n  "
 				end
-				unless @swagger.score == 1
-					@swagger.addComment "INFO: No results from Bing included any of #{finalURI.map{|b| b.to_s}}.\n"
-				end
-			else
-				@swagger.addComment "INFO: No search results from Bing using the title of the record\n  "
 			end
 		end
-		query = SPARQL.parse("select ?o where {?s ?p ?o  FILTER(CONTAINS(lcase(str(?p)), 'name'))}") # find predicate containing "name", take object
+		query = SPARQL.parse("select distinct ?o where {?s ?p ?o  FILTER(CONTAINS(lcase(str(?p)), 'name'))}") # find predicate containing "name", take object
 		results = query.execute(g)
 		if results.any?
-			@swagger.addComment "INFO: found name predicate; presuming this is a pointer to a title.\n "
-			title = results.first[:o].to_s  # get the title
-			@swagger.addComment "INFO: found Title:  #{title}.\n "
-			#$stderr.puts "looking for #{title}"
-			@swagger.addComment "INFO: Calling Bing search using #{title}.\n "
-			searchresults = callBing(title)  # search bing
-			#$stderr.puts JSON::pretty_generate(JSON(searchresults))
-			h = JSON.parse(searchresults)  # parse json
-			if h["webPages"]   # are there results
-				@swagger.addComment "INFO: Bing found results for#{title}.  Checking for results that match #{finalURI.map{|b| b.to_s}}.\n"
-				h["webPages"]["value"].each do |p|  # for each matching pge do
-					if finalURI.include?(p["url"])  # compare to the final URI from the Utils::fetch routine (the page of metadata)
-						@swagger.addComment "SUCCESS: found a search record referencing #{p["url"]} based on an exact-match title search against Bing.\n  "
-						@swagger.score = 1
+			@swagger.addComment "INFO: found a 'name' predicate; presuming this is a pointer to a title.\n "
+			seen = Hash.new(false)  # appaerntly, distinct isn't working in the sparql...??
+			results.each do |res|
+				next if seen[res[:o].to_s]
+				seen[res[:o].to_s] = true
+				title = res[:o].to_s  # get the title
+				@swagger.addComment "INFO: found possible Title:  #{title}.\n "
+				#$stderr.puts "looking for #{title}"
+				@swagger.addComment "INFO: Calling Bing search using #{title}.\n "
+				searchresults = callBing(title)  # search bing
+				#$stderr.puts JSON::pretty_generate(JSON(searchresults))
+				h = JSON.parse(searchresults)  # parse json
+				if h["webPages"]   # are there results
+					@swagger.addComment "INFO: Bing found results for#{title}.  Checking for results that match #{finalURI.map{|b| b.to_s}}.\n"
+					h["webPages"]["value"].each do |p|  # for each matching pge do
+						if finalURI.include?(p["url"])  # compare to the final URI from the Utils::fetch routine (the page of metadata)
+							@swagger.addComment "SUCCESS: found a search record referencing #{p["url"]} based on an exact-match title search against Bing.\n  "
+							@swagger.score = 1
+						end
 					end
+					unless @swagger.score == 1
+						@swagger.addComment "INFO: No results from Bing included any of #{finalURI.map{|b| b.to_s}}.\n"
+					end
+				else
+					@swagger.addComment "INFO: No search results from Bing\n  "
 				end
-				unless @swagger.score == 1
-					@swagger.addComment "INFO: No results from Bing included any of #{finalURI.map{|b| b.to_s}}.\n"
-				end
-			else
-				@swagger.addComment "INFO: No search results from Bing\n  "
 			end
 		end
 
@@ -193,38 +204,43 @@ def testGUID
 	
 	if g.size > 0  # have we found anything
 		@swagger.addComment "INFO: Testing Linked Data-formatted metadata for any predicate that contains 'keyword' in any case.\n "
-		query = SPARQL.parse("select ?o where {?s ?p ?o  FILTER(CONTAINS(lcase(str(?p)), 'keyword'))}") # find predicate containing "title", take object
+		query = SPARQL.parse("select distinct ?o where {?s ?p ?o  FILTER(CONTAINS(lcase(str(?p)), 'keyword'))}") # find predicate containing "title", take object
 		results = query.execute(g)
 		if results.any?
-			keywords = results.first[:o].to_s  # get the keywords
-			@swagger.addComment "INFO: found keywords.\n "
-			@swagger.addComment "INFO: found keywords #{keywords}.\n "
-			@swagger.addComment "INFO: Calling Bing search using #{keywords}.\n "
-			searchresults = callBing(keywords)  # search bing
-			#$stderr.puts "keywords #{keywords}"
-			#$stderr.puts "results: #{searchresults}"
-			h = Hash.new
-			begin
-				h = JSON.parse(searchresults)  # parse json
-			rescue
-				$stderr.puts "whatever came back from Bing was not parsable JSON"
-				@swagger.addComment "INFO: Bing returned a non-JSON response, indicating that the request failed for some reason\n"
-			end
-
-			if h["webPages"]   # are there results
-				@swagger.addComment "INFO: Bing found matches using #{keywords}. Testing matches for a reference to #{finalURI.map{|b| b.to_s}}\n"
-				h["webPages"]["value"].each do |p|  # for each matching pge do
-					if finalURI.include?(p["url"])  # compare to the final URI from the Utils::fetch routine (the page of metadata)
-						@swagger.addComment "SUCCESS: found a search record referencing #{p["url"]} based on a keyword search against Bing.\n  "
-						@swagger.score = 1
+			seen = Hash.new(false)  # appaerntly, distinct isn't working in the sparql...??
+			results.each do |res|
+				next if seen[res[:o].to_s]
+				seen[res[:o].to_s] = true
+				keywords = res[:o].to_s  # get the keywords
+				@swagger.addComment "INFO: found keywords.\n "
+				@swagger.addComment "INFO: found keywords #{keywords}.\n "
+				@swagger.addComment "INFO: Calling Bing search using #{keywords}.\n "
+				searchresults = callBing(keywords)  # search bing
+				#$stderr.puts "keywords #{keywords}"
+				#$stderr.puts "results: #{searchresults}"
+				h = Hash.new
+				begin
+					h = JSON.parse(searchresults)  # parse json
+				rescue
+					$stderr.puts "whatever came back from Bing was not parsable JSON"
+					@swagger.addComment "INFO: Bing returned a non-JSON response, indicating that the request failed for some reason\n"
+				end
+	
+				if h["webPages"]   # are there results
+					@swagger.addComment "INFO: Bing found matches using #{keywords}. Testing matches for a reference to #{finalURI.map{|b| b.to_s}}\n"
+					h["webPages"]["value"].each do |p|  # for each matching pge do
+						if finalURI.include?(p["url"])  # compare to the final URI from the Utils::fetch routine (the page of metadata)
+							@swagger.addComment "SUCCESS: found a search record referencing #{p["url"]} based on a keyword search against Bing.\n  "
+							@swagger.score = 1
+						end
 					end
+					unless @swagger.score == 1
+						@swagger.addComment "INFO: No results from Bing included any of #{finalURI.map{|b| b.to_s}}.\n"
+					end
+	
+				else
+					@swagger.addComment "INFO: No results from Bing using keywords #{keywords}.\n"
 				end
-				unless @swagger.score == 1
-					@swagger.addComment "INFO: No results from Bing included any of #{finalURI.map{|b| b.to_s}}.\n"
-				end
-
-			else
-				@swagger.addComment "INFO: No results from Bing using keywords #{keywords}.\n"
 			end
 		end
 	end

@@ -8,7 +8,7 @@ require 'rdf/turtle'
 require 'sparql'
 
 debug = false
-VERSION = HARVESTER_VERSION + ":" + "Tst-0.3.0"
+VERSION = HARVESTER_VERSION + ":" + "Tst-0.3.1"
 # 0.3.0 totally new algorithm for testing - checks only one pred from each domain, in alphbetidcal order
 
 def testGUID
@@ -88,12 +88,22 @@ def testGUID
 		@swagger.addComment "INFO:  testing resolution of predicate #{predicate.value}\n"
 		metadata2 = Utils::resolveit(predicate.value)  # this  sends the content-negotiation for linked data
 		g2 = metadata2.graph
+		if g2.size > 0
+			@swagger.addComment "INFO:  predicate #{predicate.value} resolved to linked data.\n"
+		else
+			@swagger.addComment "WARN:  predicate #{predicate.value} did not resolve to linked data.\n"
+		end
+
+		@swagger.addComment "INFO: If linked data was found in the previous line, it will now be tested by the following SPARQL query: 'select * where {<#{predicate.value}> ?p ?o}' \n"
+
 		query = SPARQL.parse("select * where {<#{predicate.value}> ?p ?o}")
 		results = query.execute(g2)
 		if  results.any?
 			@swagger.addComment "INFO: Resolving #{predicate.value}returned linked data, including that URI as a triple Subject.\n"
 			$stderr.puts "adding #{hosthash[host].uniq.count} to successes"
 			success += hosthash[host].uniq.count
+		else
+			@swagger.addComment "WARN:  predicate #{predicate.value} was not found as the SUBJECT of a triple, indicating that it did not resolve to its definition.\n"
 		end
 	end
 	
@@ -115,13 +125,13 @@ end
 if debug
 #	@input = '{"subject": "10.5281/zenodo.1147435"}'  # doi fail
 #	@input = '{"subject": "10.5281/zenodo.1065973"}'  # doi fail
-#	@input = '{"subject": "BSYNRYMUTXBXSQ-UHFFFAOYSA-N"}' # inchi
+	@input = '{"subject": "BSYNRYMUTXBXSQ-UHFFFAOYSA-N"}' # inchi
 #	@input = '{"subject": "LFQSCWFLJHTTHZ-UHFFFAOYSA-N"}' # another inchi
 #	@input = '{"subject": "20.1000/105"}'  # handle (fail)
 #	@input = '{"subject": "https://ortus.rtu.lv/science/lv/datamodule/303"}'  # handle#
 #	@input = '{"subject": "10.18710/3PKATY"}'  # doi fail
 #	@input = '{"subject": "10.23698/aida/lnco"}'
-	@input = '{"subject": "10.17045/sthlmuni.9907991.v1"}'
+#	@input = '{"subject": "10.17045/sthlmuni.9907991.v1"}'
 #	@input = '{"subject": "http://hdl.handle.net/11250/2631642"}'  # doi 
 #	@input = '{"subject": "10.25504/FAIRsharing.6k0kwd"}'  # doi fail
 #        @input = '{"subject": "https://www.ebi.ac.uk/arrayexpress/"}' 

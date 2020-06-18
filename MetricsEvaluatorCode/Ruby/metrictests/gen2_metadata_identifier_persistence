@@ -5,17 +5,17 @@ require 'json'
 require 'uri'
 
 debug = false
-VERSION = HARVESTER_VERSION + ":" + "Tst-0.2.1"
+VERSION = HARVESTER_VERSION + ":" + "Tst-0.2.2"
 
 
 def testGUID
 
 	@swagger.addComment("INFO: TEST VERSION '#{VERSION}'\n")
-	
+	@swagger.addComment("INFO: END OF HARVESTING\n") # necessary for consistency
 	
 	guid = @swagger.testedGUID
 	
-	type = Utils::typeit(guid)  # this is where the magic happens!
+	type = Utils::typeit(guid)  
 
 	if !type
 		@swagger.addComment("FAILURE: The GUID identifier of the metadata #{guid} did not match any known identification system.\n")
