@@ -23,7 +23,7 @@ require 'metainspector'
 require 'rdf/xsd'
 #require 'pry'
 
-HARVESTER_VERSION="Hvst-1.2.1"
+HARVESTER_VERSION="Hvst-1.2.2public"
 # better output,
 # different dealing with DataCite (they have a unique type header)
 # handle large extruct output,
@@ -689,7 +689,12 @@ class Utils
         next unless section[0]
         url = section[0][/<(.*)>/,1]
         next unless section[1]
-        type = section[1][/rel="?(\w+)"?/,1]
+        type = ""
+        section[1..].each do |s|
+            type = s[/rel="?(\w+)"?/,1]
+            break if type
+        end        
+        next unless type
         next unless ["meta", "alternate"].include?(type.downcase)  # "meta" headers are for old versions of Virtuoso LDP - not in link relations standared
         urls << url
       end
