@@ -20,7 +20,7 @@ Only Gen2 tests function with the current version of the [Evaluator software](ht
 * [FAIR-TLC](https://zenodo.org/record/203295#.WVs8m4jfoUE)
 * [RDA Working Group on Data Usability](https://www.rd-alliance.org/data-publishing-data-usability-certification-services-rda-8th-plenary-bof-meeting)
 * [RDA Working Group on Data Maturity Model](https://www.rd-alliance.org/groups/fair-data-maturity-model-wg)
-* [Horizon 2020 Commission expert group on Turning FAIR data into reality](http://ec.europa.eu/transparency/regexpert/index.cfm?do=groupDetail.groupDetail&groupID=3464
+* [Horizon 2020 Commission expert group on Turning FAIR data into reality](http://ec.europa.eu/transparency/regexpert/index.cfm?do=groupDetail.groupDetail&groupID=3464)
 
 
 # HOW TO CREATE AND REGISTER A NEW MATURITY INDICATOR
