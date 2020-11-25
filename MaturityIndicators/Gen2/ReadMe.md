@@ -13,7 +13,7 @@ All tests begin by following a common path which attempts to extract metadata (b
 2) The resulting URL is then called using the following Accept header:<br/>
      text/turtle, application/ld+json, application/rdf+xml, text/xhtml+xml, application/n3, application/rdf+n3, application/turtle, application/x-turtle, text/n3, text/turtle, text/rdf+n3, text/rdf+turtle, application/n-triples
      
-3) If there is a valid response, the HTTP Response Headers are scanned for any Link type="meta" headers, and those are pursued by returning to Step 2 and following through to the end.  This goes only one layer deep (i.e. any meta headers in a response from a meta URL are ignored)
+3) If there is a valid response, the HTTP Response Headers are scanned for any Link type="meta" headers, any Link type="describedBy" headers, or any <Meta> tags using the same link types.  Any that are discovered are pursued by returning to Step 2 and following through to the end.  This goes only one layer deep (i.e. any link headers/tags in a response from a meta URL are ignored)
 
 4) If there is no response, the URL is called again using Accept: */*, and the process cycles back to Step 3
 
