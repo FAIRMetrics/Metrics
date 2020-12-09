@@ -1,7 +1,7 @@
 # TITLE:  FAIR Maturity Indicator XXXXX
 
 ## Authors: 
-John Doe, ORCID:0000-XXXX-XXXX-XXXX
+John Doe, ORCID:0000-XXXX-XXXX-XXXX <br />
 Jane Doe, ORCID:0000-XXXX-XXXX-XXXX
 
 
