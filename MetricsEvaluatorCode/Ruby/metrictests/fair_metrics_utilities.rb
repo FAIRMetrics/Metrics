@@ -94,22 +94,32 @@ class Utils
     Utils::DATA_PREDICATES = [
         'http://www.w3.org/ns/ldp#contains',
         'http://xmlns.com/foaf/0.1/primaryTopic',
-        # 'http://schema.org/about', # removed for being too general
-        'http://schema.org/mainEntity',
-        'http://schema.org/codeRepository',
-        'http://www.w3.org/ns/dcat#distribution',
-        'http://schema.org/distribution',
-        'http://semanticscience.org/resource/SIO_000332', # is about
-        'http://semanticscience.org/resource/is-about', # is about
         'http://purl.obolibrary.org/obo/IAO_0000136', # is about
         'http://purl.obolibrary.org/obo/IAO:0000136', # is about (not the valid URL...)
         'https://www.w3.org/ns/ldp#contains',
         'https://xmlns.com/foaf/0.1/primaryTopic',
+
+
+        # 'http://schema.org/about', # removed for being too general
+        'http://schema.org/mainEntity',
+        'http://schema.org/codeRepository',
+        'http://schema.org/distribution',
         # 'https://schema.org/about', #removed for being too general
         'https://schema.org/mainEntity',
         'https://schema.org/codeRepository',
-        'https://www.w3.org/ns/dcat#distribution',
         'https://schema.org/distribution',
+
+        'http://www.w3.org/ns/dcat#distribution',
+        'https://www.w3.org/ns/dcat#distribution',
+        'http://www.w3.org/ns/dcat#dataset',
+        'https://www.w3.org/ns/dcat#dataset',
+        'http://www.w3.org/ns/dcat#downloadURL',
+        'https://www.w3.org/ns/dcat#downloadURL',
+        'http://www.w3.org/ns/dcat#accessURL',
+        'https://www.w3.org/ns/dcat#accessURL',
+        
+        'http://semanticscience.org/resource/SIO_000332', # is about
+        'http://semanticscience.org/resource/is-about', # is about
         'https://semanticscience.org/resource/SIO_000332', # is about
         'https://semanticscience.org/resource/is-about', # is about
         'https://purl.obolibrary.org/obo/IAO_0000136', # is about
@@ -1398,15 +1408,27 @@ class CommonQueries
 							return @identifier
 
 					end
+#  THIS HAS BEEN REMOVED - it isn't capable of handling situations where different portions of the DCAT schema are in different docuemnts
+#  Future versions of Evaluator need to be made DCAT-aware
+#			elsif prop =~ /dcat\#/
+#				query = SPARQL.parse("select ?o where {
+#                                     VALUES ?dcataccess {<http://www.w3.org/ns/dcat#accessURL> <http://www.w3.org/ns/dcat#accessURL>}
+#                                     ?s <#{prop}> ?b .
+#									 ?b  ?dcataccess ?o}")
+#				results = query.execute(g)
+#				if  results.any?
+#					@identifier=results.first[:o].value
+#					swagger.addComment "INFO: found identifier '#{@identifier}' using DCAT distribution property.\n"
+#					return @identifier
+#				end
+#  The replacement is a "dumb" check that there is a URL at the end of the dcat predicate(s)
 			elsif prop =~ /dcat\#/
-				query = SPARQL.parse("select ?o where {
-                                     VALUES ?dcataccess {<http://www.w3.org/ns/dcat#accessURL> <http://www.w3.org/ns/dcat#accessURL>}
-                                     ?s <#{prop}> ?b .
-									 ?b  ?dcataccess ?o}")
+				query = SPARQL.parse("select ?b where {
+                                     ?s <#{prop}> ?b .}")
 				results = query.execute(g)
 				if  results.any?
-					@identifier=results.first[:o].value
-					swagger.addComment "INFO: found identifier '#{@identifier}' using DCAT distribution property.\n"
+					@identifier=results.first[:b].value
+					swagger.addComment "INFO: found data identifier '#{@identifier}' using DCAT '#{prop}' property.\n"
 					return @identifier
 				end
 			elsif prop =~ /mainEntity/
