@@ -23,7 +23,8 @@ require 'metainspector'
 require 'rdf/xsd'
 #require 'pry'
 
-HARVESTER_VERSION="Hvst-1.2.2public"
+
+HARVESTER_VERSION="Hvst-1.4.0"
 # better output,
 # different dealing with DataCite (they have a unique type header)
 # handle large extruct output,
@@ -126,8 +127,8 @@ class Utils
         ]
 
     Utils::SELF_IDENTIFIER_PREDICATES = [
-        'http://purl.org/dc/elements/1.1/',
-        'https://purl.org/dc/elements/1.1/',
+        'http://purl.org/dc/elements/1.1/identifier',
+        'https://purl.org/dc/elements/1.1/identifier',
         'http://purl.org/dc/terms/identifier',
         'http://schema.org/identifier',
         'https://purl.org/dc/terms/identifier',
@@ -152,29 +153,34 @@ class Utils
 
     def Utils::resolveit(guid)
 
+        
+        #if meta = Utils::retrieveMetaObject(guid)
+        #    return meta
+        #end
+
       meta = MetadataObject.new()
       
-      Utils::GUID_TYPES.each do |pair|
+      Utils::GUID_TYPES.each do |pair|  # meta object gets updated in each case
           k,regex = pair
           if k == "inchi" and regex.match(guid)
-            metadata = Utils::resolve_inchi(guid, meta)
-            return metadata
+            Utils::resolve_inchi(guid, meta)
           elsif k == "handle1" and regex.match(guid)
-            metadata = Utils::resolve_handle(guid, meta)
-            return metadata
+            Utils::resolve_handle(guid, meta)
           elsif k == "handle2" and regex.match(guid)
-            metadata = Utils::resolve_handle(guid, meta)
-            return metadata
+            Utils::resolve_handle(guid, meta)
           elsif k == "uri" and regex.match(guid)
-            metadata = Utils::resolve_uri(guid, meta)
-            return metadata
+            Utils::resolve_uri(guid, meta)
           elsif k == "doi" and regex.match(guid)
-            metadata = Utils::resolve_doi(guid, meta)
-            return metadata
+            Utils::resolve_doi(guid, meta)
           end
       end
-      meta.guidtype = "unknown"
-      meta.comments << "CRITICAL: The guid did not correspond to any known GUID. Tested #{Utils::GUID_TYPES.keys.to_s}. Halting.\n"
+
+      if meta.comments.length < 1  # didn't match any of the types, so no comments were added
+            meta.guidtype = "unknown"
+            meta.comments << "CRITICAL: The guid '#{guid}' did not correspond to any known GUID format. Tested #{Utils::GUID_TYPES.keys.to_s}. Halting.\n"
+      end
+      meta.comments << "INFO: END OF HARVESTING\n"
+      #Utils::cacheMetaObject(meta, guid)
       return meta
       
     end
@@ -213,13 +219,13 @@ class Utils
     
     
     def Utils::resolve_inchi(guid, meta)
-      meta.guidtype = "inchi" if meta.guidtype.nil?
-      
+      type, url = Utils::convertToURL(guid)
+      meta.guidtype = type if meta.guidtype.nil?
       meta.comments << "INFO: Found an InChI Key GUID.\n"
 #$stderr.puts "1"
-      meta.comments << "INFO: Resolving using PubChem Resolver https://pubchem.ncbi.nlm.nih.gov/rest/rdf/inchikey/#{guid} with HTTP Accept Headers #{Utils::AcceptHeader.to_s}.\n"
+      meta.comments << "INFO: Resolving using PubChem Resolver #{url} with HTTP Accept Headers #{Utils::AcceptHeader.to_s}.\n"
 
-      head, body = self.fetch("https://pubchem.ncbi.nlm.nih.gov/rest/rdf/inchikey/#{guid}", Utils::AcceptHeader, meta)
+      head, body = self.fetch(url, Utils::AcceptHeader, meta)
       # this is a Net::HTTP response
 #$stderr.puts "2"
 
@@ -231,21 +237,23 @@ class Utils
       
       (parser, type) = Utils::figure_out_type(head)
       unless parser and type
-        meta.comments << "CRITICAL: Couldn't find a parser for the data returned from https://pubchem.ncbi.nlm.nih.gov/rest/rdf/inchikey/#{guid}. Halting. \n"
+        meta.comments << "CRITICAL: Couldn't find a parser for the data returned from #{url}. Halting. \n"
         return meta
       end
 #$stderr.puts "5"
 
       # this next operation is safe because we know that pubchem does in fact return Turtle
       unless parser.eql?"turtle"
-        meta.comments << "CRITICAL: expected turtle format from https://pubchem.ncbi.nlm.nih.gov/rest/rdf/inchikey/#{guid}. Halting. \n"
+        meta.comments << "CRITICAL: expected turtle format from #{url}. Halting. \n"
         return meta   
       end
 #$stderr.puts "6"
       
       Utils::parse_rdf(meta, body) 
         
-      query = SPARQL.parse("select ?o where {?s <http://semanticscience.org/resource/is-attribute-of> ?o}")
+      query = SPARQL.parse("select ?o where {VALUES ?p {
+                           <http://semanticscience.org/resource/is-attribute-of> <https://semanticscience.org/resource/is-attribute-of>}
+                            ?s ?p ?o}")
       results = query.execute(meta.graph)
       unless results.any?
         meta.comments << "CRITICAL: Could not find the sio:is_attribute_of predicate in the first layer of metadatafrom https://pubchem.ncbi.nlm.nih.gov/rest/rdf/inchikey/#{guid}. Halting. \n"
@@ -283,13 +291,16 @@ class Utils
     
     
     def Utils::resolve_doi(guid, meta)
-      meta.guidtype = "doi" if meta.guidtype.nil?
+      guid.downcase!
+      type, url  = Utils::convertToURL(guid)
+      meta.guidtype = type if meta.guidtype.nil?
       meta.comments << "INFO:  Found a DOI.\n"
 
-      meta.comments << "INFO:  Attempting to resolve https://doi.org/#{guid} using HTTP Headers #{Utils::AcceptHeader.to_s}.\n"
-      Utils::resolve_url("https://doi.org/#{guid}", meta, false)  # specifically metadata
-      meta.comments << "INFO:  Attempting to resolve https://doi.org/#{guid} using HTTP Headers #{{"Accept" => "*/*"}.to_s}.\n"
-      Utils::resolve_url("https://doi.org/#{guid}", meta, false, {"Accept" => "*/*"}) # whatever is default
+
+      meta.comments << "INFO:  Attempting to resolve #{url} using HTTP Headers #{Utils::AcceptHeader.to_s}.\n"
+      Utils::resolve_url(url, meta, false)  # specifically metadata
+      meta.comments << "INFO:  Attempting to resolve #{url} using HTTP Headers #{{"Accept" => "*/*"}.to_s}.\n"
+      Utils::resolve_url(url, meta, false, {"Accept" => "*/*"}) # whatever is default
 
         # CrossRef and DataCite both "intercept" the normal redirect process, when a URI has a content-type
         # Accept header that they understand.  This prevents the owner of the data from providing their own
@@ -310,10 +321,12 @@ class Utils
     
     def Utils::resolve_handle(guid, meta)
       
-      meta.guidtype = "handle" if meta.guidtype.nil?
+      type, url  = Utils::convertToURL(guid)
+      meta.guidtype = type if meta.guidtype.nil?
+
       meta.comments << "INFO: Found a non-DOI Handle.\n"
-      meta.comments << "INFO:  Attempting to resolve http://hdl.handle.net/#{guid} using HTTP Headers #{Utils::AcceptHeader.to_s}.\n"
-      Utils::resolve_uri("http://hdl.handle.net/#{guid}", meta)
+      meta.comments << "INFO:  Attempting to resolve #{url} using HTTP Headers #{Utils::AcceptHeader.to_s}.\n"
+      Utils::resolve_uri(url, meta)
 #      meta.comments << "INFO:  Attempting to resolve http://hdl.handle.net/#{guid} using HTTP Headers #{{"Accept" => "*/*"}.to_s}.\n"
 #      Utils::resolve_url("http://hdl.handle.net/#{guid}", meta, false, {"Accept" => "*/*"})
       return meta
@@ -322,16 +335,18 @@ class Utils
       
     def Utils::resolve_uri(guid, meta)
       
-      meta.guidtype = "uri" if meta.guidtype.nil?
+      type, url  = Utils::convertToURL(guid)
+      meta.guidtype = type if meta.guidtype.nil?
+
       meta.comments << "INFO: Found a URI.\n"
-      meta.comments << "INFO:  Attempting to resolve #{guid} using HTTP Headers #{Utils::AcceptHeader.to_s}.\n"
-      Utils::resolve_url(guid, meta, false)
-      meta.comments << "INFO:  Attempting to resolve #{guid} using HTTP Headers #{Utils::XML_FORMATS['xml'].join(",")}.\n"
-      Utils::resolve_url(guid, meta, false, {"Accept" => "#{Utils::XML_FORMATS['xml'].join(",")}"})
-      meta.comments << "INFO:  Attempting to resolve #{guid} using HTTP Headers #{Utils::JSON_FORMATS['json'].join(",")}.\n"
-      Utils::resolve_url(guid, meta, false, {"Accept" => "#{Utils::JSON_FORMATS['json'].join(",")}"})
-      meta.comments << "INFO:  Attempting to resolve #{guid} using HTTP Headers 'Accept: */*'.\n"
-      Utils::resolve_url(guid, meta, false, {"Accept" => "*/*"})
+      meta.comments << "INFO:  Attempting to resolve #{url} using HTTP Headers #{Utils::AcceptHeader.to_s}.\n"
+      Utils::resolve_url(url, meta, false)
+      meta.comments << "INFO:  Attempting to resolve #{url} using HTTP Headers #{Utils::XML_FORMATS['xml'].join(",")}.\n"
+      Utils::resolve_url(url, meta, false, {"Accept" => "#{Utils::XML_FORMATS['xml'].join(",")}"})
+      meta.comments << "INFO:  Attempting to resolve #{url} using HTTP Headers #{Utils::JSON_FORMATS['json'].join(",")}.\n"
+      Utils::resolve_url(url, meta, false, {"Accept" => "#{Utils::JSON_FORMATS['json'].join(",")}"})
+      meta.comments << "INFO:  Attempting to resolve #{url} using HTTP Headers 'Accept: */*'.\n"
+      Utils::resolve_url(url, meta, false, {"Accept" => "*/*"})
       return meta
 
     end
@@ -397,7 +412,7 @@ class Utils
           meta.comments << "INFO: Now attempting to use the extruct parser. \n"
           Utils::do_extruct(meta, url ) 
           meta.comments << "INFO: Now attempting to use the Kellogg's Distiller parser. \n"
-          meta.comments << "INFO: Note that, if the Distiller fails, you can view the output of its parse by visiting http://rdf.greggkellogg.net/distiller?command=serialize&url=#{URI::encode(url)}. \n"
+          meta.comments << "INFO: Note that, if the Distiller fails, you can view the output of its parse by visiting http://rdf.greggkellogg.net/distiller?command=serialize&url=#{CGI.escape(url.to_s)}. \n"
     	  Utils::do_distiller(meta, body)
         when Utils::XML_FORMATS.keys.include?(parser)
           meta.comments << "INFO: parsing as XML. \n"
@@ -598,7 +613,8 @@ class Utils
         meta.comments << "INFO: The message body is being examined by Distiller\n"
 #        command = "LANG=en_US.UTF-8 #{Utils::RDFCommand} serialize --input-format rdfa --output-format turtle #{file.path} 2>/dev/null"
         #command = "LANG=en_US.UTF-8 #{Utils::RDFCommand} serialize --input-format rdfa --output-format jsonld #{file.path}"
-        command = "LANG=en_US.UTF-8 /usr/local/bin/ruby /usr/local/bundle/bin/rdf serialize --input-format rdfa --output-format jsonld #{file.path}"
+        command = "LANG=en_US.UTF-8 /usr/local/bin/ruby #{@rdf_command} serialize --input-format rdfa --output-format jsonld #{file.path}"
+#        command = "LANG=en_US.UTF-8 /home/osboxes/.rvm/rubies/ruby-2.6.3/bin/ruby /home/osboxes/.rvm/gems/ruby-2.6.3/bin/rdf serialize --output-format jsonld #{file.path}"
         $stderr.puts "distiller command: " + command
         result, stderr, status = Open3.capture3(command); $stderr.puts "";
         stderr = stderr # silnece debugger
@@ -957,6 +973,13 @@ class Utils
 
   end
   
+
+##########################################################
+###################  CACHE FUNCTIONS #####################
+###################  #####################################
+
+
+
   
     def Utils::checkRDFCache(body)
 
@@ -1212,7 +1235,7 @@ EOF_EOF
       end
   
       unless o.respond_to?('uri')
-        if o.to_s =~ /^\w+:\/?\/?[^\s]+/
+        if o.to_s =~ /\A\w+:\/?\/?\w[^\s]+/
                 o = RDF::URI.new(o.to_s)
         elsif o.to_s =~ /^\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d/
                 o = RDF::Literal.new(o.to_s, :datatype => RDF::XSD.date)
@@ -1257,7 +1280,7 @@ EOF_EOF
 
     me = self.protocol + "://" + self.host + "/" + self.basePath + self.path
     
-    meURI  ="#{me}##{URI.encode(uri)}/result-#{URI.encode(dt)}"
+    meURI  ="#{me}##{CGI.escape(uri)}/result-#{CGI.escape(dt)}"
 
     triplify(meURI, "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "http://fairmetrics.org/resources/metric_evaluation_result", g );
     triplify(meURI, "http://semanticscience.org/resource/SIO_000300", self.score, g )
@@ -1355,6 +1378,11 @@ class CommonQueries
                 results = query.execute(g)
                 if  results.any?
                     results.each do |r|
+                        unless r[:identifier].respond_to? :value
+                            swagger.addComment "INFO: '#{prop}' PropertyValue did not have the expected structure.  Moving on.\n"
+                            next
+                        end
+                            
                         identifier=r[:identifier].value
                         swagger.addComment "INFO: found identifier '#{identifier}' using Schema.org identifier as PropertyValue.\n"
                         identifiers << identifier
@@ -1368,6 +1396,10 @@ class CommonQueries
                     if  results.any?
                         results.each do |r|
                             #$stderr.puts "inspecting results from query #{r.inspect}"
+                            unless r[:identifier].respond_to? :value
+                                swagger.addComment "INFO: '#{prop}' as a simple value did not have the expected structure.  Moving on.\n"
+                                next
+                            end
                             identifier=r[:identifier].value
                             swagger.addComment "INFO: found identifier '#{identifier}' using Schema.org identifier as with a string or URI value.\n"
                             identifiers << identifier
@@ -1379,6 +1411,10 @@ class CommonQueries
 				results = query.execute(g)
 				if results.any?
                     results.each do |r|
+                        unless r[:identifier].respond_to? :value
+                            swagger.addComment "INFO: '#{prop}' as a simple identifier predicate did not have the expected structure.  Moving on.\n"
+                            next
+                        end
                         identifier=r[:identifier].value
                         swagger.addComment "INFO: found identifier '#{identifier}' using #{prop} as a string or URI.\n"
                         identifiers << identifier
@@ -1403,6 +1439,10 @@ class CommonQueries
 										 ?b  ?schemaurl ?o}")
 					results = query.execute(g)
 					if  results.any?
+                            unless results.first[:o].respond_to? :value
+                                swagger.addComment "INFO: '#{prop}' data identifier did not have the expected structure.  Moving on.\n"
+                                next
+                            end
 							@identifier=results.first[:o].value
 							swagger.addComment "INFO: found identifier '#{@identifier}' using Schema.org distribution property.\n"
 							return @identifier
@@ -1424,9 +1464,13 @@ class CommonQueries
 #  The replacement is a "dumb" check that there is a URL at the end of the dcat predicate(s)
 			elsif prop =~ /dcat\#/
 				query = SPARQL.parse("select ?b where {
-                                     ?s <#{prop}> ?b .}")
+                                     ?s <#{prop}> ?o .}")
 				results = query.execute(g)
 				if  results.any?
+                    unless results.first[:o].respond_to? :value
+                        swagger.addComment "INFO: '#{prop}' data identifier did not have the expected structure.  Moving on.\n"
+                        next
+                    end
 					@identifier=results.first[:b].value
 					swagger.addComment "INFO: found data identifier '#{@identifier}' using DCAT '#{prop}' property.\n"
 					return @identifier
@@ -1438,6 +1482,10 @@ class CommonQueries
 									 ?entity  ?schemaidentifier ?o}")
 				results = query.execute(g)
                 if  results.any?
+                    unless results.first[:o].respond_to? :value
+                        swagger.addComment "INFO: '#{prop}' data identifier did not have the expected structure.  Moving on.\n"
+                        next
+                    end
 					@identifier=results.first[:o].value
 					swagger.addComment "INFO: found identifier '#{@identifier}' using schema:mainEntity containing a schema:identifier clause.\n"
 					return @identifier
@@ -1449,6 +1497,10 @@ class CommonQueries
 				query = SPARQL.parse("select ?o where {?s <#{prop}> ?o}")
 				results = query.execute(g)
 				if results.any?
+                    unless results.first[:o].respond_to? :value
+                        swagger.addComment "INFO: '#{prop}' data identifier did not have the expected structure.  Moving on.\n"
+                        next
+                    end
 					@identifier=results.first[:o].value
 					swagger.addComment "INFO: found identifier '#{@identifier}' using #{prop}.\n"
                     return @identifier

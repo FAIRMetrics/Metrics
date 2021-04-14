@@ -9,7 +9,7 @@ require 'sparql'
 require 'net/https'
 
 debug = false
-VERSION = HARVESTER_VERSION + ":" + "Tst-0.2.7"
+VERSION = HARVESTER_VERSION + ":" + "Tst-0.2.4"
 
 
 #config = ParseConfig.new('config.conf')
@@ -68,8 +68,9 @@ def testGUID
 		h = JSON.parse(searchresults)
 		if h["webPages"]
 			@swagger.addComment "INFO: found matches in Bing.  Checking for results that match any of #{finalURI.map{|b| b.to_s}}.\n"
+			finalURI = finalURI.map{|b| b.downcase}  # make case insensitive search
 			h["webPages"]["value"].each do |p|
-				if finalURI.include?(p["url"])   # compare to the final URI from the Utils::fetch routine (the page of metadata)
+				if finalURI.include?(p["url"].downcase)   # compare to the final URI from the Utils::fetch routine (the page of metadata)
 					@swagger.addComment "SUCCESS: found a search record referencing #{p["url"]} based on an exact-match title search against Bing.\n  "
 					@swagger.score = 1
 				end
@@ -105,8 +106,9 @@ def testGUID
 		h = JSON.parse(searchresults)
 		if h["webPages"]
 			@swagger.addComment "INFO: found matches in Bing.  Checking for results that match any of #{finalURI.map{|b| b.to_s}}\n"
+			finalURI = finalURI.map{|b| b.downcase}  # make case insensitive search
 			h["webPages"]["value"].each do |p|
-				if finalURI.include?(p["url"])   # compare to the final URI from the Utils::fetch routine (the page of metadata)
+				if finalURI.include?(p["url"].downcase)   # compare to the final URI from the Utils::fetch routine (the page of metadata)
 					@swagger.addComment "SUCCESS: found a search hit matching #{p["url"]} using metadata keywords in search on Bing.\n  "
 					@swagger.score = 1
 				end
@@ -147,8 +149,9 @@ def testGUID
 				h = JSON.parse(searchresults)  # parse json
 				if h["webPages"]   # are there results
 					@swagger.addComment "INFO: Bing found results for#{title}.  Checking for results that match #{finalURI.map{|b| b.to_s}}.\n"
+					finalURI = finalURI.map{|b| b.downcase}  # make case insensitive search
 					h["webPages"]["value"].each do |p|  # for each matching pge do
-						if finalURI.include?(p["url"])   # compare to the final URI from the Utils::fetch routine (the page of metadata)
+						if finalURI.include?(p["url"].downcase)   # compare to the final URI from the Utils::fetch routine (the page of metadata)
 							@swagger.addComment "SUCCESS: found a search record referencing #{p["url"]} based on an exact-match title search against Bing.\n  "
 							@swagger.score = 1
 						end
@@ -178,8 +181,9 @@ def testGUID
 				h = JSON.parse(searchresults)  # parse json
 				if h["webPages"]   # are there results
 					@swagger.addComment "INFO: Bing found results for#{title}.  Checking for results that match #{finalURI.map{|b| b.to_s}}.\n"
+					finalURI = finalURI.map{|b| b.downcase}  # make case insensitive search
 					h["webPages"]["value"].each do |p|  # for each matching pge do
-						if finalURI.include?(p["url"])  # compare to the final URI from the Utils::fetch routine (the page of metadata)
+						if finalURI.include?(p["url"].downcase)  # compare to the final URI from the Utils::fetch routine (the page of metadata)
 							@swagger.addComment "SUCCESS: found a search record referencing #{p["url"]} based on an exact-match title search against Bing.\n  "
 							@swagger.score = 1
 						end
@@ -228,8 +232,9 @@ def testGUID
 	
 				if h["webPages"]   # are there results
 					@swagger.addComment "INFO: Bing found matches using #{keywords}. Testing matches for a reference to #{finalURI.map{|b| b.to_s}}\n"
+					finalURI = finalURI.map{|b| b.downcase}  # make case insensitive search
 					h["webPages"]["value"].each do |p|  # for each matching pge do
-						if finalURI.include?(p["url"])  # compare to the final URI from the Utils::fetch routine (the page of metadata)
+						if finalURI.include?(p["url"].downcase)  # compare to the final URI from the Utils::fetch routine (the page of metadata)
 							@swagger.addComment "SUCCESS: found a search record referencing #{p["url"]} based on a keyword search against Bing.\n  "
 							@swagger.score = 1
 						end
@@ -286,13 +291,14 @@ end
 
 if debug
 #	@input = '{"subject": "10.5281/zenodo.1147435"}'  # doi fail
-	@input = '{"subject": "10.5878/6ctk-2b56"}'  # doi fail
+#	@input = '{"subject": "10.5878/6ctk-2b56"}'  # doi fail
+#	@input = '{"subject": "https://datasets.aida.medtech4health.se/10.23698/aida/mbtst-dm"}'  # doi fail
 #	@input = '{"subject": "10.5281/zenodo.1065973"}'  # doi fail
 #	@input = '{"subject": "BSYNRYMUTXBXSQ-UHFFFAOYSA-N"}' # inchi
 #	@input = '{"subject": "LFQSCWFLJHTTHZ-UHFFFAOYSA-N"}' # another inchi
 #	@input = '{"subject": "20.1000/105"}'  # handle (fail)
 #	@input = '{"subject": "http://w3id.org/Magnaporthe/polyA_Sites"}'  # handle
-#@input = '{"subject": "https://www.go-fair.org/fair-principles/"}'
+@input = '{"subject": "https://www.go-fair.org/fair-principles/"}'
 
 else 
 	@input = $stdin.read
