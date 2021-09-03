@@ -90,6 +90,7 @@ if debug
 #	@input = '{"subject": "LFQSCWFLJHTTHZ-UHFFFAOYSA-N"}' # another inchi
 #	@input = '{"subject": "20.1000/105"}'  # handle (fail)
 #	@input = '{"subject": "http://w3id.org/Magnaporthe/polyA_Sites"}'  # handle
+	@input = '{"subject": "http://purl.org/castor/fdp/dataset/radboudumc"}'  # handle
 #	@input = '{"subject": "10.5440/1185213"}'  # doi fail
 	@input = '{"subject": "https://explore.openaire.eu/search/dataset?datasetId=r37980778c78::f9238306682bb3e6f158e0654a120d42"}'
 else 

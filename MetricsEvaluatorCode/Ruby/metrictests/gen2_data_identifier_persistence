@@ -8,7 +8,7 @@ require 'rdf/turtle'
 require 'sparql'
 
 debug = false
-VERSION = HARVESTER_VERSION + ":" + "Tst-0.2.1"
+VERSION = HARVESTER_VERSION + ":" + "Tst-0.2.2"
 
 
 def testGUID
@@ -91,8 +91,8 @@ def testIdentifier(guid)
 		@swagger.addComment("FAILURE: The GUID identifier of the data #{guid} did not match any known identification system.\n")
 		@swagger.score = 0
 	elsif type == "uri"
-		@swagger.addComment("INFO: The GUID appears to be a URL.  Testing known URL persistence schemas (purl, oclc, fdlp, purlz, w3id, ark).\n")
-		if (guid =~ /(purl)\./) or (guid =~ /(oclc)\./) or(guid =~ /(fdlp)\./) or (guid =~ /(purlz)\./) or (guid =~ /(w3id)\./) or (guid =~ /(ark)\:/)
+		@swagger.addComment("INFO: The data GUID appears to be a URL.  Testing known URL persistence schemas (purl, oclc, fdlp, purlz, w3id, ark, doi(as URL)).\n")
+		if (guid =~ /(purl)\./) or (guid =~ /(oclc)\./) or(guid =~ /(fdlp)\./) or (guid =~ /(purlz)\./) or (guid =~ /(w3id)\./) or (guid =~ /(ark)\:/) or (guid =~ /(doi.org)/)
 			@swagger.addComment("SUCCESS: The GUID conforms with #{$1}, which is known to be persistent.\n")
 			@swagger.score = 1
 		else
@@ -117,7 +117,8 @@ if debug
 #	@input = '{"subject": "LFQSCWFLJHTTHZ-UHFFFAOYSA-N"}' # another inchi
 #	@input = '{"subject": "20.1000/105"}'  # handle (fail)
 #	@input = '{"subject": "http://w3id.org/Magnaporthe/polyA_Sites"}'  # handle
-	@input = '{"subject": "10411/GSGDSV"}'  # handle
+	@input = '{"subject": "http://purl.org/castor/fdp/dataset/radboudumc"}'  # handle
+#	@input = '{"subject": "10411/GSGDSV"}'  # handle
 
 else 
 	@input = $stdin.read

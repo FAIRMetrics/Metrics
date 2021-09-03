@@ -79,13 +79,13 @@ end
 if debug
 #       @input = '{"subject": "10.5281/zenodo.1147435"}'  # doi
 #		@input = '{"subject": "https://www.gbif.org/dataset/67c54f85-7910-4cbf-8de4-6f0b136a0e34"}'  # url
-@input = '{"subject": "https://www.nb.no/sprakbanken/show?serial=oai%3Anb.no%3Asbr-49&lang=nb"}'  # url
+#		@input = '{"subject": "https://www.nb.no/sprakbanken/show?serial=oai%3Anb.no%3Asbr-49&lang=nb"}'  # url
 #       @input = '{"subject": "BSYNRYMUTXBXSQ-UHFFFAOYSA-N"}' # inchi
 #       @input = '{"subject": "LFQSCWFLJHTTHZ-UHFFFAOYSA-N"}' # another inchi
 #       @input = '{"subject": "20.1000/105"}'  # handle
 #       @input = '{"subject": "10.25504/FAIRsharing.z4xpxx"}'  # handle
 #        @input = '{"subject": "https://doi.org/10.5281/zenodo.3349821"}'  # contains identifier clause
-
+		@input = '{"subject": " 10.1594/WDCC/WRF12_MPIESM_HIST"}'
 else
 	@input = $stdin.read
 end
