@@ -2,14 +2,15 @@
 require_relative 'fair_metrics_utilities'
 require 'cgi'
 require 'json'
-require 'uri'
+#require 'uri'
+require 'addressable'
 require 'rdf'
 require 'rdf/turtle'
 require 'sparql'
 require 'net/https'
 
 debug = false
-VERSION = HARVESTER_VERSION + ":" + "Tst-0.2.8"
+VERSION = HARVESTER_VERSION + ":" + "Tst-0.2.10"
 
 
 #config = ParseConfig.new('config.conf')
@@ -64,6 +65,8 @@ def testGUID
 	
 	if title =~ /\w+/
 		@swagger.addComment "INFO: found title #{title}.  Searching Bing\n"
+		$stderr.puts "Calling Bing with title #{title}\n\n"
+
 		searchresults = callBing(title)
 		h = JSON.parse(searchresults)
 		if h["webPages"]
@@ -102,6 +105,8 @@ def testGUID
 
 	if keywords =~ /\w+/
 		@swagger.addComment "INFO: found keywords #{keywords}.  Now searching Bing.\n"
+		$stderr.puts "Calling Bing with hash keywords #{keywords}\n\n"
+
 		searchresults = callBing(keywords)
 		h = JSON.parse(searchresults)
 		if h["webPages"]
@@ -144,6 +149,8 @@ def testGUID
 				@swagger.addComment "INFO: found possible Title:  #{title}.\n "
 				#$stderr.puts "looking for #{title}"
 				@swagger.addComment "INFO: Calling Bing search using #{title}.\n "
+				$stderr.puts "Calling Bing with graph title #{title}\n\n"
+
 				searchresults = callBing(title)  # search bing
 				#$stderr.puts JSON::pretty_generate(JSON(searchresults))
 				h = JSON.parse(searchresults)  # parse json
@@ -176,6 +183,8 @@ def testGUID
 				@swagger.addComment "INFO: found possible Title:  #{title}.\n "
 				#$stderr.puts "looking for #{title}"
 				@swagger.addComment "INFO: Calling Bing search using #{title}.\n "
+				$stderr.puts "Calling Bing with graph name #{title}\n\n"
+
 				searchresults = callBing(title)  # search bing
 				#$stderr.puts JSON::pretty_generate(JSON(searchresults))
 				h = JSON.parse(searchresults)  # parse json
@@ -219,6 +228,8 @@ def testGUID
 				@swagger.addComment "INFO: found keywords.\n "
 				@swagger.addComment "INFO: found keywords #{keywords}.\n "
 				@swagger.addComment "INFO: Calling Bing search using #{keywords}.\n "
+				$stderr.puts "Calling Bing with graph keywords #{keywords}\n\n"
+
 				searchresults = callBing(keywords)  # search bing
 				#$stderr.puts "keywords #{keywords}"
 				#$stderr.puts "results: #{searchresults}"
@@ -260,6 +271,9 @@ end
 
 
 def callBing(phrase)
+	$stderr.puts "Calling Bing with phrase #{phrase}\n\n"
+	phrase = phrase.dup if phrase.frozen?
+	phrase.gsub!(/https?\:\/\/[^\,]+/, "")  # need to eliminate URLs that appear as keywords
 	uri  = "https://api.cognitive.microsoft.com"
 	path = "/bing/v7.0/search"
 	
@@ -268,7 +282,7 @@ def callBing(phrase)
 			$stderr.puts "Please add this to your environment."
 			abort
 	end
-	escapedphrase = URI.escape(phrase)
+	escapedphrase = Addressable::URI.encode(phrase)
 	if escapedphrase.length > 1500
 		escapedphrase = escapedphrase[0..1500] # microsoft suggested maximum query length
 		match = escapedphrase.match(/(.*)(\%.*)/)  # trim off any partially escaped things at the end
@@ -294,11 +308,12 @@ if debug
 #	@input = '{"subject": "10.5878/6ctk-2b56"}'  # doi fail
 #	@input = '{"subject": "https://datasets.aida.medtech4health.se/10.23698/aida/mbtst-dm"}'  # doi fail
 #	@input = '{"subject": "10.5281/zenodo.1065973"}'  # doi fail
+	@input = '{"subject": "10.5281/zenodo.4425440"}'  # doi fail
 #	@input = '{"subject": "BSYNRYMUTXBXSQ-UHFFFAOYSA-N"}' # inchi
 #	@input = '{"subject": "LFQSCWFLJHTTHZ-UHFFFAOYSA-N"}' # another inchi
 #	@input = '{"subject": "20.1000/105"}'  # handle (fail)
 #	@input = '{"subject": "http://w3id.org/Magnaporthe/polyA_Sites"}'  # handle
-@input = '{"subject": "https://www.go-fair.org/fair-principles/"}'
+#@input = '{"subject": "https://www.go-fair.org/fair-principles/"}'
 
 else 
 	@input = $stdin.read
