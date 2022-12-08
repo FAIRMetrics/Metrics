@@ -10,7 +10,7 @@ require 'sparql'
 require 'net/https'
 
 debug = false
-VERSION = HARVESTER_VERSION + ":" + "Tst-0.2.10"
+VERSION = HARVESTER_VERSION + ":" + "Tst-0.2.11"
 
 
 #config = ParseConfig.new('config.conf')
@@ -282,7 +282,8 @@ def callBing(phrase)
 			$stderr.puts "Please add this to your environment."
 			abort
 	end
-	escapedphrase = Addressable::URI.encode(phrase)
+#	escapedphrase = Addressable::URI.encode(phrase)
+	escapedphrase = CGI.escape(phrase)
 	if escapedphrase.length > 1500
 		escapedphrase = escapedphrase[0..1500] # microsoft suggested maximum query length
 		match = escapedphrase.match(/(.*)(\%.*)/)  # trim off any partially escaped things at the end
