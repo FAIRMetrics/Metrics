@@ -24,7 +24,7 @@ require 'rdf/xsd'
 #require 'pry'
 
 
-HARVESTER_VERSION="Hvst-1.4.0"
+HARVESTER_VERSION="Hvst-1.4.2"
 # better output,
 # different dealing with DataCite (they have a unique type header)
 # handle large extruct output,
@@ -657,7 +657,13 @@ class Utils
                 meta.comments << "WARN: extruct error was #{$1}\n"
             end
         elsif result.to_s.match(/^\s+?\{/) or result.to_s.match(/^\s+\[/) # this is JSON
-          json = JSON.parse result
+          begin
+                  json = JSON.parse result
+          rescue
+                $stderr.puts "json parsing failed!  This is bad!\n"
+                  meta.comments << "INFO: the extruct tool found non-parseable data at #{uri}.  Aborting attempt to read it\n"
+                return
+          end
           #$stderr.puts "\n\n\n\nFOUND JSON\n\n\n"
           #$stderr.puts "\n\n\n\nFOUND JSON-LD\n#{json["json-ld"]} content\n\n\n"
           meta.comments << "INFO: the extruct tool found parseable data at #{uri}\n"
