@@ -373,7 +373,7 @@ Sample JSON
 
     curl -L -X POST -H "Content-Type: application/json" -H "Accept: application/json" -d '{"resource": "10.5281/zenodo.1147435", "executor":  "0000-0001-6960-357X", "title": "an exemplar evaluation of a zenodo record using two identifier metrics"}' https://w3id.org/FAIR_Evaluator/collections/5/evaluate 
 
-Response 302 Redirect  (redirected to the URL of a newly created Evaluation http://linkeddata.systems/evaluations/{id}  with a structure similar to:
+Response 302 Redirect  (redirected to the URL of a newly created Evaluation http://fairdata.services:3333/FAIR_Evaluator/evaluations/XXXXX  with a structure similar to: 
 
     {
 	"@id": "https://w3id.org/FAIR_Evaluator/evaluations/8",
