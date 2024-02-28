@@ -1,4 +1,10 @@
+gem "nokogiri", "~> 1.10.9"
+require 'nokogiri'
+gem "metainspector", "~> 5.10.0"
+require 'metainspector'
+
 require 'json'
+# require 'linkeddata'
 require 'rdf'
 require 'rdf/json'
 require 'rdf/rdfa'
@@ -8,19 +14,17 @@ require 'rdf/trig'
 require 'rdf/raptor'
 require 'net/http'
 require 'net/https' # for openssl
-require 'uri'
-require 'rdf/turtle'
+# require 'uri'
+# require 'rdf/turtle'
 require 'sparql'
 require 'tempfile'
-require 'xmlsimple'
-require 'nokogiri'
+#require 'xmlsimple'
 require 'parseconfig'
 require 'rest-client'
 require 'cgi'
 require 'digest'
 require 'open3'
-require 'metainspector'
-require 'rdf/xsd'
+# require 'rdf/xsd'
 #require 'pry'
 
 

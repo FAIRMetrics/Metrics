@@ -1,0 +1,16 @@
+source "https://rubygems.org"
+
+
+gem "linkeddata"
+gem "parseconfig"
+gem "rdf-raptor"
+gem "require_all"
+gem "rest-client"
+gem "shotgun"
+gem "cgi"
+gem "fileutils"
+gem "json"
+gem "json-canonicalization"
+gem "openapi3_parser"
+gem "sinatra-cross_origin"
+gem "metainspector", "~> 5.10.0"

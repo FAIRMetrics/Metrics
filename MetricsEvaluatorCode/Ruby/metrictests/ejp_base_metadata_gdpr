@@ -1,0 +1,138 @@
+#!/home/mark_moby_wilkinson/.rvm/rubies/ruby-2.5.1/bin/ruby
+require_relative 'fair_metrics_utilities'
+require 'cgi'
+require 'json'
+require 'uri'
+require 'rdf'
+require 'rdf/turtle'
+require 'sparql'
+
+debug = false
+VERSION = HARVESTER_VERSION + ":" + "Tst-0.0.1"
+
+# @prefix dcat: <http://www.w3.org/ns/dcat#>.
+# @prefix dct: <http://purl.org/dc/terms/>.
+# @prefix foaf: <http://xmlns.com/foaf/0.1/>.
+# @prefix language: <http://id.loc.gov/vocabulary/iso639-1/>.
+# @prefix tes: <http://testbed.ejprd.semlab-leiden.nl:10000/>.
+# @prefix c: <http://testbed.ejprd.semlab-leiden.nl:10000/catalog/>.
+# @prefix n: <http://www.w3.org/2006/vcard/ns#>.
+# @prefix n0: <https://herculescrue.github.io/ROH/roh/#>.
+# @prefix voc: <https://w3id.org/ejp-rd/vocabulary#>.
+
+# tes:new
+#     a dcat:Dataset, dcat:Resource;
+#     dct:description "An example dataset";
+#     dct:isPartOf c:cdbe703b-aaa9-4119-a35e-18eb2e8d47d0;
+#     dct:keyword "test";
+#     dct:language language:en;
+#     dct:license <https://w3id.org/ejp-rd/resources/licenses/v1.0.txt>;
+#     dct:publisher [ a foaf:Agent; foaf:name "Mark Denis Wilkinson" ];
+#     dct:title "A minimal dataset";
+#     dcat:contactPoint [ a n:Agent; n:url <https://wilkinsonlab.info> ];
+#     dcat:theme n0:Administrative;
+#     voc:personalData "false".
+
+
+def testGUID
+
+	@swagger.addComment("INFO: TEST VERSION '#{VERSION}'\n")
+	
+	
+	guid = @swagger.testedGUID
+	
+	metadata = Utils::resolveit(guid)  # this is where the magic happens!
+
+	metadata.comments.each do |c|
+		@swagger.addComment(c)
+	end
+
+	@swagger.score = 0
+
+	if metadata.guidtype == "unknown"
+		@swagger.addComment("FAILURE: The identifier #{guid} did not match any known identification system.\n")
+		return @swagger.createEvaluationResponse
+	end
+		
+	g = metadata.graph
+	if @swagger.debug
+		g.each {|s| $stderr.puts s.subject.to_s + "\tPRED: " + s.predicate.to_s + "\tOBJ: " + s.object.to_s + "\n"}
+	end
+
+	if g.size > 0  # have we found anything yet?
+		@swagger.addComment "SUCCESS: found linked-data style structured metadata.  "
+		@swagger.score = 1
+	else
+		@swagger.addComment "FAILURE: no linked-data style structured metadata found.  "
+		@swagger.score = 0
+	end
+	
+	# https://w3id.org/ejp-rd/vocabulary#personalData "true"
+	@swagger.addComment "INFO:  Testing for <https://w3id.org/ejp-rd/vocabulary#personalData>.\n"
+	query = SPARQL.parse("select ?o where {?s <https://w3id.org/ejp-rd/vocabulary#personalData> ?o}")
+	results = query.execute(g)
+	if results.any?
+		object = results.first[:o]
+		if object.resource? && !object.anonymous?
+			@swagger.addComment "WARN: Found the personal information predicate, but it did not have a literal value. The value should be 'true' or 'false'\n"
+		elsif ["true", "false"].include? object.to_s 
+			@swagger.score = 1
+			@swagger.addComment "SUCCESS: Found the value of the GDPR predicate.\n"
+		else
+			@swagger.addComment "FAILURE: the GDPR predicate either didn't exist, or didn't have a valid value\n"
+		end
+	end
+	
+	return @swagger.createEvaluationResponse
+end
+
+
+
+
+if debug
+	@input = '{"subject": "10.5281/zenodo.1065973"}'  # doi fail
+
+else 
+	@input = $stdin.read
+end
+
+ENV['TEST_PROTOCOL'] ||= "http"
+ENV['TEST_HOST'] ||= "http://tests:8080s"
+ENV['TEST_PATH'] ||= "/tests/"
+
+cgi = CGI.new
+
+schemas = {'subject' => ['string', "the GUID being tested"]}
+
+@swagger = Swagger.new({
+			:title => "FAIR Metrics for EJP - GDPR Declaration",
+			:description => "Tests whether the EJP resource has a GDPR declaration, and that the declaratiomn is a string of 'true' or 'false'",
+			:tests_metric => 'https://purl.org/fair-metrics/Gen2_FM_R1.3',
+			:version => VERSION,
+			:applies_to_principle => "R1.3",
+			:organization => 'EJP Metrics Authoring Group',
+			:org_url => 'https://ejprdproject.org',
+			:responsible_developer => "Mark D Wilkinson",
+			:email => 'mark.wilkinson@upm.es',
+			:developer_ORCiD => '0000-0001-6960-357X',
+			:protocol => ENV['TEST_PROTOCOL'],
+			:host => ENV['TEST_HOST'],
+			:basePath => ENV['TEST_PATH'],
+			:path => 'ejp_base_metadata_gdpr',
+			:response_description => 'The response is a binary (1/0), success or failure',
+			:schemas => schemas,
+			:fairsharing_key_location => ENV['FAIRSHARING_KEY'],
+			:debug => false				 				 
+})
+
+if (!cgi.request_method or cgi.request_method == "GET") and !debug
+        puts "Content-type: application/openapi+yaml;version=3.0\n\n"
+        puts @swagger.getSwagger
+elsif cgi.request_method == "POST" or debug
+        input_json = JSON.parse(@input)
+        guid = input_json["subject"]
+        @swagger.testedGUID = guid
+        response = testGUID
+        puts "Content-type: application/json+ld\n\n"
+        puts response
+end
