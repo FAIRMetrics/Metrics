@@ -8,143 +8,129 @@ require 'rdf/turtle'
 require 'sparql'
 
 debug = false
-VERSION = HARVESTER_VERSION + ":" + "Tst-0.2.2"
-
+VERSION = HARVESTER_VERSION + ':' + 'Tst-0.2.3'
 
 def testGUID
-	
-	guid = @swagger.testedGUID
+  guid = @swagger.testedGUID
 
-	@swagger.addComment("INFO: TEST VERSION '#{VERSION}'\n")
-	
-	
-	metadata = Utils::resolveit(guid)  # this is where the magic happens!
+  @swagger.addComment("INFO: TEST VERSION '#{VERSION}'\n")
 
-	metadata.comments.each do |c|
-		@swagger.addComment(c)
-	end
-	@swagger.score = 0
-	
-	if metadata.guidtype == "unknown"
-		@swagger.addComment("FAILURE: The identifier #{guid} did not match any known identification system.\n")
-		return @swagger.createEvaluationResponse
-	end
-	
-	g = metadata.graph
-	if @swagger.debug
-		g.each {|s| $stderr.puts s.subject.to_s + "\tPRED: " + s.predicate.to_s + "\tOBJ: " + s.object.to_s + "\n"}
-	end
-	
-	@swagger.score = 0
+  metadata = Utils.resolveit(guid) # this is where the magic happens!
 
-	queries = %W(
-	http://www.w3.org/1999/xhtml/vocab#license https://www.w3.org/1999/xhtml/vocab#license
-	http://purl.org/ontology/dvia#hasLicense	https://purl.org/ontology/dvia#hasLicense
-	http://purl.org/dc/terms/license	https://purl.org/dc/terms/license
-	http://creativecommons.org/ns#license	https://creativecommons.org/ns#license
-	http://reference.data.gov.au/def/ont/dataset#hasLicense	https://reference.data.gov.au/def/ont/dataset#hasLicense
-	)
-	if g.size > 0  # have we found anything yet?
-		@swagger.addComment("INFO: Linked data found.  Testing for one of the following predicates: #{queries}.\n")
-		queries.each do |predicate|
-#			$stderr.puts "\n\nPREDICATE #{predicate}\n\n"
-			query = SPARQL.parse("select ?o where {?s <" + predicate + "> ?o}")
-			results = query.execute(g)
-			if results.any?
-				object = results.first[:o]
-				unless object.resource? && !object.anonymous?
-					@swagger.addComment "WARN: Found the #{predicate} predicate, but it does not have a Resource as its value, thus is non-compliant.\n"
-				else
-					@swagger.score = 1
-					@swagger.addComment "SUCCESS: Found the #{predicate} predicate with a Resource as its value.\n"
-				end
-			end
-		end		
-		
-		@swagger.addComment "INFO:  Testing for <https://schema.org/license>.\n"
-		query = SPARQL.parse("select ?o where {?s <https://schema.org/license> ?o}")
-		results = query.execute(g)
-		if results.any?
-			object = results.first[:o]
-			unless object.resource? && !object.anonymous?
-				@swagger.addComment "WARN: Found the Schema license predicate, but it does not have a Resource as its value.  While this is compliant with Schema, it is not best-practice.  Please update your metadata to point to a URL containing the license.\n"
-			else
-				@swagger.score = 1
-				@swagger.addComment "SUCCESS: Found the Schema license predicate with a Resource as its value.\n"
-			end
-		end
+  metadata.comments.each do |c|
+    @swagger.addComment(c)
+  end
+  @swagger.score = 0
 
-		@swagger.addComment "INFO:  Testing for <http://schema.org/license>.\n"
-		query = SPARQL.parse("select ?o where {?s <http://schema.org/license> ?o}")
-		results = query.execute(g)
-		if results.any?
-			object = results.first[:o]
-			unless object.resource? && !object.anonymous?
-				@swagger.addComment "WARN: Found the Schema license predicate, but it does not have a Resource as its value.  While this is compliant with Schema, it is not best-practice.  Please update your metadata to point to a URL containing the license.\n"
-			else
-				@swagger.score = 1
-				@swagger.addComment "SUCCESS: Found the Schema license predicate with a Resource as its value.\n"
-			end
-		end
-		
-	else
-		@swagger.addComment "WARN: No Linked Data metadata found.  "
-	end
+  if metadata.guidtype == 'unknown'
+    @swagger.addComment("FAILURE: The identifier #{guid} did not match any known identification system.\n")
+    return @swagger.createEvaluationResponse
+  end
 
-	if @swagger.score == 0
-		@swagger.addComment "FAILURE: No License property was found in the metadata.  "
-	end
+  g = metadata.graph
+  if @swagger.debug
+    g.each { |s| warn s.subject.to_s + "\tPRED: " + s.predicate.to_s + "\tOBJ: " + s.object.to_s + "\n" }
+  end
 
-	return @swagger.createEvaluationResponse
+  @swagger.score = 0
+
+  queries = %w[
+    http://www.w3.org/1999/xhtml/vocab#license https://www.w3.org/1999/xhtml/vocab#license
+    http://purl.org/ontology/dvia#hasLicense	https://purl.org/ontology/dvia#hasLicense
+    http://purl.org/dc/terms/license	https://purl.org/dc/terms/license
+    http://creativecommons.org/ns#license	https://creativecommons.org/ns#license
+    http://reference.data.gov.au/def/ont/dataset#hasLicense	https://reference.data.gov.au/def/ont/dataset#hasLicense
+  ]
+  if g.size > 0 # have we found anything yet?
+    @swagger.addComment("INFO: Linked data found.  Testing for one of the following predicates: #{queries}.\n")
+    queries.each do |predicate|
+      #			$stderr.puts "\n\nPREDICATE #{predicate}\n\n"
+      query = SPARQL.parse('select ?o where {?s <' + predicate + '> ?o}')
+      results = query.execute(g)
+      next unless results.any?
+
+      object = results.first[:o]
+      if object.resource? && !object.anonymous?
+        @swagger.score = 1
+        @swagger.addComment "SUCCESS: Found the #{predicate} predicate with a Resource as its value.\n"
+      else
+        @swagger.addComment "WARN: Found the #{predicate} predicate, but it does not have a Resource as its value, thus is non-compliant.\n"
+      end
+    end
+
+
+    @swagger.addComment "INFO:  Testing for https://schema.org/license or http://schema.org/license.\n"
+    query = SPARQL.parse("select ?o where
+      { VALUES ?license {<https://schema.org/license> <http://schema.org/license>}
+        ?s ?license ?o .
+      }")
+    results = query.execute(g)
+    if results.any?
+      object = results.first[:o]
+      if object.resource?
+        @swagger.score = 1
+        @swagger.addComment "SUCCESS: Found the Schema license predicate, with a correct structure and value.\n"
+      else
+        @swagger.addComment "WARN: Found the Schema license predicate but it does not follow the Schema license allowed ranges.\n"
+      end
+    else
+      @swagger.addComment "WARN: did not find a schema:license predicate.\n"
+    end
+
+  else
+    @swagger.addComment "WARN: No Linked Data metadata found.\n"
+  end
+
+  @swagger.addComment "FAILURE: No License property was found in the metadata.\n" if @swagger.score == 0
+
+  @swagger.createEvaluationResponse
 end
 
+@input = if debug
+           #	@input = '{"subject": "10.5281/zenodo.1147435"}'  # doi fail
+           #	@input = '{"subject": "10.5281/zenodo.1065973"}'  # doi fail
+           #	@input = '{"subject": "BSYNRYMUTXBXSQ-UHFFFAOYSA-N"}' # inchi
+           #	@input = '{"subject": "LFQSCWFLJHTTHZ-UHFFFAOYSA-N"}' # another inchi
+           #	@input = '{"subject": "20.1000/105"}'  # handle (fail)
+           '{"subject": "http://w3id.org/Magnaporthe/polyA_Sites"}' # handle
 
-if debug
-#	@input = '{"subject": "10.5281/zenodo.1147435"}'  # doi fail
-#	@input = '{"subject": "10.5281/zenodo.1065973"}'  # doi fail
-#	@input = '{"subject": "BSYNRYMUTXBXSQ-UHFFFAOYSA-N"}' # inchi
-#	@input = '{"subject": "LFQSCWFLJHTTHZ-UHFFFAOYSA-N"}' # another inchi
-#	@input = '{"subject": "20.1000/105"}'  # handle (fail)
-	@input = '{"subject": "http://w3id.org/Magnaporthe/polyA_Sites"}'  # handle
-
-else 
-	@input = $stdin.read
-end
-
+         else
+           $stdin.read
+         end
 
 cgi = CGI.new
 
-schemas = {'subject' => ['string', "the GUID being tested"]}
+schemas = { 'subject' => ['string', 'the GUID being tested'] }
 
 @swagger = Swagger.new({
-			:title => "FAIR Metrics Gen2 - Metadata Includes License (strong)",
-			:description => "Maturity Indicator to test if the linked data metadata contains an explicit pointer to the license.  Tests: xhtml, dvia, dcterms, cc, data.gov.au, and Schema license predicates in linked data, and validates the value of those properties. ",
-			:tests_metric => 'https://purl.org/fair-metrics/Gen2_FM_R1.1',
-			:version => VERSION,
-			:applies_to_principle => "R1.1",
-			:organization => 'FAIR Metrics Authoring Group',
-			:org_url => 'http://fairmetrics.org',
-			:responsible_developer => "Mark D Wilkinson",
-			:email => 'markw@illuminae.com',
-			:developer_ORCiD => '0000-0001-6960-357X',
-			:protocol => ENV['TEST_PROTOCOL'],
-			:host => ENV['TEST_HOST'],
-			:basePath => ENV['TEST_PATH'],
-			:path => 'gen2_metadata_includes_license_strong',
-			:response_description => 'The response is a binary (1/0), success or failure',
-			:schemas => schemas,
-			:fairsharing_key_location => ENV['FAIRSHARING_KEY'],
-			:debug => false				 				 
-})
+                         title: 'FAIR Metrics Gen2 - Metadata Includes License (strong)',
+                         description: 'Maturity Indicator to test if the linked data metadata contains an explicit pointer to the license.  Tests: xhtml, dvia, dcterms, cc, data.gov.au, and Schema license predicates in linked data, and validates the value of those properties. ',
+                         tests_metric: 'https://purl.org/fair-metrics/Gen2_FM_R1.1',
+                         version: VERSION,
+                         applies_to_principle: 'R1.1',
+                         organization: 'FAIR Metrics Authoring Group',
+                         org_url: 'http://fairmetrics.org',
+                         responsible_developer: 'Mark D Wilkinson',
+                         email: 'markw@illuminae.com',
+                         developer_ORCiD: '0000-0001-6960-357X',
+                         protocol: ENV['TEST_PROTOCOL'],
+                         host: ENV['TEST_HOST'],
+                         basePath: ENV['TEST_PATH'],
+                         path: 'gen2_metadata_includes_license_strong',
+                         response_description: 'The response is a binary (1/0), success or failure',
+                         schemas: schemas,
+                         fairsharing_key_location: ENV['FAIRSHARING_KEY'],
+                         debug: false
+                       })
 
-if (!cgi.request_method or cgi.request_method == "GET") and !debug
-        puts "Content-type: application/openapi+yaml;version=3.0\n\n"
-        puts @swagger.getSwagger
-elsif cgi.request_method == "POST" or debug
-        input_json = JSON.parse(@input)
-        guid = input_json["subject"]
-        @swagger.testedGUID = guid
-        response = testGUID
-        puts "Content-type: application/json+ld\n\n"
-        puts response
+if (!cgi.request_method or cgi.request_method == 'GET') and !debug
+  puts "Content-type: application/openapi+yaml;version=3.0\n\n"
+  puts @swagger.getSwagger
+elsif cgi.request_method == 'POST' or debug
+  input_json = JSON.parse(@input)
+  guid = input_json['subject']
+  @swagger.testedGUID = guid
+  response = testGUID
+  puts "Content-type: application/json+ld\n\n"
+  puts response
 end
