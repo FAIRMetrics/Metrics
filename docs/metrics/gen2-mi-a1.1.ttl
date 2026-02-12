@@ -1,0 +1,32 @@
+@prefix ftr:     <https://w3id.org/ftr#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix foaf:    <http://xmlns.com/foaf/0.1/> .
+@prefix prov:    <http://www.w3.org/ns/prov#> .
+
+<https://example.org/metrics/gen2-mi-a1.1>
+    a                          ftr:Metric ;
+    
+    ftr:identifier            "https://w3id.org/fair/maturity_indicator/terms/Gen2/Gen2_MI_A1.1"^^xsd:anyURI ;
+    ftr:title                 "Open protocol for (meta)data retrieval" ;
+    ftr:abbreviation          "Gen2_MI_A1.1" ;
+    ftr:description           """Metric Gen2_MI_A1.1 verifies that the resolution/retrieval protocol for a digital object (and/or its metadata) identified by a persistent identifier is open, free of charge, and universally implementable. This ensures no proprietary or paid mechanisms are required to access FAIR resources, aligning with FAIR Principle A1.1.""" ;
+    ftr:version               "Gen2" ;
+    ftr:keyword               "FAIR", "accessibility", "protocol", "open standard", "A1.1" ;
+    
+    ftr:applicationArea       <http://www.fairsharing.org/ontology/subject/SRAO_0000401> ;
+    
+    ftr:definedBy             <https://github.com/FAIRMetrics/Metrics/blob/master/MaturityIndicators/Gen2/Gen2_MI_A1.1> ;
+    
+    ftr:creator               [
+        a                     foaf:Person ;
+        foaf:name             "Mark D. Wilkinson" ;
+        foaf:mbox             <mailto:markw@illuminae.com>
+    ] ;
+    
+    ftr:license               <https://creativecommons.org/licenses/by/4.0/> ;
+    
+    prov:wasDerivedFrom       <https://github.com/FAIRMetrics/Metrics/tree/master/MaturityIndicators/Gen2> ;
+    
+    ftr:hasPositiveExample    <https://github.com/FAIRMetrics/Metrics/blob/master/MaturityIndicators/Gen2/Gen2_MI_A1.1.md> ;
+    ftr:hasNegativeExample    <https://github.com/FAIRMetrics/Metrics/blob/master/MaturityIndicators/Gen2/Gen2_MI_A1.1.md> .
