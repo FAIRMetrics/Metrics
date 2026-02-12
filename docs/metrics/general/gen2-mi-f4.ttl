@@ -8,16 +8,16 @@
 @prefix vivo:    <http://vivoweb.org/ontology/core#> .
 
 
-<https://w3id.org/fair-metrics/general/gen2-mi-a1.1.ttl>
+<https://w3id.org/fair-metrics/general/gen2-mi-f4.ttl>
     a                          ftr:Metric, dcat:Dataset ;
     
-    ftr:identifier            "https://w3id.org/fair-metrics/general/gen2-mi-a1.1"^^xsd:anyURI ;
-    dcterms:title             "Open protocol for (meta)data retrieval" ;
-    vivo:abbreviation         "gen2-mi-a1.1" ;
-    dcterms:description       """Metric Gen2_MI_A1.1 open protocol for (meta)data retrieval. This metric aligns with FAIR Principle A1.1.""" ;
-    dcat:keyword              "FAIR", "accessibility", "protocol", "open", "standard", "A1.1" ;
+    ftr:identifier            "https://w3id.org/fair-metrics/general/gen2-mi-f4"^^xsd:anyURI ;
+    dcterms:title             "Metadata is indexed in a searchable resource" ;
+    vivo:abbreviation         "gen2-mi-f4" ;
+    dcterms:description       """Metric Gen2_MI_F4 metadata is indexed in a searchable resource. This metric aligns with FAIR Principle F4.""" ;
+    dcat:keyword              "FAIR", "findability", "search", "indexed", "F4" ;
     
-    dcat:landingPage          <https://github.com/FAIRMetrics/Metrics/blob/master/MaturityIndicators/Gen2/Gen2_MI_A1.1.md> ;
+    dcat:landingPage          <https://github.com/FAIRMetrics/Metrics/blob/master/MaturityIndicators/Gen2/Gen2_MI_F4.md> ;
     
 ftr:creator               [
     a                     foaf:Person ;
@@ -32,5 +32,6 @@ ftr:applicationArea       <http://www.fairsharing.org/ontology/subject/SRAO_0000
 dcterms:license           <https://creativecommons.org/licenses/by/4.0/> ;
 
 dpv:isApplicableFor       schema:CreativeWork .
+
 
 

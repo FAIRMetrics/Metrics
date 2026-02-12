@@ -1,0 +1,37 @@
+@prefix ftr:     <https://w3id.org/ftr#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix foaf:    <http://xmlns.com/foaf/0.1/> .
+@prefix dcat:    <http://www.w3.org/ns/dcat#> .
+@prefix dpv:     <https://w3id.org/dpv#> .
+@prefix schema:  <https://schema.org/> .
+@prefix vivo:    <http://vivoweb.org/ontology/core#> .
+
+
+<https://w3id.org/fair-metrics/esrf/f4.oa.doi.ttl>
+    a                          ftr:Metric, dcat:Dataset ;
+    
+    ftr:identifier            "https://w3id.org/fair-metrics/esrf/f4.oa.doi"^^xsd:anyURI ;
+    dcterms:title             "The content associated to a DOI is Open Access" ;
+    vivo:abbreviation         "f4.oa.doi" ;
+    dcterms:description       """ This metric applies to DOI objects. For publications entities, it ensures that its content, or a allowed copy is open access. For dataset entities it ensures that the data is open access (with or without embargo period). The reference services used are : https://unpaywall.org/ and https://openalex.org. While originally created as part of the OSTrails project to fulfil requirements within the PaNOSC cluster, this metric is subject agnostic and can be re-used by any community with these requirements for FAIR F4. """ ;
+    dcat:keyword              "FAIR", "open access", "standard", "f4" ;
+    
+    dcat:landingPage          <https://fairsharing.org/6449> ;
+    
+ftr:creator               [
+    a                     foaf:Person ;
+    foaf:name             "Mark D. Wilkinson" ;
+    foaf:mbox             <mailto:markw@illuminae.com>
+] ;
+
+dcterms:version           "1.0" ;
+
+ftr:applicationArea       <http://www.fairsharing.org/ontology/subject/SRAO_0000401> ;
+
+dcterms:license           <https://creativecommons.org/licenses/by/4.0/> ;
+
+dpv:isApplicableFor       schema:CreativeWork .
+
+
+

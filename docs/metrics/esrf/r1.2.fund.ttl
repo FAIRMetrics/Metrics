@@ -8,16 +8,16 @@
 @prefix vivo:    <http://vivoweb.org/ontology/core#> .
 
 
-<https://w3id.org/fair-metrics/general/gen2-mi-a1.1.ttl>
+<https://w3id.org/fair-metrics/esrf/r1.2.fund.ttl>
     a                          ftr:Metric, dcat:Dataset ;
     
-    ftr:identifier            "https://w3id.org/fair-metrics/general/gen2-mi-a1.1"^^xsd:anyURI ;
-    dcterms:title             "Open protocol for (meta)data retrieval" ;
-    vivo:abbreviation         "gen2-mi-a1.1" ;
-    dcterms:description       """Metric Gen2_MI_A1.1 open protocol for (meta)data retrieval. This metric aligns with FAIR Principle A1.1.""" ;
-    dcat:keyword              "FAIR", "accessibility", "protocol", "open", "standard", "A1.1" ;
+    ftr:identifier            "https://w3id.org/fair-metrics/esrf/r1.2.fund"^^xsd:anyURI ;
+    dcterms:title             "Funding information is defined in metadata   " ;
+    vivo:abbreviation         "r1.2.fund" ;
+    dcterms:description       """This metric ensures that the research object provided by the supplied URL or DOI has metadata containing funding information. """ ;
+    dcat:keyword              "FAIR", "reusability", "funding", "standard", "r1.2" ;
     
-    dcat:landingPage          <https://github.com/FAIRMetrics/Metrics/blob/master/MaturityIndicators/Gen2/Gen2_MI_A1.1.md> ;
+    dcat:landingPage          <https://fairsharing.org/7496> ;
     
 ftr:creator               [
     a                     foaf:Person ;
@@ -25,12 +25,13 @@ ftr:creator               [
     foaf:mbox             <mailto:markw@illuminae.com>
 ] ;
 
-dcterms:version           "Gen2" ;
+dcterms:version           "1.0" ;
 
 ftr:applicationArea       <http://www.fairsharing.org/ontology/subject/SRAO_0000401> ;
 
 dcterms:license           <https://creativecommons.org/licenses/by/4.0/> ;
 
 dpv:isApplicableFor       schema:CreativeWork .
+
 
 
