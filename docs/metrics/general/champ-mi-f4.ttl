@@ -1,0 +1,39 @@
+@prefix ftr:     <https://w3id.org/ftr#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix foaf:    <http://xmlns.com/foaf/0.1/> .
+@prefix dcat:    <http://www.w3.org/ns/dcat#> .
+@prefix dpv:     <https://w3id.org/dpv#> .
+@prefix schema:  <https://schema.org/> .
+@prefix vivo:    <http://vivoweb.org/ontology/core#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+
+<https://w3id.org/fair-metrics/general/champ-mi-f4.ttl>
+    a                          ftr:Metric, dcat:Dataset ;
+    rdfs:definedBy <https://w3id.org/fair-metrics/general/champ-mi-f4.ttl> ;
+    
+    ftr:identifier            "https://w3id.org/fair-metrics/general/champ-mi-f4"^^xsd:anyURI ;
+    dcterms:title             "Metadata is indexed in a searchable resource" ;
+    vivo:abbreviation         "champ-mi-f4" ;
+    dcterms:description       """Metric Champ_MI_F4 metadata is indexed in a searchable resource. This metric aligns with FAIR Principle F4.""" ;
+    dcat:keyword              "FAIR", "findability", "search", "indexed", "F4" ;
+    
+    dcat:landingPage <https://w3id.org/fair-metrics/landingpages/Champ_MI_F4.md> ;
+    
+ftr:creator               [
+    a                     foaf:Person ;
+    foaf:name             "Mark D. Wilkinson" ;
+    foaf:mbox             <mailto:markw@illuminae.com>
+] ;
+
+dcterms:version           "Champion" ;
+
+ftr:applicationArea       <http://www.fairsharing.org/ontology/subject/SRAO_0000401> ;
+
+dcterms:license           <https://creativecommons.org/licenses/by/4.0/> ;
+
+dpv:isApplicableFor       schema:CreativeWork .
+
+
+
