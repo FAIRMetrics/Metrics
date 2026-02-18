@@ -14,7 +14,7 @@
     ftr:identifier            "https://w3id.org/fair-metrics/general/gen2-mi-r1.1"^^xsd:anyURI ;
     dcterms:title             "Metadata license is a standard license" ;
     vivo:abbreviation         "gen2-mi-r1.1" ;
-    dcterms:description       """Metric Gen2_MI_R1.1 metadata license is a standard license. This metric aligns with FAIR Principle R1.1.""" ;
+    dcterms:description       """Metric Gen2_MI_R1.1 metadata license discoverable. This metric aligns with FAIR Principle R1.1.""" ;
     dcat:keyword              "FAIR", "reusability", "standard-license", "machine-readable", "R1.1" ;
     
     dcat:landingPage          <https://github.com/FAIRMetrics/Metrics/blob/master/MaturityIndicators/Gen2/Gen2_MI_R1.1.md> ;

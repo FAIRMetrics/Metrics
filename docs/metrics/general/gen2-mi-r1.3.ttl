@@ -14,8 +14,8 @@
     ftr:identifier            "https://w3id.org/fair-metrics/general/gen2-mi-r1.3"^^xsd:anyURI ;
     dcterms:title             "Metadata contains provenance information" ;
     vivo:abbreviation         "gen2-mi-r1.3" ;
-    dcterms:description       """Metric Gen2_MI_R1.3 metadata contains provenance information. This metric aligns with FAIR Principle R1.3.""" ;
-    dcat:keyword              "FAIR", "reusability", "provenance", "R1.3" ;
+    dcterms:description       """Metric Gen2_MI_R1.3 metadata meets community standards""" ;
+    dcat:keyword              "FAIR", "reusability", "provenance", 'standards', "R1.3" ;
     
     dcat:landingPage          <https://github.com/FAIRMetrics/Metrics/blob/master/MaturityIndicators/Gen2/Gen2_MI_R1.3.md> ;
     

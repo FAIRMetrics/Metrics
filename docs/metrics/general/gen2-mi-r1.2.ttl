@@ -14,8 +14,8 @@
     ftr:identifier            "https://w3id.org/fair-metrics/general/gen2-mi-r1.2"^^xsd:anyURI ;
     dcterms:title             "Metadata license is machine-understandable" ;
     vivo:abbreviation         "gen2-mi-r1.2" ;
-    dcterms:description       """Metric Gen2_MI_R1.2 metadata license is machine-understandable. This metric aligns with FAIR Principle R1.2.""" ;
-    dcat:keyword              "FAIR", "reusability", "license", "machine-readable", "R1.2" ;
+    dcterms:description       """Metric Gen2_MI_R1.2 metadata hincludes detailed provenance""" ;
+    dcat:keyword              "FAIR", "reusability", "provenance", "machine-readable", "R1.2" ;
     
     dcat:landingPage          <https://github.com/FAIRMetrics/Metrics/blob/master/MaturityIndicators/Gen2/Gen2_MI_R1.2.md> ;
     

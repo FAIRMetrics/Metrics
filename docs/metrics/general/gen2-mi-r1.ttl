@@ -12,9 +12,9 @@
     a                          ftr:Metric, dcat:Dataset ;
     
     ftr:identifier            "https://w3id.org/fair-metrics/general/gen2-mi-r1"^^xsd:anyURI ;
-    dcterms:title             "Metadata contains a clear and accessible data usage license" ;
+    dcterms:title             "Metadata has a plurality of relevant and accurate attributes" ;
     vivo:abbreviation         "gen2-mi-r1" ;
-    dcterms:description       """Metric Gen2_MI_R1 metadata contains a clear and accessible data usage license. This metric aligns with FAIR Principle R1.""" ;
+    dcterms:description       """Metric Gen2_MI_R1 metadata must have sufficient attributes to support reuse""" ;
     dcat:keyword              "FAIR", "reusability", "license", "R1" ;
     
     dcat:landingPage          <https://github.com/FAIRMetrics/Metrics/blob/master/MaturityIndicators/Gen2/Gen2_MI_R1.md> ;
