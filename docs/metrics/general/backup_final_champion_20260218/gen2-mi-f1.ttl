@@ -27,7 +27,7 @@ ftr:creator               [
     foaf:mbox             <mailto:markw@illuminae.com>
 ] ;
 
-dcterms:version           "Champion" ;
+dcterms:version           "Gen2" ;
 
 ftr:applicationArea       <http://www.fairsharing.org/ontology/subject/SRAO_0000401> ;
 

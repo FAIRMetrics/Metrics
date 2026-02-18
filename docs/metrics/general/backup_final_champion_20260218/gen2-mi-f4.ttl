@@ -9,17 +9,17 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
 
-<https://w3id.org/fair-metrics/general/gen2-mi-f1.ttl>
+<https://w3id.org/fair-metrics/general/gen2-mi-f4.ttl>
     a                          ftr:Metric, dcat:Dataset ;
-    rdfs:definedBy <https://w3id.org/fair-metrics/general/gen2-mi-f1.ttl> ;
+    rdfs:definedBy <https://w3id.org/fair-metrics/general/gen2-mi-f4.ttl> ;
     
-    ftr:identifier            "https://w3id.org/fair-metrics/general/gen2-mi-f1"^^xsd:anyURI ;
-    dcterms:title             "Identifier is globally unique and persistent" ;
-    vivo:abbreviation         "gen2-mi-f1" ;
-    dcterms:description       """Metric Gen2_MI_F1 identifier is globally unique and persistent. This metric aligns with FAIR Principle F1.""" ;
-    dcat:keyword              "FAIR", "findability", "persistent", "identifier", "GUID", "F1" ;
+    ftr:identifier            "https://w3id.org/fair-metrics/general/gen2-mi-f4"^^xsd:anyURI ;
+    dcterms:title             "Metadata is indexed in a searchable resource" ;
+    vivo:abbreviation         "gen2-mi-f4" ;
+    dcterms:description       """Metric Gen2_MI_F4 metadata is indexed in a searchable resource. This metric aligns with FAIR Principle F4.""" ;
+    dcat:keyword              "FAIR", "findability", "search", "indexed", "F4" ;
     
-    dcat:landingPage <https://fairmetrics.github.io/Metrics/metrics/landingpages/Gen2_MI_F1.md> ;
+    dcat:landingPage <https://fairmetrics.github.io/Metrics/metrics/landingpages/Gen2_MI_F4.md> ;
     
 ftr:creator               [
     a                     foaf:Person ;
@@ -27,7 +27,7 @@ ftr:creator               [
     foaf:mbox             <mailto:markw@illuminae.com>
 ] ;
 
-dcterms:version           "Champion" ;
+dcterms:version           "Gen2" ;
 
 ftr:applicationArea       <http://www.fairsharing.org/ontology/subject/SRAO_0000401> ;
 

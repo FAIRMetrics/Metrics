@@ -6,20 +6,19 @@
 @prefix dpv:     <https://w3id.org/dpv#> .
 @prefix schema:  <https://schema.org/> .
 @prefix vivo:    <http://vivoweb.org/ontology/core#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
 
-<https://w3id.org/fair-metrics/general/gen2-mi-f1.ttl>
+<https://w3id.org/fair-metrics/general/gen2-mi-i2.ttl>
     a                          ftr:Metric, dcat:Dataset ;
-    rdfs:definedBy <https://w3id.org/fair-metrics/general/gen2-mi-f1.ttl> ;
+    rdfs:definedBy <https://w3id.org/fair-metrics/general/gen2-mi-i2.ttl> ;
     
-    ftr:identifier            "https://w3id.org/fair-metrics/general/gen2-mi-f1"^^xsd:anyURI ;
-    dcterms:title             "Identifier is globally unique and persistent" ;
-    vivo:abbreviation         "gen2-mi-f1" ;
-    dcterms:description       """Metric Gen2_MI_F1 identifier is globally unique and persistent. This metric aligns with FAIR Principle F1.""" ;
-    dcat:keyword              "FAIR", "findability", "persistent", "identifier", "GUID", "F1" ;
+    ftr:identifier            "https://w3id.org/fair-metrics/general/gen2-mi-i2"^^xsd:anyURI ;
+    dcterms:title             "(Meta)data uses FAIR vocabularies" ;
+    vivo:abbreviation         "gen2-mi-i2" ;
+    dcterms:description       """Metric Gen2_MI_I2 (meta)data uses fair vocabularies. This metric aligns with FAIR Principle I2.""" ;
+    dcat:keyword              "FAIR", "interoperability", "vocabulary", "FAIR", "I2" ;
     
-    dcat:landingPage <https://fairmetrics.github.io/Metrics/metrics/landingpages/Gen2_MI_F1.md> ;
+    dcat:landingPage          <https://github.com/FAIRMetrics/Metrics/blob/master/MaturityIndicators/Gen2/Gen2_MI_I2.md> ;
     
 ftr:creator               [
     a                     foaf:Person ;
@@ -27,7 +26,7 @@ ftr:creator               [
     foaf:mbox             <mailto:markw@illuminae.com>
 ] ;
 
-dcterms:version           "Champion" ;
+dcterms:version           "Gen2" ;
 
 ftr:applicationArea       <http://www.fairsharing.org/ontology/subject/SRAO_0000401> ;
 
