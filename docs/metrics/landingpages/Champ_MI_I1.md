@@ -12,7 +12,7 @@ Michel Dumontier, ORCID:0000-0003-4727-9435
 #### Accepted: pending
 
 
-### Maturity Indicator Identifier: Champ_MI_I1A [https://w3id.org/fair/maturity_indicator/terms/Gen2/Champ_MI_I1A](https://w3id.org/fair/maturity_indicator/terms/Gen2/Champ_MI_I1A)
+### Maturity Indicator Identifier:[Champ_MI_I1A](https://w3id.org/fair-metrics/general/champ-mi-i1a.ttl)
 
 ### Maturity Indicator Name:   Use a Knowledge Representation Language (soft)
 
@@ -31,17 +31,6 @@ There is debate in the community about what languages would be considered "knowl
 this Maturity Indicator is broken into two sub-MIs (Gen2-FM-I1A and Gen2-FM-I1B).  This MI takes a loose definition,
 that any kind of structured information is sufficient.
 
-
-### What must be provided for the measurement?
-The Metadata GUID.
-
-
-### How is the measurement executed?
-The GUID is resolved.  Any hash-style metadata (e.g. JSON or microformat) or Linked Data that can be found is considered a success.
-
-
-### What is/are considered valid result(s)?
-The presence of hash-style, or linked data
 
 ### For which digital resource(s) is this relevant? (or 'all')
 All

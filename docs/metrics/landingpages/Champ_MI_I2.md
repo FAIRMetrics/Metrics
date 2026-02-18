@@ -12,7 +12,7 @@ Michel Dumontier, ORCID:0000-0003-4727-9435
 #### Accepted: pending
 
 
-### Maturity Indicator Identifier: Champ_MI_I2A [https://w3id.org/fair/maturity_indicator/terms/Gen2/Champ_MI_I2A](https://w3id.org/fair/maturity_indicator/terms/Gen2/Champ_MI_I2A)
+### Maturity Indicator Identifier:[Champ_MI_I2A](https://w3id.org/fair-metrics/general/champ-mi-i2a.ttl)
 
 ### Maturity Indicator Name:   Uses FAIR Vocabularies (loose)
 
@@ -30,19 +30,6 @@ It is not possible to unambiguously interpret metadata represented as simple key
 In this loose MI, we test only if the vocabulary terms resolve (e.g. to a human-readable page).  We do not test
 if they resolve to machine-readable information.  A second Maturity Indicator (Gen2-FM-I2B) is for that stricter test.
 
-
-### What must be provided for the measurement?
-The Metadata GUID.
-
-
-### How is the measurement executed?
-Any Linked Data that can be found is tested for the resolution of a subset of properties (predicates) present in it.
-Some proportion of these should resolve (the creator of the associated Maturity Test will decide what that
-proportion should be)
-
-
-### What is/are considered valid result(s)?
-Successful resolution of a proportion of predicates in Linked Data
 
 ### For which digital resource(s) is this relevant? (or 'all')
 All
