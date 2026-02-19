@@ -6,18 +6,20 @@
 @prefix dpv:     <https://w3id.org/dpv#> .
 @prefix schema:  <https://schema.org/> .
 @prefix vivo:    <http://vivoweb.org/ontology/core#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
 
-<https://w3id.org/fair-metrics/general/gen2-mi-i2.ttl>
+<https://w3id.org/fair-metrics/general/champ-mi-f3.ttl>
     a                          ftr:Metric, dcat:Dataset ;
+    rdfs:definedBy <https://w3id.org/fair-metrics/general/champ-mi-f3.ttl> ;
     
-    ftr:identifier            "https://w3id.org/fair-metrics/general/gen2-mi-i2"^^xsd:anyURI ;
-    dcterms:title             "(Meta)data uses FAIR vocabularies" ;
-    vivo:abbreviation         "gen2-mi-i2" ;
-    dcterms:description       """Metric Gen2_MI_I2 (meta)data uses fair vocabularies. This metric aligns with FAIR Principle I2.""" ;
-    dcat:keyword              "FAIR", "interoperability", "vocabulary", "FAIR", "I2" ;
+    ftr:identifier            "https://w3id.org/fair-metrics/general/champ-mi-f3"^^xsd:anyURI ;
+    dcterms:title             "Metadata identifier explicitly in metadata" ;
+    vivo:abbreviation         "champ-mi-f3" ;
+    dcterms:description       """Metric Champ_MI_F3 metadata identifier explicitly in metadata. This metric aligns with FAIR Principle F3.""" ;
+    dcat:keyword              "FAIR", "findability", "metadata", "identifier", "F3" ;
     
-    dcat:landingPage          <https://github.com/FAIRMetrics/Metrics/blob/master/MaturityIndicators/Gen2/Gen2_MI_I2.md> ;
+    dcat:landingPage <https://w3id.org/fair-metrics/landingpages/Champ_MI_F3.md> ;
     
 ftr:creator               [
     a                     foaf:Person ;
@@ -25,7 +27,7 @@ ftr:creator               [
     foaf:mbox             <mailto:markw@illuminae.com>
 ] ;
 
-dcterms:version           "Gen2" ;
+dcterms:version           "Champion" ;
 
 ftr:applicationArea       <http://www.fairsharing.org/ontology/subject/SRAO_0000401> ;
 
