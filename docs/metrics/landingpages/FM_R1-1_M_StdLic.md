@@ -10,7 +10,7 @@ Mark D. Wilkinson, ORCID:0000-0001-6960-357X
 
 ### Maturity Indicator Identifier:[FM_R1-1_M_StdLic](https://w3id.org/fair-metrics/general/FM_R1-1_M_StdLic)
 
-### Maturity Indicator Name:   Metadata contains link to license
+### Maturity Indicator Name:   Metadata Contains Link to License
 
 ----
 
@@ -25,14 +25,11 @@ R1.1
 
 
 ### What is being measured?
-A pointer in the metadata to the data license
+There is an unambiguous pointer in the metadata to the data license.
 
 ### Why should we measure it?
 Data that does not have a license cannot (legitimately) be reused, since the conditions of that reuse are not known.
 
-
-### For which digital resource(s) is this relevant? (or 'all')
-All
 
 ### Examples of good practices (that would score well on this assessment)
 

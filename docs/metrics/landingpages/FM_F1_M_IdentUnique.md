@@ -10,7 +10,7 @@ Mark D. Wilkinson, ORCID:0000-0001-6960-357X
 
 ### Maturity Indicator Identifier:[FM_F1_M_IdentUnique](https://w3id.org/fair-metrics/general/FM_F1_M_IdentUnique)
 
-### Maturity Indicator Name:   Identifier Uniqueness
+### Maturity Indicator Name:   Identifier of the (meta)data is unique and resolvable
 
 ----
 
@@ -25,15 +25,13 @@ F1
 
 
 ### What is being measured?
-Whether the GUID matches (regexp) a GUID scheme recognized as being globally unique by some authority (e.g. FAIRsharing).
+Whether the GUID matches (regexp) a GUID scheme recognized as being globally unique by some authority (e.g. FAIRsharing).  It must also be resolvable.
 
 
 ### Why should we measure it?
-The uniqueness of an identifier is a necessary condition to unambiguously refer that resource, and that resource alone. Otherwise, an identifier shared by multiple resources will confound efforts to describe that resource, or to use the identifier to retrieve it. Examples of identifier schemes include, but are not limited to URN, IRI, DOI, Handle, trustyURI, LSID, etc. For an in-depth understanding of the issues around identifiers, please see http://dx.plos.org/10.1371/journal.pbio.2001414
+The uniqueness of an identifier is a necessary condition to unambiguously refer that resource, and that resource alone. Otherwise, an identifier shared by multiple resources will confound efforts to describe that resource, or to use the identifier to retrieve it. Examples of identifier schemes include, but are not limited to URN, IRI, DOI, Handle, trustyURI, LSID, etc. For this metric, there must also be a known machine-actionable resolution protocol for the identifier (this is NOT a requirement of the FAIR Principles, that only require retrieval, not resolution).  For an in-depth understanding of the issues around identifiers, please see http://dx.plos.org/10.1371/journal.pbio.2001414
 
 
-### For which digital resource(s) is this relevant? (or 'all')
-All
 
 ### Examples of good practices (that would score well on this assessment)
 

@@ -9,7 +9,7 @@ Mark D. Wilkinson, ORCID:0000-0001-6960-357X
 
 ### Maturity Indicator Identifier:[FM_I2_M_FAIRVocab](https://w3id.org/fair-metrics/general/FM_I2_M_FAIRVocab)
 
-### Maturity Indicator Name:   Uses FAIR Vocabularies
+### Maturity Indicator Name:   (Meta)data Uses FAIR Vocabularies
 
 ----
 
@@ -33,8 +33,6 @@ In this loose MI, we test only if the vocabulary terms resolve (e.g. to a human-
 if they resolve to machine-readable information.  A second Maturity Indicator (Gen2-FM-I2B) is for that stricter test.
 
 
-### For which digital resource(s) is this relevant? (or 'all')
-All
 
 ### Examples of good practices (that would score well on this assessment)
 

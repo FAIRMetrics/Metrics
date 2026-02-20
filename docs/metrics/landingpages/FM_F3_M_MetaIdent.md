@@ -9,7 +9,7 @@ Mark D. Wilkinson, ORCID:0000-0001-6960-357X
 
 ### Maturity Indicator Identifier:[FM_F3_M_MetaIdent](https://w3id.org/fair-metrics/general/FM_F3_M_MetaIdent)
 
-### Maturity Indicator Name:   Use of GUIDs in metadata
+### Maturity Indicator Name:  The GUID of both the metadata and data are explicitly in the Metadata record
 
 ----
 
@@ -40,9 +40,6 @@ discover the metadata related to a digital object will be to search based
 on the GUID of the digital object itself.
 
 
-
-### For which digital resource(s) is this relevant? (or 'all')
-All
 
 ### Examples of good practices (that would score well on this assessment)
 

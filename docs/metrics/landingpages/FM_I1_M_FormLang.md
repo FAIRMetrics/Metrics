@@ -10,7 +10,7 @@ Mark D. Wilkinson, ORCID:0000-0001-6960-357X
 
 ### Maturity Indicator Identifier:[FM_I1_M_FormLang](https://w3id.org/fair-metrics/general/FM_I1_M_FormLang)
 
-### Maturity Indicator Name:   Use a Knowledge Representation Language 
+### Maturity Indicator Name:  Metadata is represented in a Knowledge Representation Language 
 
 ----
 
@@ -35,8 +35,6 @@ this Maturity Indicator is broken into two sub-MIs (Gen2-FM-I1A and Gen2-FM-I1B)
 that any kind of structured information is sufficient.
 
 
-### For which digital resource(s) is this relevant? (or 'all')
-All
 
 ### Examples of good practices (that would score well on this assessment)
 

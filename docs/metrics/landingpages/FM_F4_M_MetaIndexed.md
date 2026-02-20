@@ -34,8 +34,6 @@ Thus, the ability to discover the resource should be tested using i) its identif
 ii) other text-based metadata.
 
 
-### For which digital resource(s) is this relevant? (or 'all')
-All
 
 ### Examples of good practices (that would score well on this assessment)
 

@@ -9,7 +9,7 @@ Mark D. Wilkinson, ORCID:0000-0001-6960-357X
 
 ### Maturity Indicator Identifier:[FM_F2_M_StructMeta](https://w3id.org/fair-metrics/general/FM_F2_M_StructMeta)
 
-### Maturity Indicator Name:   Structured Metadata
+### Maturity Indicator Name:   Metadata is Structured
 
 ----
 
@@ -35,9 +35,6 @@ to consume it, including those of major search engines.  Thus, it improves
 the findability of the record.
 
 
-
-### For which digital resource(s) is this relevant? (or 'all')
-All
 
 ### Examples of good practices (that would score well on this assessment)
 

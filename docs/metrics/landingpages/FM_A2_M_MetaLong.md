@@ -9,7 +9,7 @@ Mark D. Wilkinson, ORCID:0000-0001-6960-357X
 
 ### Maturity Indicator Identifier:[FM_A2_M_MetaLong](https://w3id.org/fair-metrics/general/FM_A2_M_MetaLong)
 
-### Maturity Indicator Name:   Metadata persistence
+### Maturity Indicator Name:   Metadata persists beyond the lifespan of the data
 
 ----
 
@@ -31,9 +31,6 @@ If there is a policy for metadata persistence
 Cross-references to data from third-party’s FAIR data and metadata will naturally degrade over time, and become “stale links”. In such cases, it is important for FAIR providers to continue to provide descriptors of what the data was to assist in the continued interpretation of those third-party data. As per FAIR Principle F3, this metadata remains discoverable, even in the absence of the data, because it contains an explicit reference to the IRI of the data.
 
 
-
-### For which digital resource(s) is this relevant? (or 'all')
-All
 
 ### Examples of good practices (that would score well on this assessment)
 

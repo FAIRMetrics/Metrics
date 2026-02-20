@@ -9,7 +9,8 @@ Mark D. Wilkinson, ORCID:0000-0001-6960-357X
 
 ### Maturity Indicator Identifier:[FM_I3_M_QualRef](https://w3id.org/fair-metrics/general/FM_I3_M_QualRef)
 
-### Maturity Indicator Name:   Qualified outward links
+### Maturity Indicator Name:  Metadata Contains Qualified Outward Links
+
 
 ----
 
@@ -30,9 +31,6 @@ Does the linked data metadata contain links that are not from the same source (d
 Data silos thwart interoperability. Thus, we should reasonably expect that some of the references/relations point outwards to other resources, owned by third-parties; this is one of the requirements for 5 star linked data.
 
 
-
-### For which digital resource(s) is this relevant? (or 'all')
-All
 
 ### Examples of good practices (that would score well on this assessment)
 
