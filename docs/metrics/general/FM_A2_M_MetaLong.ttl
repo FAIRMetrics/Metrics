@@ -9,17 +9,18 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
 
-<https://w3id.org/fair-metrics/general/champ-mi-i3.ttl>
+<https://w3id.org/fair-metrics/general/FM_A2_M_MetaLong>
     a                          ftr:Metric, dcat:Dataset ;
-    rdfs:definedBy <https://w3id.org/fair-metrics/general/champ-mi-i3.ttl> ;
+    rdfs:definedBy <https://w3id.org/fair-metrics/general/FM_A2_M_MetaLong.ttl> ;
     
-    ftr:identifier            "https://w3id.org/fair-metrics/general/champ-mi-i3"^^xsd:anyURI ;
-    dcterms:title             "(Meta)data includes qualified references to other (meta)data" ;
-    vivo:abbreviation         "champ-mi-i3" ;
-    dcterms:description       """Metric Champ_MI_I3 (meta)data includes qualified references to other (meta)data. This metric aligns with FAIR Principle I3.""" ;
-    dcat:keyword              "FAIR", "interoperability", "qualified-references", "linked-data", "I3" ;
+    ftr:identifier            "https://w3id.org/fair-metrics/general/FM_A2_M_MetaLong"^^xsd:anyURI ;
+
+    dcterms:title             "FAIR Metric – A2 – Metadata - Metadata is long-lived and independently accessible" ;
+    vivo:abbreviation         "FM_A2_M_MetaLong" ;
+    dcterms:description       """metadata is long-lived and independently accessible. This metric aligns with FAIR Principle A2.""" ;
+    dcat:keyword              "FAIR", "accessibility", "metadata", "persistence", "A2" ;
     
-    dcat:landingPage <https://w3id.org/fair-metrics/landingpages/Champ_MI_I3.md> ;
+    dcat:landingPage <https://w3id.org/fair-metrics/landingpages/FM_A2_M_MetaLong.md> ;
     
 ftr:creator               [
     a                     foaf:Person ;

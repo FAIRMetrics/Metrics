@@ -9,17 +9,18 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
 
-<https://w3id.org/fair-metrics/general/champ-mi-a2.ttl>
+<https://w3id.org/fair-metrics/general/FM_A1-2_M_Auth>
     a                          ftr:Metric, dcat:Dataset ;
-    rdfs:definedBy <https://w3id.org/fair-metrics/general/champ-mi-a2.ttl> ;
+    rdfs:definedBy <https://w3id.org/fair-metrics/general/FM_A1-2_M_Auth.ttl> ;
     
-    ftr:identifier            "https://w3id.org/fair-metrics/general/champ-mi-a2"^^xsd:anyURI ;
-    dcterms:title             "Metadata is long-lived and independently accessible" ;
-    vivo:abbreviation         "champ-mi-a2" ;
-    dcterms:description       """Metric Champ_MI_A2 metadata is long-lived and independently accessible. This metric aligns with FAIR Principle A2.""" ;
-    dcat:keyword              "FAIR", "accessibility", "metadata", "persistence", "A2" ;
+    ftr:identifier            "https://w3id.org/fair-metrics/general/FM_A1-2_M_Auth"^^xsd:anyURI ;
+
+    dcterms:title             "FAIR Metric – A1.2 – Metadata - Protocol supports authentication and authorisation where applicable" ;
+    vivo:abbreviation         "FM_A1-2_M_Auth" ;
+    dcterms:description       """protocol supports authentication and authorisation where applicable. This metric aligns with FAIR Principle A1.""" ;
+    dcat:keyword              "FAIR", "accessibility", "authentication", "authorization", "A1" ;
     
-    dcat:landingPage <https://w3id.org/fair-metrics/landingpages/Champ_MI_A2.md> ;
+    dcat:landingPage <https://w3id.org/fair-metrics/landingpages/FM_A1-2_M_Auth.md> ;
     
 ftr:creator               [
     a                     foaf:Person ;

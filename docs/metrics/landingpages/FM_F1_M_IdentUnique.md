@@ -1,4 +1,4 @@
-# TITLE:  FAIR Maturity Indicator Champ-MI-F1A
+# TITLE:  FAIR Maturity Indicator M_F1_M_IdentUnique
 
 ## Authors: 
 Mark D. Wilkinson, ORCID:0000-0001-6960-357X
@@ -8,7 +8,7 @@ Mark D. Wilkinson, ORCID:0000-0001-6960-357X
 #### Last Edit: 2026-02-20
 
 
-### Maturity Indicator Identifier:[Champ_MI_F1A](https://w3id.org/fair-metrics/general/champ-mi-f1a.ttl)
+### Maturity Indicator Identifier:[FM_F1_M_IdentUnique](https://w3id.org/fair-metrics/general/FM_F1_M_IdentUnique)
 
 ### Maturity Indicator Name:   Identifier Uniqueness
 

@@ -6,18 +6,20 @@
 @prefix dpv:     <https://w3id.org/dpv#> .
 @prefix schema:  <https://schema.org/> .
 @prefix vivo:    <http://vivoweb.org/ontology/core#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-
-<https://w3id.org/fair-metrics/esrf/r1.1.li-ra.doi.ttl>
+<https://w3id.org/fair-metrics/esrf/FM_R1-2_M_Fund_ESRF>
     a                          ftr:Metric, dcat:Dataset ;
     
-    ftr:identifier            "https://w3id.org/fair-metrics/esrf/r1.1.li-ra.doi"^^xsd:anyURI ;
-    dcterms:title             "License information found in DOI metadata" ;
-    vivo:abbreviation         "r1.1.li-ra.doi" ;
-    dcterms:description       """ This metric ensures that the research object provided by the supplied DOI is associated to licence information in the DOI registration agency metadata. Note that more generic metrics exist that do not specialise R1.1 to DOIs only; this is intended to be a more granular metric specific to DOIs. """ ;
-    dcat:keyword              "FAIR", "reusability", "standard", "r1.1" ;
-    
-    dcat:landingPage          <https://fairsharing.org/7465> ;
+    ftr:identifier            "https://w3id.org/fair-metrics/esrf/FM_R1-2_M_Fund_ESRF"^^xsd:anyURI ;
+
+
+    dcterms:title             "FAIR Metric – R1.1 – Metadata - Funding information is defined in metadata   " ;
+    vivo:abbreviation         "FM_R1-2_M_Fund_ESRF" ;
+    dcterms:description       """This metric ensures that the research object provided by the supplied URL or DOI has metadata containing funding information. """ ;
+    dcat:keyword              "FAIR", "reusability", "funding", "standard", "r1.2" ;
+    rdfs:definedBy <https://w3id.org/fair-metrics/esrf/FM_R1-2_M_Fund_ESRF.ttl> ;
+    dcat:landingPage          <https://fairsharing.org/7496> ;
     
 ftr:creator               [
     a                     foaf:Person ;

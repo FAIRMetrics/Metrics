@@ -1,4 +1,4 @@
-# TITLE:  FAIR Maturity Indicator Champ-MI-A1.1
+# TITLE:  FAIR Maturity Indicator FM_A1-1_M_OpenProt
 
 ## Authors: 
 Mark D. Wilkinson, ORCID:0000-0001-6960-357X
@@ -8,7 +8,7 @@ Mark D. Wilkinson, ORCID:0000-0001-6960-357X
 #### Last Edit: 2026-02-20
 
 
-### Maturity Indicator Identifier:[Champ_MI_A1.1](https://w3id.org/fair-metrics/general/champ-mi-a1.1.ttl)
+### Maturity Indicator Identifier:[FM_A1-1_M_OpenProt](https://w3id.org/fair-metrics/general/FM_A1-1_M_OpenProt)
 
 ### Maturity Indicator Name: Open protocol for (meta)data retrieval
 

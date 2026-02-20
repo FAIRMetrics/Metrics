@@ -1,4 +1,4 @@
-# TITLE:  FAIR Maturity Indicator Champ-MI-A1.2
+# TITLE:  FAIR Maturity Indicator FM_A1-2_M_Auth
 
 ## Authors: 
 Mark D. Wilkinson, ORCID:0000-0001-6960-357X
@@ -7,7 +7,7 @@ Mark D. Wilkinson, ORCID:0000-0001-6960-357X
 #### Publication Date: 2026-02-20
 #### Last Edit: 2026-02-20
 
-### Maturity Indicator Identifier:[Champ_MI_A1.2](https://w3id.org/fair-metrics/general/champ-mi-a1.2.ttl)
+### Maturity Indicator Identifier:[FM_A1-2_M_Auth](https://w3id.org/fair-metrics/general/FM_A1-2_M_Auth)
 
 ### Maturity Indicator Name:   Protocol supports authentication/authorization
 

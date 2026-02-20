@@ -1,4 +1,4 @@
-# TITLE:  FAIR Maturity Indicator Champ-MI-F3
+# TITLE:  FAIR Maturity Indicator FM_F3_M_MetaIdent
 
 ## Authors: 
 Mark D. Wilkinson, ORCID:0000-0001-6960-357X
@@ -7,7 +7,7 @@ Mark D. Wilkinson, ORCID:0000-0001-6960-357X
 #### Publication Date: 2026-02-20
 #### Last Edit: 2026-02-20
 
-### Maturity Indicator Identifier:[Champ_MI_F3](https://w3id.org/fair-metrics/general/champ-mi-f3.ttl)
+### Maturity Indicator Identifier:[FM_F3_M_MetaIdent](https://w3id.org/fair-metrics/general/FM_F3_M_MetaIdent)
 
 ### Maturity Indicator Name:   Use of GUIDs in metadata
 

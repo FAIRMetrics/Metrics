@@ -1,0 +1,38 @@
+@prefix ftr:     <https://w3id.org/ftr#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix foaf:    <http://xmlns.com/foaf/0.1/> .
+@prefix dcat:    <http://www.w3.org/ns/dcat#> .
+@prefix dpv:     <https://w3id.org/dpv#> .
+@prefix schema:  <https://schema.org/> .
+@prefix vivo:    <http://vivoweb.org/ontology/core#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+
+<https://w3id.org/fair-metrics/esrf/FM_R1-1_M_DOI_Lic_ESRF>
+    a                          ftr:Metric, dcat:Dataset ;
+    
+    ftr:identifier            "https://w3id.org/fair-metrics/esrf/FM_R1-1_M_DOI_Lic_ESRF.doi"^^xsd:anyURI ;
+
+    dcterms:title             "FAIR Metric – R1.1 – Metadata - License information found in DOI metadata" ;
+    vivo:abbreviation         "FM_R1-1_M_DOI_Lic_ESRF" ;
+    dcterms:description       """ This metric ensures that the research object provided by the supplied DOI is associated to licence information in the DOI registration agency metadata. Note that more generic metrics exist that do not specialise R1.1 to DOIs only; this is intended to be a more granular metric specific to DOIs. """ ;
+    dcat:keyword              "FAIR", "reusability", "standard", "r1.1" ;
+    rdfs:definedBy <https://w3id.org/fair-metrics/esrf/FM_R1-1_M_DOI_Lic_ESRF.ttl> ;
+    dcat:landingPage          <https://fairsharing.org/7465> ;
+    
+ftr:creator               [
+    a                     foaf:Person ;
+    foaf:name             "Renaud DUYME" ;
+    foaf:mbox             <mailto:renaud.duyme@esrf.fr>
+] ;
+
+
+dcterms:version           "esrf1.0" ;
+
+ftr:applicationArea       <http://www.fairsharing.org/ontology/subject/SRAO_0000401> ;
+
+dcterms:license           <https://creativecommons.org/licenses/by/4.0/> ;
+
+ftr:supportedBy <https://w3id.org/FAIR-Champion> ;
+dpv:isApplicableFor       schema:CreativeWork .  

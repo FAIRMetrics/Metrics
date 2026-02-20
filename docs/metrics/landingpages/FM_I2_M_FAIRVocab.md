@@ -1,4 +1,4 @@
-# TITLE:  FAIR Maturity Indicator Champ-MI-I2A
+# TITLE:  FAIR Maturity Indicator FM_I2_M_FAIRVocab
 
 ## Authors: 
 Mark D. Wilkinson, ORCID:0000-0001-6960-357X
@@ -7,9 +7,9 @@ Mark D. Wilkinson, ORCID:0000-0001-6960-357X
 #### Publication Date: 2026-02-20
 #### Last Edit: 2026-02-20
 
-### Maturity Indicator Identifier:[Champ_MI_I2A](https://w3id.org/fair-metrics/general/champ-mi-i2a.ttl)
+### Maturity Indicator Identifier:[FM_I2_M_FAIRVocab](https://w3id.org/fair-metrics/general/FM_I2_M_FAIRVocab)
 
-### Maturity Indicator Name:   Uses FAIR Vocabularies (loose)
+### Maturity Indicator Name:   Uses FAIR Vocabularies
 
 ----
 

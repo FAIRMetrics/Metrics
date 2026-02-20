@@ -8,18 +8,17 @@
 @prefix vivo:    <http://vivoweb.org/ontology/core#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-
-<https://w3id.org/fair-metrics/general/champ-mi-f3.ttl>
+<https://w3id.org/fair-metrics/general/FM_A1-1_M_OpenProt>
     a                          ftr:Metric, dcat:Dataset ;
-    rdfs:definedBy <https://w3id.org/fair-metrics/general/champ-mi-f3.ttl> ;
+    rdfs:definedBy <https://w3id.org/fair-metrics/general/FM_A1-1_M_OpenProt.ttl> ;
     
-    ftr:identifier            "https://w3id.org/fair-metrics/general/champ-mi-f3"^^xsd:anyURI ;
-    dcterms:title             "Metadata identifier explicitly in metadata" ;
-    vivo:abbreviation         "champ-mi-f3" ;
-    dcterms:description       """Metric Champ_MI_F3 metadata identifier explicitly in metadata. This metric aligns with FAIR Principle F3.""" ;
-    dcat:keyword              "FAIR", "findability", "metadata", "identifier", "F3" ;
+    ftr:identifier            "https://w3id.org/fair-metrics/general/FM_A1-1_M_OpenProt"^^xsd:anyURI ;
+    dcterms:title             "FAIR Metric – A1.1 – Metadata - Open protocol for (meta)data retrieval" ;
+    vivo:abbreviation         "FM_A1-1_M_OpenProt" ;
+    dcterms:description       """open protocol for (meta)data retrieval. This metric aligns with FAIR Principle A1.1.""" ;
+    dcat:keyword              "FAIR", "accessibility", "protocol", "open", "standard", "A1.1" ;
     
-    dcat:landingPage <https://w3id.org/fair-metrics/landingpages/Champ_MI_F3.md> ;
+    dcat:landingPage <https://w3id.org/fair-metrics/landingpages/FM_A1-1_M_OpenProt.md> ;
     
 ftr:creator               [
     a                     foaf:Person ;

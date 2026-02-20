@@ -9,24 +9,24 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
 
-<https://w3id.org/fair-metrics/general/champ-mi-f1.ttl>
+<https://w3id.org/fair-metrics/general/FM_R1-1_M_StdLic>
     a                          ftr:Metric, dcat:Dataset ;
-    rdfs:definedBy <https://w3id.org/fair-metrics/general/champ-mi-f1.ttl> ;
+    rdfs:definedBy <https://w3id.org/fair-metrics/general/FM_R1-1_M_StdLic.ttl> ;
     
-    ftr:identifier            "https://w3id.org/fair-metrics/general/champ-mi-f1"^^xsd:anyURI ;
-    dcterms:title             "Identifier is globally unique and persistent" ;
-    vivo:abbreviation         "champ-mi-f1" ;
-    dcterms:description       """Metric Champ_MI_F1 identifier is globally unique and persistent. This metric aligns with FAIR Principle F1.""" ;
-    dcat:keyword              "FAIR", "findability", "persistent", "identifier", "GUID", "F1" ;
+    ftr:identifier            "https://w3id.org/fair-metrics/general/FM_R1-1_M_StdLic"^^xsd:anyURI ;
+
+    dcterms:title             "FAIR Metric – R1.1 – Metadata - Metadata license is a standard license" ;
+    vivo:abbreviation         "FM_R1-1_M_StdLic" ;
+    dcterms:description       """Metadata license discoverable. This metric aligns with FAIR Principle R1.1.""" ;
+    dcat:keyword              "FAIR", "reusability", "standard-license", "machine-readable", "R1.1" ;
     
-    dcat:landingPage <https://w3id.org/fair-metrics/landingpages/Champ_MI_F1.md> ;
+    dcat:landingPage <https://w3id.org/fair-metrics/landingpages/FM_R1-1_M_StdLic.md> ;
     
 ftr:creator               [
     a                     foaf:Person ;
     foaf:name             "Mark D. Wilkinson" ;
     foaf:mbox             <mailto:markw@illuminae.com>
 ] ;
-
 
 dcterms:version           "Champion1.0" ;
 
@@ -36,4 +36,8 @@ dcterms:license           <https://creativecommons.org/licenses/by/4.0/> ;
 
 ftr:hasPositiveValidation <https://w3id.org/duchenne-fdp> ;
 ftr:supportedBy <https://w3id.org/FAIR-Champion> ;
-dpv:isApplicableFor       schema:Dataset .  
+
+dpv:isApplicableFor       schema:Dataset .
+
+
+

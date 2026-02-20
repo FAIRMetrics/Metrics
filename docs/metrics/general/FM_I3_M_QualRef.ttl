@@ -9,17 +9,19 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
 
-<https://w3id.org/fair-metrics/general/champ-mi-i2.ttl>
+<https://w3id.org/fair-metrics/general/FM_I3_M_QualRef>
     a                          ftr:Metric, dcat:Dataset ;
-    rdfs:definedBy <https://w3id.org/fair-metrics/general/champ-mi-i2.ttl> ;
+    rdfs:definedBy <https://w3id.org/fair-metrics/general/FM_I3_M_QualRef.ttl> ;
     
-    ftr:identifier            "https://w3id.org/fair-metrics/general/champ-mi-i2"^^xsd:anyURI ;
-    dcterms:title             "(Meta)data uses FAIR vocabularies" ;
-    vivo:abbreviation         "champ-mi-i2" ;
-    dcterms:description       """Metric Champ_MI_I2 (meta)data uses fair vocabularies. This metric aligns with FAIR Principle I2.""" ;
-    dcat:keyword              "FAIR", "interoperability", "vocabulary", "FAIR", "I2" ;
+    ftr:identifier            "https://w3id.org/fair-metrics/general/FM_I3_M_QualRef"^^xsd:anyURI ;
+
+
+    dcterms:title             "FAIR Metric – I3 – Metadata - (Meta)data includes qualified references to other (meta)data" ;
+    vivo:abbreviation         "FM_I3_M_QualRef" ;
+    dcterms:description       """Metadata includes qualified references to other (meta)data. This metric aligns with FAIR Principle I3.""" ;
+    dcat:keyword              "FAIR", "interoperability", "qualified-references", "linked-data", "I3" ;
     
-    dcat:landingPage <https://w3id.org/fair-metrics/landingpages/Champ_MI_I2.md> ;
+    dcat:landingPage <https://w3id.org/fair-metrics/landingpages/FM_I3_M_QualRef.md> ;
     
 ftr:creator               [
     a                     foaf:Person ;

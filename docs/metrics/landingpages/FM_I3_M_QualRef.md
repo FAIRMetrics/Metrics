@@ -1,4 +1,4 @@
-# TITLE:  FAIR Maturity Indicator Champ-MI-I3
+# TITLE:  FAIR Maturity Indicator FM_I3_M_QualRef
 
 ## Authors: 
 Mark D. Wilkinson, ORCID:0000-0001-6960-357X
@@ -7,7 +7,7 @@ Mark D. Wilkinson, ORCID:0000-0001-6960-357X
 #### Publication Date: 2026-02-20
 #### Last Edit: 2026-02-20
 
-### Maturity Indicator Identifier:[Champ_MI_I3](https://w3id.org/fair-metrics/general/champ-mi-i3.ttl)
+### Maturity Indicator Identifier:[FM_I3_M_QualRef](https://w3id.org/fair-metrics/general/FM_I3_M_QualRef)
 
 ### Maturity Indicator Name:   Qualified outward links
 

@@ -9,23 +9,25 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
 
-<https://w3id.org/fair-metrics/general/champ-mi-r1.1.ttl>
+<https://w3id.org/fair-metrics/general/FM_F3_M_MetaIdent>
     a                          ftr:Metric, dcat:Dataset ;
-    rdfs:definedBy <https://w3id.org/fair-metrics/general/champ-mi-r1.1.ttl> ;
+    rdfs:definedBy <https://w3id.org/fair-metrics/general/FM_F3_M_MetaIdent.ttl> ;
     
-    ftr:identifier            "https://w3id.org/fair-metrics/general/champ-mi-r1.1"^^xsd:anyURI ;
-    dcterms:title             "Metadata license is a standard license" ;
-    vivo:abbreviation         "champ-mi-r1.1" ;
-    dcterms:description       """Metric Champ_MI_R1.1 metadata license discoverable. This metric aligns with FAIR Principle R1.1.""" ;
-    dcat:keyword              "FAIR", "reusability", "standard-license", "machine-readable", "R1.1" ;
+    ftr:identifier            "https://w3id.org/fair-metrics/general/FM_F3_M_MetaIdent"^^xsd:anyURI ;
+
+    dcterms:title             "FAIR Metric – F3 – Metadata - Metadata identifier explicitly in metadata" ;
+    vivo:abbreviation         "FM_F3_M_MetaIdent" ;
+    dcterms:description       """Metadata identifier explicitly in metadata. This metric aligns with FAIR Principle F3.""" ;
+    dcat:keyword              "FAIR", "findability", "metadata", "identifier", "F3" ;
     
-    dcat:landingPage <https://w3id.org/fair-metrics/landingpages/Champ_MI_R1.1.md> ;
+    dcat:landingPage <https://w3id.org/fair-metrics/landingpages/FM_F3_M_MetaIdent.md> ;
     
 ftr:creator               [
     a                     foaf:Person ;
     foaf:name             "Mark D. Wilkinson" ;
     foaf:mbox             <mailto:markw@illuminae.com>
 ] ;
+
 
 dcterms:version           "Champion1.0" ;
 
@@ -35,8 +37,4 @@ dcterms:license           <https://creativecommons.org/licenses/by/4.0/> ;
 
 ftr:hasPositiveValidation <https://w3id.org/duchenne-fdp> ;
 ftr:supportedBy <https://w3id.org/FAIR-Champion> ;
-
-dpv:isApplicableFor       schema:Dataset .
-
-
-
+dpv:isApplicableFor       schema:Dataset .  

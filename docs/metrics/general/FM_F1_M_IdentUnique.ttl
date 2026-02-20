@@ -9,17 +9,18 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
 
-<https://w3id.org/fair-metrics/general/champ-mi-f2.ttl>
+<https://w3id.org/fair-metrics/general/FM_F1_M_IdentUnique>
     a                          ftr:Metric, dcat:Dataset ;
-    rdfs:definedBy <https://w3id.org/fair-metrics/general/champ-mi-f2.ttl> ;
+    rdfs:definedBy <https://w3id.org/fair-metrics/general/FM_F1_M_IdentUnique.ttl> ;
     
-    ftr:identifier            "https://w3id.org/fair-metrics/general/champ-mi-f2"^^xsd:anyURI ;
-    dcterms:title             "Structured metadata" ;
-    vivo:abbreviation         "champ-mi-f2" ;
-    dcterms:description       """Metric Champ_MI_F2 structured metadata. This metric aligns with FAIR Principle F2.""" ;
-    dcat:keyword              "FAIR", "findability", "structured", "metadata", "F2" ;
+    ftr:identifier            "https://w3id.org/fair-metrics/general/FM_F1_M_IdentUnique"^^xsd:anyURI ;
+
+    dcterms:title             "FAIR Metric – F1 – Metadata - Identifier is globally unique and persistent" ;
+    vivo:abbreviation         "FM_F1_M_IdentUnique" ;
+    dcterms:description       """identifier is globally unique and persistent. This metric aligns with FAIR Principle F1.""" ;
+    dcat:keyword              "FAIR", "findability", "persistent", "identifier", "GUID", "F1" ;
     
-    dcat:landingPage <https://w3id.org/fair-metrics/landingpages/Champ_MI_F2.md> ;
+    dcat:landingPage <https://w3id.org/fair-metrics/landingpages/FM_F1_M_IdentUnique.md> ;
     
 ftr:creator               [
     a                     foaf:Person ;

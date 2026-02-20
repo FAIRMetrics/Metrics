@@ -6,17 +6,19 @@
 @prefix dpv:     <https://w3id.org/dpv#> .
 @prefix schema:  <https://schema.org/> .
 @prefix vivo:    <http://vivoweb.org/ontology/core#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
 
-<https://w3id.org/fair-metrics/esrf/r1.2.aff.ttl>
+<https://w3id.org/fair-metrics/esrf/FM_R1-2_M_Affil_ESRF>
     a                          ftr:Metric, dcat:Dataset ;
     
-    ftr:identifier            "https://w3id.org/fair-metrics/esrf/r1.2.aff"^^xsd:anyURI ;
-    dcterms:title             "Author affiliation is defined in metadata" ;
-    vivo:abbreviation         "r1.2.aff" ;
+    ftr:identifier            "https://w3id.org/fair-metrics/esrf/FM_R1-2_M_Affil_ESRF"^^xsd:anyURI ;
+
+    dcterms:title             "FAIR Metric – R1.2 – Metadata - Author affiliation is defined in metadata" ;
+    vivo:abbreviation         "FM_R1-2_M_Affil_ESRF" ;
     dcterms:description       """ This metric ensures that the research object provided by the supplied URL or DOI has metadata containing author affiliation. """ ;
     dcat:keyword              "FAIR", "reusability", "affiliation", "standard", "r1.2" ;
-    
+    rdfs:definedBy <https://w3id.org/fair-metrics/esrf/FM_R1-2_M_Affil_ESRF.ttl> ;
     dcat:landingPage          <https://fairsharing.org/7494> ;
     
 ftr:creator               [

@@ -1,22 +1,23 @@
-@prefix ftr:     <https://w3id.org/ftr#> .
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
-@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
-@prefix foaf:    <http://xmlns.com/foaf/0.1/> .
-@prefix dcat:    <http://www.w3.org/ns/dcat#> .
-@prefix dpv:     <https://w3id.org/dpv#> .
-@prefix schema:  <https://schema.org/> .
-@prefix vivo:    <http://vivoweb.org/ontology/core#> .
+@prefix dpv: <https://w3id.org/dpv#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ftr: <https://w3id.org/ftr#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix vivo: <http://vivoweb.org/ontology/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-
-<https://w3id.org/fair-metrics/esrf/f4.oa.doi.ttl>
+<https://w3id.org/fair-metrics/esrf/FM_F4_M_DOI_OA_ESRF>
     a                          ftr:Metric, dcat:Dataset ;
     
-    ftr:identifier            "https://w3id.org/fair-metrics/esrf/f4.oa.doi"^^xsd:anyURI ;
-    dcterms:title             "The content associated to a DOI is Open Access" ;
-    vivo:abbreviation         "f4.oa.doi" ;
+    ftr:identifier            "https://w3id.org/fair-metrics/esrf/FM_F4_M_DOI_OA_ESRF"^^xsd:anyURI ;
+
+    dcterms:title             "FAIR Metric – F4 – Metadata - The content associated to a DOI is Open Access" ;
+    vivo:abbreviation         "FM_F4_M_DOI_OA_ESRF" ;
     dcterms:description       """ This metric applies to DOI objects. For publications entities, it ensures that its content, or a allowed copy is open access. For dataset entities it ensures that the data is open access (with or without embargo period). The reference services used are : https://unpaywall.org/ and https://openalex.org. While originally created as part of the OSTrails project to fulfil requirements within the PaNOSC cluster, this metric is subject agnostic and can be re-used by any community with these requirements for FAIR F4. """ ;
     dcat:keyword              "FAIR", "open access", "standard", "f4" ;
-    
+    rdfs:definedBy <https://w3id.org/fair-metrics/esrf/FM_F4_M_DOI_OA_ESRF.ttl> ;
     dcat:landingPage          <https://fairsharing.org/6449> ;
     
 ftr:creator               [

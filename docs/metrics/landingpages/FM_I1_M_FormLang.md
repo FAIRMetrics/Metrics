@@ -1,4 +1,4 @@
-# TITLE:  FAIR Maturity Indicator Champ-MI-I1A
+# TITLE:  FAIR Maturity Indicator FM_I1_M_FormLang
 
 ## Authors: 
 Mark D. Wilkinson, ORCID:0000-0001-6960-357X
@@ -8,9 +8,9 @@ Mark D. Wilkinson, ORCID:0000-0001-6960-357X
 #### Last Edit: 2026-02-20 
 
 
-### Maturity Indicator Identifier:[Champ_MI_I1A](https://w3id.org/fair-metrics/general/champ-mi-i1a.ttl)
+### Maturity Indicator Identifier:[FM_I1_M_FormLang](https://w3id.org/fair-metrics/general/FM_I1_M_FormLang)
 
-### Maturity Indicator Name:   Use a Knowledge Representation Language (soft)
+### Maturity Indicator Name:   Use a Knowledge Representation Language 
 
 ----
 

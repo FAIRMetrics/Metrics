@@ -9,17 +9,19 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
 
-<https://w3id.org/fair-metrics/general/champ-mi-a1.1.ttl>
+<https://w3id.org/fair-metrics/general/FM_I1_M_FormLang>
     a                          ftr:Metric, dcat:Dataset ;
-    rdfs:definedBy <https://w3id.org/fair-metrics/general/champ-mi-a1.1.ttl> ;
+    rdfs:definedBy <https://w3id.org/fair-metrics/general/FM_I1_M_FormLang.ttl> ;
     
-    ftr:identifier            "https://w3id.org/fair-metrics/general/champ-mi-a1.1"^^xsd:anyURI ;
-    dcterms:title             "Open protocol for (meta)data retrieval" ;
-    vivo:abbreviation         "champ-mi-a1.1" ;
-    dcterms:description       """Metric Champ_MI_A1.1 open protocol for (meta)data retrieval. This metric aligns with FAIR Principle A1.1.""" ;
-    dcat:keyword              "FAIR", "accessibility", "protocol", "open", "standard", "A1.1" ;
+    ftr:identifier            "https://w3id.org/fair-metrics/general/FM_I1_M_FormLang"^^xsd:anyURI ;
+
+
+    dcterms:title             "FAIR Metric – I1 – Metadata - Metadata uses a formal, accessible, shared, broadly applicable language" ;
+    vivo:abbreviation         "FM_I1_M_FormLang" ;
+    dcterms:description       """Metadata uses a formal, accessible, shared, broadly applicable language. This metric aligns with FAIR Principle I1.""" ;
+    dcat:keyword              "FAIR", "interoperability", "knowledge-representation", "FAIR-vocabulary", "I1" ;
     
-    dcat:landingPage <https://w3id.org/fair-metrics/landingpages/Champ_MI_A1.1.md> ;
+    dcat:landingPage <https://w3id.org/fair-metrics/landingpages/FM_I1_M_FormLang.md> ;
     
 ftr:creator               [
     a                     foaf:Person ;
