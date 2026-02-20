@@ -18,10 +18,7 @@ Mark D. Wilkinson, ORCID:0000-0001-6960-357X
 A1.1
 
 ### Applicable Research Domain
-[Subject Agnostic]("http://www.fairsharing.org/ontology/subject/SRAO_0000401")
-
-### Applicable Datatype
-[Dataset] ("https://schema.org/Dataset")
+https://docs.google.com/document/d/1ZERe1vP_DibDoNzADaRgh37A7nEf7ES05z85lv5XnHo/edit?tab=t.0
 
 
 ### What is being measured?

@@ -27,13 +27,13 @@ ftr:creator               [
     foaf:mbox             <mailto:markw@illuminae.com>
 ] ;
 
-dcterms:version           "Champion" ;
+
+dcterms:version           "Champion1.0" ;
 
 ftr:applicationArea       <http://www.fairsharing.org/ontology/subject/SRAO_0000401> ;
 
 dcterms:license           <https://creativecommons.org/licenses/by/4.0/> ;
 
-dpv:isApplicableFor       schema:CreativeWork .
-
-
-
+ftr:hasPositiveValidation <https://w3id.org/duchenne-fdp> ;
+ftr:supportedBy <https://w3id.org/FAIR-Champion> ;
+dpv:isApplicableFor       schema:Dataset .  
