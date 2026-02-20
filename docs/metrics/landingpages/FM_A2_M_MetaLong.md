@@ -1,4 +1,4 @@
-# TITLE:  FAIR Maturity Indicator FM_A2_M_MetaLong
+# TITLE:  FAIR Metric FM_A2_M_MetaLong
 
 ## Authors: 
 Mark D. Wilkinson, ORCID:0000-0001-6960-357X
@@ -7,9 +7,9 @@ Mark D. Wilkinson, ORCID:0000-0001-6960-357X
 #### Publication Date: 2026-02-20
 #### Last Edit: 2026-02-20
 
-### Maturity Indicator Identifier:[FM_A2_M_MetaLong](https://w3id.org/fair-metrics/general/FM_A2_M_MetaLong)
+### Metric Identifier:[FM_A2_M_MetaLong](https://w3id.org/fair-metrics/general/FM_A2_M_MetaLong)
 
-### Maturity Indicator Name:   Metadata persists beyond the lifespan of the data
+### Metric Name:   Metadata persists beyond the lifespan of the data
 
 ----
 

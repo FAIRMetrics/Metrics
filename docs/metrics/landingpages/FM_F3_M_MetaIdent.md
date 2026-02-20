@@ -1,4 +1,4 @@
-# TITLE:  FAIR Maturity Indicator FM_F3_M_MetaIdent
+# TITLE:  FAIR Metric FM_F3_M_MetaIdent
 
 ## Authors: 
 Mark D. Wilkinson, ORCID:0000-0001-6960-357X
@@ -7,9 +7,9 @@ Mark D. Wilkinson, ORCID:0000-0001-6960-357X
 #### Publication Date: 2026-02-20
 #### Last Edit: 2026-02-20
 
-### Maturity Indicator Identifier:[FM_F3_M_MetaIdent](https://w3id.org/fair-metrics/general/FM_F3_M_MetaIdent)
+### Metric Identifier:[FM_F3_M_MetaIdent](https://w3id.org/fair-metrics/general/FM_F3_M_MetaIdent)
 
-### Maturity Indicator Name:  The GUID of both the metadata and data are explicitly in the Metadata record
+### Metric Name:  The GUID of both the metadata and data are explicitly in the Metadata record
 
 ----
 

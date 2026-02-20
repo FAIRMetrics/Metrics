@@ -1,4 +1,4 @@
-# TITLE:  FAIR Maturity Indicator M_F1_M_IdentUnique
+# TITLE:  FAIR Metric M_F1_M_IdentUnique
 
 ## Authors: 
 Mark D. Wilkinson, ORCID:0000-0001-6960-357X
@@ -8,9 +8,9 @@ Mark D. Wilkinson, ORCID:0000-0001-6960-357X
 #### Last Edit: 2026-02-20
 
 
-### Maturity Indicator Identifier:[FM_F1_M_IdentUnique](https://w3id.org/fair-metrics/general/FM_F1_M_IdentUnique)
+### Metric Identifier:[FM_F1_M_IdentUnique](https://w3id.org/fair-metrics/general/FM_F1_M_IdentUnique)
 
-### Maturity Indicator Name:   Identifier of the (meta)data is unique and resolvable
+### Metric Name:   Identifier of the (meta)data is unique and resolvable
 
 ----
 

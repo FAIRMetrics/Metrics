@@ -1,4 +1,4 @@
-# TITLE:  FAIR Maturity Indicator FM_I3_M_QualRef
+# TITLE:  FAIR Metric FM_I3_M_QualRef
 
 ## Authors: 
 Mark D. Wilkinson, ORCID:0000-0001-6960-357X
@@ -7,9 +7,9 @@ Mark D. Wilkinson, ORCID:0000-0001-6960-357X
 #### Publication Date: 2026-02-20
 #### Last Edit: 2026-02-20
 
-### Maturity Indicator Identifier:[FM_I3_M_QualRef](https://w3id.org/fair-metrics/general/FM_I3_M_QualRef)
+### Metric Identifier:[FM_I3_M_QualRef](https://w3id.org/fair-metrics/general/FM_I3_M_QualRef)
 
-### Maturity Indicator Name:  Metadata Contains Qualified Outward Links
+### Metric Name:  Metadata Contains Qualified Outward Links
 
 
 ----

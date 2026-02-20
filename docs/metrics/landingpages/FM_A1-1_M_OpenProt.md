@@ -1,4 +1,4 @@
-# TITLE:  FAIR Maturity Indicator FM_A1-1_M_OpenProt
+# TITLE:  FAIR Metric FM_A1-1_M_OpenProt
 
 ## Authors: 
 Mark D. Wilkinson, ORCID:0000-0001-6960-357X
@@ -8,9 +8,9 @@ Mark D. Wilkinson, ORCID:0000-0001-6960-357X
 #### Last Edit: 2026-02-20
 
 
-### Maturity Indicator Identifier:[FM_A1-1_M_OpenProt](https://w3id.org/fair-metrics/general/FM_A1-1_M_OpenProt)
+### Metric Identifier:[FM_A1-1_M_OpenProt](https://w3id.org/fair-metrics/general/FM_A1-1_M_OpenProt)
 
-### Maturity Indicator Name: (Meta)data retrieval protocol is open
+### Metric Name: (Meta)data retrieval protocol is open
 
 ----
 

@@ -1,4 +1,4 @@
-# TITLE:  FAIR Maturity Indicator FM_I2_M_FAIRVocab
+# TITLE:  FAIR Metric FM_I2_M_FAIRVocab
 
 ## Authors: 
 Mark D. Wilkinson, ORCID:0000-0001-6960-357X
@@ -7,9 +7,9 @@ Mark D. Wilkinson, ORCID:0000-0001-6960-357X
 #### Publication Date: 2026-02-20
 #### Last Edit: 2026-02-20
 
-### Maturity Indicator Identifier:[FM_I2_M_FAIRVocab](https://w3id.org/fair-metrics/general/FM_I2_M_FAIRVocab)
+### Metric Identifier:[FM_I2_M_FAIRVocab](https://w3id.org/fair-metrics/general/FM_I2_M_FAIRVocab)
 
-### Maturity Indicator Name:   (Meta)data Uses FAIR Vocabularies
+### Metric Name:   (Meta)data Uses FAIR Vocabularies
 
 ----
 
@@ -30,7 +30,7 @@ If the (meta)data uses vocabularies that are, themselves, FAIR
 It is not possible to unambiguously interpret metadata represented as simple keywords or other non-qualified symbols. For interoperability, it must be possible to identify data that can be integrated like-with-like. This requires that the data, and the provenance descriptors of the data, should (where reasonable) use vocabularies and terminologies that are, themselves, FAIR.
 
 In this loose MI, we test only if the vocabulary terms resolve (e.g. to a human-readable page).  We do not test
-if they resolve to machine-readable information.  A second Maturity Indicator (Gen2-FM-I2B) is for that stricter test.
+if they resolve to machine-readable information.  A second Metric (Gen2-FM-I2B) is for that stricter test.
 
 
 

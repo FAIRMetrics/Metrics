@@ -1,4 +1,4 @@
-# TITLE:  FAIR Maturity Indicator FM_F4_M_MetaIndexed
+# TITLE:  FAIR Metric FM_F4_M_MetaIndexed
 
 ## Authors: 
 Mark D. Wilkinson, ORCID:0000-0001-6960-357X
@@ -7,9 +7,9 @@ Mark D. Wilkinson, ORCID:0000-0001-6960-357X
 #### Publication Date: 2026-02-20
 #### Last Edit: 2026-02-20
 
-### Maturity Indicator Identifier:[FM_F4_M_MetaIndexed](https://w3id.org/fair-metrics/general/FM_F4_M_MetaIndexed)
+### Metric Identifier:[FM_F4_M_MetaIndexed](https://w3id.org/fair-metrics/general/FM_F4_M_MetaIndexed)
 
-### Maturity Indicator Name:   Metadata indexed in a searchable resource
+### Metric Name:   Metadata indexed in a searchable resource
 
 ----
 

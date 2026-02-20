@@ -1,4 +1,4 @@
-# TITLE:  FAIR Maturity Indicator FM_F2_M_StructMeta
+# TITLE:  FAIR Metric FM_F2_M_StructMeta
 
 ## Authors: 
 Mark D. Wilkinson, ORCID:0000-0001-6960-357X
@@ -7,9 +7,9 @@ Mark D. Wilkinson, ORCID:0000-0001-6960-357X
 #### Publication Date: 2026-02-20
 #### Last Edit: 2026-02-20
 
-### Maturity Indicator Identifier:[FM_F2_M_StructMeta](https://w3id.org/fair-metrics/general/FM_F2_M_StructMeta)
+### Metric Identifier:[FM_F2_M_StructMeta](https://w3id.org/fair-metrics/general/FM_F2_M_StructMeta)
 
-### Maturity Indicator Name:   Metadata is Structured
+### Metric Name:   Metadata is Structured
 
 ----
 

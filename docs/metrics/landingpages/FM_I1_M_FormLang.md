@@ -1,4 +1,4 @@
-# TITLE:  FAIR Maturity Indicator FM_I1_M_FormLang
+# TITLE:  FAIR Metric FM_I1_M_FormLang
 
 ## Authors: 
 Mark D. Wilkinson, ORCID:0000-0001-6960-357X
@@ -8,9 +8,9 @@ Mark D. Wilkinson, ORCID:0000-0001-6960-357X
 #### Last Edit: 2026-02-20 
 
 
-### Maturity Indicator Identifier:[FM_I1_M_FormLang](https://w3id.org/fair-metrics/general/FM_I1_M_FormLang)
+### Metric Identifier:[FM_I1_M_FormLang](https://w3id.org/fair-metrics/general/FM_I1_M_FormLang)
 
-### Maturity Indicator Name:  Metadata is represented in a Knowledge Representation Language 
+### Metric Name:  Metadata is represented in a Knowledge Representation Language 
 
 ----
 
@@ -31,7 +31,7 @@ use of a formal, accessible, shared, and broadly applicable language for knowled
 The unambiguous communication of knowledge and meaning (what symbols are, and how they relate to one another) necessitates the use of languages that are capable of representing these concepts in a machine-readable manner.
 
 There is debate in the community about what languages would be considered "knowledge representation languages", as such
-this Maturity Indicator is broken into two sub-MIs (Gen2-FM-I1A and Gen2-FM-I1B).  This MI takes a loose definition,
+this Metric is broken into two sub-MIs (Gen2-FM-I1A and Gen2-FM-I1B).  This MI takes a loose definition,
 that any kind of structured information is sufficient.
 
 
