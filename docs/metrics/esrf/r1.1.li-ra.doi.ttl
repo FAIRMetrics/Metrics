@@ -21,17 +21,16 @@
     
 ftr:creator               [
     a                     foaf:Person ;
-    foaf:name             "Mark D. Wilkinson" ;
-    foaf:mbox             <mailto:markw@illuminae.com>
+    foaf:name             "Renaud DUYME" ;
+    foaf:mbox             <mailto:renaud.duyme@esrf.fr>
 ] ;
 
-dcterms:version           "1.0" ;
+
+dcterms:version           "esrf1.0" ;
 
 ftr:applicationArea       <http://www.fairsharing.org/ontology/subject/SRAO_0000401> ;
 
 dcterms:license           <https://creativecommons.org/licenses/by/4.0/> ;
 
-dpv:isApplicableFor       schema:CreativeWork .
-
-
-
+ftr:supportedBy <https://w3id.org/FAIR-Champion> ;
+dpv:isApplicableFor       schema:CreativeWork .  
