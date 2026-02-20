@@ -1,3 +1,5 @@
-# DCAT copies of the Gen2 Metrics
+# DCAT copies of the 2026 Metrics
 
-Markdown in the [MaturityIndicators/Gen2](https://github.com/FAIRMetrics/Metrics/tree/master/MaturityIndicators/Gen2)  folder, and also registered in [FAIRsharing](https://fairsharing.org/search?q=fair%20gen2)
+Markdown in [LandingPages](./landingpages) folder
+
+Turtle in [general](./general) or other folder indicating the project who authored the metri
