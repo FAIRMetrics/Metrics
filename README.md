@@ -1,4 +1,17 @@
 # FAIR Maturity Indicators and Tools
+
+# NOTE DEPRECATIONS
+
+The documentation for the old "Gen1" and Gen2" Metrics are retained, but they are **DEPRECATED**.
+
+Anything in the ['MaturityIndicators'](https://github.com/FAIRMetrics/Metrics/tree/master/MaturityIndicators) should not be used.
+
+The newest metrics follow the [FAIR Test Results Vocabulary](https://w3id.org/ftr) and are located in a GitHub Pages-served folder under ./docs/   These are separated into general metrics and project/community/digital-object specific metrics (e.g. the ESRF metrics for the ESRF Sincrotron in Grenoble)
+
+
+# OLD DOCUMENTATION
+
+
 Resources and guidelines to assess the FAIRness of a digital resource.
 
 The folder ['MaturityIndicators'](https://github.com/FAIRMetrics/Metrics/tree/master/MaturityIndicators) contains the text (as MarkDown) for the:

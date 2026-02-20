@@ -2,16 +2,10 @@
 
 ## Authors: 
 Mark D. Wilkinson, ORCID:0000-0001-6960-357X
-Susanna-Assunta Sansone, ORCID:0000-0001-5306-5690
-Erik Schultes, ORCID:0000-0001-8888-635X
-Luiz Olavo Bonino da Silva Santos, ORCID:0000-0002-1164-1351
-Michel Dumontier, ORCID:0000-0003-4727-9435
-
-#### Publication Date: 2019-02-26
-#### Last Edit: 2019-02-26
-#### Accepted: pending
 
 
+#### Publication Date: 2026-02-20
+#### Last Edit: 2026-02-20
 
 ### Maturity Indicator Identifier:[Champ_MI_A1.2](https://w3id.org/fair-metrics/general/champ-mi-a1.2.ttl)
 
@@ -21,6 +15,13 @@ Michel Dumontier, ORCID:0000-0003-4727-9435
 
 ### To which principle does it apply?  
 A1.2
+
+### Applicable Research Domain
+[Subject Agnostic]("http://www.fairsharing.org/ontology/subject/SRAO_0000401")
+
+### Applicable Datatype
+[Dataset] ("https://schema.org/Dataset")
+
 
 ### What is being measured?
 If the resolution protocol supports authentication and authorization for access to restricted content
