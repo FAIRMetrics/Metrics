@@ -1,44 +1,32 @@
 RewriteEngine On
+RewriteBase /fair-metrics/
 
-# =============================================================================
-# 0.5 – Set FAIR_SLUG environment variable for Signposting Link headers
-#       (only for /fair-metrics/general/... paths; handles optional trailing slash)
-#       This runs first so the env var is available even on the 301 canonical redirect.
-RewriteCond %{REQUEST_URI} ^/fair-metrics/general/(.+)(?:/)?$
-RewriteRule ^ - [E=FAIR_SLUG:%1]
+# Trailing slash removal
+RewriteRule ^(.+)/$ $1 [R=301,L]
 
-# 0 – Remove trailing slash ONLY for /fair-metrics/... paths
-#     (global trailing-slash removal removed – it was affecting the whole site)
-RewriteCond %{REQUEST_URI} ^/fair-metrics
-RewriteRule ^(.+)/$ /$1 [R=301,L]
+# Set FAIR_SLUG (works perfectly in your tests)
+SetEnvIf Request_URI "^/fair-metrics/general/(.+?)(?:\.(md|html|htm))?$" FAIR_SLUG=$1
 
-# =============================================================================
-# 1 – Headers: Vary + correct Signposting Link headers (only on /general/ paths)
+# Headers – Vary + TWO Signposting Link headers (using append!)
 <IfModule mod_headers.c>
-    Header set Vary "Accept"
+    Header always set Vary "Accept"
 
-    # Signposting links – only when FAIR_SLUG was set (i.e. /fair-metrics/general/...)
-    # Uses expr= + concat so the GitHub URLs are built correctly (no /fair-metrics/ prefix)
-    Header always set Link "expr=concat('<https://fairmetrics.github.io/Metrics/metrics/general/', %{ENV:FAIR_SLUG}, '.ttl>; rel=\"describedby\"; type=\"text/turtle\"')" env=FAIR_SLUG
-    Header always set Link "expr=concat('<https://fairmetrics.github.io/Metrics/landingpages/', %{ENV:FAIR_SLUG}, '.md>; rel=\"alternate\"; type=\"text/markdown\"')" env=FAIR_SLUG
+    Header always append Link "<https://fairmetrics.github.io/Metrics/metrics/general/%{FAIR_SLUG}e.ttl>; rel=\"describedby\"; type=\"text/turtle\""
+    Header always append Link "<https://fairmetrics.github.io/Metrics/landingpages/%{FAIR_SLUG}e.md>; rel=\"alternate\"; type=\"text/markdown\""
 </IfModule>
 
-# =============================================================================
-# 2 – Content Negotiation ONLY for /fair-metrics/general/...
-#     HTML-preferring clients to .md landing page (303 See Other)
-RewriteCond %{REQUEST_URI} ^/fair-metrics/general/(.+)$
+# Content Negotiation
+RewriteCond %{REQUEST_URI} ^/fair-metrics/general/
 RewriteCond %{HTTP:Accept} text/html [OR]
 RewriteCond %{HTTP:Accept} application/xhtml\+xml
-RewriteRule ^fair-metrics/general/(.+)$ https://fairmetrics.github.io/Metrics/landingpages/%1.md [R=303,L]
+RewriteRule ^general/(.+?)(?:\.(md|html|htm))?$ https://fairmetrics.github.io/Metrics/landingpages/$1.md [R=303,L]
 
-#     Everything else (including text/turtle, */*, no Accept header, etc.) to .ttl
-RewriteCond %{REQUEST_URI} ^/fair-metrics/general/(.+)$
-RewriteRule ^fair-metrics/general/(.+)$ https://fairmetrics.github.io/Metrics/metrics/general/%1.ttl [R=303,L]
+RewriteCond %{REQUEST_URI} ^/fair-metrics/general/
+RewriteRule ^general/(.+?)(?:\.(md|html|htm))?$ https://fairmetrics.github.io/Metrics/metrics/general/$1.ttl [R=303,L]
 
-# =============================================================================
-# 3 – All other /fair-metrics/... paths to always .ttl (now 303 for consistency)
-RewriteCond %{REQUEST_URI} ^/fair-metrics/(.+)$
-RewriteRule ^fair-metrics/(.+)$ https://fairmetrics.github.io/Metrics/metrics/$1.ttl [R=303,L]
+# Other paths under /fair-metrics/
+RewriteCond %{REQUEST_URI} !^/fair-metrics/general/
+RewriteRule ^(.+)$ https://fairmetrics.github.io/Metrics/metrics/$1.ttl [R=303,L]
 
-# Root /fair-metrics/ or /fair-metrics to index page (303 for consistency)
-RewriteRule ^fair-metrics/?$ https://fairmetrics.github.io/Metrics/ [R=303,L]
+# Root
+RewriteRule ^$ https://fairmetrics.github.io/Metrics/ [R=303,L]
