@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{{web_title}}</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"> 
+    </head>
+    <body>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        <style>
+            .row {
+              margin-bottom: 10px;
+            }
+            .well {
+                margin: 0; 
+                padding: 10px; 
+                min-height: 40px;
+            }
+            .tag_div {
+                margin-right: 10px;
+            }
+            .row-equal { 
+                display: flex; 
+                align-items: stretch; 
+            } 
+            .align-items-center { 
+                display: flex; 
+                align-items: center; 
+            }
+            .flex-space-between { 
+                display: flex; justify-content: space-between; 
+            }
+            .text-separation { 
+                margin-right: 10px; 
+            }   
+            .cell-title {
+                display: table-cell;
+                vertical-align: middle;
+                width: 100%;
+            }
+            .cell-button {
+                display: table-cell;
+                vertical-align: middle;
+                width: 10%;
+                text-align: right;
+            }
+            h1.miClase {
+                margin: 0;
+                margin-bottom: 15px;
+                margin-top: 15px;
+            }
+        </style>
+        <div class="container">
+            <div class="row">
+                <div class="cell-title"> 
+                   <h1 class="miClase text-center">{{test_name}}</h1>
+                </div>
+                <div class="cell-button"> 
+                    <button type="button" class="btn btn-primary" onclick="window.location.href='https://oeg-upm.github.io/fair_ontologies/doc/catalog.html#test'" style="position: absolute; top: 10px; right: 10px;">Back</button>
+                </div>
+            </div>
+            <div class="row">
+                    <div class="col-md-12 well" style="font-size: 18px;"> {{{test_description}}}</div>
+            </div>
+
+            <div class="row flex-space-between"> 
+                <div class="col-md-12 align-items-center"> 
+                    <h4 class="miClase text-left text-separation">Test information</h4> 
+                    <a href="{{test_turtle}}" title="RDF Resource Description
+                    Framework"> <img border="0" src="http://www.w3.org/RDF/icons/rdf_flyer.24"
+                    alt="RDF Resource Description Framework Flyer Icon"/></a>
+                </div> 
+            </div>
+            <div class="row row-equal">
+                <div class="col-md-3 well tag_div"> <strong>Title</strong></div>
+                <div class="col-md-9 well"> {{test_title}} </div>
+            </div>
+            <div class="row row-equal">
+                <div class="col-md-3 well tag_div"> <strong>Identifier</strong></div>
+                 <div class="col-md-9 well"><a href="{{test_identifier}}" target="_blank">{{test_identifier}}</a></div>
+                <!-- <div class="col-md-9 well"><a href="https://w3id.org/foops/test/URI1" target="_blank">https://w3id.org/foops/test/URI1</a></div> -->
+            </div>
+            <div class="row row-equal">
+                <div class="col-md-3 well tag_div"> <strong>License</strong></div>
+                <div class="col-md-9 well"> <a href="{{test_license}}" target="_blank"> {{test_license}} </a></div>
+            </div>
+            <div class="row row-equal">
+                <div class="col-md-3 well tag_div"> <strong>Contact Point</strong></div>
+                <div class="col-md-9 well"> {{{test_contactPoint}}} </div>
+                <!--  debe añadir el href y el label de todos los creadores. 
+                  <a href="https://orcid.org/0000-0003-0454-7145" target="_blank">Daniel Garijo</a>, <a href="https://orcid.org/0000-0003-3587-0367" target="_blank">María Poveda</a>  -->
+            </div>
+            <div class="row row-equal">
+                <div class="col-md-3 well tag_div"> <strong>Creator</strong></div>
+                <div class="col-md-9 well"> {{{test_creators}}} </div>
+                <!--  debe añadir el href y el label de todos los creadores. 
+                  <a href="https://orcid.org/0000-0003-0454-7145" target="_blank">Daniel Garijo</a>, <a href="https://orcid.org/0000-0003-3587-0367" target="_blank">María Poveda</a>  -->
+            </div>
+            <div class="row row-equal">
+                <div class="col-md-3 well tag_div"> <strong>Keywords</strong></div>
+                <div class="col-md-9 well"> {{test_keywords}} </div>
+            </div>
+            <div class="row row-equal">
+                <div class="col-md-3 well tag_div"> <strong>Publisher</strong></div>
+                 <div class="col-md-9 well"> {{{test_publishers}}} </div>
+                <!-- <div class="col-md-9 well"><a href="{{test_publisher}}" target="_blank">{{test_publisher}}</a></div> -->
+            </div>
+            <div class="row row-equal">
+                <div class="col-md-3 well tag_div"> <strong>Version</strong></div>
+                <div class="col-md-9 well"> {{test_version}} </div>
+            </div>
+            <div class="row row-equal">
+                 <div class="col-md-3 well tag_div"> <strong>Principle</strong></div>
+                <div class="col-md-9 well">
+                    <ul>
+                        {{#dimensions_test}}
+                        <li>
+                            <a href="{{uri}}" target="_blank">{{name}}</a>: {{description}}
+                        </li>
+                        {{/dimensions_test}}
+                    </ul>
+                </div>
+            </div>
+                <!-- <div class="col-md-3 well tag_div"> <strong>Principle</strong></div>
+                 
+                <div class="col-md-9 well"><a href="{{test_uri_dimension}}" target="_blank"> {{test_dimension}} </a></div>
+            </div> -->
+            <!-- <div class="row row-equal">
+                <div class="col-md-3 well tag_div"> <strong>Desc. Dimension</strong></div>
+                <div class="col-md-9 well"> {{test_desc_dimension}} </div>
+            </div> -->
+            <div class="row row-equal">
+                <div class="col-md-3 well tag_div"> <strong>Repository</strong></div>
+                <div class="col-md-9 well"> <a href="{{test_repository}}" target="_blank"> {{test_repository}} </a> </div>
+            </div>
+            <div class="row row-equal">
+                <div class="col-md-3 well tag_div"> <strong>Endpoint Desc.</strong></div>
+                <div class="col-md-9 well"> <a href="{{test_endpoint_desc}}" target="_blank"> {{test_endpoint_desc}} </a> </div>
+            </div>
+            <div class="row row-equal">
+                <div class="col-md-3 well tag_div"> <strong>Endpoint URL</strong></div>
+                <div class="col-md-9 well"> <a href="{{test_endpoint_url}}" target="_blank"> {{test_endpoint_url}} </a> </div>
+            </div>
+            <div class="row row-equal">
+                <div class="col-md-3 well tag_div"> <strong>Applicable for</strong></div>
+                <div class="col-md-9 well"> <a href="{{test_applicable_for}}" target="_blank"> {{test_applicable_for}} </a> </div>
+            </div>
+            <div class="row row-equal">
+                <div class="col-md-3 well tag_div"> <strong>Supported by</strong></div>
+                <div class="col-md-9 well"> <a href="{{test_supported_by}}" target="_blank"> {{test_supported_by}} </a> </div>
+            </div>
+            {{#test_same_as}}
+            <div class="row row-equal">
+                <div class="col-md-3 well tag_div"> <strong>Same as</strong></div>
+                <div class="col-md-9 well"> <a href="{{test_same_as}}" target="_blank"> {{test_same_as}} </a> </div>
+            </div>
+            {{/test_same_as}}
+            <div class="row row-equal">
+                <div class="col-md-3 well tag_div"> <strong>Metric</strong></div>
+                <div class="col-md-9 well"> <a href="{{test_metric}}" target="_blank"> {{test_metric}} </a> </div>
+            </div>
+        </div>
+
+        <div id="pie" class="row" style="margin-top: 20px;">
+            <div class="col-md-12 text-center"">
+              Ontology Engineering Group
+              <a href="https://oeg.fi.upm.es" target="_blank">https://oeg.fi.upm.es</a>
+            </div>
+        </div>
+     </body>
+</html>

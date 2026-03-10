@@ -1,0 +1,1 @@
+python3.10 web_generation_scripts/ttl_transformations.py -i ./ -o landingpages/

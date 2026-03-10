@@ -1,0 +1,108 @@
+[
+    {
+        "@id": "https://w3id.org/fair-metrics/general/FM_A2_M_MetaLong",
+        "@type": [
+            "https://w3id.org/ftr#Metric",
+            "http://www.w3.org/ns/dcat#Dataset"
+        ],
+        "http://purl.org/dc/terms/creator": [
+            {
+                "@id": "_:nb0ca8dbf27a2408693bde7708d944c18b1"
+            }
+        ],
+        "http://purl.org/dc/terms/description": [
+            {
+                "@value": "metadata is long-lived and independently accessible. This metric aligns with FAIR Principle A2."
+            }
+        ],
+        "http://purl.org/dc/terms/license": [
+            {
+                "@id": "https://creativecommons.org/licenses/by/4.0/"
+            }
+        ],
+        "http://purl.org/dc/terms/title": [
+            {
+                "@value": "FAIR Metric – A2 – Metadata - Metadata is long-lived and independently accessible"
+            }
+        ],
+        "http://vivoweb.org/ontology/core#abbreviation": [
+            {
+                "@value": "FM_A2_M_MetaLong"
+            }
+        ],
+        "http://www.w3.org/2000/01/rdf-schema#definedBy": [
+            {
+                "@id": "https://w3id.org/fair-metrics/general/FM_A2_M_MetaLong.ttl"
+            }
+        ],
+        "http://www.w3.org/ns/dcat#keyword": [
+            {
+                "@value": "FAIR"
+            },
+            {
+                "@value": "accessibility"
+            },
+            {
+                "@value": "metadata"
+            },
+            {
+                "@value": "persistence"
+            },
+            {
+                "@value": "A2"
+            }
+        ],
+        "http://www.w3.org/ns/dcat#landingPage": [
+            {
+                "@id": "https://w3id.org/fair-metrics/landingpages/FM_A2_M_MetaLong.md"
+            }
+        ],
+        "http://www.w3.org/ns/dcat#version": [
+            {
+                "@value": "Champion1.0"
+            }
+        ],
+        "https://w3id.org/dpv#isApplicableFor": [
+            {
+                "@id": "https://schema.org/Dataset"
+            }
+        ],
+        "https://w3id.org/ftr#applicationArea": [
+            {
+                "@id": "http://www.fairsharing.org/ontology/subject/SRAO_0000401"
+            }
+        ],
+        "https://w3id.org/ftr#hasPositiveValidation": [
+            {
+                "@id": "https://w3id.org/duchenne-fdp"
+            }
+        ],
+        "https://w3id.org/ftr#identifier": [
+            {
+                "@type": "http://www.w3.org/2001/XMLSchema#anyURI",
+                "@value": "https://w3id.org/fair-metrics/general/FM_A2_M_MetaLong"
+            }
+        ],
+        "https://w3id.org/ftr#supportedBy": [
+            {
+                "@id": "https://w3id.org/FAIR-Champion"
+            }
+        ]
+    },
+    {
+        "@id": "_:nb0ca8dbf27a2408693bde7708d944c18b1",
+        "@type": [
+            "http://xmlns.com/foaf/0.1/Person"
+        ],
+        "http://www.w3.org/2006/vcard/ns#fn": [
+            {
+                "@value": "Mark D. Wilkinson"
+            }
+        ],
+        "http://xmlns.com/foaf/0.1/mbox": [
+            {
+                "@id": "mailto:markw@illuminae.com"
+            }
+        ]
+    }
+]

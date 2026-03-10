@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>FOOPS! Catalogue</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <style>
+    .foops-header {
+      text-align: center;
+      margin-top: 20px;
+    }
+    .foops-logo {
+      height: 50px;
+      margin-bottom: 10px;
+    }
+    .panel-title {
+      font-size: 18px;
+      font-weight: bold;
+    }
+    .panel-body {
+      min-height: 100px;
+    }
+    .panel-t { background-color: #FAAD5C; color: white; }
+    .panel-m { background-color: #83d2f7; color: white; }
+    .panel-b { background-color: #bb8fc3; color: white; }
+
+    .panel-heading { font-weight: bold; text-align: center; }
+    .panel-body { background-color: white; color: #333; }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Header -->
+    <div class="foops-header">
+      <img src="../html_client/assets/foopsLogo.png" alt="FOOPS Logo" class="foops-logo">
+      <h2>FOOPS! Catalogue</h2>
+    </div>
+
+    <!-- Panels -->
+    <div class="row" style="margin-top: 30px;">
+      <div class="col-md-4">
+        <div class="panel panel-t">
+          <div class="panel-heading text-center">
+            <span class="panel-title">TESTS</span>
+          </div>
+          <div class="panel-body text-center">
+            <p>Explore all available FOOPS! tests.</p>
+            <p style="font-size: 22px;">{{number_test}}</p>
+            <a href="https://oeg-upm.github.io/fair_ontologies/doc/catalog.html#test" class="btn btn-default">Go to Tests</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="panel panel-m">
+          <div class="panel-heading text-center">
+            <span class="panel-title">METRICS</span>
+          </div>
+          <div class="panel-body text-center">
+            <p>Explore the FAIR metrics implemented in FOOPS!</p>
+            <p style="font-size: 22px;">{{number_metric}}</p>
+            <a href="https://oeg-upm.github.io/fair_ontologies/doc/catalog.html#metric" class="btn btn-default">Go to Metrics</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="panel panel-b">
+          <div class="panel-heading text-center">
+            <span class="panel-title">BENCHMARKS</span>
+          </div>
+          <div class="panel-body text-center">
+            <p>View benchmarks.</p>
+            <p style="font-size: 22px;">{{number_benchmark}}</p>
+            <a href="https://oeg-upm.github.io/fair_ontologies/doc/catalog.html#benchmark" class="btn btn-default">Go to Benchmarks</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="col-md-12 text-center" style="margin-top: 40px;">
+        <!-- DOI badge -->
+        <a href="https://doi.org/10.5281/zenodo.14767999" target="_blank">
+          <img src="https://zenodo.org/badge/367292245.svg" alt="DOI badge">
+        </a>
+
+        <p style="margin-top: 20px; font-size: 16px;">
+          FOOPS! is available at: 
+          <a href="https://w3id.org/foops/" target="_blank">https://w3id.org/foops/</a>
+        </p>
+        <!-- Authors -->
+        <p style="margin-top: 20px; font-size: 16px;">
+          <strong>Authors:</strong> Daniel Garijo and María Poveda, with contributions from Jacobo Mata and Juan Jesús Mendoza.
+        </p>
+
+        <!-- Description -->
+        <p style="max-width: 700px; margin: 0 auto; font-size: 16px;">
+          <strong>FOOPS!</strong> is an application for assessing whether a vocabulary (OWL or SKOS) conforms with the FAIR data principles.
+        </p>
+
+        <!-- Demo paper -->
+        <p style="margin-top: 10px; font-size: 16px;">
+          Our <a href="html_client/assets/iswc_2021_demo.pdf" target="_blank">ISWC 2021 demo paper</a> (<em>best demo award</em>) provides an overview of the FOOPS! service.
+        </p>
+      </div>
+    </div>
+
+    
+  </div>
+
+</body>
+</html>

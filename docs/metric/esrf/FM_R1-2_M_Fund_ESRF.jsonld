@@ -1,0 +1,103 @@
+[
+    {
+        "@id": "https://w3id.org/fair-metrics/esrf/FM_R1-2_M_Fund_ESRF",
+        "@type": [
+            "https://w3id.org/ftr#Metric",
+            "http://www.w3.org/ns/dcat#Dataset"
+        ],
+        "http://purl.org/dc/terms/creator": [
+            {
+                "@id": "_:n60d108db60a3408b930470f69bf8ae0bb1"
+            }
+        ],
+        "http://purl.org/dc/terms/description": [
+            {
+                "@value": "This metric ensures that the research object provided by the supplied URL or DOI has metadata containing funding information. "
+            }
+        ],
+        "http://purl.org/dc/terms/license": [
+            {
+                "@id": "https://creativecommons.org/licenses/by/4.0/"
+            }
+        ],
+        "http://purl.org/dc/terms/title": [
+            {
+                "@value": "FAIR Metric – R1.1 – Metadata - Funding information is defined in metadata   "
+            }
+        ],
+        "http://vivoweb.org/ontology/core#abbreviation": [
+            {
+                "@value": "FM_R1-2_M_Fund_ESRF"
+            }
+        ],
+        "http://www.w3.org/2000/01/rdf-schema#definedBy": [
+            {
+                "@id": "https://w3id.org/fair-metrics/esrf/FM_R1-2_M_Fund_ESRF.ttl"
+            }
+        ],
+        "http://www.w3.org/ns/dcat#keyword": [
+            {
+                "@value": "FAIR"
+            },
+            {
+                "@value": "reusability"
+            },
+            {
+                "@value": "funding"
+            },
+            {
+                "@value": "standard"
+            },
+            {
+                "@value": "r1.2"
+            }
+        ],
+        "http://www.w3.org/ns/dcat#landingPage": [
+            {
+                "@id": "https://fairsharing.org/7496"
+            }
+        ],
+        "http://www.w3.org/ns/dcat#version": [
+            {
+                "@value": "esrf1.0"
+            }
+        ],
+        "https://w3id.org/dpv#isApplicableFor": [
+            {
+                "@id": "https://schema.org/CreativeWork"
+            }
+        ],
+        "https://w3id.org/ftr#applicationArea": [
+            {
+                "@id": "http://www.fairsharing.org/ontology/subject/SRAO_0000401"
+            }
+        ],
+        "https://w3id.org/ftr#identifier": [
+            {
+                "@type": "http://www.w3.org/2001/XMLSchema#anyURI",
+                "@value": "https://w3id.org/fair-metrics/esrf/FM_R1-2_M_Fund_ESRF"
+            }
+        ],
+        "https://w3id.org/ftr#supportedBy": [
+            {
+                "@id": "https://w3id.org/FAIR-Champion"
+            }
+        ]
+    },
+    {
+        "@id": "_:n60d108db60a3408b930470f69bf8ae0bb1",
+        "@type": [
+            "http://xmlns.com/foaf/0.1/Person"
+        ],
+        "http://www.w3.org/2006/vcard/ns#fn": [
+            {
+                "@value": "Renaud DUYME"
+            }
+        ],
+        "http://xmlns.com/foaf/0.1/mbox": [
+            {
+                "@id": "mailto:renaud.duyme@esrf.fr"
+            }
+        ]
+    }
+]

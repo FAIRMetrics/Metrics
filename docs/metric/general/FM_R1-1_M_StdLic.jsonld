@@ -1,0 +1,108 @@
+[
+    {
+        "@id": "https://w3id.org/fair-metrics/general/FM_R1-1_M_StdLic",
+        "@type": [
+            "https://w3id.org/ftr#Metric",
+            "http://www.w3.org/ns/dcat#Dataset"
+        ],
+        "http://purl.org/dc/terms/creator": [
+            {
+                "@id": "_:n4e468f6ce346489faa1a02d102647f15b1"
+            }
+        ],
+        "http://purl.org/dc/terms/description": [
+            {
+                "@value": "Metadata license discoverable. This metric aligns with FAIR Principle R1.1."
+            }
+        ],
+        "http://purl.org/dc/terms/license": [
+            {
+                "@id": "https://creativecommons.org/licenses/by/4.0/"
+            }
+        ],
+        "http://purl.org/dc/terms/title": [
+            {
+                "@value": "FAIR Metric – R1.1 – Metadata - Metadata license is a standard license"
+            }
+        ],
+        "http://vivoweb.org/ontology/core#abbreviation": [
+            {
+                "@value": "FM_R1-1_M_StdLic"
+            }
+        ],
+        "http://www.w3.org/2000/01/rdf-schema#definedBy": [
+            {
+                "@id": "https://w3id.org/fair-metrics/general/FM_R1-1_M_StdLic.ttl"
+            }
+        ],
+        "http://www.w3.org/ns/dcat#keyword": [
+            {
+                "@value": "FAIR"
+            },
+            {
+                "@value": "reusability"
+            },
+            {
+                "@value": "standard-license"
+            },
+            {
+                "@value": "machine-readable"
+            },
+            {
+                "@value": "R1.1"
+            }
+        ],
+        "http://www.w3.org/ns/dcat#landingPage": [
+            {
+                "@id": "https://w3id.org/fair-metrics/landingpages/FM_R1-1_M_StdLic.md"
+            }
+        ],
+        "http://www.w3.org/ns/dcat#version": [
+            {
+                "@value": "Champion1.0"
+            }
+        ],
+        "https://w3id.org/dpv#isApplicableFor": [
+            {
+                "@id": "https://schema.org/Dataset"
+            }
+        ],
+        "https://w3id.org/ftr#applicationArea": [
+            {
+                "@id": "http://www.fairsharing.org/ontology/subject/SRAO_0000401"
+            }
+        ],
+        "https://w3id.org/ftr#hasPositiveValidation": [
+            {
+                "@id": "https://w3id.org/duchenne-fdp"
+            }
+        ],
+        "https://w3id.org/ftr#identifier": [
+            {
+                "@type": "http://www.w3.org/2001/XMLSchema#anyURI",
+                "@value": "https://w3id.org/fair-metrics/general/FM_R1-1_M_StdLic"
+            }
+        ],
+        "https://w3id.org/ftr#supportedBy": [
+            {
+                "@id": "https://w3id.org/FAIR-Champion"
+            }
+        ]
+    },
+    {
+        "@id": "_:n4e468f6ce346489faa1a02d102647f15b1",
+        "@type": [
+            "http://xmlns.com/foaf/0.1/Person"
+        ],
+        "http://www.w3.org/2006/vcard/ns#fn": [
+            {
+                "@value": "Mark D. Wilkinson"
+            }
+        ],
+        "http://xmlns.com/foaf/0.1/mbox": [
+            {
+                "@id": "mailto:markw@illuminae.com"
+            }
+        ]
+    }
+]
