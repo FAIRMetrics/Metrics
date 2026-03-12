@@ -1,4 +1,4 @@
-@prefix vcard: <http://www.w3.org/2006/vcard/ns#> .
+@prefix vcard:   <http://www.w3.org/2006/vcard/ns#> .
 @prefix ftr:     <https://w3id.org/ftr#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
@@ -7,36 +7,47 @@
 @prefix dpv:     <https://w3id.org/dpv#> .
 @prefix schema:  <https://schema.org/> .
 @prefix vivo:    <http://vivoweb.org/ontology/core#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
 
 <https://w3id.org/fair-metrics/general/FM_I3_M_QualRef>
     a                          ftr:Metric, dcat:Dataset ;
-    rdfs:definedBy <https://w3id.org/fair-metrics/general/FM_I3_M_QualRef.ttl> ;
-    
+    rdfs:definedBy            <https://fairmetrics.github.io/Metrics/metric/general/FM_I3_M_QualRef.ttl> ;
+
     ftr:identifier            "https://w3id.org/fair-metrics/general/FM_I3_M_QualRef"^^xsd:anyURI ;
-
-
-    dcterms:title             "FAIR Metric – I3 – Metadata - (Meta)data includes qualified references to other (meta)data" ;
+    dcterms:title             "FAIR Metric - I3 - Metadata - Contains Qualified Outward Links" ;
     vivo:abbreviation         "FM_I3_M_QualRef" ;
-    dcterms:description       """Metadata includes qualified references to other (meta)data. This metric aligns with FAIR Principle I3.""" ;
-    dcat:keyword              "FAIR", "interoperability", "qualified-references", "linked-data", "I3" ;
-    
-    dcat:landingPage <https://w3id.org/fair-metrics/landingpages/FM_I3_M_QualRef.md> ;
-    
-dcterms:creator               [
-    a                     foaf:Person ;
-    vcard:fn             "Mark D. Wilkinson" ;
-    foaf:mbox             <mailto:markw@illuminae.com>
-] ;
+    dcat:landingPage          <https://w3id.org/fair-metrics/general/FM_I3_M_QualRef> ;
+
+    dcterms:description       """<p>This metric evaluates whether there are qualified (labelled or named) links in the metadata that reference external IRIs; specifically, IRIs that do not share the same domain name as that of the provided identifier.</p>
+
+<p>I3 requires that metadata include qualified references to other metadata. The purpose of this principle is to ensure that digital objects are connected to the wider research ecosystem through explicitly defined and semantically meaningful relationships. This metric evaluates whether there are qualified (labelled or named) links in the metadata that reference external IRIs. Under this interpretation, the evaluation retrieves the metadata upon resolution of the provided identifier and identifies all labelled relationships that reference IRIs. The domain names of the referenced IRIs are then compared against the domain name of the identifier provided to the evaluation tool. Links that resolve to IRIs with a different domain name are considered external references. Only qualified relationships — that is, links expressed with an explicit relationship type — are considered. A resource satisfies this metric if at least one qualified reference to an external IRI (i.e., with a different domain name than the identifier under evaluation) is present in the metadata.</p>
+
+""";
+    dcat:keyword              "FAIR", "I3", "identifier", "metadata" ;
+
+    dcat:landingPage          <https://w3id.org/fair-metrics/general/FM_I3_M_QualRef> ;
+
+    dcterms:creator           [
+        a                     vcard:Individual ;
+        vcard:fn              "Mark D. Wilkinson" ;
+        vcard:hasEmail             <mailto:mark.wilkinson@upm.es> ;
+    ] ;
+    dcterms:creator           [
+        a                     vcard:Individual ;
+        vcard:fn              "Allyson L. Lister" ;
+        vivo:orcidId          <http://orcid.org/0000-0002-7702-4495> ;
+        vcard:hasEmail             <mailto:mark.wilkinson@upm.es> ;
+    ] ;
+
+    dcterms:issued            "2026-02-20"^^xsd:date ;
+    dcterms:modified          "2026-03-01"^^xsd:date ;
+
+    dcat:version              "Champion1.0" ;
+
+    ftr:applicationArea       <http://www.fairsharing.org/ontology/subject/SRAO_0000401> ;
+    dcterms:license           <https://creativecommons.org/licenses/by/4.0/> ;
 
 
-dcat:version           "Champion1.0" ;
+    ftr:supportedBy           <https://w3id.org/FAIR-Champion> ;
+    dpv:isApplicableFor       schema:CreativeWork .
 
-ftr:applicationArea       <http://www.fairsharing.org/ontology/subject/SRAO_0000401> ;
-
-dcterms:license           <https://creativecommons.org/licenses/by/4.0/> ;
-
-ftr:hasPositiveValidation <https://w3id.org/duchenne-fdp> ;
-ftr:supportedBy <https://w3id.org/FAIR-Champion> ;
-dpv:isApplicableFor       schema:Dataset .  

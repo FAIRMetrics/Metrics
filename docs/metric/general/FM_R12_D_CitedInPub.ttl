@@ -1,0 +1,45 @@
+@prefix vcard:   <http://www.w3.org/2006/vcard/ns#> .
+@prefix ftr:     <https://w3id.org/ftr#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix foaf:    <http://xmlns.com/foaf/0.1/> .
+@prefix dcat:    <http://www.w3.org/ns/dcat#> .
+@prefix dpv:     <https://w3id.org/dpv#> .
+@prefix schema:  <https://schema.org/> .
+@prefix vivo:    <http://vivoweb.org/ontology/core#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+
+<https://w3id.org/fair-metrics/general/FM_R12_D_CitedInPub>
+    a                          ftr:Metric, dcat:Dataset ;
+    rdfs:definedBy            <https://fairmetrics.github.io/Metrics/metric/general/FM_R12_D_CitedInPub.ttl> ;
+
+    ftr:identifier            "https://w3id.org/fair-metrics/general/FM_R12_D_CitedInPub"^^xsd:anyURI ;
+    dcterms:title             "FAIR Metric - R1.2 - Data - cited in publication" ;
+    vivo:abbreviation         "FM_R12_D_CitedInPub" ;
+    dcat:landingPage          <https://w3id.org/fair-metrics/general/FM_R12_D_CitedInPub> ;
+
+    dcterms:description       """<p>This metric evaluates whether there is evidence that the research object identifier(s) linked to the metadata identifier provided to the evaluation is cited in one or more scholarly publication repositories, providing one facet of evaluation for this R1.2.</p>
+
+<p>R1.2 requires that a research object be associated with detailed provenance. The purpose of this principle is to ensure that connections between a research object and related scholarly outputs are documented, demonstrating that the object is being reused, cited, or otherwise referenced in the research literature. This metric evaluates whether there is evidence that the research object identifier provided to the evaluation is cited in one or more scholarly publication repositories. Under this interpretation, the evaluation examines external citation databases or services (specifically, OpenAlex and OpenCitations) for references to the research object DOI in publication metadata, reference lists, or full text. A resource satisfies this metric if at least one scholarly publication can be found in either OpenAlex and/or OpenCitations that explicitly cites or references the research object identified by the input identifier. The presence of one or more such citation is interpreted as a structured link from the data to the scholarly literature, supporting provenance and reuse context.</p>
+
+<p># R1.3 (empty of gen3) There is currently no plan to provide a generic metric for R1.3, due to the inherent community-specific nature of it.</p>""" ;
+    dcat:keyword              "FAIR", "R1.2", "identifier", "metadata" ;
+
+    dcat:landingPage          <https://w3id.org/fair-metrics/general/FM_R12_D_CitedInPub> ;
+
+    dcterms:creator           [
+        a                     vcard:Individual ;
+        vcard:fn              "Allyson L. Lister" ;
+        vivo:orcidId          <http://orcid.org/0000-0002-7702-4495> ;
+        vcard:hasEmail             <mailto:renaud.duyme@esrf.fr> ;
+    ] ;
+
+    dcat:version              "Champion1.0" ;
+
+    ftr:applicationArea       <http://www.fairsharing.org/ontology/subject/SRAO_0000401> ;
+    dcterms:license           <https://creativecommons.org/licenses/by/4.0/> ;
+
+
+    ftr:supportedBy           <https://w3id.org/FAIR-Champion> ;
+    dpv:isApplicableFor       schema:CreativeWork .
+

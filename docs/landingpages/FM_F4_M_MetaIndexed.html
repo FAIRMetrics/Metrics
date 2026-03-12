@@ -81,37 +81,39 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12"> 
-                    <button type="button" class="btn btn-primary" onclick="window.location.href='https://oeg-upm.github.io/fair_ontologies/doc/catalog.html#metric'" style="position: absolute; top: 10px; right: 10px;">Back</button>
-                    <h1 class="miClase text-center">FAIR Metric – F3 – Metadata - Metadata is indexed in a searchable resource</h1>
+                    
+                    <h1 class="miClase text-center">FAIR Metric - F4 - Metadata - indexed in a searchable resource</h1>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-12 well" style="font-size: 16px;"> <p>Metadata is indexed in a searchable resource. This metric aligns with FAIR Principle F4.</p></div>
+                <div class="col-md-12 well" style="font-size: 16px;"> <p>This metric evaluates whether metadata can be discovered by web-based search engines. The evaluation requires the identifier to first resolve to its metadata; then, both the identifier and the content of the retrieved metadata are used in automated search queries to determine if they are indexed and discoverable.</p>
+
+<p>Principle F4 requires that metadata be registered or indexed in a searchable resource. Even if metadata is perfectly structured and contains valid identifiers, it is not "Findable" if it remains hidden from discovery services. This metric ensures that the metadata is not just "published," but actively participating in the research ecosystem. By verifying that the metadata can be found through automated queries—using both the unique identifier and the descriptive content—we confirm that the resource is effectively searchable by the machines and services that researchers rely on. Search engines are used to discover particular digital resources of interest. If the resource or its metadata are not indexed by web search engines, then this would substantially diminish the ability to find and reuse it. Thus, the ability to discover the resource should be tested using i) its identifier, ii) its text-based metadata. This metric evaluates whether the provided identifier’s metadata is discoverable by performing public, automated searches with commonly-used search engines. The evaluation assesses whether a search service can successfully locate the metadata record using either the metadata identifier or landing page content such as the record title or keywords - both commonly consumed by search engines - thereby confirming that the resource has been appropriately indexed and is accessible for automated discovery.</p></div>
             </div>
             <div class="row flex-space-between"> 
                 <div class="col-md-12 align-items-center"> 
                     <h4 class="miClase text-left text-separation">Metric information</h4> 
-                    <a href="FM_F4_M_MetaIndexed.ttl.ttl" title="RDF Resource Description
+                    <a href="FM_F4_M_MetaIndexed.ttl" title="RDF Resource Description
                     Framework"> <img border="0" src="http://www.w3.org/RDF/icons/rdf_flyer.24"
                     alt="RDF Resource Description Framework Flyer Icon"/></a>
                 </div> 
             </div>
             <div class="row row-equal" >
                 <div class="col-md-3 well tag_div"> <strong>Title</strong></div>
-                <div class="col-md-9 well"> FAIR Metric – F3 – Metadata - Metadata is indexed in a searchable resource </div>
+                <div class="col-md-9 well"> FAIR Metric - F4 - Metadata - indexed in a searchable resource </div>
             </div>
             <div class="row row-equal" >
                 <div class="col-md-3 well tag_div"> <strong>Identifier</strong></div>
-                <div class="col-md-9 well"><a href="https://w3id.org/fair-metrics/general/FM_F4_M_MetaIndexed.ttl" target="_blank">https://w3id.org/fair-metrics/general/FM_F4_M_MetaIndexed.ttl</a></div>
+                <div class="col-md-9 well"><a href="https://w3id.org/fair-metrics/general/FM_F4_M_MetaIndexed" target="_blank">https://w3id.org/fair-metrics/general/FM_F4_M_MetaIndexed</a></div>
                 <!-- <div class="col-md-9 well"><a href="https://w3id.org/foops/test/URI1" target="_blank">https://w3id.org/foops/test/URI1</a></div> -->
             </div>
             <div class="row row-equal" style="display: none;" >
                 <div class="col-md-3 well tag_div"> <strong>Creator</strong></div>
-                <div class="col-md-9 well"> <a href="None" target="_blank">None</a> </div>
+                <div class="col-md-9 well"> <a href="None" target="_blank">Mark D. Wilkinson</a> </div>
             </div>
             <div class="row row-equal" >
                 <div class="col-md-3 well tag_div"> <strong>Keywords</strong></div>
-                <div class="col-md-9 well"> FAIR, findability, search, indexed, F4 </div>
+                <div class="col-md-9 well"> FAIR, F4, identifier, metadata </div>
             </div>
             <div class="row row-equal">
                 <div class="col-md-3 well tag_div"> <strong>Contact Point</strong></div>
@@ -132,7 +134,7 @@
             </div>
             <!-- <div class="row row-equal" >
                 <div class="col-md-3 well tag_div"> <strong>Landing Page</strong></div>
-                <div class="col-md-9 well"><a href="https://w3id.org/fair-metrics/landingpages/FM_F4_M_MetaIndexed.md" target="_blank">https://w3id.org/fair-metrics/landingpages/FM_F4_M_MetaIndexed.md</a></div>
+                <div class="col-md-9 well"><a href="https://w3id.org/fair-metrics/general/FM_F4_M_MetaIndexed" target="_blank">https://w3id.org/fair-metrics/general/FM_F4_M_MetaIndexed</a></div>
             </div> -->
             <div class="row row-equal" >
                 <div class="col-md-3 well tag_div"> <strong>Principle</strong></div>
@@ -152,7 +154,7 @@
             </div>
             <div class="row row-equal">
                 <div class="col-md-3 well tag_div"> <strong>Applicable for</strong></div>
-                <div class="col-md-9 well"> <a href="https://schema.org/Dataset" target="_blank"> https://schema.org/Dataset </a> </div>
+                <div class="col-md-9 well"> <a href="https://schema.org/CreativeWork" target="_blank"> https://schema.org/CreativeWork </a> </div>
             </div>
             <div class="row row-equal">
                 <div class="col-md-3 well tag_div"> <strong>Supported by</strong></div>

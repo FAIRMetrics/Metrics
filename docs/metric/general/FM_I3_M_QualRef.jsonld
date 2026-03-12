@@ -7,12 +7,21 @@
         ],
         "http://purl.org/dc/terms/creator": [
             {
-                "@id": "_:n4a6437dd5b3043219cfccbbf74b276aeb1"
+                "@id": "_:nf768c33aab974479a853691b41d3ea1cb1"
+            },
+            {
+                "@id": "_:nf768c33aab974479a853691b41d3ea1cb2"
             }
         ],
         "http://purl.org/dc/terms/description": [
             {
-                "@value": "Metadata includes qualified references to other (meta)data. This metric aligns with FAIR Principle I3."
+                "@value": "<p>This metric evaluates whether there are qualified (labelled or named) links in the metadata that reference external IRIs; specifically, IRIs that do not share the same domain name as that of the provided identifier.</p>\n\n<p>I3 requires that metadata include qualified references to other metadata. The purpose of this principle is to ensure that digital objects are connected to the wider research ecosystem through explicitly defined and semantically meaningful relationships. This metric evaluates whether there are qualified (labelled or named) links in the metadata that reference external IRIs. Under this interpretation, the evaluation retrieves the metadata upon resolution of the provided identifier and identifies all labelled relationships that reference IRIs. The domain names of the referenced IRIs are then compared against the domain name of the identifier provided to the evaluation tool. Links that resolve to IRIs with a different domain name are considered external references. Only qualified relationships — that is, links expressed with an explicit relationship type — are considered. A resource satisfies this metric if at least one qualified reference to an external IRI (i.e., with a different domain name than the identifier under evaluation) is present in the metadata.</p>\n\n"
+            }
+        ],
+        "http://purl.org/dc/terms/issued": [
+            {
+                "@type": "http://www.w3.org/2001/XMLSchema#date",
+                "@value": "2026-02-20"
             }
         ],
         "http://purl.org/dc/terms/license": [
@@ -20,9 +29,15 @@
                 "@id": "https://creativecommons.org/licenses/by/4.0/"
             }
         ],
+        "http://purl.org/dc/terms/modified": [
+            {
+                "@type": "http://www.w3.org/2001/XMLSchema#date",
+                "@value": "2026-03-01"
+            }
+        ],
         "http://purl.org/dc/terms/title": [
             {
-                "@value": "FAIR Metric – I3 – Metadata - (Meta)data includes qualified references to other (meta)data"
+                "@value": "FAIR Metric - I3 - Metadata - Contains Qualified Outward Links"
             }
         ],
         "http://vivoweb.org/ontology/core#abbreviation": [
@@ -32,7 +47,7 @@
         ],
         "http://www.w3.org/2000/01/rdf-schema#definedBy": [
             {
-                "@id": "https://w3id.org/fair-metrics/general/FM_I3_M_QualRef.ttl"
+                "@id": "https://fairmetrics.github.io/Metrics/metric/general/FM_I3_M_QualRef.ttl"
             }
         ],
         "http://www.w3.org/ns/dcat#keyword": [
@@ -40,21 +55,18 @@
                 "@value": "FAIR"
             },
             {
-                "@value": "interoperability"
-            },
-            {
-                "@value": "qualified-references"
-            },
-            {
-                "@value": "linked-data"
-            },
-            {
                 "@value": "I3"
+            },
+            {
+                "@value": "identifier"
+            },
+            {
+                "@value": "metadata"
             }
         ],
         "http://www.w3.org/ns/dcat#landingPage": [
             {
-                "@id": "https://w3id.org/fair-metrics/landingpages/FM_I3_M_QualRef.md"
+                "@id": "https://w3id.org/fair-metrics/general/FM_I3_M_QualRef"
             }
         ],
         "http://www.w3.org/ns/dcat#version": [
@@ -64,17 +76,12 @@
         ],
         "https://w3id.org/dpv#isApplicableFor": [
             {
-                "@id": "https://schema.org/Dataset"
+                "@id": "https://schema.org/CreativeWork"
             }
         ],
         "https://w3id.org/ftr#applicationArea": [
             {
                 "@id": "http://www.fairsharing.org/ontology/subject/SRAO_0000401"
-            }
-        ],
-        "https://w3id.org/ftr#hasPositiveValidation": [
-            {
-                "@id": "https://w3id.org/duchenne-fdp"
             }
         ],
         "https://w3id.org/ftr#identifier": [
@@ -90,18 +97,39 @@
         ]
     },
     {
-        "@id": "_:n4a6437dd5b3043219cfccbbf74b276aeb1",
+        "@id": "_:nf768c33aab974479a853691b41d3ea1cb1",
         "@type": [
-            "http://xmlns.com/foaf/0.1/Person"
+            "http://www.w3.org/2006/vcard/ns#Individual"
         ],
         "http://www.w3.org/2006/vcard/ns#fn": [
             {
                 "@value": "Mark D. Wilkinson"
             }
         ],
-        "http://xmlns.com/foaf/0.1/mbox": [
+        "http://www.w3.org/2006/vcard/ns#hasEmail": [
             {
-                "@id": "mailto:markw@illuminae.com"
+                "@id": "mailto:mark.wilkinson@upm.es"
+            }
+        ]
+    },
+    {
+        "@id": "_:nf768c33aab974479a853691b41d3ea1cb2",
+        "@type": [
+            "http://www.w3.org/2006/vcard/ns#Individual"
+        ],
+        "http://vivoweb.org/ontology/core#orcidId": [
+            {
+                "@id": "http://orcid.org/0000-0002-7702-4495"
+            }
+        ],
+        "http://www.w3.org/2006/vcard/ns#fn": [
+            {
+                "@value": "Allyson L. Lister"
+            }
+        ],
+        "http://www.w3.org/2006/vcard/ns#hasEmail": [
+            {
+                "@id": "mailto:mark.wilkinson@upm.es"
             }
         ]
     }

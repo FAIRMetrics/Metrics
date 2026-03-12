@@ -1,4 +1,4 @@
-@prefix vcard: <http://www.w3.org/2006/vcard/ns#> .
+@prefix vcard:   <http://www.w3.org/2006/vcard/ns#> .
 @prefix ftr:     <https://w3id.org/ftr#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
@@ -7,38 +7,53 @@
 @prefix dpv:     <https://w3id.org/dpv#> .
 @prefix schema:  <https://schema.org/> .
 @prefix vivo:    <http://vivoweb.org/ontology/core#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
 
 <https://w3id.org/fair-metrics/general/FM_R1-1_M_StdLic>
     a                          ftr:Metric, dcat:Dataset ;
-    rdfs:definedBy <https://w3id.org/fair-metrics/general/FM_R1-1_M_StdLic.ttl> ;
-    
+    rdfs:definedBy            <https://fairmetrics.github.io/Metrics/metric/general/FM_R1-1_M_StdLic.ttl> ;
+
     ftr:identifier            "https://w3id.org/fair-metrics/general/FM_R1-1_M_StdLic"^^xsd:anyURI ;
-
-    dcterms:title             "FAIR Metric – R1.1 – Metadata - Metadata license is a standard license" ;
+    dcterms:title             "FAIR Metric - R1.1 - Metadata - discoverable data license in metadata" ;
     vivo:abbreviation         "FM_R1-1_M_StdLic" ;
-    dcterms:description       """Metadata license discoverable. This metric aligns with FAIR Principle R1.1.""" ;
-    dcat:keyword              "FAIR", "reusability", "standard-license", "machine-readable", "R1.1" ;
-    
-    dcat:landingPage <https://w3id.org/fair-metrics/landingpages/FM_R1-1_M_StdLic.md> ;
-    
-dcterms:creator               [
-    a                     foaf:Person ;
-    vcard:fn             "Mark D. Wilkinson" ;
-    foaf:mbox             <mailto:markw@illuminae.com>
-] ;
+    dcat:landingPage          <https://w3id.org/fair-metrics/general/FM_R1-1_M_StdLic> ;
 
-dcat:version           "Champion1.0" ;
+    dcterms:description       """<p>This metric evaluates whether there is an explicit licence declaration present in the metadata retrieved upon resolution of the provided identifier.</p>
 
-ftr:applicationArea       <http://www.fairsharing.org/ontology/subject/SRAO_0000401> ;
+    <p>R1.1 requires that metadata be released with a clear and accessible data usage licence. 
+The purpose of this principle is to ensure that reuse conditions are explicitly stated at the 
+level of the individual digital object. This metric evaluates whether there is an explicit 
+licence declaration present in the metadata retrieved upon resolution of the provided 
+identifier. Under this interpretation, the evaluation checks whether the resolved 
+metadata contains a licence statement or reference that clearly specifies usage
+ conditions for the record or its associated research object. A resource satisfies 
+ this metric if the resolved metadata includes at least one explicit licence declaration.</p>
+    """;
+    dcat:keyword              "FAIR", "R1.1", "identifier", "metadata" ;
 
-dcterms:license           <https://creativecommons.org/licenses/by/4.0/> ;
+    dcat:landingPage          <https://w3id.org/fair-metrics/general/FM_R1-1_M_StdLic> ;
 
-ftr:hasPositiveValidation <https://w3id.org/duchenne-fdp> ;
-ftr:supportedBy <https://w3id.org/FAIR-Champion> ;
+    dcterms:creator           [
+        a                     vcard:Individual ;
+        vcard:fn              "Mark D. Wilkinson" ;
+        vcard:hasEmail             <mailto:mark.wilkinson@upm.es> ;
+    ] ;
+    dcterms:creator           [
+        a                     vcard:Individual ;
+        vcard:fn              "Allyson L. Lister" ;
+        vivo:orcidId          <http://orcid.org/0000-0002-7702-4495> ;
+        vcard:hasEmail             <mailto:mark.wilkinson@upm.es> ;
+    ] ;
 
-dpv:isApplicableFor       schema:Dataset .
+    dcterms:issued            "2026-02-20"^^xsd:date ;
+    dcterms:modified          "2026-03-01"^^xsd:date ;
+
+    dcat:version              "Champion1.0" ;
+
+    ftr:applicationArea       <http://www.fairsharing.org/ontology/subject/SRAO_0000401> ;
+    dcterms:license           <https://creativecommons.org/licenses/by/4.0/> ;
 
 
+    ftr:supportedBy           <https://w3id.org/FAIR-Champion> ;
+    dpv:isApplicableFor       schema:CreativeWork .
 

@@ -22,9 +22,9 @@
     dcat:landingPage <https://w3id.org/fair-metrics/landingpages/FM_A1-1_M_OpenProt.md> ;
     
 dcterms:creator               [
-    a                     foaf:Person ;
+    a                     vcard:Individual ;
     vcard:fn             "Mark D. Wilkinson" ;
-    foaf:mbox             <mailto:markw@illuminae.com>
+    vcard:hasEmail             <mailto:markw@illuminae.com>
 ] ;
 
 

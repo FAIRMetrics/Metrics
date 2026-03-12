@@ -1,0 +1,105 @@
+[
+    {
+        "@id": "https://w3id.org/fair-metrics/general/FM_R12_D_CitedInPub",
+        "@type": [
+            "https://w3id.org/ftr#Metric",
+            "http://www.w3.org/ns/dcat#Dataset"
+        ],
+        "http://purl.org/dc/terms/creator": [
+            {
+                "@id": "_:n778572597f204ae1b60e5776fec86211b1"
+            }
+        ],
+        "http://purl.org/dc/terms/description": [
+            {
+                "@value": "<p>This metric evaluates whether there is evidence that the research object identifier(s) linked to the metadata identifier provided to the evaluation is cited in one or more scholarly publication repositories, providing one facet of evaluation for this R1.2.</p>\n\n<p>R1.2 requires that a research object be associated with detailed provenance. The purpose of this principle is to ensure that connections between a research object and related scholarly outputs are documented, demonstrating that the object is being reused, cited, or otherwise referenced in the research literature. This metric evaluates whether there is evidence that the research object identifier provided to the evaluation is cited in one or more scholarly publication repositories. Under this interpretation, the evaluation examines external citation databases or services (specifically, OpenAlex and OpenCitations) for references to the research object DOI in publication metadata, reference lists, or full text. A resource satisfies this metric if at least one scholarly publication can be found in either OpenAlex and/or OpenCitations that explicitly cites or references the research object identified by the input identifier. The presence of one or more such citation is interpreted as a structured link from the data to the scholarly literature, supporting provenance and reuse context.</p>\n\n<p># R1.3 (empty of gen3) There is currently no plan to provide a generic metric for R1.3, due to the inherent community-specific nature of it.</p>"
+            }
+        ],
+        "http://purl.org/dc/terms/license": [
+            {
+                "@id": "https://creativecommons.org/licenses/by/4.0/"
+            }
+        ],
+        "http://purl.org/dc/terms/title": [
+            {
+                "@value": "FAIR Metric - R1.2 - Data - cited in publication"
+            }
+        ],
+        "http://vivoweb.org/ontology/core#abbreviation": [
+            {
+                "@value": "FM_R12_D_CitedInPub"
+            }
+        ],
+        "http://www.w3.org/2000/01/rdf-schema#definedBy": [
+            {
+                "@id": "https://fairmetrics.github.io/Metrics/metric/general/FM_R12_D_CitedInPub.ttl"
+            }
+        ],
+        "http://www.w3.org/ns/dcat#keyword": [
+            {
+                "@value": "FAIR"
+            },
+            {
+                "@value": "R1.2"
+            },
+            {
+                "@value": "identifier"
+            },
+            {
+                "@value": "metadata"
+            }
+        ],
+        "http://www.w3.org/ns/dcat#landingPage": [
+            {
+                "@id": "https://w3id.org/fair-metrics/general/FM_R12_D_CitedInPub"
+            }
+        ],
+        "http://www.w3.org/ns/dcat#version": [
+            {
+                "@value": "Champion1.0"
+            }
+        ],
+        "https://w3id.org/dpv#isApplicableFor": [
+            {
+                "@id": "https://schema.org/CreativeWork"
+            }
+        ],
+        "https://w3id.org/ftr#applicationArea": [
+            {
+                "@id": "http://www.fairsharing.org/ontology/subject/SRAO_0000401"
+            }
+        ],
+        "https://w3id.org/ftr#identifier": [
+            {
+                "@type": "http://www.w3.org/2001/XMLSchema#anyURI",
+                "@value": "https://w3id.org/fair-metrics/general/FM_R12_D_CitedInPub"
+            }
+        ],
+        "https://w3id.org/ftr#supportedBy": [
+            {
+                "@id": "https://w3id.org/FAIR-Champion"
+            }
+        ]
+    },
+    {
+        "@id": "_:n778572597f204ae1b60e5776fec86211b1",
+        "@type": [
+            "http://www.w3.org/2006/vcard/ns#Individual"
+        ],
+        "http://vivoweb.org/ontology/core#orcidId": [
+            {
+                "@id": "http://orcid.org/0000-0002-7702-4495"
+            }
+        ],
+        "http://www.w3.org/2006/vcard/ns#fn": [
+            {
+                "@value": "Allyson L. Lister"
+            }
+        ],
+        "http://www.w3.org/2006/vcard/ns#hasEmail": [
+            {
+                "@id": "mailto:renaud.duyme@esrf.fr"
+            }
+        ]
+    }
+]

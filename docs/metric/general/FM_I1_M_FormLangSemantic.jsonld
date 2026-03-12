@@ -1,0 +1,136 @@
+[
+    {
+        "@id": "https://w3id.org/fair-metrics/general/FM_I1_M_FormLangSemantic",
+        "@type": [
+            "https://w3id.org/ftr#Metric",
+            "http://www.w3.org/ns/dcat#Dataset"
+        ],
+        "http://purl.org/dc/terms/creator": [
+            {
+                "@id": "_:nfb40402584624aae99843a72c8b6d832b1"
+            },
+            {
+                "@id": "_:nfb40402584624aae99843a72c8b6d832b2"
+            }
+        ],
+        "http://purl.org/dc/terms/description": [
+            {
+                "@value": "<p>This metric evaluates whether there is a resolved metadata representation that conforms to a recognised semantic knowledge representation language.</p>\n\n<p>I1 requires that metadata use a formal, accessible, shared and broadly applicable language for knowledge representation. The purpose of this principle is to ensure that metadata, when retrieved, is expressed in a formally defined knowledge representation language. In this metric, the definition of syntactic and semantic formats follows the [FAIRsharing guidance](<a href=\"https://fairsharing.gitbook.io/fairsharing/about-our-records/fair-assistance/syntactic-vs-semantic-knowledge-representation-languages).\">https://fairsharing.gitbook.io/fairsharing/about-our-records/fair-assistance/syntactic-vs-semantic-knowledge-representation-languages).</a> Under this semantic interpretation, a resource satisfies this metric if the resolved metadata meets these defined semantic criteria for structured representation.</p>\n\n"
+            }
+        ],
+        "http://purl.org/dc/terms/issued": [
+            {
+                "@type": "http://www.w3.org/2001/XMLSchema#date",
+                "@value": "2026-03-01"
+            }
+        ],
+        "http://purl.org/dc/terms/license": [
+            {
+                "@id": "https://creativecommons.org/licenses/by/4.0/"
+            }
+        ],
+        "http://purl.org/dc/terms/modified": [
+            {
+                "@type": "http://www.w3.org/2001/XMLSchema#date",
+                "@value": "2026-03-01"
+            }
+        ],
+        "http://purl.org/dc/terms/title": [
+            {
+                "@value": "FAIR Metric - I1 - Metadata - Uses Knowledge representation language (semantic)"
+            }
+        ],
+        "http://vivoweb.org/ontology/core#abbreviation": [
+            {
+                "@value": "FM_I1_M_FormLangSemantic"
+            }
+        ],
+        "http://www.w3.org/2000/01/rdf-schema#definedBy": [
+            {
+                "@id": "https://fairmetrics.github.io/Metrics/metric/general/FM_I1_M_FormLangSemantic.ttl"
+            }
+        ],
+        "http://www.w3.org/ns/dcat#keyword": [
+            {
+                "@value": "FAIR"
+            },
+            {
+                "@value": "I1"
+            },
+            {
+                "@value": "identifier"
+            },
+            {
+                "@value": "metadata"
+            }
+        ],
+        "http://www.w3.org/ns/dcat#landingPage": [
+            {
+                "@id": "https://w3id.org/fair-metrics/general/FM_I1_M_FormLangSemantic"
+            }
+        ],
+        "http://www.w3.org/ns/dcat#version": [
+            {
+                "@value": "Champion1.0"
+            }
+        ],
+        "https://w3id.org/dpv#isApplicableFor": [
+            {
+                "@id": "https://schema.org/CreativeWork"
+            }
+        ],
+        "https://w3id.org/ftr#applicationArea": [
+            {
+                "@id": "http://www.fairsharing.org/ontology/subject/SRAO_0000401"
+            }
+        ],
+        "https://w3id.org/ftr#identifier": [
+            {
+                "@type": "http://www.w3.org/2001/XMLSchema#anyURI",
+                "@value": "https://w3id.org/fair-metrics/general/FM_I1_M_FormLangSemantic"
+            }
+        ],
+        "https://w3id.org/ftr#supportedBy": [
+            {
+                "@id": "https://w3id.org/FAIR-Champion"
+            }
+        ]
+    },
+    {
+        "@id": "_:nfb40402584624aae99843a72c8b6d832b1",
+        "@type": [
+            "http://www.w3.org/2006/vcard/ns#Individual"
+        ],
+        "http://www.w3.org/2006/vcard/ns#fn": [
+            {
+                "@value": "Mark D. Wilkinson"
+            }
+        ],
+        "http://www.w3.org/2006/vcard/ns#hasEmail": [
+            {
+                "@id": "mailto:mark.wilkinson@upm.es"
+            }
+        ]
+    },
+    {
+        "@id": "_:nfb40402584624aae99843a72c8b6d832b2",
+        "@type": [
+            "http://www.w3.org/2006/vcard/ns#Individual"
+        ],
+        "http://vivoweb.org/ontology/core#orcidId": [
+            {
+                "@id": "http://orcid.org/0000-0002-7702-4495"
+            }
+        ],
+        "http://www.w3.org/2006/vcard/ns#fn": [
+            {
+                "@value": "Allyson L. Lister"
+            }
+        ],
+        "http://www.w3.org/2006/vcard/ns#hasEmail": [
+            {
+                "@id": "mailto:mark.wilkinson@upm.es"
+            }
+        ]
+    }
+]

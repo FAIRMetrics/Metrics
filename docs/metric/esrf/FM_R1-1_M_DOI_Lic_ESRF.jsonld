@@ -7,7 +7,7 @@
         ],
         "http://purl.org/dc/terms/creator": [
             {
-                "@id": "_:n87db877f5cab430086f51ac09c80a740b1"
+                "@id": "_:n55a0b736794641d09cfda9cce9e12210b1"
             }
         ],
         "http://purl.org/dc/terms/description": [
@@ -82,7 +82,7 @@
         ]
     },
     {
-        "@id": "_:n87db877f5cab430086f51ac09c80a740b1",
+        "@id": "_:n55a0b736794641d09cfda9cce9e12210b1",
         "@type": [
             "http://xmlns.com/foaf/0.1/Person"
         ],

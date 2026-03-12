@@ -7,12 +7,21 @@
         ],
         "http://purl.org/dc/terms/creator": [
             {
-                "@id": "_:n4c35f08878404f25af0f582cb0a63201b1"
+                "@id": "_:na4cc13b5bddf4fed9b17ba6d8e4e2c39b1"
+            },
+            {
+                "@id": "_:na4cc13b5bddf4fed9b17ba6d8e4e2c39b2"
             }
         ],
         "http://purl.org/dc/terms/description": [
             {
-                "@value": "protocol supports authentication and authorisation where applicable. This metric aligns with FAIR Principle A1."
+                "@value": "<p>If the resolution protocol supports authentication and authorization for access to restricted content.</p>\n\n<p>A1.2 requires that the protocol used to retrieve research objects clearly describes any necessary authentication and authorisation procedures. This ensures that access conditions are transparent and that restricted content is accessed in a defined and controlled way. Optionally, if a FAIRsharing record for the hosting database is provided, the evaluation first checks the declared [data access conditions](<a href=\"https://fairsharing.gitbook.io/fairsharing/additional-information/database-conditions#data-access-condition).\">https://fairsharing.gitbook.io/fairsharing/additional-information/database-conditions#data-access-condition).</a> If the access condition is “open”, tests will pass immediately. Next, if access is restricted, the resolution protocol is then evaluated to determine whether it supports authentication and authorisation. If the test does make use of the FAIRsharing record, this can ensure a pass for completely open access databases, even if a test implementation does not recognise a particular protocol. A resource satisfies this metric if access is declared as open in FAIRsharing record metadata, or if restricted access to metadata is supported by appropriate authentication and authorisation mechanisms. Note that identification of the FAIRsharing database record URL/DOI (so that FAIRsharing metadata may be retrieved) can be done in a variety of ways, e.g. using the FAIRsharing API to find possible matches between the identifier and registered databases, hard coding the FAIRsharing record identifier, or expecting it to be provided as a second argument to the test.</p>\n"
+            }
+        ],
+        "http://purl.org/dc/terms/issued": [
+            {
+                "@type": "http://www.w3.org/2001/XMLSchema#date",
+                "@value": "2026-02-20"
             }
         ],
         "http://purl.org/dc/terms/license": [
@@ -20,9 +29,15 @@
                 "@id": "https://creativecommons.org/licenses/by/4.0/"
             }
         ],
+        "http://purl.org/dc/terms/modified": [
+            {
+                "@type": "http://www.w3.org/2001/XMLSchema#date",
+                "@value": "2026-03-01"
+            }
+        ],
         "http://purl.org/dc/terms/title": [
             {
-                "@value": "FAIR Metric – A1.2 – Metadata - Protocol supports authentication and authorisation where applicable"
+                "@value": "FAIR Metric - A1.2 - Metadata - retrieval protocol supports auth"
             }
         ],
         "http://vivoweb.org/ontology/core#abbreviation": [
@@ -32,7 +47,7 @@
         ],
         "http://www.w3.org/2000/01/rdf-schema#definedBy": [
             {
-                "@id": "https://w3id.org/fair-metrics/general/FM_A1-2_M_Auth.ttl"
+                "@id": "https://fairmetrics.github.io/Metrics/metric/general/FM_A1-2_M_Auth.ttl"
             }
         ],
         "http://www.w3.org/ns/dcat#keyword": [
@@ -40,21 +55,18 @@
                 "@value": "FAIR"
             },
             {
-                "@value": "accessibility"
+                "@value": "A1.2"
             },
             {
-                "@value": "authentication"
+                "@value": "identifier"
             },
             {
-                "@value": "authorization"
-            },
-            {
-                "@value": "A1"
+                "@value": "metadata"
             }
         ],
         "http://www.w3.org/ns/dcat#landingPage": [
             {
-                "@id": "https://w3id.org/fair-metrics/landingpages/FM_A1-2_M_Auth.md"
+                "@id": "https://w3id.org/fair-metrics/general/FM_A1-2_M_Auth"
             }
         ],
         "http://www.w3.org/ns/dcat#version": [
@@ -64,17 +76,12 @@
         ],
         "https://w3id.org/dpv#isApplicableFor": [
             {
-                "@id": "https://schema.org/Dataset"
+                "@id": "https://schema.org/CreativeWork"
             }
         ],
         "https://w3id.org/ftr#applicationArea": [
             {
                 "@id": "http://www.fairsharing.org/ontology/subject/SRAO_0000401"
-            }
-        ],
-        "https://w3id.org/ftr#hasPositiveValidation": [
-            {
-                "@id": "https://w3id.org/duchenne-fdp"
             }
         ],
         "https://w3id.org/ftr#identifier": [
@@ -90,18 +97,39 @@
         ]
     },
     {
-        "@id": "_:n4c35f08878404f25af0f582cb0a63201b1",
+        "@id": "_:na4cc13b5bddf4fed9b17ba6d8e4e2c39b1",
         "@type": [
-            "http://xmlns.com/foaf/0.1/Person"
+            "http://www.w3.org/2006/vcard/ns#Individual"
         ],
         "http://www.w3.org/2006/vcard/ns#fn": [
             {
                 "@value": "Mark D. Wilkinson"
             }
         ],
-        "http://xmlns.com/foaf/0.1/mbox": [
+        "http://www.w3.org/2006/vcard/ns#hasEmail": [
             {
-                "@id": "mailto:markw@illuminae.com"
+                "@id": "mailto:mark.wilkinson@upm.es"
+            }
+        ]
+    },
+    {
+        "@id": "_:na4cc13b5bddf4fed9b17ba6d8e4e2c39b2",
+        "@type": [
+            "http://www.w3.org/2006/vcard/ns#Individual"
+        ],
+        "http://vivoweb.org/ontology/core#orcidId": [
+            {
+                "@id": "http://orcid.org/0000-0002-7702-4495"
+            }
+        ],
+        "http://www.w3.org/2006/vcard/ns#fn": [
+            {
+                "@value": "Allyson L. Lister"
+            }
+        ],
+        "http://www.w3.org/2006/vcard/ns#hasEmail": [
+            {
+                "@id": "mailto:mark.wilkinson@upm.es"
             }
         ]
     }

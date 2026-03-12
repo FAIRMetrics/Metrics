@@ -1,4 +1,4 @@
-@prefix vcard: <http://www.w3.org/2006/vcard/ns#> .
+@prefix vcard:   <http://www.w3.org/2006/vcard/ns#> .
 @prefix ftr:     <https://w3id.org/ftr#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
@@ -7,36 +7,47 @@
 @prefix dpv:     <https://w3id.org/dpv#> .
 @prefix schema:  <https://schema.org/> .
 @prefix vivo:    <http://vivoweb.org/ontology/core#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
 
-
-<https://w3id.org/fair-metrics/general/FM_F4_M_MetaIndexed.ttl>
+<https://w3id.org/fair-metrics/general/FM_F4_M_MetaIndexed>
     a                          ftr:Metric, dcat:Dataset ;
-    rdfs:definedBy <https://w3id.org/fair-metrics/general/FM_F4_M_MetaIndexed.ttl> ;
-    
+    rdfs:definedBy            <https://fairmetrics.github.io/Metrics/metric/general/FM_F4_M_MetaIndexed.ttl> ;
+
     ftr:identifier            "https://w3id.org/fair-metrics/general/FM_F4_M_MetaIndexed"^^xsd:anyURI ;
-
-
-    dcterms:title             "FAIR Metric – F3 – Metadata - Metadata is indexed in a searchable resource" ;
+    dcterms:title             "FAIR Metric - F4 - Metadata - indexed in a searchable resource" ;
     vivo:abbreviation         "FM_F4_M_MetaIndexed" ;
-    dcterms:description       """Metadata is indexed in a searchable resource. This metric aligns with FAIR Principle F4.""" ;
-    dcat:keyword              "FAIR", "findability", "search", "indexed", "F4" ;
-    
-    dcat:landingPage <https://w3id.org/fair-metrics/landingpages/FM_F4_M_MetaIndexed.md> ;
-    
-dcterms:creator               [
-    a                     foaf:Person ;
-    vcard:fn             "Mark D. Wilkinson" ;
-    foaf:mbox             <mailto:markw@illuminae.com>
-] ;
+    dcat:landingPage          <https://w3id.org/fair-metrics/general/FM_F4_M_MetaIndexed> ;
+
+    dcterms:description       """<p>This metric evaluates whether metadata can be discovered by web-based search engines. The evaluation requires the identifier to first resolve to its metadata; then, both the identifier and the content of the retrieved metadata are used in automated search queries to determine if they are indexed and discoverable.</p>
+
+<p>Principle F4 requires that metadata be registered or indexed in a searchable resource. Even if metadata is perfectly structured and contains valid identifiers, it is not "Findable" if it remains hidden from discovery services. This metric ensures that the metadata is not just "published," but actively participating in the research ecosystem. By verifying that the metadata can be found through automated queries—using both the unique identifier and the descriptive content—we confirm that the resource is effectively searchable by the machines and services that researchers rely on. Search engines are used to discover particular digital resources of interest. If the resource or its metadata are not indexed by web search engines, then this would substantially diminish the ability to find and reuse it. Thus, the ability to discover the resource should be tested using i) its identifier, ii) its text-based metadata. This metric evaluates whether the provided identifier’s metadata is discoverable by performing public, automated searches with commonly-used search engines. The evaluation assesses whether a search service can successfully locate the metadata record using either the metadata identifier or landing page content such as the record title or keywords - both commonly consumed by search engines - thereby confirming that the resource has been appropriately indexed and is accessible for automated discovery.</p>
+
+""" ;
+    dcat:keyword              "FAIR", "F4", "identifier", "metadata" ;
+
+    dcat:landingPage          <https://w3id.org/fair-metrics/general/FM_F4_M_MetaIndexed> ;
+
+    dcterms:creator           [
+        a                     vcard:Individual ;
+        vcard:fn              "Mark D. Wilkinson" ;
+        vcard:hasEmail             <mailto:mark.wilkinson@upm.es> ;
+    ] ;
+    dcterms:creator           [
+        a                     vcard:Individual ;
+        vcard:fn              "Allyson L. Lister" ;
+        vivo:orcidId          <http://orcid.org/0000-0002-7702-4495> ;
+        vcard:hasEmail             <mailto:mark.wilkinson@upm.es> ;
+    ] ;
+
+    dcterms:issued            "2026-02-20"^^xsd:date ;
+    dcterms:modified          "2026-02-25"^^xsd:date ;
+
+    dcat:version              "Champion1.0" ;
+
+    ftr:applicationArea       <http://www.fairsharing.org/ontology/subject/SRAO_0000401> ;
+    dcterms:license           <https://creativecommons.org/licenses/by/4.0/> ;
 
 
-dcat:version           "Champion1.0" ;
+    ftr:supportedBy           <https://w3id.org/FAIR-Champion> ;
+    dpv:isApplicableFor       schema:CreativeWork .
 
-ftr:applicationArea       <http://www.fairsharing.org/ontology/subject/SRAO_0000401> ;
-
-dcterms:license           <https://creativecommons.org/licenses/by/4.0/> ;
-
-ftr:hasPositiveValidation <https://w3id.org/duchenne-fdp> ;
-ftr:supportedBy <https://w3id.org/FAIR-Champion> ;
-dpv:isApplicableFor       schema:Dataset .  

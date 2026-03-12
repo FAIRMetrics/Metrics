@@ -1,0 +1,105 @@
+[
+    {
+        "@id": "https://w3id.org/fair-metrics/general/FM_R12_M_CreatorORCiD",
+        "@type": [
+            "https://w3id.org/ftr#Metric",
+            "http://www.w3.org/ns/dcat#Dataset"
+        ],
+        "http://purl.org/dc/terms/creator": [
+            {
+                "@id": "_:na61ac95fc2a34c0386e840bab6eaf20fb1"
+            }
+        ],
+        "http://purl.org/dc/terms/description": [
+            {
+                "@value": "<p>This metric evaluates whether there is at least one dc:creator with an ORCID in the metadata retrieved upon resolution of the provided identifier, providing one facet of evaluation for this R1.2.</p>\n\n<p>R1.2 requires that metadata be associated with detailed provenance. The purpose of this principle is to ensure that the origins and responsible individuals associated with a digital object are clearly identified, supporting attribution and transparency. This metric evaluates whether there is at least one dc:creator with an ORCID in the metadata retrieved upon resolution of the provided identifier, providing one facet of evaluation for this R1.2. Under this interpretation, the evaluation checks whether the resolved metadata includes an ORCID identifier associated with a person in the defined dc:creator role.</p>\n\n<p>#</p>"
+            }
+        ],
+        "http://purl.org/dc/terms/license": [
+            {
+                "@id": "https://creativecommons.org/licenses/by/4.0/"
+            }
+        ],
+        "http://purl.org/dc/terms/title": [
+            {
+                "@value": "FAIR Metric - R1.2 - Metadata - creator ORCiD"
+            }
+        ],
+        "http://vivoweb.org/ontology/core#abbreviation": [
+            {
+                "@value": "FM_R12_M_CreatorORCiD"
+            }
+        ],
+        "http://www.w3.org/2000/01/rdf-schema#definedBy": [
+            {
+                "@id": "https://fairmetrics.github.io/Metrics/metric/general/FM_R12_M_CreatorORCiD.ttl"
+            }
+        ],
+        "http://www.w3.org/ns/dcat#keyword": [
+            {
+                "@value": "FAIR"
+            },
+            {
+                "@value": "R1.2"
+            },
+            {
+                "@value": "identifier"
+            },
+            {
+                "@value": "metadata"
+            }
+        ],
+        "http://www.w3.org/ns/dcat#landingPage": [
+            {
+                "@id": "https://w3id.org/fair-metrics/general/FM_R12_M_CreatorORCiD"
+            }
+        ],
+        "http://www.w3.org/ns/dcat#version": [
+            {
+                "@value": "Champion1.0"
+            }
+        ],
+        "https://w3id.org/dpv#isApplicableFor": [
+            {
+                "@id": "https://schema.org/CreativeWork"
+            }
+        ],
+        "https://w3id.org/ftr#applicationArea": [
+            {
+                "@id": "http://www.fairsharing.org/ontology/subject/SRAO_0000401"
+            }
+        ],
+        "https://w3id.org/ftr#identifier": [
+            {
+                "@type": "http://www.w3.org/2001/XMLSchema#anyURI",
+                "@value": "https://w3id.org/fair-metrics/general/FM_R12_M_CreatorORCiD"
+            }
+        ],
+        "https://w3id.org/ftr#supportedBy": [
+            {
+                "@id": "https://w3id.org/FAIR-Champion"
+            }
+        ]
+    },
+    {
+        "@id": "_:na61ac95fc2a34c0386e840bab6eaf20fb1",
+        "@type": [
+            "http://www.w3.org/2006/vcard/ns#Individual"
+        ],
+        "http://vivoweb.org/ontology/core#orcidId": [
+            {
+                "@id": "http://orcid.org/0000-0002-7702-4495"
+            }
+        ],
+        "http://www.w3.org/2006/vcard/ns#fn": [
+            {
+                "@value": "Allyson L. Lister"
+            }
+        ],
+        "http://www.w3.org/2006/vcard/ns#hasEmail": [
+            {
+                "@id": "mailto:allyson.lister@oerc.ox.ac.uk"
+            }
+        ]
+    }
+]

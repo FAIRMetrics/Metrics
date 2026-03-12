@@ -1,0 +1,136 @@
+[
+    {
+        "@id": "https://w3id.org/fair-metrics/general/FM_A2_M_DbMetaLong",
+        "@type": [
+            "https://w3id.org/ftr#Metric",
+            "http://www.w3.org/ns/dcat#Dataset"
+        ],
+        "http://purl.org/dc/terms/creator": [
+            {
+                "@id": "_:nd2a62e44ae5440c88d0d0e80a1261c62b1"
+            },
+            {
+                "@id": "_:nd2a62e44ae5440c88d0d0e80a1261c62b2"
+            }
+        ],
+        "http://purl.org/dc/terms/description": [
+            {
+                "@value": "<p>This metric evaluates whether there is a policy for metadata persistence declared by the managing database and included within its FAIRsharing database record metadata.</p>\n\n<p>A2 requires that metadata remain accessible even if the digital object is no longer available. The purpose of this principle is to ensure that information about a resource persists over time, independent of the continued availability of the research object itself.  As per FAIR Principle F3, when this metadata remains discoverable, even in the absence of the research object, it will also contain an explicit reference to the IRI of the research object. This metric evaluates whether the hosting database or repository declares a formal data preservation policy. The evaluation retrieves the FAIRsharing record for the database and checks for the presence of a value in the “Data Preservation Policy” field, as defined in the FAIRsharing [database conditions documentation](<a href=\"https://fairsharing.gitbook.io/fairsharing/additional-information/database-conditions#data-preservation-policy).\">https://fairsharing.gitbook.io/fairsharing/additional-information/database-conditions#data-preservation-policy).</a> The presence of a declared preservation policy in the FAIRsharing record is interpreted as evidence that the database has articulated commitments to long-term metadata availability. If a preservation policy is listed in the FAIRsharing record, the resource passes this metric; if not, it fails. This metric measures database-level persistence policies as persistence information is rarely included in record-level metadata. Communities may wish to use this metric in conjunction with others that search for persistence fields directly within the resolved metadata. Note that, in order for this metric to function, tests must know the FAIRsharing database record URL/DOI so that FAIRsharing metadata may be retrieved. This can be done in a variety of ways, e.g. using the FAIRsharing API to find possible matches between the identifier and registered databases, hard coding the FAIRsharing record identifier, or expecting it to be provided as a second argument to the test.</p>"
+            }
+        ],
+        "http://purl.org/dc/terms/issued": [
+            {
+                "@type": "http://www.w3.org/2001/XMLSchema#date",
+                "@value": "2026-03-01"
+            }
+        ],
+        "http://purl.org/dc/terms/license": [
+            {
+                "@id": "https://creativecommons.org/licenses/by/4.0/"
+            }
+        ],
+        "http://purl.org/dc/terms/modified": [
+            {
+                "@type": "http://www.w3.org/2001/XMLSchema#date",
+                "@value": "2026-03-01"
+            }
+        ],
+        "http://purl.org/dc/terms/title": [
+            {
+                "@value": "FAIR Metric - A2 - Metadata - Database persistence policy"
+            }
+        ],
+        "http://vivoweb.org/ontology/core#abbreviation": [
+            {
+                "@value": "FM_A2_M_DbMetaLong"
+            }
+        ],
+        "http://www.w3.org/2000/01/rdf-schema#definedBy": [
+            {
+                "@id": "https://fairmetrics.github.io/Metrics/metric/general/FM_A2_M_DbMetaLong.ttl"
+            }
+        ],
+        "http://www.w3.org/ns/dcat#keyword": [
+            {
+                "@value": "FAIR"
+            },
+            {
+                "@value": "A2"
+            },
+            {
+                "@value": "identifier"
+            },
+            {
+                "@value": "metadata"
+            }
+        ],
+        "http://www.w3.org/ns/dcat#landingPage": [
+            {
+                "@id": "https://w3id.org/fair-metrics/general/FM_A2_M_DbMetaLong"
+            }
+        ],
+        "http://www.w3.org/ns/dcat#version": [
+            {
+                "@value": "Champion1.0"
+            }
+        ],
+        "https://w3id.org/dpv#isApplicableFor": [
+            {
+                "@id": "https://schema.org/CreativeWork"
+            }
+        ],
+        "https://w3id.org/ftr#applicationArea": [
+            {
+                "@id": "http://www.fairsharing.org/ontology/subject/SRAO_0000401"
+            }
+        ],
+        "https://w3id.org/ftr#identifier": [
+            {
+                "@type": "http://www.w3.org/2001/XMLSchema#anyURI",
+                "@value": "https://w3id.org/fair-metrics/general/FM_A2_M_DbMetaLong"
+            }
+        ],
+        "https://w3id.org/ftr#supportedBy": [
+            {
+                "@id": "https://w3id.org/FAIR-Champion"
+            }
+        ]
+    },
+    {
+        "@id": "_:nd2a62e44ae5440c88d0d0e80a1261c62b1",
+        "@type": [
+            "http://www.w3.org/2006/vcard/ns#Individual"
+        ],
+        "http://www.w3.org/2006/vcard/ns#fn": [
+            {
+                "@value": "Mark D. Wilkinson"
+            }
+        ],
+        "http://www.w3.org/2006/vcard/ns#hasEmail": [
+            {
+                "@id": "mailto:mark.wilkinson@upm.es"
+            }
+        ]
+    },
+    {
+        "@id": "_:nd2a62e44ae5440c88d0d0e80a1261c62b2",
+        "@type": [
+            "http://www.w3.org/2006/vcard/ns#Individual"
+        ],
+        "http://vivoweb.org/ontology/core#orcidId": [
+            {
+                "@id": "http://orcid.org/0000-0002-7702-4495"
+            }
+        ],
+        "http://www.w3.org/2006/vcard/ns#fn": [
+            {
+                "@value": "Allyson L. Lister"
+            }
+        ],
+        "http://www.w3.org/2006/vcard/ns#hasEmail": [
+            {
+                "@id": "mailto:mark.wilkinson@upm.es"
+            }
+        ]
+    }
+]

@@ -7,7 +7,7 @@
         ],
         "http://purl.org/dc/terms/creator": [
             {
-                "@id": "_:nb0ca8dbf27a2408693bde7708d944c18b1"
+                "@id": "_:n15215bbd3453407484ed805b32257192b1"
             }
         ],
         "http://purl.org/dc/terms/description": [
@@ -22,7 +22,7 @@
         ],
         "http://purl.org/dc/terms/title": [
             {
-                "@value": "FAIR Metric – A2 – Metadata - Metadata is long-lived and independently accessible"
+                "@value": "FAIR Metric - A2 - Metadata - Metadata is long-lived and independently accessible"
             }
         ],
         "http://vivoweb.org/ontology/core#abbreviation": [
@@ -54,7 +54,7 @@
         ],
         "http://www.w3.org/ns/dcat#landingPage": [
             {
-                "@id": "https://w3id.org/fair-metrics/landingpages/FM_A2_M_MetaLong.md"
+                "@id": "https://w3id.org/fair-metrics/landingpages/FM_A2_M_MetaLong"
             }
         ],
         "http://www.w3.org/ns/dcat#version": [
@@ -90,16 +90,16 @@
         ]
     },
     {
-        "@id": "_:nb0ca8dbf27a2408693bde7708d944c18b1",
+        "@id": "_:n15215bbd3453407484ed805b32257192b1",
         "@type": [
-            "http://xmlns.com/foaf/0.1/Person"
+            "http://www.w3.org/2006/vcard/ns#Individual"
         ],
         "http://www.w3.org/2006/vcard/ns#fn": [
             {
                 "@value": "Mark D. Wilkinson"
             }
         ],
-        "http://xmlns.com/foaf/0.1/mbox": [
+        "http://www.w3.org/2006/vcard/ns#hasEmail": [
             {
                 "@id": "mailto:markw@illuminae.com"
             }

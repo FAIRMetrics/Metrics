@@ -1,0 +1,51 @@
+@prefix vcard:   <http://www.w3.org/2006/vcard/ns#> .
+@prefix ftr:     <https://w3id.org/ftr#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix foaf:    <http://xmlns.com/foaf/0.1/> .
+@prefix dcat:    <http://www.w3.org/ns/dcat#> .
+@prefix dpv:     <https://w3id.org/dpv#> .
+@prefix schema:  <https://schema.org/> .
+@prefix vivo:    <http://vivoweb.org/ontology/core#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+
+<https://w3id.org/fair-metrics/general/FM_A2_M_DbMetaLong>
+    a                          ftr:Metric, dcat:Dataset ;
+    rdfs:definedBy            <https://fairmetrics.github.io/Metrics/metric/general/FM_A2_M_DbMetaLong.ttl> ;
+
+    ftr:identifier            "https://w3id.org/fair-metrics/general/FM_A2_M_DbMetaLong"^^xsd:anyURI ;
+    dcterms:title             "FAIR Metric - A2 - Metadata - Database persistence policy" ;
+    vivo:abbreviation         "FM_A2_M_DbMetaLong" ;
+    dcat:landingPage          <https://w3id.org/fair-metrics/general/FM_A2_M_DbMetaLong> ;
+
+    dcterms:description       """<p>This metric evaluates whether there is a policy for metadata persistence declared by the managing database and included within its FAIRsharing database record metadata.</p>
+
+<p>A2 requires that metadata remain accessible even if the digital object is no longer available. The purpose of this principle is to ensure that information about a resource persists over time, independent of the continued availability of the research object itself.  As per FAIR Principle F3, when this metadata remains discoverable, even in the absence of the research object, it will also contain an explicit reference to the IRI of the research object. This metric evaluates whether the hosting database or repository declares a formal data preservation policy. The evaluation retrieves the FAIRsharing record for the database and checks for the presence of a value in the “Data Preservation Policy” field, as defined in the FAIRsharing [database conditions documentation](<a href="https://fairsharing.gitbook.io/fairsharing/additional-information/database-conditions#data-preservation-policy).">https://fairsharing.gitbook.io/fairsharing/additional-information/database-conditions#data-preservation-policy).</a> The presence of a declared preservation policy in the FAIRsharing record is interpreted as evidence that the database has articulated commitments to long-term metadata availability. If a preservation policy is listed in the FAIRsharing record, the resource passes this metric; if not, it fails. This metric measures database-level persistence policies as persistence information is rarely included in record-level metadata. Communities may wish to use this metric in conjunction with others that search for persistence fields directly within the resolved metadata. Note that, in order for this metric to function, tests must know the FAIRsharing database record URL/DOI so that FAIRsharing metadata may be retrieved. This can be done in a variety of ways, e.g. using the FAIRsharing API to find possible matches between the identifier and registered databases, hard coding the FAIRsharing record identifier, or expecting it to be provided as a second argument to the test.</p>""" ;
+    dcat:keyword              "FAIR", "A2", "identifier", "metadata" ;
+
+    dcat:landingPage          <https://w3id.org/fair-metrics/general/FM_A2_M_DbMetaLong> ;
+
+    dcterms:creator           [
+        a                     vcard:Individual ;
+        vcard:fn              "Mark D. Wilkinson" ;
+        vcard:hasEmail             <mailto:mark.wilkinson@upm.es> ;
+    ] ;
+    dcterms:creator           [
+        a                     vcard:Individual ;
+        vcard:fn              "Allyson L. Lister" ;
+        vivo:orcidId          <http://orcid.org/0000-0002-7702-4495> ;
+        vcard:hasEmail             <mailto:mark.wilkinson@upm.es> ;
+    ] ;
+
+    dcterms:issued            "2026-03-01"^^xsd:date ;
+    dcterms:modified          "2026-03-01"^^xsd:date ;
+
+    dcat:version              "Champion1.0" ;
+
+    ftr:applicationArea       <http://www.fairsharing.org/ontology/subject/SRAO_0000401> ;
+    dcterms:license           <https://creativecommons.org/licenses/by/4.0/> ;
+
+
+    ftr:supportedBy           <https://w3id.org/FAIR-Champion> ;
+    dpv:isApplicableFor       schema:CreativeWork .
+

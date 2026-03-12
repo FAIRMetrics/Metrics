@@ -81,12 +81,14 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12"> 
-                    <button type="button" class="btn btn-primary" onclick="window.location.href='https://oeg-upm.github.io/fair_ontologies/doc/catalog.html#metric'" style="position: absolute; top: 10px; right: 10px;">Back</button>
-                    <h1 class="miClase text-center">FAIR Metric – I3 – Metadata - (Meta)data includes qualified references to other (meta)data</h1>
+                    
+                    <h1 class="miClase text-center">FAIR Metric - I3 - Metadata - Contains Qualified Outward Links</h1>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-12 well" style="font-size: 16px;"> <p>Metadata includes qualified references to other (meta)data. This metric aligns with FAIR Principle I3.</p></div>
+                <div class="col-md-12 well" style="font-size: 16px;"> <p>This metric evaluates whether there are qualified (labelled or named) links in the metadata that reference external IRIs; specifically, IRIs that do not share the same domain name as that of the provided identifier.</p>
+
+<p>I3 requires that metadata include qualified references to other metadata. The purpose of this principle is to ensure that digital objects are connected to the wider research ecosystem through explicitly defined and semantically meaningful relationships. This metric evaluates whether there are qualified (labelled or named) links in the metadata that reference external IRIs. Under this interpretation, the evaluation retrieves the metadata upon resolution of the provided identifier and identifies all labelled relationships that reference IRIs. The domain names of the referenced IRIs are then compared against the domain name of the identifier provided to the evaluation tool. Links that resolve to IRIs with a different domain name are considered external references. Only qualified relationships — that is, links expressed with an explicit relationship type — are considered. A resource satisfies this metric if at least one qualified reference to an external IRI (i.e., with a different domain name than the identifier under evaluation) is present in the metadata.</p></div>
             </div>
             <div class="row flex-space-between"> 
                 <div class="col-md-12 align-items-center"> 
@@ -98,7 +100,7 @@
             </div>
             <div class="row row-equal" >
                 <div class="col-md-3 well tag_div"> <strong>Title</strong></div>
-                <div class="col-md-9 well"> FAIR Metric – I3 – Metadata - (Meta)data includes qualified references to other (meta)data </div>
+                <div class="col-md-9 well"> FAIR Metric - I3 - Metadata - Contains Qualified Outward Links </div>
             </div>
             <div class="row row-equal" >
                 <div class="col-md-3 well tag_div"> <strong>Identifier</strong></div>
@@ -107,11 +109,11 @@
             </div>
             <div class="row row-equal" style="display: none;" >
                 <div class="col-md-3 well tag_div"> <strong>Creator</strong></div>
-                <div class="col-md-9 well"> <a href="None" target="_blank">None</a> </div>
+                <div class="col-md-9 well"> <a href="None" target="_blank">Mark D. Wilkinson</a> </div>
             </div>
             <div class="row row-equal" >
                 <div class="col-md-3 well tag_div"> <strong>Keywords</strong></div>
-                <div class="col-md-9 well"> FAIR, interoperability, qualified-references, linked-data, I3 </div>
+                <div class="col-md-9 well"> FAIR, I3, identifier, metadata </div>
             </div>
             <div class="row row-equal">
                 <div class="col-md-3 well tag_div"> <strong>Contact Point</strong></div>
@@ -132,7 +134,7 @@
             </div>
             <!-- <div class="row row-equal" >
                 <div class="col-md-3 well tag_div"> <strong>Landing Page</strong></div>
-                <div class="col-md-9 well"><a href="https://w3id.org/fair-metrics/landingpages/FM_I3_M_QualRef.md" target="_blank">https://w3id.org/fair-metrics/landingpages/FM_I3_M_QualRef.md</a></div>
+                <div class="col-md-9 well"><a href="https://w3id.org/fair-metrics/general/FM_I3_M_QualRef" target="_blank">https://w3id.org/fair-metrics/general/FM_I3_M_QualRef</a></div>
             </div> -->
             <div class="row row-equal" >
                 <div class="col-md-3 well tag_div"> <strong>Principle</strong></div>
@@ -152,7 +154,7 @@
             </div>
             <div class="row row-equal">
                 <div class="col-md-3 well tag_div"> <strong>Applicable for</strong></div>
-                <div class="col-md-9 well"> <a href="https://schema.org/Dataset" target="_blank"> https://schema.org/Dataset </a> </div>
+                <div class="col-md-9 well"> <a href="https://schema.org/CreativeWork" target="_blank"> https://schema.org/CreativeWork </a> </div>
             </div>
             <div class="row row-equal">
                 <div class="col-md-3 well tag_div"> <strong>Supported by</strong></div>

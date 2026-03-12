@@ -1,0 +1,53 @@
+@prefix vcard:   <http://www.w3.org/2006/vcard/ns#> .
+@prefix ftr:     <https://w3id.org/ftr#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix foaf:    <http://xmlns.com/foaf/0.1/> .
+@prefix dcat:    <http://www.w3.org/ns/dcat#> .
+@prefix dpv:     <https://w3id.org/dpv#> .
+@prefix schema:  <https://schema.org/> .
+@prefix vivo:    <http://vivoweb.org/ontology/core#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+
+<https://w3id.org/fair-metrics/general/FM_I2_M_FAIRVocabSyntax>
+    a                          ftr:Metric, dcat:Dataset ;
+    rdfs:definedBy            <https://fairmetrics.github.io/Metrics/metric/general/FM_I2_M_FAIRVocabSyntax.ttl> ;
+
+    ftr:identifier            "https://w3id.org/fair-metrics/general/FM_I2_M_FAIRVocabSyntax"^^xsd:anyURI ;
+    dcterms:title             "FAIR Metric - I2 - Metadata - uses FAIR vocabularies (syntactic)" ;
+    vivo:abbreviation         "FM_I2_M_FAIRVocabSyntax" ;
+    dcat:landingPage          <https://w3id.org/fair-metrics/general/FM_I2_M_FAIRVocabSyntax> ;
+
+    dcterms:description       """<p>This metric evaluates whether there is at least one vocabulary term used in the metadata that resolves, as a syntactic interpretation of a minimally FAIR vocabulary.</p>
+
+<p>I2 requires that metadata use vocabularies that follow FAIR principles. The purpose of this principle is to ensure that descriptive terms are drawn from such  vocabularies, enabling consistent interpretation across systems and communities.  This metric evaluates whether there is at least one vocabulary term used in the metadata that resolves. The evaluation checks whether the resolved metadata contains at least one term that itself can be resolved (to anything). The outcome of that resolution is not required to demonstrate full FAIR compliance under this metric; rather, the presence of at least one resolvable vocabulary term is sufficient. A resource satisfies this metric if at least one metadata element references a recognised controlled vocabulary term that resolves.</p>
+
+<p>#</p>""" ;
+    dcat:keyword              "FAIR", "I2", "identifier", "metadata" ;
+
+    dcat:landingPage          <https://w3id.org/fair-metrics/general/FM_I2_M_FAIRVocabSyntax> ;
+
+    dcterms:creator           [
+        a                     vcard:Individual ;
+        vcard:fn              "Mark D. Wilkinson" ;
+        vcard:hasEmail             <mailto:mark.wilkinson@upm.es> ;
+    ] ;
+    dcterms:creator           [
+        a                     vcard:Individual ;
+        vcard:fn              "Allyson L. Lister" ;
+        vivo:orcidId          <http://orcid.org/0000-0002-7702-4495> ;
+        vcard:hasEmail             <mailto:mark.wilkinson@upm.es> ;
+    ] ;
+
+    dcterms:issued            "2026-03-01"^^xsd:date ;
+    dcterms:modified          "2026-03-01"^^xsd:date ;
+
+    dcat:version              "Champion1.0" ;
+
+    ftr:applicationArea       <http://www.fairsharing.org/ontology/subject/SRAO_0000401> ;
+    dcterms:license           <https://creativecommons.org/licenses/by/4.0/> ;
+
+
+    ftr:supportedBy           <https://w3id.org/FAIR-Champion> ;
+    dpv:isApplicableFor       schema:CreativeWork .
+

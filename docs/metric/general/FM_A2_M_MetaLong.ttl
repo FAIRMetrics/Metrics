@@ -16,17 +16,17 @@
     
     ftr:identifier            "https://w3id.org/fair-metrics/general/FM_A2_M_MetaLong"^^xsd:anyURI ;
 
-    dcterms:title             "FAIR Metric – A2 – Metadata - Metadata is long-lived and independently accessible" ;
+    dcterms:title             "FAIR Metric - A2 - Metadata - Metadata is long-lived and independently accessible" ;
     vivo:abbreviation         "FM_A2_M_MetaLong" ;
     dcterms:description       """metadata is long-lived and independently accessible. This metric aligns with FAIR Principle A2.""" ;
     dcat:keyword              "FAIR", "accessibility", "metadata", "persistence", "A2" ;
     
-    dcat:landingPage <https://w3id.org/fair-metrics/landingpages/FM_A2_M_MetaLong.md> ;
+    dcat:landingPage <https://w3id.org/fair-metrics/landingpages/FM_A2_M_MetaLong> ;
     
 dcterms:creator               [
-    a                     foaf:Person ;
+    a                     vcard:Individual ;
     vcard:fn             "Mark D. Wilkinson" ;
-    foaf:mbox             <mailto:markw@illuminae.com>
+    vcard:hasEmail             <mailto:markw@illuminae.com>
 ] ;
 
 

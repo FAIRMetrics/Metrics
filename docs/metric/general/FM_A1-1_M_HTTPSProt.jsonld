@@ -1,0 +1,105 @@
+[
+    {
+        "@id": "https://w3id.org/fair-metrics/general/FM_A1-1_M_HTTPSProt",
+        "@type": [
+            "https://w3id.org/ftr#Metric",
+            "http://www.w3.org/ns/dcat#Dataset"
+        ],
+        "http://purl.org/dc/terms/creator": [
+            {
+                "@id": "_:n77241e3e622844529db419ed9828d032b1"
+            }
+        ],
+        "http://purl.org/dc/terms/description": [
+            {
+                "@value": "<p>This metric evaluates whether the protocol used to retrieve metadata referenced by the provided identifier is either HTTP or HTTPS and therefore openly specified, free to implement, and universally implementable.</p>\n\n<p>Principle A1.1 requires that metadata be retrievable by an open, free, and universally implementable protocol. The intent is to ensure that access to metadata is not gated by proprietary technologies, non-standardized interfaces, or restrictive licensing that prevents automated integration and universal access. Protocols such as HTTP(S) are the gold standard for this requirement because they are openly specified web standards, free for any developer to implement, and universally supported across virtually all modern software environments and programming languages. Protocols that are closed source or that have royalties associated with them could prevent users from being able to obtain the resource. By mandating these standards, we ensure that metadata remains accessible to the widest possible range of humans, harvesters and research discovery services. This metric evaluates whether the metadata access protocol satisfies the requirements for open, free, and universal implementation. The evaluation checks for the use of the HTTP or HTTPS protocols.</p>\n\n"
+            }
+        ],
+        "http://purl.org/dc/terms/license": [
+            {
+                "@id": "https://creativecommons.org/licenses/by/4.0/"
+            }
+        ],
+        "http://purl.org/dc/terms/title": [
+            {
+                "@value": "FAIR Metric - A1.1 - Metadata - HTTP(S) retrieval protocol"
+            }
+        ],
+        "http://vivoweb.org/ontology/core#abbreviation": [
+            {
+                "@value": "FM_A1-1_M_HTTPSProt"
+            }
+        ],
+        "http://www.w3.org/2000/01/rdf-schema#definedBy": [
+            {
+                "@id": "https://fairmetrics.github.io/Metrics/metric/general/FM_A1-1_M_HTTPSProt.ttl"
+            }
+        ],
+        "http://www.w3.org/ns/dcat#keyword": [
+            {
+                "@value": "FAIR"
+            },
+            {
+                "@value": "A1.1"
+            },
+            {
+                "@value": "identifier"
+            },
+            {
+                "@value": "metadata"
+            }
+        ],
+        "http://www.w3.org/ns/dcat#landingPage": [
+            {
+                "@id": "https://w3id.org/fair-metrics/general/FM_A1-1_M_HTTPSProt"
+            }
+        ],
+        "http://www.w3.org/ns/dcat#version": [
+            {
+                "@value": "Champion1.0"
+            }
+        ],
+        "https://w3id.org/dpv#isApplicableFor": [
+            {
+                "@id": "https://schema.org/CreativeWork"
+            }
+        ],
+        "https://w3id.org/ftr#applicationArea": [
+            {
+                "@id": "http://www.fairsharing.org/ontology/subject/SRAO_0000401"
+            }
+        ],
+        "https://w3id.org/ftr#identifier": [
+            {
+                "@type": "http://www.w3.org/2001/XMLSchema#anyURI",
+                "@value": "https://w3id.org/fair-metrics/general/FM_A1-1_M_HTTPSProt"
+            }
+        ],
+        "https://w3id.org/ftr#supportedBy": [
+            {
+                "@id": "https://w3id.org/FAIR-Champion"
+            }
+        ]
+    },
+    {
+        "@id": "_:n77241e3e622844529db419ed9828d032b1",
+        "@type": [
+            "http://www.w3.org/2006/vcard/ns#Individual"
+        ],
+        "http://vivoweb.org/ontology/core#orcidId": [
+            {
+                "@id": "http://orcid.org/0000-0002-7702-4495"
+            }
+        ],
+        "http://www.w3.org/2006/vcard/ns#fn": [
+            {
+                "@value": "Allyson L. Lister"
+            }
+        ],
+        "http://www.w3.org/2006/vcard/ns#hasEmail": [
+            {
+                "@id": "mailto:allyson.lister@oerc.ox.ac.uk"
+            }
+        ]
+    }
+]

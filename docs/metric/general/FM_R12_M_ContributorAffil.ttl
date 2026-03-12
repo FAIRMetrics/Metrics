@@ -1,0 +1,59 @@
+@prefix vcard:   <http://www.w3.org/2006/vcard/ns#> .
+@prefix ftr:     <https://w3id.org/ftr#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix foaf:    <http://xmlns.com/foaf/0.1/> .
+@prefix dcat:    <http://www.w3.org/ns/dcat#> .
+@prefix dpv:     <https://w3id.org/dpv#> .
+@prefix schema:  <https://schema.org/> .
+@prefix vivo:    <http://vivoweb.org/ontology/core#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+
+<https://w3id.org/fair-metrics/general/FM_R12_M_ContributorAffil>
+    a                          ftr:Metric, dcat:Dataset ;
+    rdfs:definedBy            <https://fairmetrics.github.io/Metrics/metric/general/FM_R12_M_ContributorAffil.ttl> ;
+
+    ftr:identifier            "https://w3id.org/fair-metrics/general/FM_R12_M_ContributorAffil"^^xsd:anyURI ;
+    dcterms:title             "FAIR Metric - R1.2 - Metadata - contributor affiliation" ;
+    vivo:abbreviation         "FM_R12_M_ContributorAffil" ;
+    dcat:landingPage          <https://w3id.org/fair-metrics/general/FM_R12_M_ContributorAffil> ;
+
+    dcterms:description       """
+    <p>This metric evaluates whether there is structured affiliation information associated with at least one author or core contributor in the metadata retrieved upon resolution of the provided identifier, providing one facet of evaluation for this R1.2.</p>
+
+<p>R1.2 requires that metadata be associated with detailed provenance. The purpose of 
+this principle is to ensure that the institutional context of authors or contributors is 
+documented, enabling attribution and transparency. This metric evaluates whether
+ there is structured affiliation information associated with at least one author 
+ or core contributor in the metadata retrieved upon resolution of the provided 
+ identifier. Under this interpretation, the evaluation checks whether at least 
+ one identified person (e.g., creator or contributor) is associated with an
+  organisation through a structured affiliation field or relationship. The 
+  affiliation must be explicitly represented in the metadata, rather than implied. 
+A resource satisfies this metric if at least one author or contributor includes any 
+nonzero value in the resolved 
+metadata of the following types only: citation_author_institution field name, 
+    DataCite creators affiliation (DOIs only), 
+    Crossref author/investigator/lead-investigator affiliation (DOIs only).</p>
+
+""" ;
+    dcat:keyword              "FAIR", "R1.2", "identifier", "metadata" ;
+
+    dcat:landingPage          <https://w3id.org/fair-metrics/general/FM_R12_M_ContributorAffil> ;
+
+    dcterms:creator           [
+        a                     vcard:Individual ;
+        vcard:fn              "Allyson L. Lister" ;
+        vivo:orcidId          <http://orcid.org/0000-0002-7702-4495> ;
+        vcard:hasEmail             <mailto:renaud.duyme@esrf.fr> ;
+    ] ;
+
+    dcat:version              "Champion1.0" ;
+
+    ftr:applicationArea       <http://www.fairsharing.org/ontology/subject/SRAO_0000401> ;
+    dcterms:license           <https://creativecommons.org/licenses/by/4.0/> ;
+
+
+    ftr:supportedBy           <https://w3id.org/FAIR-Champion> ;
+    dpv:isApplicableFor       schema:CreativeWork .
+

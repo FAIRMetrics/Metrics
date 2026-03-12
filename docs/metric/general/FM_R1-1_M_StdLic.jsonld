@@ -7,12 +7,21 @@
         ],
         "http://purl.org/dc/terms/creator": [
             {
-                "@id": "_:n4e468f6ce346489faa1a02d102647f15b1"
+                "@id": "_:n8cf2984937aa4048b18438ecc106c7aeb1"
+            },
+            {
+                "@id": "_:n8cf2984937aa4048b18438ecc106c7aeb2"
             }
         ],
         "http://purl.org/dc/terms/description": [
             {
-                "@value": "Metadata license discoverable. This metric aligns with FAIR Principle R1.1."
+                "@value": "<p>This metric evaluates whether there is an explicit licence declaration present in the metadata retrieved upon resolution of the provided identifier.</p>\n\n    <p>R1.1 requires that metadata be released with a clear and accessible data usage licence. \nThe purpose of this principle is to ensure that reuse conditions are explicitly stated at the \nlevel of the individual digital object. This metric evaluates whether there is an explicit \nlicence declaration present in the metadata retrieved upon resolution of the provided \nidentifier. Under this interpretation, the evaluation checks whether the resolved \nmetadata contains a licence statement or reference that clearly specifies usage\n conditions for the record or its associated research object. A resource satisfies \n this metric if the resolved metadata includes at least one explicit licence declaration.</p>\n    "
+            }
+        ],
+        "http://purl.org/dc/terms/issued": [
+            {
+                "@type": "http://www.w3.org/2001/XMLSchema#date",
+                "@value": "2026-02-20"
             }
         ],
         "http://purl.org/dc/terms/license": [
@@ -20,9 +29,15 @@
                 "@id": "https://creativecommons.org/licenses/by/4.0/"
             }
         ],
+        "http://purl.org/dc/terms/modified": [
+            {
+                "@type": "http://www.w3.org/2001/XMLSchema#date",
+                "@value": "2026-03-01"
+            }
+        ],
         "http://purl.org/dc/terms/title": [
             {
-                "@value": "FAIR Metric – R1.1 – Metadata - Metadata license is a standard license"
+                "@value": "FAIR Metric - R1.1 - Metadata - discoverable data license in metadata"
             }
         ],
         "http://vivoweb.org/ontology/core#abbreviation": [
@@ -32,7 +47,7 @@
         ],
         "http://www.w3.org/2000/01/rdf-schema#definedBy": [
             {
-                "@id": "https://w3id.org/fair-metrics/general/FM_R1-1_M_StdLic.ttl"
+                "@id": "https://fairmetrics.github.io/Metrics/metric/general/FM_R1-1_M_StdLic.ttl"
             }
         ],
         "http://www.w3.org/ns/dcat#keyword": [
@@ -40,21 +55,18 @@
                 "@value": "FAIR"
             },
             {
-                "@value": "reusability"
-            },
-            {
-                "@value": "standard-license"
-            },
-            {
-                "@value": "machine-readable"
-            },
-            {
                 "@value": "R1.1"
+            },
+            {
+                "@value": "identifier"
+            },
+            {
+                "@value": "metadata"
             }
         ],
         "http://www.w3.org/ns/dcat#landingPage": [
             {
-                "@id": "https://w3id.org/fair-metrics/landingpages/FM_R1-1_M_StdLic.md"
+                "@id": "https://w3id.org/fair-metrics/general/FM_R1-1_M_StdLic"
             }
         ],
         "http://www.w3.org/ns/dcat#version": [
@@ -64,17 +76,12 @@
         ],
         "https://w3id.org/dpv#isApplicableFor": [
             {
-                "@id": "https://schema.org/Dataset"
+                "@id": "https://schema.org/CreativeWork"
             }
         ],
         "https://w3id.org/ftr#applicationArea": [
             {
                 "@id": "http://www.fairsharing.org/ontology/subject/SRAO_0000401"
-            }
-        ],
-        "https://w3id.org/ftr#hasPositiveValidation": [
-            {
-                "@id": "https://w3id.org/duchenne-fdp"
             }
         ],
         "https://w3id.org/ftr#identifier": [
@@ -90,18 +97,39 @@
         ]
     },
     {
-        "@id": "_:n4e468f6ce346489faa1a02d102647f15b1",
+        "@id": "_:n8cf2984937aa4048b18438ecc106c7aeb1",
         "@type": [
-            "http://xmlns.com/foaf/0.1/Person"
+            "http://www.w3.org/2006/vcard/ns#Individual"
         ],
         "http://www.w3.org/2006/vcard/ns#fn": [
             {
                 "@value": "Mark D. Wilkinson"
             }
         ],
-        "http://xmlns.com/foaf/0.1/mbox": [
+        "http://www.w3.org/2006/vcard/ns#hasEmail": [
             {
-                "@id": "mailto:markw@illuminae.com"
+                "@id": "mailto:mark.wilkinson@upm.es"
+            }
+        ]
+    },
+    {
+        "@id": "_:n8cf2984937aa4048b18438ecc106c7aeb2",
+        "@type": [
+            "http://www.w3.org/2006/vcard/ns#Individual"
+        ],
+        "http://vivoweb.org/ontology/core#orcidId": [
+            {
+                "@id": "http://orcid.org/0000-0002-7702-4495"
+            }
+        ],
+        "http://www.w3.org/2006/vcard/ns#fn": [
+            {
+                "@value": "Allyson L. Lister"
+            }
+        ],
+        "http://www.w3.org/2006/vcard/ns#hasEmail": [
+            {
+                "@id": "mailto:mark.wilkinson@upm.es"
             }
         ]
     }

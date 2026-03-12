@@ -7,12 +7,21 @@
         ],
         "http://purl.org/dc/terms/creator": [
             {
-                "@id": "_:n5ee631b7e8354447a4bc794ff1e95c9fb1"
+                "@id": "_:n8212a3ae78874ff887065381e8867cfeb1"
+            },
+            {
+                "@id": "_:n8212a3ae78874ff887065381e8867cfeb2"
             }
         ],
         "http://purl.org/dc/terms/description": [
             {
-                "@value": "Metadata identifier explicitly in metadata. This metric aligns with FAIR Principle F3."
+                "@value": "<p>This metric evaluates whether the metadata record includes its own identifier, distinct from the identifier assigned to the research object it describes.</p>\n\n<p>This metric is concerned with the record-level traceability aspect of FAIR; while the F3 principle was originally created to require only the research object identifier within the metadata record, this metric expands that requirement to ensure that the metadata also includes its own identifier. This ensures that the metadata itself is machine-actionable and can be retrieved, accessed, and managed as an independent entity in an indexing system. If a metadata record lacks its own unique, resolvable identifier, it cannot be reliably cited, tracked, or versioned independently of the research object it describes.  This metric evaluates whether the metadata resolved from the identifier provided as input contains that identifier.</p>\n\n"
+            }
+        ],
+        "http://purl.org/dc/terms/issued": [
+            {
+                "@type": "http://www.w3.org/2001/XMLSchema#date",
+                "@value": "2026-02-20"
             }
         ],
         "http://purl.org/dc/terms/license": [
@@ -20,9 +29,15 @@
                 "@id": "https://creativecommons.org/licenses/by/4.0/"
             }
         ],
+        "http://purl.org/dc/terms/modified": [
+            {
+                "@type": "http://www.w3.org/2001/XMLSchema#date",
+                "@value": "2026-02-25"
+            }
+        ],
         "http://purl.org/dc/terms/title": [
             {
-                "@value": "FAIR Metric – F3 – Metadata - Metadata identifier explicitly in metadata"
+                "@value": "FAIR Metric - F3 - Metadata - includes its own identifier"
             }
         ],
         "http://vivoweb.org/ontology/core#abbreviation": [
@@ -32,7 +47,7 @@
         ],
         "http://www.w3.org/2000/01/rdf-schema#definedBy": [
             {
-                "@id": "https://w3id.org/fair-metrics/general/FM_F3_M_MetaIdent.ttl"
+                "@id": "https://fairmetrics.github.io/Metrics/metric/general/FM_F3_M_MetaIdent.ttl"
             }
         ],
         "http://www.w3.org/ns/dcat#keyword": [
@@ -40,21 +55,18 @@
                 "@value": "FAIR"
             },
             {
-                "@value": "findability"
-            },
-            {
-                "@value": "metadata"
+                "@value": "F3"
             },
             {
                 "@value": "identifier"
             },
             {
-                "@value": "F3"
+                "@value": "metadata"
             }
         ],
         "http://www.w3.org/ns/dcat#landingPage": [
             {
-                "@id": "https://w3id.org/fair-metrics/landingpages/FM_F3_M_MetaIdent.md"
+                "@id": "https://w3id.org/fair-metrics/general/FM_F3_M_MetaIdent"
             }
         ],
         "http://www.w3.org/ns/dcat#version": [
@@ -64,7 +76,7 @@
         ],
         "https://w3id.org/dpv#isApplicableFor": [
             {
-                "@id": "https://schema.org/Dataset"
+                "@id": "https://schema.org/CreativeWork"
             }
         ],
         "https://w3id.org/ftr#applicationArea": [
@@ -74,7 +86,7 @@
         ],
         "https://w3id.org/ftr#hasPositiveValidation": [
             {
-                "@id": "https://w3id.org/duchenne-fdp"
+                "@id": "https://doi.org/10.5281/zenodo.17901310(https://doi.org/10.5281/zenodo.17901310)"
             }
         ],
         "https://w3id.org/ftr#identifier": [
@@ -90,18 +102,39 @@
         ]
     },
     {
-        "@id": "_:n5ee631b7e8354447a4bc794ff1e95c9fb1",
+        "@id": "_:n8212a3ae78874ff887065381e8867cfeb1",
         "@type": [
-            "http://xmlns.com/foaf/0.1/Person"
+            "http://www.w3.org/2006/vcard/ns#Individual"
         ],
         "http://www.w3.org/2006/vcard/ns#fn": [
             {
                 "@value": "Mark D. Wilkinson"
             }
         ],
-        "http://xmlns.com/foaf/0.1/mbox": [
+        "http://www.w3.org/2006/vcard/ns#hasEmail": [
             {
-                "@id": "mailto:markw@illuminae.com"
+                "@id": "mailto:mark.wilkinson@upm.es"
+            }
+        ]
+    },
+    {
+        "@id": "_:n8212a3ae78874ff887065381e8867cfeb2",
+        "@type": [
+            "http://www.w3.org/2006/vcard/ns#Individual"
+        ],
+        "http://vivoweb.org/ontology/core#orcidId": [
+            {
+                "@id": "http://orcid.org/0000-0002-7702-4495"
+            }
+        ],
+        "http://www.w3.org/2006/vcard/ns#fn": [
+            {
+                "@value": "Allyson L. Lister"
+            }
+        ],
+        "http://www.w3.org/2006/vcard/ns#hasEmail": [
+            {
+                "@id": "mailto:mark.wilkinson@upm.es"
             }
         ]
     }

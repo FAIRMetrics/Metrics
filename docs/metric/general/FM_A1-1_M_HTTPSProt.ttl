@@ -1,0 +1,45 @@
+@prefix vcard:   <http://www.w3.org/2006/vcard/ns#> .
+@prefix ftr:     <https://w3id.org/ftr#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix foaf:    <http://xmlns.com/foaf/0.1/> .
+@prefix dcat:    <http://www.w3.org/ns/dcat#> .
+@prefix dpv:     <https://w3id.org/dpv#> .
+@prefix schema:  <https://schema.org/> .
+@prefix vivo:    <http://vivoweb.org/ontology/core#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+
+<https://w3id.org/fair-metrics/general/FM_A1-1_M_HTTPSProt>
+    a                          ftr:Metric, dcat:Dataset ;
+    rdfs:definedBy            <https://fairmetrics.github.io/Metrics/metric/general/FM_A1-1_M_HTTPSProt.ttl> ;
+
+    ftr:identifier            "https://w3id.org/fair-metrics/general/FM_A1-1_M_HTTPSProt"^^xsd:anyURI ;
+    dcterms:title             "FAIR Metric - A1.1 - Metadata - HTTP(S) retrieval protocol" ;
+    vivo:abbreviation         "FM_A1-1_M_HTTPSProt" ;
+    dcat:landingPage          <https://w3id.org/fair-metrics/general/FM_A1-1_M_HTTPSProt> ;
+
+    dcterms:description       """<p>This metric evaluates whether the protocol used to retrieve metadata referenced by the provided identifier is either HTTP or HTTPS and therefore openly specified, free to implement, and universally implementable.</p>
+
+<p>Principle A1.1 requires that metadata be retrievable by an open, free, and universally implementable protocol. The intent is to ensure that access to metadata is not gated by proprietary technologies, non-standardized interfaces, or restrictive licensing that prevents automated integration and universal access. Protocols such as HTTP(S) are the gold standard for this requirement because they are openly specified web standards, free for any developer to implement, and universally supported across virtually all modern software environments and programming languages. Protocols that are closed source or that have royalties associated with them could prevent users from being able to obtain the resource. By mandating these standards, we ensure that metadata remains accessible to the widest possible range of humans, harvesters and research discovery services. This metric evaluates whether the metadata access protocol satisfies the requirements for open, free, and universal implementation. The evaluation checks for the use of the HTTP or HTTPS protocols.</p>
+
+""" ;
+    dcat:keyword              "FAIR", "A1.1", "identifier", "metadata" ;
+
+    dcat:landingPage          <https://w3id.org/fair-metrics/general/FM_A1-1_M_HTTPSProt> ;
+
+    dcterms:creator           [
+        a                     vcard:Individual ;
+        vcard:fn              "Allyson L. Lister" ;
+        vivo:orcidId          <http://orcid.org/0000-0002-7702-4495> ;
+        vcard:hasEmail             <mailto:allyson.lister@oerc.ox.ac.uk> ;
+    ] ;
+
+    dcat:version              "Champion1.0" ;
+
+    ftr:applicationArea       <http://www.fairsharing.org/ontology/subject/SRAO_0000401> ;
+    dcterms:license           <https://creativecommons.org/licenses/by/4.0/> ;
+
+
+    ftr:supportedBy           <https://w3id.org/FAIR-Champion> ;
+    dpv:isApplicableFor       schema:CreativeWork .
+

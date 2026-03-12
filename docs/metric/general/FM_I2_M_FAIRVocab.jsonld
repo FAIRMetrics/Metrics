@@ -7,7 +7,7 @@
         ],
         "http://purl.org/dc/terms/creator": [
             {
-                "@id": "_:n415523cddef7482798114d8753d9e400b1"
+                "@id": "_:na441f3ba2493461282d337efd3b66992b1"
             }
         ],
         "http://purl.org/dc/terms/description": [
@@ -87,16 +87,16 @@
         ]
     },
     {
-        "@id": "_:n415523cddef7482798114d8753d9e400b1",
+        "@id": "_:na441f3ba2493461282d337efd3b66992b1",
         "@type": [
-            "http://xmlns.com/foaf/0.1/Person"
+            "http://www.w3.org/2006/vcard/ns#Individual"
         ],
         "http://www.w3.org/2006/vcard/ns#fn": [
             {
                 "@value": "Mark D. Wilkinson"
             }
         ],
-        "http://xmlns.com/foaf/0.1/mbox": [
+        "http://www.w3.org/2006/vcard/ns#hasEmail": [
             {
                 "@id": "mailto:markw@illuminae.com"
             }

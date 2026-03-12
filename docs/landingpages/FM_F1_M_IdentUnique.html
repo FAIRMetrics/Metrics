@@ -81,12 +81,16 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12"> 
-                    <button type="button" class="btn btn-primary" onclick="window.location.href='https://oeg-upm.github.io/fair_ontologies/doc/catalog.html#metric'" style="position: absolute; top: 10px; right: 10px;">Back</button>
-                    <h1 class="miClase text-center">FAIR Metric – F1 – Metadata - Identifier is globally unique and persistent</h1>
+                    
+                    <h1 class="miClase text-center">FAIR Metric - F1 - Metadata - Identifier is resolvable</h1>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-12 well" style="font-size: 16px;"> <p>identifier is globally unique and persistent. This metric aligns with FAIR Principle F1.</p></div>
+                <div class="col-md-12 well" style="font-size: 16px;"> <p>This metric evaluates whether the identifier provided as input satisfies the EOSC-PID aligned [FAIRsharing definition](<a href="https://fairsharing.gitbook.io/fairsharing/record-sections-and-fields/general-information/globally-unique-persistent-and-resolvable-identifier-schemas)">https://fairsharing.gitbook.io/fairsharing/record-sections-and-fields/general-information/globally-unique-persistent-and-resolvable-identifier-schemas)</a> of resolvability.</p>
+
+<p>F1 requires that metadata be assigned a globally unique, persistent and resolvable identifier. This metric is particularly concerned with the resolvability aspect of GUPRIs. For this metric, there must also be a known machine-actionable resolution protocol for the identifier. Although resolvability is not explicitly mentioned in the original Nature paper on the FAIR Principles, due to the relationship among global uniqueness, persistence and resolvability, please note that the [GO FAIR Foundation states](<a href="https://www.gofair.foundation/f1)">https://www.gofair.foundation/f1)</a> that FAIR implementations should require all three aspects. As such, some aspects of this metric overlap with FAIR A1. Resolvability is required so that identifiers are actionable for both humans and machines. In this metric, the definition of persistence follows the [FAIRsharing guidance](<a href="https://fairsharing.gitbook.io/fairsharing/record-sections-and-fields/general-information/globally-unique-persistent-and-resolvable-identifier-schemas)">https://fairsharing.gitbook.io/fairsharing/record-sections-and-fields/general-information/globally-unique-persistent-and-resolvable-identifier-schemas)</a> on Globally Unique, Persistent and Resolvable Identifier (GUPRI) schemas. This definition requires that humans and machines must be able to use the identifier to access information on the digital object. To make it globally resolvable as per the EOSC PID definition, it further needs to be part of a namespace defined by a syntax that is controlled by an Authority. There should be an established tombstoning or equivalent procedure. This metric evaluates whether the identifier provided as input satisfies the FAIRsharing definition of resolvability. The evaluation assesses whether the identifier schema supports the community definition provided by FAIRsharing.</p>
+
+<p>For an in-depth understanding of the issues around identifiers, please see http://dx.plos.org/10.1371/journal.pbio.2001414">http://dx.plos.org/10.1371/journal.pbio.2001414</div>
             </div>
             <div class="row flex-space-between"> 
                 <div class="col-md-12 align-items-center"> 
@@ -98,7 +102,7 @@
             </div>
             <div class="row row-equal" >
                 <div class="col-md-3 well tag_div"> <strong>Title</strong></div>
-                <div class="col-md-9 well"> FAIR Metric – F1 – Metadata - Identifier is globally unique and persistent </div>
+                <div class="col-md-9 well"> FAIR Metric - F1 - Metadata - Identifier is resolvable </div>
             </div>
             <div class="row row-equal" >
                 <div class="col-md-3 well tag_div"> <strong>Identifier</strong></div>
@@ -107,11 +111,11 @@
             </div>
             <div class="row row-equal" style="display: none;" >
                 <div class="col-md-3 well tag_div"> <strong>Creator</strong></div>
-                <div class="col-md-9 well"> <a href="None" target="_blank">None</a> </div>
+                <div class="col-md-9 well"> <a href="None" target="_blank">Mark D. Wilkinson</a> </div>
             </div>
             <div class="row row-equal" >
                 <div class="col-md-3 well tag_div"> <strong>Keywords</strong></div>
-                <div class="col-md-9 well"> FAIR, findability, persistent, identifier, GUID, F1 </div>
+                <div class="col-md-9 well"> FAIR, F1, identifier, metadata </div>
             </div>
             <div class="row row-equal">
                 <div class="col-md-3 well tag_div"> <strong>Contact Point</strong></div>
@@ -132,7 +136,7 @@
             </div>
             <!-- <div class="row row-equal" >
                 <div class="col-md-3 well tag_div"> <strong>Landing Page</strong></div>
-                <div class="col-md-9 well"><a href="https://w3id.org/fair-metrics/landingpages/FM_F1_M_IdentUnique.md" target="_blank">https://w3id.org/fair-metrics/landingpages/FM_F1_M_IdentUnique.md</a></div>
+                <div class="col-md-9 well"><a href="https://w3id.org/fair-metrics/general/FM_F1_M_IdentUnique" target="_blank">https://w3id.org/fair-metrics/general/FM_F1_M_IdentUnique</a></div>
             </div> -->
             <div class="row row-equal" >
                 <div class="col-md-3 well tag_div"> <strong>Principle</strong></div>
@@ -152,7 +156,7 @@
             </div>
             <div class="row row-equal">
                 <div class="col-md-3 well tag_div"> <strong>Applicable for</strong></div>
-                <div class="col-md-9 well"> <a href="https://schema.org/Dataset" target="_blank"> https://schema.org/Dataset </a> </div>
+                <div class="col-md-9 well"> <a href="https://schema.org/CreativeWork" target="_blank"> https://schema.org/CreativeWork </a> </div>
             </div>
             <div class="row row-equal">
                 <div class="col-md-3 well tag_div"> <strong>Supported by</strong></div>

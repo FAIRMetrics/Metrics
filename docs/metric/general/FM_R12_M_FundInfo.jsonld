@@ -1,0 +1,105 @@
+[
+    {
+        "@id": "https://w3id.org/fair-metrics/general/FM_R12_M_FundInfo",
+        "@type": [
+            "https://w3id.org/ftr#Metric",
+            "http://www.w3.org/ns/dcat#Dataset"
+        ],
+        "http://purl.org/dc/terms/creator": [
+            {
+                "@id": "_:n2dc7df2a091b4c77a19a3c9ecd53dd1ab1"
+            }
+        ],
+        "http://purl.org/dc/terms/description": [
+            {
+                "@value": "<p>This metric evaluates DOIs to determine whether there is structured funding information declared in the metadata retrieved upon resolution of the provided identifier, providing one facet of evaluation for this R1.2.</p>\n\n<p>R1.2 requires that (meta)data be associated with detailed provenance. The purpose of this principle is to ensure that the financial support underlying a digital object is documented and transparent. This metric evaluates whether there is structured funding information declared in the metadata retrieved upon resolution of the provided identifier. Under this interpretation, the evaluation checks for the presence of at least one funding reference, such as a funder name, grant identifier, or structured funding relationship. The funding information must be explicitly represented in the metadata. A resource satisfies this metric if at least one funding reference is present in the resolved metadata (DOIs only) of the following types only: DataCite fundingReferences, Crossref funder.</p>\n\n<p>#</p>"
+            }
+        ],
+        "http://purl.org/dc/terms/license": [
+            {
+                "@id": "https://creativecommons.org/licenses/by/4.0/"
+            }
+        ],
+        "http://purl.org/dc/terms/title": [
+            {
+                "@value": "FAIR Metric - R1.2 - Metadata - funding information"
+            }
+        ],
+        "http://vivoweb.org/ontology/core#abbreviation": [
+            {
+                "@value": "FM_R12_M_FundInfo"
+            }
+        ],
+        "http://www.w3.org/2000/01/rdf-schema#definedBy": [
+            {
+                "@id": "https://fairmetrics.github.io/Metrics/metric/general/FM_R12_M_FundInfo.ttl"
+            }
+        ],
+        "http://www.w3.org/ns/dcat#keyword": [
+            {
+                "@value": "FAIR"
+            },
+            {
+                "@value": "R1.2"
+            },
+            {
+                "@value": "identifier"
+            },
+            {
+                "@value": "metadata"
+            }
+        ],
+        "http://www.w3.org/ns/dcat#landingPage": [
+            {
+                "@id": "https://w3id.org/fair-metrics/general/FM_R12_M_FundInfo"
+            }
+        ],
+        "http://www.w3.org/ns/dcat#version": [
+            {
+                "@value": "Champion1.0"
+            }
+        ],
+        "https://w3id.org/dpv#isApplicableFor": [
+            {
+                "@id": "https://schema.org/CreativeWork"
+            }
+        ],
+        "https://w3id.org/ftr#applicationArea": [
+            {
+                "@id": "http://www.fairsharing.org/ontology/subject/SRAO_0000401"
+            }
+        ],
+        "https://w3id.org/ftr#identifier": [
+            {
+                "@type": "http://www.w3.org/2001/XMLSchema#anyURI",
+                "@value": "https://w3id.org/fair-metrics/general/FM_R12_M_FundInfo"
+            }
+        ],
+        "https://w3id.org/ftr#supportedBy": [
+            {
+                "@id": "https://w3id.org/FAIR-Champion"
+            }
+        ]
+    },
+    {
+        "@id": "_:n2dc7df2a091b4c77a19a3c9ecd53dd1ab1",
+        "@type": [
+            "http://www.w3.org/2006/vcard/ns#Individual"
+        ],
+        "http://vivoweb.org/ontology/core#orcidId": [
+            {
+                "@id": "http://orcid.org/0000-0002-7702-4495"
+            }
+        ],
+        "http://www.w3.org/2006/vcard/ns#fn": [
+            {
+                "@value": "Allyson L. Lister"
+            }
+        ],
+        "http://www.w3.org/2006/vcard/ns#hasEmail": [
+            {
+                "@id": "mailto:renaud.duyme@esrf.fr"
+            }
+        ]
+    }
+]

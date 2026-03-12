@@ -1,0 +1,53 @@
+@prefix vcard:   <http://www.w3.org/2006/vcard/ns#> .
+@prefix ftr:     <https://w3id.org/ftr#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix foaf:    <http://xmlns.com/foaf/0.1/> .
+@prefix dcat:    <http://www.w3.org/ns/dcat#> .
+@prefix dpv:     <https://w3id.org/dpv#> .
+@prefix schema:  <https://schema.org/> .
+@prefix vivo:    <http://vivoweb.org/ontology/core#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+
+<https://w3id.org/fair-metrics/general/FM_I1_M_FormLangSemantic>
+    a                          ftr:Metric, dcat:Dataset ;
+    rdfs:definedBy            <https://fairmetrics.github.io/Metrics/metric/general/FM_I1_M_FormLangSemantic.ttl> ;
+
+    ftr:identifier            "https://w3id.org/fair-metrics/general/FM_I1_M_FormLangSemantic"^^xsd:anyURI ;
+    dcterms:title             "FAIR Metric - I1 - Metadata - Uses Knowledge representation language (semantic)" ;
+    vivo:abbreviation         "FM_I1_M_FormLangSemantic" ;
+    dcat:landingPage          <https://w3id.org/fair-metrics/general/FM_I1_M_FormLangSemantic> ;
+
+    dcterms:description       """<p>This metric evaluates whether there is a resolved metadata representation that conforms to a recognised semantic knowledge representation language.</p>
+
+<p>I1 requires that metadata use a formal, accessible, shared and broadly applicable language for knowledge representation. The purpose of this principle is to ensure that metadata, when retrieved, is expressed in a formally defined knowledge representation language. In this metric, the definition of syntactic and semantic formats follows the [FAIRsharing guidance](<a href="https://fairsharing.gitbook.io/fairsharing/about-our-records/fair-assistance/syntactic-vs-semantic-knowledge-representation-languages).">https://fairsharing.gitbook.io/fairsharing/about-our-records/fair-assistance/syntactic-vs-semantic-knowledge-representation-languages).</a> Under this semantic interpretation, a resource satisfies this metric if the resolved metadata meets these defined semantic criteria for structured representation.</p>
+
+""" ;
+    dcat:keyword              "FAIR", "I1", "identifier", "metadata" ;
+
+    dcat:landingPage          <https://w3id.org/fair-metrics/general/FM_I1_M_FormLangSemantic> ;
+
+    dcterms:creator           [
+        a                     vcard:Individual ;
+        vcard:fn              "Mark D. Wilkinson" ;
+        vcard:hasEmail             <mailto:mark.wilkinson@upm.es> ;
+    ] ;
+    dcterms:creator           [
+        a                     vcard:Individual ;
+        vcard:fn              "Allyson L. Lister" ;
+        vivo:orcidId          <http://orcid.org/0000-0002-7702-4495> ;
+        vcard:hasEmail             <mailto:mark.wilkinson@upm.es> ;
+    ] ;
+
+    dcterms:issued            "2026-03-01"^^xsd:date ;
+    dcterms:modified          "2026-03-01"^^xsd:date ;
+
+    dcat:version              "Champion1.0" ;
+
+    ftr:applicationArea       <http://www.fairsharing.org/ontology/subject/SRAO_0000401> ;
+    dcterms:license           <https://creativecommons.org/licenses/by/4.0/> ;
+
+
+    ftr:supportedBy           <https://w3id.org/FAIR-Champion> ;
+    dpv:isApplicableFor       schema:CreativeWork .
+
