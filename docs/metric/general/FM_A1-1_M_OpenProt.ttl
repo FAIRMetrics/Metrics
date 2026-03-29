@@ -19,7 +19,7 @@
     dcterms:description       """open protocol for (meta)data retrieval. This metric aligns with FAIR Principle A1.1.""" ;
     dcat:keyword              "FAIR", "accessibility", "protocol", "open", "standard", "A1.1" ;
     
-    dcat:landingPage <https://w3id.org/fair-metrics/landingpages/FM_A1-1_M_OpenProt> ;
+    dcat:landingPage <https://w3id.org/fair-metrics/metric/FM_A1-1_M_OpenProt> ;
     
 dcterms:creator               [
     a                     vcard:Individual ;

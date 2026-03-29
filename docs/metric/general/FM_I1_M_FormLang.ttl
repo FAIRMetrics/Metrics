@@ -22,7 +22,7 @@
     dcterms:description       """Metadata uses a formal, accessible, shared, broadly applicable language. This metric aligns with FAIR Principle I1.""" ;
     dcat:keyword              "FAIR", "interoperability", "knowledge-representation", "FAIR-vocabulary", "I1" ;
     
-    dcat:landingPage <https://w3id.org/fair-metrics/landingpages/FM_I1_M_FormLang> ;
+    dcat:landingPage <https://w3id.org/fair-metrics/metric/FM_I1_M_FormLang> ;
     
 dcterms:creator               [
     a                     vcard:Individual ;

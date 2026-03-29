@@ -22,7 +22,7 @@
     dcterms:description       """Metadata uses fair vocabularies. This metric aligns with FAIR Principle I2.""" ;
     dcat:keyword              "FAIR", "interoperability", "vocabulary", "FAIR", "I2" ;
     
-    dcat:landingPage <https://w3id.org/fair-metrics/landingpages/FM_I2_M_FAIRVocab> ;
+    dcat:landingPage <https://w3id.org/fair-metrics/metric/FM_I2_M_FAIRVocab> ;
     
 dcterms:creator               [
     a                     vcard:Individual ;

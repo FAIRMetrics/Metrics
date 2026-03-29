@@ -57,7 +57,7 @@
         ],
         "http://www.w3.org/ns/dcat#landingPage": [
             {
-                "@id": "https://w3id.org/fair-metrics/landingpages/FM_A1-1_M_OpenProt"
+                "@id": "https://w3id.org/fair-metrics/metric/FM_A1-1_M_OpenProt"
             }
         ],
         "http://www.w3.org/ns/dcat#version": [
