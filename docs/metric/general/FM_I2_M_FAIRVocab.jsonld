@@ -51,7 +51,7 @@
         ],
         "http://www.w3.org/ns/dcat#landingPage": [
             {
-                "@id": "https://w3id.org/fair-metrics/metric/FM_I2_M_FAIRVocab"
+                "@id": "https://w3id.org/fair-metrics/general/FM_I2_M_FAIRVocab"
             }
         ],
         "http://www.w3.org/ns/dcat#version": [

@@ -54,7 +54,7 @@
         ],
         "http://www.w3.org/ns/dcat#landingPage": [
             {
-                "@id": "https://w3id.org/fair-metrics/metric/FM_I1_M_FormLang"
+                "@id": "https://w3id.org/fair-metrics/general/FM_I1_M_FormLang"
             }
         ],
         "http://www.w3.org/ns/dcat#version": [

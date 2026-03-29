@@ -21,7 +21,7 @@
     dcterms:description       """metadata is long-lived and independently accessible. This metric aligns with FAIR Principle A2.""" ;
     dcat:keyword              "FAIR", "accessibility", "metadata", "persistence", "A2" ;
     
-    dcat:landingPage <https://w3id.org/fair-metrics/metric/FM_A2_M_MetaLong> ;
+    dcat:landingPage <https://w3id.org/fair-metrics/general/FM_A2_M_MetaLong> ;
     
 dcterms:creator               [
     a                     vcard:Individual ;

@@ -22,7 +22,7 @@
     dcterms:description       """structured metadata. This metric aligns with FAIR Principle F2.""" ;
     dcat:keyword              "FAIR", "findability", "structured", "metadata", "F2" ;
     
-    dcat:landingPage <https://w3id.org/fair-metrics/metric/FM_F2_M_StructMeta> ;
+    dcat:landingPage <https://w3id.org/fair-metrics/general/FM_F2_M_StructMeta> ;
     
 dcterms:creator               [
     a                     vcard:Individual ;
