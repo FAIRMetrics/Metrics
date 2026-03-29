@@ -7,7 +7,7 @@
         ],
         "http://purl.org/dc/terms/creator": [
             {
-                "@id": "_:n89b97fd7269c41dd98fdcb78a461a55cb1"
+                "@id": "_:n5d48c2119e154a4abebee2a2af400471b1"
             }
         ],
         "http://purl.org/dc/terms/description": [
@@ -32,7 +32,7 @@
         ],
         "http://www.w3.org/2000/01/rdf-schema#definedBy": [
             {
-                "@id": "https://w3id.org/fair-metrics/esrf/FM_R1-2_M_Fund_ESRF.ttl"
+                "@id": "https://fairmetrics.github.io/Metrics/metric/esrf/FM_R1-2_M_Fund_ESRF.ttl"
             }
         ],
         "http://www.w3.org/ns/dcat#keyword": [
@@ -85,7 +85,7 @@
         ]
     },
     {
-        "@id": "_:n89b97fd7269c41dd98fdcb78a461a55cb1",
+        "@id": "_:n5d48c2119e154a4abebee2a2af400471b1",
         "@type": [
             "http://xmlns.com/foaf/0.1/Person"
         ],
