@@ -13,7 +13,7 @@
 <https://w3id.org/fair-metrics/esrf/FM_R1-1_M_DOI_Lic_ESRF>
     a                          ftr:Metric, dcat:Dataset ;
     
-    ftr:identifier            "https://w3id.org/fair-metrics/esrf/FM_R1-1_M_DOI_Lic_ESRF.doi"^^xsd:anyURI ;
+    ftr:identifier            "https://w3id.org/fair-metrics/esrf/FM_R1-1_M_DOI_Lic_ESRF"^^xsd:anyURI ;
 
     dcterms:title             "FAIR Metric – R1.1 – Metadata - License information found in DOI metadata" ;
     vivo:abbreviation         "FM_R1-1_M_DOI_Lic_ESRF" ;
