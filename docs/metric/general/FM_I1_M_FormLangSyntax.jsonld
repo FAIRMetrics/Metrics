@@ -7,10 +7,10 @@
         ],
         "http://purl.org/dc/terms/creator": [
             {
-                "@id": "_:ne2879a141299416db64e31e2b9f6c4b9b1"
+                "@id": "_:n55124110bcbf4e8d996dbd0733f7f466b1"
             },
             {
-                "@id": "_:ne2879a141299416db64e31e2b9f6c4b9b2"
+                "@id": "_:n55124110bcbf4e8d996dbd0733f7f466b2"
             }
         ],
         "http://purl.org/dc/terms/description": [
@@ -97,7 +97,7 @@
         ]
     },
     {
-        "@id": "_:ne2879a141299416db64e31e2b9f6c4b9b1",
+        "@id": "_:n55124110bcbf4e8d996dbd0733f7f466b1",
         "@type": [
             "http://www.w3.org/2006/vcard/ns#Individual"
         ],
@@ -113,7 +113,7 @@
         ]
     },
     {
-        "@id": "_:ne2879a141299416db64e31e2b9f6c4b9b2",
+        "@id": "_:n55124110bcbf4e8d996dbd0733f7f466b2",
         "@type": [
             "http://www.w3.org/2006/vcard/ns#Individual"
         ],

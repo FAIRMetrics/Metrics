@@ -1,18 +1,24 @@
 [
     {
-        "@id": "https://w3id.org/fair-metrics/general/FM_I1_M_FormLang",
+        "@id": "https://w3id.org/fair-metrics/erdera/FM_R1-3_M_VP_L2",
         "@type": [
             "https://w3id.org/ftr#Metric",
             "http://www.w3.org/ns/dcat#Dataset"
         ],
         "http://purl.org/dc/terms/creator": [
             {
-                "@id": "_:nef091d5a221c4f37a3d06c3fd2280464b1"
+                "@id": "_:nb19951f5c4cc4d859add91e3506777f8b1"
             }
         ],
         "http://purl.org/dc/terms/description": [
             {
-                "@value": "Metadata uses a formal, accessible, shared, broadly applicable language. This metric aligns with FAIR Principle I1."
+                "@value": "\n                           The ERDERA Project has strict requirements for minimal metadata to onboard their Virtual Platform. \n                            For Level 2, you must first be Level 1 compliant (see https://w3id.org/fair-metrics/erdera/FM_R1-3_M_VP_L1).\n                            In addition, you must declare yourself as a dcat Data Service, and have a landingPage at a minimimum.\n\n"
+            }
+        ],
+        "http://purl.org/dc/terms/issued": [
+            {
+                "@type": "http://www.w3.org/2001/XMLSchema#date",
+                "@value": "2026-04-06"
             }
         ],
         "http://purl.org/dc/terms/license": [
@@ -20,19 +26,25 @@
                 "@id": "https://creativecommons.org/licenses/by/4.0/"
             }
         ],
+        "http://purl.org/dc/terms/modified": [
+            {
+                "@type": "http://www.w3.org/2001/XMLSchema#date",
+                "@value": "2026-04-06"
+            }
+        ],
         "http://purl.org/dc/terms/title": [
             {
-                "@value": "FAIR Metric – I1 – Metadata - Metadata uses a formal, accessible, shared, broadly applicable language"
+                "@value": "ERDERA Metric - R1.3 - Metadata - Metadata meets minimal VP Metadata for ERDERA Virtual Platform Level 2 Compliance  "
             }
         ],
         "http://vivoweb.org/ontology/core#abbreviation": [
             {
-                "@value": "FM_I1_M_FormLang"
+                "@value": "FM_R1-3_M_VP_L2"
             }
         ],
         "http://www.w3.org/2000/01/rdf-schema#definedBy": [
             {
-                "@id": "https://w3id.org/fair-metrics/general/FM_I1_M_FormLang.ttl"
+                "@id": "https://fairmetrics.github.io/Metrics/metric/erdera/FM_R1-3_M_VP_L2.ttl"
             }
         ],
         "http://www.w3.org/ns/dcat#keyword": [
@@ -40,21 +52,27 @@
                 "@value": "FAIR"
             },
             {
-                "@value": "interoperability"
+                "@value": "R1.3"
             },
             {
-                "@value": "knowledge-representation"
+                "@value": "identifier"
             },
             {
-                "@value": "FAIR-vocabulary"
+                "@value": "metadata"
             },
             {
-                "@value": "I1"
+                "@value": "ERDERA"
+            },
+            {
+                "@value": "virtual platform"
+            },
+            {
+                "@value": "data service"
             }
         ],
         "http://www.w3.org/ns/dcat#landingPage": [
             {
-                "@id": "https://w3id.org/fair-metrics/general/FM_I1_M_FormLang"
+                "@id": "https://w3id.org/fair-metrics/erdera/FM_R1-3_M_VP_L2"
             }
         ],
         "http://www.w3.org/ns/dcat#version": [
@@ -64,7 +82,7 @@
         ],
         "https://w3id.org/dpv#isApplicableFor": [
             {
-                "@id": "https://schema.org/Dataset"
+                "@id": "https://schema.org/CreativeWork"
             }
         ],
         "https://w3id.org/ftr#applicationArea": [
@@ -72,15 +90,10 @@
                 "@id": "http://www.fairsharing.org/ontology/subject/SRAO_0000401"
             }
         ],
-        "https://w3id.org/ftr#hasPositiveValidation": [
-            {
-                "@id": "https://w3id.org/duchenne-fdp"
-            }
-        ],
         "https://w3id.org/ftr#identifier": [
             {
                 "@type": "http://www.w3.org/2001/XMLSchema#anyURI",
-                "@value": "https://w3id.org/fair-metrics/general/FM_I1_M_FormLang"
+                "@value": "https://w3id.org/fair-metrics/erdera/FM_R1-3_M_VP_L2"
             }
         ],
         "https://w3id.org/ftr#supportedBy": [
@@ -90,7 +103,7 @@
         ]
     },
     {
-        "@id": "_:nef091d5a221c4f37a3d06c3fd2280464b1",
+        "@id": "_:nb19951f5c4cc4d859add91e3506777f8b1",
         "@type": [
             "http://www.w3.org/2006/vcard/ns#Individual"
         ],
@@ -101,7 +114,7 @@
         ],
         "http://www.w3.org/2006/vcard/ns#hasEmail": [
             {
-                "@id": "mailto:markw@illuminae.com"
+                "@id": "mailto:mark.wilkinson@upm.es"
             }
         ]
     }

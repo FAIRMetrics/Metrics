@@ -1,5 +1,5 @@
 go into Metrics/docs
-the script looks for "metrics" and traverses
+the script looks for "metric" (singular) and traverses
 it will output to landingpages, and you can sort it from there
 
 python3.10 web_generation_scripts/ttl_transformations.py -i ./ -o landingpages/
