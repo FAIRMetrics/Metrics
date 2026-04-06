@@ -1,0 +1,48 @@
+@prefix vcard:   <http://www.w3.org/2006/vcard/ns#> .
+@prefix ftr:     <https://w3id.org/ftr#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix foaf:    <http://xmlns.com/foaf/0.1/> .
+@prefix dcat:    <http://www.w3.org/ns/dcat#> .
+@prefix dpv:     <https://w3id.org/dpv#> .
+@prefix schema:  <https://schema.org/> .
+@prefix vivo:    <http://vivoweb.org/ontology/core#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+
+<https://w3id.org/fair-metrics/erdera/FM_R1-3_M_VP_L1>
+    a                          ftr:Metric, dcat:Dataset ;
+    rdfs:definedBy            <https://fairmetrics.github.io/Metrics/metric/erdera/FM_R1-3_M_VP_L1.ttl> ;
+
+    ftr:identifier            "https://w3id.org/fair-metrics/erdera/FM_R1-3_M_VP_L1"^^xsd:anyURI ;
+    dcterms:title             "ERDERA Metric - R1.3 - Metadata - Minimal VP Metadata for Level 1 Compliance" ;
+    vivo:abbreviation         "FM_R1-3_M_VP_L1" ;
+    dcat:landingPage          <https://w3id.org/fair-metrics/erdera/FM_R1-3_M_VP_L1> ;
+
+    dcterms:description       """The ERDERA Project has strict requirements for minimal metadata to onboard their Virtual Platform. 
+                            These include: Migration away from deprecated EJP purl properties to the w3id equivalents.  Presence of the VPDiscoverable prpoperty. Properties: dcat:theme dcat:contactPoint dct:description
+                            dcat:keyword dct:language dct:license
+                            dct:publisher dct:title dcat:contactPoint dcat:landingPage.  
+                        It does not test the substructure of the dct:publisher, but it must be a foaf:Agent with a foaf:name.
+""";
+    dcat:keyword              "FAIR", "R1.3", "identifier", "metadata", "ERDERA", "virtual platform"   ;
+
+    dcat:landingPage          <https://w3id.org/fair-metrics/erdera/FM_R1-3_M_VP_L1> ;
+
+    dcterms:creator           [
+        a                     vcard:Individual ;
+        vcard:fn              "Mark D. Wilkinson" ;
+        vcard:hasEmail             <mailto:mark.wilkinson@upm.es> ;
+    ] ;
+
+    dcterms:issued            "2026-04-06"^^xsd:date ;
+    dcterms:modified          "2026-04-06"^^xsd:date ;
+
+    dcat:version              "Champion1.0" ;
+
+    ftr:applicationArea       <http://www.fairsharing.org/ontology/subject/SRAO_0000401> ;
+    dcterms:license           <https://creativecommons.org/licenses/by/4.0/> ;
+
+
+    ftr:supportedBy           <https://w3id.org/FAIR-Champion> ;
+    dpv:isApplicableFor       schema:CreativeWork .
+
