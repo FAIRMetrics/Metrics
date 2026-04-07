@@ -8,6 +8,7 @@
 @prefix schema:  <https://schema.org/> .
 @prefix vivo:    <http://vivoweb.org/ontology/core#> .
 @prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dqv:    <http://www.w3.org/ns/dqv#> .
 
 <https://w3id.org/fair-metrics/erdera/FM_R1-3_M_VP_L2>
     a                          ftr:Metric, dcat:Dataset ;
@@ -40,10 +41,11 @@
 
     dcat:version              "Champion1.0" ;
 
-    ftr:applicationArea       <http://www.fairsharing.org/ontology/subject/SRAO_0000401> ;
+    ftr:applicationArea       	<http://purl.obolibrary.org/obo/NCIT_C4873>, <http://purl.obolibrary.org/obo/OGMS_0000031> ;
     dcterms:license           <https://creativecommons.org/licenses/by/4.0/> ;
 
-
+dqv:inDimension <https://doi.org/10.25504/FAIRsharing.87d197> ;
+    ftr:status "Active"@en ;
     ftr:supportedBy           <https://w3id.org/FAIR-Champion> ;
     dpv:isApplicableFor       schema:CreativeWork .
 
