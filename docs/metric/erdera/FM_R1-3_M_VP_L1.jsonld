@@ -7,12 +7,12 @@
         ],
         "http://purl.org/dc/terms/creator": [
             {
-                "@id": "_:n0fa6b524598d40779ba837f77642a15eb1"
+                "@id": "_:n4ce547921026435ea1290a71b6daf74fb1"
             }
         ],
         "http://purl.org/dc/terms/description": [
             {
-                "@value": "The ERDERA Project has strict requirements for minimal metadata to onboard their Virtual Platform. \n                            These include: Migration away from deprecated EJP purl properties to the w3id equivalents.  Presence of the VPDiscoverable prpoperty. Properties: dcat:theme dcat:contactPoint dct:description\n                            dcat:keyword dct:language dct:license\n                            dct:publisher dct:title dcat:contactPoint dcat:landingPage.  \n                        It does not test the substructure of the dct:publisher, but it must be a foaf:Agent with a foaf:name.\n"
+                "@value": "The ERDERA Project has strict requirements for minimal metadata to onboard their Virtual Platform. \n                            These include: Migration away from deprecated EJP purl properties to the w3id equivalents.  Presence of the VPDiscoverable prpoperty. Properties: dcat:theme dcat:contactPoint dct:description\n                            dcat:keyword dct:language dct:license\n                            dct:publisher dct:title dcat:contactPoint dcat:landingPage.  \n                        It does not extensively test the substructure of the dct:publisher, but it must be a foaf:Agent with a foaf:name.\n"
             }
         ],
         "http://purl.org/dc/terms/issued": [
@@ -77,6 +77,11 @@
                 "@value": "Champion1.0"
             }
         ],
+        "http://www.w3.org/ns/dqv#inDimension": [
+            {
+                "@id": "https://doi.org/10.25504/FAIRsharing.87d197"
+            }
+        ],
         "https://w3id.org/dpv#isApplicableFor": [
             {
                 "@id": "https://schema.org/CreativeWork"
@@ -84,13 +89,22 @@
         ],
         "https://w3id.org/ftr#applicationArea": [
             {
-                "@id": "http://www.fairsharing.org/ontology/subject/SRAO_0000401"
+                "@id": "http://purl.obolibrary.org/obo/NCIT_C4873"
+            },
+            {
+                "@id": "http://purl.obolibrary.org/obo/OGMS_0000031"
             }
         ],
         "https://w3id.org/ftr#identifier": [
             {
                 "@type": "http://www.w3.org/2001/XMLSchema#anyURI",
                 "@value": "https://w3id.org/fair-metrics/erdera/FM_R1-3_M_VP_L1"
+            }
+        ],
+        "https://w3id.org/ftr#status": [
+            {
+                "@language": "en",
+                "@value": "Active"
             }
         ],
         "https://w3id.org/ftr#supportedBy": [
@@ -100,7 +114,7 @@
         ]
     },
     {
-        "@id": "_:n0fa6b524598d40779ba837f77642a15eb1",
+        "@id": "_:n4ce547921026435ea1290a71b6daf74fb1",
         "@type": [
             "http://www.w3.org/2006/vcard/ns#Individual"
         ],

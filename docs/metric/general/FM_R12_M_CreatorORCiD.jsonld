@@ -7,7 +7,7 @@
         ],
         "http://purl.org/dc/terms/creator": [
             {
-                "@id": "_:n6ea531a2b3094cfdb42a52404a588866b1"
+                "@id": "_:na1142e84d22b49f181ee8148f36ae8e0b1"
             }
         ],
         "http://purl.org/dc/terms/description": [
@@ -82,7 +82,7 @@
         ]
     },
     {
-        "@id": "_:n6ea531a2b3094cfdb42a52404a588866b1",
+        "@id": "_:na1142e84d22b49f181ee8148f36ae8e0b1",
         "@type": [
             "http://www.w3.org/2006/vcard/ns#Individual"
         ],
