@@ -7,10 +7,10 @@
         ],
         "http://purl.org/dc/terms/creator": [
             {
-                "@id": "_:nd0b853b1c26b452ca2aeebe9e3ed117db1"
+                "@id": "_:n8b04f40572ba4e649143cbe004040a83b1"
             },
             {
-                "@id": "_:nd0b853b1c26b452ca2aeebe9e3ed117db2"
+                "@id": "_:n8b04f40572ba4e649143cbe004040a83b2"
             }
         ],
         "http://purl.org/dc/terms/description": [
@@ -48,6 +48,11 @@
         "http://www.w3.org/2000/01/rdf-schema#definedBy": [
             {
                 "@id": "https://fairmetrics.github.io/Metrics/metric/general/FM_F4_M_MetaIndexed.ttl"
+            }
+        ],
+        "http://www.w3.org/ns/dcat#contactPoint": [
+            {
+                "@id": "_:n8b04f40572ba4e649143cbe004040a83b3"
             }
         ],
         "http://www.w3.org/ns/dcat#keyword": [
@@ -90,6 +95,12 @@
                 "@value": "https://w3id.org/fair-metrics/general/FM_F4_M_MetaIndexed"
             }
         ],
+        "https://w3id.org/ftr#status": [
+            {
+                "@language": "en",
+                "@value": "Active"
+            }
+        ],
         "https://w3id.org/ftr#supportedBy": [
             {
                 "@id": "https://w3id.org/FAIR-Champion"
@@ -97,7 +108,7 @@
         ]
     },
     {
-        "@id": "_:nd0b853b1c26b452ca2aeebe9e3ed117db1",
+        "@id": "_:n8b04f40572ba4e649143cbe004040a83b1",
         "@type": [
             "http://www.w3.org/2006/vcard/ns#Individual"
         ],
@@ -113,7 +124,7 @@
         ]
     },
     {
-        "@id": "_:nd0b853b1c26b452ca2aeebe9e3ed117db2",
+        "@id": "_:n8b04f40572ba4e649143cbe004040a83b2",
         "@type": [
             "http://www.w3.org/2006/vcard/ns#Individual"
         ],
@@ -130,6 +141,27 @@
         "http://www.w3.org/2006/vcard/ns#hasEmail": [
             {
                 "@id": "mailto:mark.wilkinson@upm.es"
+            }
+        ]
+    },
+    {
+        "@id": "_:n8b04f40572ba4e649143cbe004040a83b3",
+        "@type": [
+            "http://www.w3.org/2006/vcard/ns#Individual"
+        ],
+        "http://www.w3.org/2006/vcard/ns#fn": [
+            {
+                "@value": "Mark D. Wilkinson"
+            }
+        ],
+        "http://www.w3.org/2006/vcard/ns#hasEmail": [
+            {
+                "@id": "mailto:mark.wilkinson@upm.es"
+            }
+        ],
+        "http://www.w3.org/2006/vcard/ns#organization-name": [
+            {
+                "@value": "Wilkinson Laboratory, UPM, Madrid"
             }
         ]
     }

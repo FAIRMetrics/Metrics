@@ -7,7 +7,7 @@
         ],
         "http://purl.org/dc/terms/creator": [
             {
-                "@id": "_:n4ce547921026435ea1290a71b6daf74fb1"
+                "@id": "_:nabf6cfc94b2c4089aabe2d7047842b9cb1"
             }
         ],
         "http://purl.org/dc/terms/description": [
@@ -45,6 +45,11 @@
         "http://www.w3.org/2000/01/rdf-schema#definedBy": [
             {
                 "@id": "https://fairmetrics.github.io/Metrics/metric/erdera/FM_R1-3_M_VP_L1.ttl"
+            }
+        ],
+        "http://www.w3.org/ns/dcat#contactPoint": [
+            {
+                "@id": "_:nabf6cfc94b2c4089aabe2d7047842b9cb2"
             }
         ],
         "http://www.w3.org/ns/dcat#keyword": [
@@ -114,7 +119,7 @@
         ]
     },
     {
-        "@id": "_:n4ce547921026435ea1290a71b6daf74fb1",
+        "@id": "_:nabf6cfc94b2c4089aabe2d7047842b9cb1",
         "@type": [
             "http://www.w3.org/2006/vcard/ns#Individual"
         ],
@@ -126,6 +131,27 @@
         "http://www.w3.org/2006/vcard/ns#hasEmail": [
             {
                 "@id": "mailto:mark.wilkinson@upm.es"
+            }
+        ]
+    },
+    {
+        "@id": "_:nabf6cfc94b2c4089aabe2d7047842b9cb2",
+        "@type": [
+            "http://www.w3.org/2006/vcard/ns#Individual"
+        ],
+        "http://www.w3.org/2006/vcard/ns#fn": [
+            {
+                "@value": "Mark D. Wilkinson"
+            }
+        ],
+        "http://www.w3.org/2006/vcard/ns#hasEmail": [
+            {
+                "@id": "mailto:mark.wilkinson@upm.es"
+            }
+        ],
+        "http://www.w3.org/2006/vcard/ns#organization-name": [
+            {
+                "@value": "Wilkinson Laboratory, UPM, Madrid"
             }
         ]
     }

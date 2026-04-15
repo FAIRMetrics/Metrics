@@ -7,7 +7,7 @@
         ],
         "http://purl.org/dc/terms/creator": [
             {
-                "@id": "_:na1142e84d22b49f181ee8148f36ae8e0b1"
+                "@id": "_:nca1f03e53b8447a3bfcaa2bbd1aa3ff9b1"
             }
         ],
         "http://purl.org/dc/terms/description": [
@@ -33,6 +33,11 @@
         "http://www.w3.org/2000/01/rdf-schema#definedBy": [
             {
                 "@id": "https://fairmetrics.github.io/Metrics/metric/general/FM_R12_M_CreatorORCiD.ttl"
+            }
+        ],
+        "http://www.w3.org/ns/dcat#contactPoint": [
+            {
+                "@id": "_:nca1f03e53b8447a3bfcaa2bbd1aa3ff9b2"
             }
         ],
         "http://www.w3.org/ns/dcat#keyword": [
@@ -75,6 +80,12 @@
                 "@value": "https://w3id.org/fair-metrics/general/FM_R12_M_CreatorORCiD"
             }
         ],
+        "https://w3id.org/ftr#status": [
+            {
+                "@language": "en",
+                "@value": "Active"
+            }
+        ],
         "https://w3id.org/ftr#supportedBy": [
             {
                 "@id": "https://w3id.org/FAIR-Champion"
@@ -82,7 +93,7 @@
         ]
     },
     {
-        "@id": "_:na1142e84d22b49f181ee8148f36ae8e0b1",
+        "@id": "_:nca1f03e53b8447a3bfcaa2bbd1aa3ff9b1",
         "@type": [
             "http://www.w3.org/2006/vcard/ns#Individual"
         ],
@@ -99,6 +110,27 @@
         "http://www.w3.org/2006/vcard/ns#hasEmail": [
             {
                 "@id": "mailto:allyson.lister@oerc.ox.ac.uk"
+            }
+        ]
+    },
+    {
+        "@id": "_:nca1f03e53b8447a3bfcaa2bbd1aa3ff9b2",
+        "@type": [
+            "http://www.w3.org/2006/vcard/ns#Individual"
+        ],
+        "http://www.w3.org/2006/vcard/ns#fn": [
+            {
+                "@value": "Mark D. Wilkinson"
+            }
+        ],
+        "http://www.w3.org/2006/vcard/ns#hasEmail": [
+            {
+                "@id": "mailto:mark.wilkinson@upm.es"
+            }
+        ],
+        "http://www.w3.org/2006/vcard/ns#organization-name": [
+            {
+                "@value": "Wilkinson Laboratory, UPM, Madrid"
             }
         ]
     }

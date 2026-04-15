@@ -7,7 +7,7 @@
         ],
         "http://purl.org/dc/terms/creator": [
             {
-                "@id": "_:n5b60327e4d3541e18141fc84e964b4edb1"
+                "@id": "_:n3e09e7ba226545f6aaa3adc63eb3bb70b1"
             }
         ],
         "http://purl.org/dc/terms/description": [
@@ -33,6 +33,11 @@
         "http://www.w3.org/2000/01/rdf-schema#definedBy": [
             {
                 "@id": "https://w3id.org/fair-metrics/general/FM_F2_M_StructMeta.ttl"
+            }
+        ],
+        "http://www.w3.org/ns/dcat#contactPoint": [
+            {
+                "@id": "_:n3e09e7ba226545f6aaa3adc63eb3bb70b2"
             }
         ],
         "http://www.w3.org/ns/dcat#keyword": [
@@ -83,6 +88,12 @@
                 "@value": "https://w3id.org/fair-metrics/general/FM_F2_M_StructMeta"
             }
         ],
+        "https://w3id.org/ftr#status": [
+            {
+                "@language": "en",
+                "@value": "Active"
+            }
+        ],
         "https://w3id.org/ftr#supportedBy": [
             {
                 "@id": "https://w3id.org/FAIR-Champion"
@@ -90,7 +101,7 @@
         ]
     },
     {
-        "@id": "_:n5b60327e4d3541e18141fc84e964b4edb1",
+        "@id": "_:n3e09e7ba226545f6aaa3adc63eb3bb70b1",
         "@type": [
             "http://www.w3.org/2006/vcard/ns#Individual"
         ],
@@ -102,6 +113,27 @@
         "http://www.w3.org/2006/vcard/ns#hasEmail": [
             {
                 "@id": "mailto:markw@illuminae.com"
+            }
+        ]
+    },
+    {
+        "@id": "_:n3e09e7ba226545f6aaa3adc63eb3bb70b2",
+        "@type": [
+            "http://www.w3.org/2006/vcard/ns#Individual"
+        ],
+        "http://www.w3.org/2006/vcard/ns#fn": [
+            {
+                "@value": "Mark D. Wilkinson"
+            }
+        ],
+        "http://www.w3.org/2006/vcard/ns#hasEmail": [
+            {
+                "@id": "mailto:mark.wilkinson@upm.es"
+            }
+        ],
+        "http://www.w3.org/2006/vcard/ns#organization-name": [
+            {
+                "@value": "Wilkinson Laboratory, UPM, Madrid"
             }
         ]
     }

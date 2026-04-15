@@ -39,6 +39,14 @@
         vcard:hasEmail             <mailto:mark.wilkinson@upm.es> ;
     ] ;
 
+    dcat:contactPoint           [
+        a                     vcard:Individual ;
+        vcard:fn              "Mark D. Wilkinson" ;
+        vcard:organization-name "Wilkinson Laboratory, UPM, Madrid";
+        vcard:hasEmail             <mailto:mark.wilkinson@upm.es> ;
+    ] ;
+    
+
     dcterms:issued            "2026-03-01"^^xsd:date ;
     dcterms:modified          "2026-03-01"^^xsd:date ;
 
@@ -47,7 +55,7 @@
     ftr:applicationArea       <http://www.fairsharing.org/ontology/subject/SRAO_0000401> ;
     dcterms:license           <https://creativecommons.org/licenses/by/4.0/> ;
 
-
+	ftr:status "Active"@en ;
     ftr:supportedBy           <https://w3id.org/FAIR-Champion> ;
     dpv:isApplicableFor       schema:CreativeWork .
 
