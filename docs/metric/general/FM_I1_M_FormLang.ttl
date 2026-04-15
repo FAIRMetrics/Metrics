@@ -23,7 +23,7 @@
     dcat:keyword              "FAIR", "interoperability", "knowledge-representation", "FAIR-vocabulary", "I1" ;
     
     dcat:landingPage <https://w3id.org/fair-metrics/general/FM_I1_M_FormLang> ;
-    
+    dqv:inDimension <https://doi.org/10.25504/FAIRsharing.ec5648> ;
 dcterms:creator               [
     a                     vcard:Individual ;
     vcard:fn             "Mark D. Wilkinson" ;

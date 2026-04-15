@@ -44,6 +44,7 @@ metadata contains a licence statement or reference that clearly specifies usage
         vivo:orcidId          <http://orcid.org/0000-0002-7702-4495> ;
         vcard:hasEmail             <mailto:mark.wilkinson@upm.es> ;
     ] ;
+    dqv:inDimension <https://doi.org/10.25504/FAIRsharing.482c33> ;
 
     dcat:contactPoint           [
         a                     vcard:Individual ;

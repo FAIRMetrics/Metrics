@@ -24,7 +24,7 @@
 
 """ ;
     dcat:keyword              "FAIR", "A1.1", "identifier", "metadata" ;
-
+dqv:inDimension <https://doi.org/10.25504/FAIRsharing.7612c1> ;
     dcat:landingPage          <https://w3id.org/fair-metrics/general/FM_A1-1_M_HTTPSProt> ;
 
     dcterms:creator           [

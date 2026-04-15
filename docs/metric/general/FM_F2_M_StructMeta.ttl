@@ -23,7 +23,7 @@
     dcat:keyword              "FAIR", "findability", "structured", "metadata", "F2" ;
     
     dcat:landingPage <https://w3id.org/fair-metrics/general/FM_F2_M_StructMeta> ;
-    
+    dqv:inDimension <https://doi.org/10.25504/FAIRsharing.e05e98> ;
 dcterms:creator               [
     a                     vcard:Individual ;
     vcard:fn             "Mark D. Wilkinson" ;

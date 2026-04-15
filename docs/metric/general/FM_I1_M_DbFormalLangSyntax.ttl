@@ -26,7 +26,7 @@
     dcat:keyword              "FAIR", "I1", "identifier", "metadata" ;
 
     dcat:landingPage          <https://w3id.org/fair-metrics/general/FM_I1_M_DbFormalLangSyntax> ;
-
+dqv:inDimension <https://doi.org/10.25504/FAIRsharing.ec5648> ;
     dcterms:creator           [
         a                     vcard:Individual ;
         vcard:fn              "Allyson L. Lister" ;

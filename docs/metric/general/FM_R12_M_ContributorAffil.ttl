@@ -47,6 +47,7 @@ metadata of the following types only: citation_author_institution field name,
         vivo:orcidId          <http://orcid.org/0000-0002-7702-4495> ;
         vcard:hasEmail             <mailto:renaud.duyme@esrf.fr> ;
     ] ;
+    dqv:inDimension <https://doi.org/10.25504/FAIRsharing.3e9860> ;
 
 
     dcat:contactPoint           [

@@ -26,6 +26,7 @@
     dcat:keyword              "FAIR", "I2", "identifier", "metadata" ;
 
     dcat:landingPage          <https://w3id.org/fair-metrics/general/FM_I2_M_FAIRVocabSyntax> ;
+    dqv:inDimension <https://doi.org/10.25504/FAIRsharing.96d4af> ;
 
     dcterms:creator           [
         a                     vcard:Individual ;

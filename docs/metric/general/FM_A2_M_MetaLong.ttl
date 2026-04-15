@@ -22,7 +22,7 @@
     dcat:keyword              "FAIR", "accessibility", "metadata", "persistence", "A2" ;
     
     dcat:landingPage <https://w3id.org/fair-metrics/general/FM_A2_M_MetaLong> ;
-    
+   dqv:inDimension <https://doi.org/10.25504/FAIRsharing.7c4d7f> ; 
 dcterms:creator               [
     a                     vcard:Individual ;
     vcard:fn             "Mark D. Wilkinson" ;

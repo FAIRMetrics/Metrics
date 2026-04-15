@@ -26,6 +26,7 @@
     dcat:keyword              "FAIR", "R1.2", "identifier", "metadata" ;
 
     dcat:landingPage          <https://w3id.org/fair-metrics/general/FM_R12_D_CitedInPub> ;
+    dqv:inDimension <https://doi.org/10.25504/FAIRsharing.3e9860> ;
 
     dcterms:creator           [
         a                     vcard:Individual ;

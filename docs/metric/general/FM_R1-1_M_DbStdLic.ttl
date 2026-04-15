@@ -24,6 +24,7 @@
 
 <p>#</p>""" ;
     dcat:keyword              "FAIR", "R1.1", "identifier", "metadata" ;
+    dqv:inDimension <https://doi.org/10.25504/FAIRsharing.482c33> ;
 
     dcat:landingPage          <https://w3id.org/fair-metrics/general/FM_R1-1_M_DbStdLic> ;
 

@@ -24,7 +24,7 @@
     dcat:keyword              "FAIR", "A2", "identifier", "metadata" ;
 
     dcat:landingPage          <https://w3id.org/fair-metrics/general/FM_A2_M_DbMetaLong> ;
-
+dqv:inDimension <https://doi.org/10.25504/FAIRsharing.7c4d7f> ;
     dcterms:creator           [
         a                     vcard:Individual ;
         vcard:fn              "Mark D. Wilkinson" ;

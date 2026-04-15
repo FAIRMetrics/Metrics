@@ -26,6 +26,7 @@
     dcat:keyword              "FAIR", "I3", "identifier", "metadata" ;
 
     dcat:landingPage          <https://w3id.org/fair-metrics/general/FM_I3_M_QualRef> ;
+    dqv:inDimension <https://doi.org/10.25504/FAIRsharing.ae22b8> ;
 
     dcterms:creator           [
         a                     vcard:Individual ;

@@ -24,7 +24,7 @@
 
 <p>For an in-depth understanding of the issues around identifiers, please see [<a href="http://dx.plos.org/10.1371/journal.pbio.2001414">http://dx.plos.org/10.1371/journal.pbio.2001414</a>](<a href="http://dx.plos.org/10.1371/journal.pbio.2001414).">http://dx.plos.org/10.1371/journal.pbio.2001414).</a> #</p>""" ;
     dcat:keyword              "FAIR", "F1", "identifier", "metadata" ;
-
+dqv:inDimension <https://doi.org/10.25504/FAIRsharing.a2cea7> ;
     dcat:landingPage          <https://w3id.org/fair-metrics/general/FM_F1_M_IdentPersistent> ;
 
     dcterms:creator           [

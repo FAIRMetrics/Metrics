@@ -23,7 +23,8 @@
     dcat:keyword              "FAIR", "interoperability", "vocabulary", "FAIR", "I2" ;
     
     dcat:landingPage <https://w3id.org/fair-metrics/general/FM_I2_M_FAIRVocab> ;
-    
+    dqv:inDimension <https://doi.org/10.25504/FAIRsharing.96d4af> ;
+
 dcterms:creator               [
     a                     vcard:Individual ;
     vcard:fn             "Mark D. Wilkinson" ;

@@ -27,7 +27,7 @@ dcterms:creator               [
     vcard:hasEmail             <mailto:markw@illuminae.com>
 ] ;
 
-
+dqv:inDimension <https://doi.org/10.25504/FAIRsharing.7612c1> ;
     dcat:contactPoint           [
         a                     vcard:Individual ;
         vcard:fn              "Mark D. Wilkinson" ;

@@ -24,7 +24,7 @@
 
 """ ;
     dcat:keyword              "FAIR", "I1", "identifier", "metadata" ;
-
+dqv:inDimension <https://doi.org/10.25504/FAIRsharing.ec5648> ;
     dcat:landingPage          <https://w3id.org/fair-metrics/general/FM_I1_M_FormLangSyntax> ;
 
     dcterms:creator           [
