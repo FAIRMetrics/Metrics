@@ -7,10 +7,10 @@
         ],
         "http://purl.org/dc/terms/creator": [
             {
-                "@id": "_:n74d6e17d88824fdabea703bac7d4ed78b1"
+                "@id": "_:n590eec6a06804a85a89cc8a79d6c28a2b1"
             },
             {
-                "@id": "_:n74d6e17d88824fdabea703bac7d4ed78b2"
+                "@id": "_:n590eec6a06804a85a89cc8a79d6c28a2b2"
             }
         ],
         "http://purl.org/dc/terms/description": [
@@ -52,10 +52,10 @@
         ],
         "http://www.w3.org/ns/dcat#contactPoint": [
             {
-                "@id": "_:n74d6e17d88824fdabea703bac7d4ed78b3"
+                "@id": "_:n590eec6a06804a85a89cc8a79d6c28a2b3"
             },
             {
-                "@id": "_:n74d6e17d88824fdabea703bac7d4ed78b4"
+                "@id": "_:n590eec6a06804a85a89cc8a79d6c28a2b4"
             }
         ],
         "http://www.w3.org/ns/dcat#keyword": [
@@ -80,6 +80,11 @@
         "http://www.w3.org/ns/dcat#version": [
             {
                 "@value": "Champion1.0"
+            }
+        ],
+        "http://www.w3.org/ns/dqv#inDimension": [
+            {
+                "@id": "https://doi.org/10.25504/FAIRsharing.482c33"
             }
         ],
         "https://w3id.org/dpv#isApplicableFor": [
@@ -111,7 +116,7 @@
         ]
     },
     {
-        "@id": "_:n74d6e17d88824fdabea703bac7d4ed78b1",
+        "@id": "_:n590eec6a06804a85a89cc8a79d6c28a2b1",
         "@type": [
             "http://www.w3.org/2006/vcard/ns#Individual"
         ],
@@ -127,7 +132,7 @@
         ]
     },
     {
-        "@id": "_:n74d6e17d88824fdabea703bac7d4ed78b2",
+        "@id": "_:n590eec6a06804a85a89cc8a79d6c28a2b2",
         "@type": [
             "http://www.w3.org/2006/vcard/ns#Individual"
         ],
@@ -148,7 +153,7 @@
         ]
     },
     {
-        "@id": "_:n74d6e17d88824fdabea703bac7d4ed78b3",
+        "@id": "_:n590eec6a06804a85a89cc8a79d6c28a2b3",
         "@type": [
             "http://www.w3.org/2006/vcard/ns#Individual"
         ],
@@ -169,7 +174,7 @@
         ]
     },
     {
-        "@id": "_:n74d6e17d88824fdabea703bac7d4ed78b4",
+        "@id": "_:n590eec6a06804a85a89cc8a79d6c28a2b4",
         "@type": [
             "http://www.w3.org/2006/vcard/ns#Individual"
         ],

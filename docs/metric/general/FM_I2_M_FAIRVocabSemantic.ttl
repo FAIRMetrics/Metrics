@@ -8,6 +8,7 @@
 @prefix schema:  <https://schema.org/> .
 @prefix vivo:    <http://vivoweb.org/ontology/core#> .
 @prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dqv:    <http://www.w3.org/ns/dqv#> .
 
 <https://w3id.org/fair-metrics/general/FM_I2_M_FAIRVocabSemantic>
     a                          ftr:Metric, dcat:Dataset ;

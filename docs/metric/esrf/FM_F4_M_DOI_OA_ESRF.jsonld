@@ -7,7 +7,7 @@
         ],
         "http://purl.org/dc/terms/creator": [
             {
-                "@id": "_:n8400b54f83194564aef84d4a93fb350cb1"
+                "@id": "_:n3aaf30634ba847f09b3c8e9972ab05f4b1"
             }
         ],
         "http://purl.org/dc/terms/description": [
@@ -37,7 +37,7 @@
         ],
         "http://www.w3.org/ns/dcat#contactPoint": [
             {
-                "@id": "_:n8400b54f83194564aef84d4a93fb350cb2"
+                "@id": "_:n3aaf30634ba847f09b3c8e9972ab05f4b2"
             }
         ],
         "http://www.w3.org/ns/dcat#keyword": [
@@ -93,7 +93,7 @@
         ]
     },
     {
-        "@id": "_:n8400b54f83194564aef84d4a93fb350cb1",
+        "@id": "_:n3aaf30634ba847f09b3c8e9972ab05f4b1",
         "@type": [
             "http://xmlns.com/foaf/0.1/Person"
         ],
@@ -109,7 +109,7 @@
         ]
     },
     {
-        "@id": "_:n8400b54f83194564aef84d4a93fb350cb2",
+        "@id": "_:n3aaf30634ba847f09b3c8e9972ab05f4b2",
         "@type": [
             "http://www.w3.org/2006/vcard/ns#Individual"
         ],

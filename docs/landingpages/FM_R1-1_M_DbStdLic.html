@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title></title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"> 
+    </head>
+    <body>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        <style>
+            .row {
+              margin-bottom: 10px;
+            }
+            .well {
+                margin: 0; 
+                padding: 10px; 
+                min-height: 40px;
+            }
+            .tag_div {
+                margin-right: 10px;
+            }
+            .row-equal { 
+                display: flex; 
+                align-items: stretch; 
+            } 
+            .align-items-center { 
+                display: flex; 
+                align-items: center; 
+            }
+            .flex-space-between { 
+                display: flex; justify-content: space-between; 
+            }
+            .text-separation { 
+                margin-right: 10px; 
+            } 
+            .status-indicator {
+                display: inline-block;
+                width: 12px;
+                height: 12px;
+                border-radius: 50%;
+                margin-right: 8px;
+                vertical-align: middle;
+            }
+            .status-indicator.Active {
+                background-color: #28a745; /* Verde */
+            }
+            .status-indicator.Proposed {
+                background-color: #ffc107; /* Amarillo */
+            }
+            .status-indicator.Inactive {
+                background-color: #6c757d; /* Gris */
+            }
+            .status-indicator.Deprecated {
+                background-color: #dc3545; /* Rojo */
+            }
+            .legend ul {
+                list-style-type: none;
+                padding: 0;
+                margin: 0;
+            }
+            .legend li {
+                margin-bottom: 5px;
+            }
+            .legend li strong {
+                color: #000; /* Negrita negra para el texto */
+            }  
+            .legend-inline span.status-indicator {
+                display: inline-block;
+                margin-right: 4px;
+                width: 12px;
+                height: 12px;
+                border-radius: 50%;
+                vertical-align: middle;
+            }
+
+            .legend-inline strong {
+                margin-right: 12px;
+                vertical-align: middle;
+            }
+        </style>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12"> 
+                    
+                    <h1 class="miClase text-center">FAIR Metric - R1.1 - Metadata - Database-level licenses</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 well" style="font-size: 16px;"> <p>This metric evaluates whether there is at least one licence declared at the database level in the FAIRsharing registry record associated with the identifier under evaluation (see FAIRsharing [documentation for licences](<a href="https://fairsharing.gitbook.io/fairsharing/record-sections-and-fields/licences-and-support-links/licences)).">https://fairsharing.gitbook.io/fairsharing/record-sections-and-fields/licences-and-support-links/licences)).</a></p>
+
+<p>R1.1 requires that metadata be released with a clear and accessible data usage licence. The purpose of this principle is to ensure that reuse conditions are explicitly stated and legally unambiguous. This metric evaluates whether there is at least one licence declared at the database level in the FAIRsharing registry record associated with the identifier under evaluation. Under this interpretation, the evaluation retrieves the FAIRsharing registry record for the owning database and checks for the presence of one or more values in the “Licences” field, as defined in the [FAIRsharing registry documentation](<a href="https://fairsharing.gitbook.io/fairsharing/record-sections-and-fields/licences-and-support-links/licences).">https://fairsharing.gitbook.io/fairsharing/record-sections-and-fields/licences-and-support-links/licences).</a> These licences represent usage conditions known to apply within the database. A resource satisfies this metric if the FAIRsharing registry record for the database lists at least one recognised licence. While a useful measure, this information only provides a list of licences that apply to content, and does not explicitly state which one applies to which research objects, nor does it ensure that the database uses a licence for every research object. However, in cases where the licence information is not provided within the resolved metadata, this will provide some extra information.  Communities may wish to use this metric in conjunction with others that will evaluate resolved metadata where the specific licence format and structure is known. Note that, in order for this metric to function, tests must know the FAIRsharing database record URL/DOI so that FAIRsharing metadata may be retrieved. This can be done in a variety of ways, e.g. using the FAIRsharing API to find possible matches between the identifier and registered databases, hard coding the FAIRsharing record identifier, or expecting it to be provided as a second argument to the test.</p>
+
+<p>#</p></div>
+            </div>
+            <div class="row flex-space-between"> 
+                <div class="col-md-12 align-items-center"> 
+                    <h4 class="miClase text-left text-separation">Metric information</h4> 
+                    <a href="FM_R1-1_M_DbStdLic.ttl" title="RDF Resource Description
+                    Framework"> <img border="0" src="http://www.w3.org/RDF/icons/rdf_flyer.24"
+                    alt="RDF Resource Description Framework Flyer Icon"/></a>
+                </div> 
+            </div>
+            <div class="row row-equal" >
+                <div class="col-md-3 well tag_div"> <strong>Title</strong></div>
+                <div class="col-md-9 well"> FAIR Metric - R1.1 - Metadata - Database-level licenses </div>
+            </div>
+            <div class="row row-equal" >
+                <div class="col-md-3 well tag_div"> <strong>Identifier</strong></div>
+                <div class="col-md-9 well"><a href="https://w3id.org/fair-metrics/general/FM_R1-1_M_DbStdLic" target="_blank">https://w3id.org/fair-metrics/general/FM_R1-1_M_DbStdLic</a></div>
+                <!-- <div class="col-md-9 well"><a href="https://w3id.org/foops/test/URI1" target="_blank">https://w3id.org/foops/test/URI1</a></div> -->
+            </div>
+            <div class="row row-equal" style="display: none;" >
+                <div class="col-md-3 well tag_div"> <strong>Creator</strong></div>
+                <div class="col-md-9 well"> <a href="None" target="_blank">Mark D. Wilkinson</a> </div>
+            </div>
+            <div class="row row-equal" >
+                <div class="col-md-3 well tag_div"> <strong>Keywords</strong></div>
+                <div class="col-md-9 well"> FAIR, R1.1, identifier, metadata </div>
+            </div>
+            <div class="row row-equal">
+                <div class="col-md-3 well tag_div"> <strong>Contact Point</strong></div>
+                <div class="col-md-9 well"> <a href="na689838fa1ff4255a5535b4897d450d3b3" target="_blank">Mark D. Wilkinson</a> at <a href="https://www.upm.es" target="_blank">upm.es</a> </div>   
+            </div>
+            <div class="row row-equal" >
+                <div class="col-md-3 well tag_div"> <strong>Publisher</strong></div>
+                <div class="col-md-9 well"> <a href="None" target="_blank">None</a> </div>
+                <!--  <div class="col-md-9 well"><a href="" target="_blank"></a></div>-->
+            </div>
+            <div class="row row-equal" >
+                <div class="col-md-3 well tag_div"> <strong>Version</strong></div>
+                <div class="col-md-9 well"> Champion1.0 </div>
+            </div>
+            <div class="row row-equal" >
+                <div class="col-md-3 well tag_div"> <strong>License</strong></div>
+                <div class="col-md-9 well"> <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank"> https://creativecommons.org/licenses/by/4.0/ </a></div>
+            </div>
+            <!-- <div class="row row-equal" >
+                <div class="col-md-3 well tag_div"> <strong>Landing Page</strong></div>
+                <div class="col-md-9 well"><a href="https://w3id.org/fair-metrics/general/FM_R1-1_M_DbStdLic" target="_blank">https://w3id.org/fair-metrics/general/FM_R1-1_M_DbStdLic</a></div>
+            </div> -->
+            <div class="row row-equal" >
+                <div class="col-md-3 well tag_div"> <strong>Principle</strong></div>
+                <!-- <div class="col-md-9 well"><a href="" target="_blank"> </a>:   </div> -->
+                    <div class="col-md-9 well">
+                        <ul>
+                        </ul>
+                    </div>
+            </div>
+            <!-- <div class="row">
+                <div class="col-md-3 well tag_div"> <strong>Desc. Dimension</strong></div>
+                <div class="col-md-9 well">  </div>
+            </div> -->
+            <div class="row row-equal" >
+                <div class="col-md-3 well tag_div"> <strong>Benchmark</strong></div>
+                <div class="col-md-9 well"> <a href="None" target="_blank">None</a>: None </div>
+            </div>
+            <div class="row row-equal">
+                <div class="col-md-3 well tag_div"> <strong>Applicable for</strong></div>
+                <div class="col-md-9 well"> <a href="https://schema.org/CreativeWork" target="_blank"> https://schema.org/CreativeWork </a> </div>
+            </div>
+            <div class="row row-equal">
+                <div class="col-md-3 well tag_div"> <strong>Supported by</strong></div>
+                <div class="col-md-9 well"> <a href="https://w3id.org/FAIR-Champion" target="_blank"> https://w3id.org/FAIR-Champion </a> </div>
+            </div>
+            <div class="row row-equal" >
+                <div class="col-md-3 well tag_div"> <strong>Metric Status</strong></div>
+                <div class="col-md-2 well">                   
+                    <span class="status-indicator Active"></span>
+                    <span>Active </span>
+                </div>
+                <!-- <div class="col-md-7">
+                    <div class="legend">
+                        <ul>
+                            <li><span class="status-indicator Active"></span> <strong>Active:</strong> The metric is actively used and maintained.</li>
+                            <li><span class="status-indicator Proposed"></span> <strong>Proposed:</strong> The metric is under review or consideration for adoption.</li>
+                            <li><span class="status-indicator Inactive"></span> <strong>Inactive:</strong> The metric is not currently in use but remains available for reference.</li>
+                            <li><span class="status-indicator Deprecated"></span> <strong>Deprecated:</strong> The metric has been retired and should no longer be used.</li>
+                        </ul>
+                    </div>
+                </div> -->
+
+                <div class="col-md-7 d-flex align-items-center flex-wrap">
+                    <div class="legend-inline">
+                        <span class="status-indicator Active" title="The metric is actively used and maintained."></span> <strong>Active</strong>
+                        <span class="status-indicator Proposed" title="The metric is under review or consideration for adoption."></span> <strong>Proposed</strong>
+                        <span class="status-indicator Inactive" title="The metric is not currently in use but remains available for reference."></span> <strong>Inactive</strong>
+                        <span class="status-indicator Deprecated" title="The metric has been retired and should no longer be used."></span> <strong>Deprecated</strong>
+                    </div>
+                </div>
+            </div>
+            <div class="row row-equal" >
+                <div class="col-md-3 well tag_div"> <strong>Used in Test</strong></div>
+                <div class="col-md-9 well"> <a href="" target="_blank">  </a> </div>
+            </div>
+        </div>
+
+        <div id="pie" class="row" style="margin-top: 20px;">
+            <div class="col-md-12 text-center"">
+              Ontology Engineering Group
+              <a href="https://oeg.fi.upm.es" target="_blank">https://oeg.fi.upm.es</a>
+            </div>
+        </div>
+     </body>
+</html>

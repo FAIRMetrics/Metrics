@@ -7,7 +7,7 @@
         ],
         "http://purl.org/dc/terms/creator": [
             {
-                "@id": "_:n11d0d315f5764068a0c9269c703c2c0bb1"
+                "@id": "_:n40521cacfc8a4b119fcd1237ce7eb8eeb1"
             }
         ],
         "http://purl.org/dc/terms/description": [
@@ -37,7 +37,7 @@
         ],
         "http://www.w3.org/ns/dcat#contactPoint": [
             {
-                "@id": "_:n11d0d315f5764068a0c9269c703c2c0bb2"
+                "@id": "_:n40521cacfc8a4b119fcd1237ce7eb8eeb2"
             }
         ],
         "http://www.w3.org/ns/dcat#keyword": [
@@ -62,6 +62,11 @@
         "http://www.w3.org/ns/dcat#version": [
             {
                 "@value": "Champion1.0"
+            }
+        ],
+        "http://www.w3.org/ns/dqv#inDimension": [
+            {
+                "@id": "https://doi.org/10.25504/FAIRsharing.ec5648"
             }
         ],
         "https://w3id.org/dpv#isApplicableFor": [
@@ -93,7 +98,7 @@
         ]
     },
     {
-        "@id": "_:n11d0d315f5764068a0c9269c703c2c0bb1",
+        "@id": "_:n40521cacfc8a4b119fcd1237ce7eb8eeb1",
         "@type": [
             "http://www.w3.org/2006/vcard/ns#Individual"
         ],
@@ -114,7 +119,7 @@
         ]
     },
     {
-        "@id": "_:n11d0d315f5764068a0c9269c703c2c0bb2",
+        "@id": "_:n40521cacfc8a4b119fcd1237ce7eb8eeb2",
         "@type": [
             "http://www.w3.org/2006/vcard/ns#Individual"
         ],

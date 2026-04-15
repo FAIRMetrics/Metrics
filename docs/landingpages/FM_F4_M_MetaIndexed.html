@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title></title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"> 
+    </head>
+    <body>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        <style>
+            .row {
+              margin-bottom: 10px;
+            }
+            .well {
+                margin: 0; 
+                padding: 10px; 
+                min-height: 40px;
+            }
+            .tag_div {
+                margin-right: 10px;
+            }
+            .row-equal { 
+                display: flex; 
+                align-items: stretch; 
+            } 
+            .align-items-center { 
+                display: flex; 
+                align-items: center; 
+            }
+            .flex-space-between { 
+                display: flex; justify-content: space-between; 
+            }
+            .text-separation { 
+                margin-right: 10px; 
+            } 
+            .status-indicator {
+                display: inline-block;
+                width: 12px;
+                height: 12px;
+                border-radius: 50%;
+                margin-right: 8px;
+                vertical-align: middle;
+            }
+            .status-indicator.Active {
+                background-color: #28a745; /* Verde */
+            }
+            .status-indicator.Proposed {
+                background-color: #ffc107; /* Amarillo */
+            }
+            .status-indicator.Inactive {
+                background-color: #6c757d; /* Gris */
+            }
+            .status-indicator.Deprecated {
+                background-color: #dc3545; /* Rojo */
+            }
+            .legend ul {
+                list-style-type: none;
+                padding: 0;
+                margin: 0;
+            }
+            .legend li {
+                margin-bottom: 5px;
+            }
+            .legend li strong {
+                color: #000; /* Negrita negra para el texto */
+            }  
+            .legend-inline span.status-indicator {
+                display: inline-block;
+                margin-right: 4px;
+                width: 12px;
+                height: 12px;
+                border-radius: 50%;
+                vertical-align: middle;
+            }
+
+            .legend-inline strong {
+                margin-right: 12px;
+                vertical-align: middle;
+            }
+        </style>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12"> 
+                    
+                    <h1 class="miClase text-center">FAIR Metric - F4 - Metadata - indexed in a searchable resource</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 well" style="font-size: 16px;"> <p>This metric evaluates whether metadata can be discovered by web-based search engines. The evaluation requires the identifier to first resolve to its metadata; then, both the identifier and the content of the retrieved metadata are used in automated search queries to determine if they are indexed and discoverable.</p>
+
+<p>Principle F4 requires that metadata be registered or indexed in a searchable resource. Even if metadata is perfectly structured and contains valid identifiers, it is not "Findable" if it remains hidden from discovery services. This metric ensures that the metadata is not just "published," but actively participating in the research ecosystem. By verifying that the metadata can be found through automated queries—using both the unique identifier and the descriptive content—we confirm that the resource is effectively searchable by the machines and services that researchers rely on. Search engines are used to discover particular digital resources of interest. If the resource or its metadata are not indexed by web search engines, then this would substantially diminish the ability to find and reuse it. Thus, the ability to discover the resource should be tested using i) its identifier, ii) its text-based metadata. This metric evaluates whether the provided identifier’s metadata is discoverable by performing public, automated searches with commonly-used search engines. The evaluation assesses whether a search service can successfully locate the metadata record using either the metadata identifier or landing page content such as the record title or keywords - both commonly consumed by search engines - thereby confirming that the resource has been appropriately indexed and is accessible for automated discovery.</p></div>
+            </div>
+            <div class="row flex-space-between"> 
+                <div class="col-md-12 align-items-center"> 
+                    <h4 class="miClase text-left text-separation">Metric information</h4> 
+                    <a href="FM_F4_M_MetaIndexed.ttl" title="RDF Resource Description
+                    Framework"> <img border="0" src="http://www.w3.org/RDF/icons/rdf_flyer.24"
+                    alt="RDF Resource Description Framework Flyer Icon"/></a>
+                </div> 
+            </div>
+            <div class="row row-equal" >
+                <div class="col-md-3 well tag_div"> <strong>Title</strong></div>
+                <div class="col-md-9 well"> FAIR Metric - F4 - Metadata - indexed in a searchable resource </div>
+            </div>
+            <div class="row row-equal" >
+                <div class="col-md-3 well tag_div"> <strong>Identifier</strong></div>
+                <div class="col-md-9 well"><a href="https://w3id.org/fair-metrics/general/FM_F4_M_MetaIndexed" target="_blank">https://w3id.org/fair-metrics/general/FM_F4_M_MetaIndexed</a></div>
+                <!-- <div class="col-md-9 well"><a href="https://w3id.org/foops/test/URI1" target="_blank">https://w3id.org/foops/test/URI1</a></div> -->
+            </div>
+            <div class="row row-equal" style="display: none;" >
+                <div class="col-md-3 well tag_div"> <strong>Creator</strong></div>
+                <div class="col-md-9 well"> <a href="None" target="_blank">Mark D. Wilkinson</a> </div>
+            </div>
+            <div class="row row-equal" >
+                <div class="col-md-3 well tag_div"> <strong>Keywords</strong></div>
+                <div class="col-md-9 well"> FAIR, F4, identifier, metadata </div>
+            </div>
+            <div class="row row-equal">
+                <div class="col-md-3 well tag_div"> <strong>Contact Point</strong></div>
+                <div class="col-md-9 well"> <a href="n0ffebf63610a4a96bf4e1852479feb6fb3" target="_blank">Mark D. Wilkinson</a> at <a href="https://www.upm.es" target="_blank">upm.es</a> </div>   
+            </div>
+            <div class="row row-equal" >
+                <div class="col-md-3 well tag_div"> <strong>Publisher</strong></div>
+                <div class="col-md-9 well"> <a href="None" target="_blank">None</a> </div>
+                <!--  <div class="col-md-9 well"><a href="" target="_blank"></a></div>-->
+            </div>
+            <div class="row row-equal" >
+                <div class="col-md-3 well tag_div"> <strong>Version</strong></div>
+                <div class="col-md-9 well"> Champion1.0 </div>
+            </div>
+            <div class="row row-equal" >
+                <div class="col-md-3 well tag_div"> <strong>License</strong></div>
+                <div class="col-md-9 well"> <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank"> https://creativecommons.org/licenses/by/4.0/ </a></div>
+            </div>
+            <!-- <div class="row row-equal" >
+                <div class="col-md-3 well tag_div"> <strong>Landing Page</strong></div>
+                <div class="col-md-9 well"><a href="https://w3id.org/fair-metrics/general/FM_F4_M_MetaIndexed" target="_blank">https://w3id.org/fair-metrics/general/FM_F4_M_MetaIndexed</a></div>
+            </div> -->
+            <div class="row row-equal" >
+                <div class="col-md-3 well tag_div"> <strong>Principle</strong></div>
+                <!-- <div class="col-md-9 well"><a href="" target="_blank"> </a>:   </div> -->
+                    <div class="col-md-9 well">
+                        <ul>
+                        </ul>
+                    </div>
+            </div>
+            <!-- <div class="row">
+                <div class="col-md-3 well tag_div"> <strong>Desc. Dimension</strong></div>
+                <div class="col-md-9 well">  </div>
+            </div> -->
+            <div class="row row-equal" >
+                <div class="col-md-3 well tag_div"> <strong>Benchmark</strong></div>
+                <div class="col-md-9 well"> <a href="None" target="_blank">None</a>: None </div>
+            </div>
+            <div class="row row-equal">
+                <div class="col-md-3 well tag_div"> <strong>Applicable for</strong></div>
+                <div class="col-md-9 well"> <a href="https://schema.org/CreativeWork" target="_blank"> https://schema.org/CreativeWork </a> </div>
+            </div>
+            <div class="row row-equal">
+                <div class="col-md-3 well tag_div"> <strong>Supported by</strong></div>
+                <div class="col-md-9 well"> <a href="https://w3id.org/FAIR-Champion" target="_blank"> https://w3id.org/FAIR-Champion </a> </div>
+            </div>
+            <div class="row row-equal" >
+                <div class="col-md-3 well tag_div"> <strong>Metric Status</strong></div>
+                <div class="col-md-2 well">                   
+                    <span class="status-indicator Active"></span>
+                    <span>Active </span>
+                </div>
+                <!-- <div class="col-md-7">
+                    <div class="legend">
+                        <ul>
+                            <li><span class="status-indicator Active"></span> <strong>Active:</strong> The metric is actively used and maintained.</li>
+                            <li><span class="status-indicator Proposed"></span> <strong>Proposed:</strong> The metric is under review or consideration for adoption.</li>
+                            <li><span class="status-indicator Inactive"></span> <strong>Inactive:</strong> The metric is not currently in use but remains available for reference.</li>
+                            <li><span class="status-indicator Deprecated"></span> <strong>Deprecated:</strong> The metric has been retired and should no longer be used.</li>
+                        </ul>
+                    </div>
+                </div> -->
+
+                <div class="col-md-7 d-flex align-items-center flex-wrap">
+                    <div class="legend-inline">
+                        <span class="status-indicator Active" title="The metric is actively used and maintained."></span> <strong>Active</strong>
+                        <span class="status-indicator Proposed" title="The metric is under review or consideration for adoption."></span> <strong>Proposed</strong>
+                        <span class="status-indicator Inactive" title="The metric is not currently in use but remains available for reference."></span> <strong>Inactive</strong>
+                        <span class="status-indicator Deprecated" title="The metric has been retired and should no longer be used."></span> <strong>Deprecated</strong>
+                    </div>
+                </div>
+            </div>
+            <div class="row row-equal" >
+                <div class="col-md-3 well tag_div"> <strong>Used in Test</strong></div>
+                <div class="col-md-9 well"> <a href="" target="_blank">  </a> </div>
+            </div>
+        </div>
+
+        <div id="pie" class="row" style="margin-top: 20px;">
+            <div class="col-md-12 text-center"">
+              Ontology Engineering Group
+              <a href="https://oeg.fi.upm.es" target="_blank">https://oeg.fi.upm.es</a>
+            </div>
+        </div>
+     </body>
+</html>
