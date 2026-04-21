@@ -29,11 +29,6 @@
 
     dcat:landingPage          <https://w3id.org/fair-metrics/erdera/FM_R1-3_M_VP_L2> ;
 
-    dcat:contactPoint           [
-        a                     vcard:Individual ;
-        vcard:fn              "Mark D. Wilkinson" ;
-        vcard:hasEmail             <mailto:mark.wilkinson@upm.es> ;
-    ] ;
 	ftr:status "Active"@en ;
     dcat:contactPoint           [
         a                     vcard:Individual ;
@@ -44,7 +39,6 @@
 
     dcterms:issued            "2026-04-06"^^xsd:date ;
     dcterms:modified          "2026-04-06"^^xsd:date ;
-
     dcat:version              "Champion1.0" ;
 
     ftr:applicationArea       	<http://purl.obolibrary.org/obo/NCIT_C4873>, <http://purl.obolibrary.org/obo/OGMS_0000031> ;

@@ -27,11 +27,7 @@ dqv:inDimension <https://doi.org/10.25504/FAIRsharing.7c4d7f> ;
 
     dcat:landingPage          <https://w3id.org/fair-metrics/general/FM_A2_M_DbMetaLong> ;
 
-    dcat:contactPoint           [
-        a                     vcard:Individual ;
-        vcard:fn              "Mark D. Wilkinson" ;
-        vcard:hasEmail             <mailto:mark.wilkinson@upm.es> ;
-    ] ;
+
     dcat:contactPoint           [
         a                     vcard:Individual ;
         vcard:fn              "Allyson L. Lister" ;

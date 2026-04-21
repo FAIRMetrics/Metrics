@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>FAIR Metric - I1 - Metadata - Database-level knowledge representation languages (syntactic)</title>
+  <title><%= metric_name || metric_title %></title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 </head>
 <body>
@@ -28,20 +28,20 @@
   <div class="container">
     <div class="row">
       <div class="col-md-12">
-        <h1 class="text-center">FAIR Metric - I1 - Metadata - Database-level knowledge representation languages (syntactic)</h1>
+        <h1 class="text-center"><%= metric_name || metric_title %></h1>
       </div>
     </div>
 
     <div class="row">
       <div class="col-md-12 well" style="font-size: 16px;">
-        <p>This metric evaluates whether there is a declared relationship (related to, implements or outputs) to a model/format from the hosting database for the provided identifier in the FAIRsharing registry, and that the associated model/format has a machine-readable structure.</p><br><br><p>I1 requires that metadata use a formal, accessible, shared and broadly applicable language for knowledge representation. The purpose of this principle is to ensure that metadata is expressed in a standardised format that can be interpreted and exchanged across systems. In this metric, the definition of syntactic and semantic formats follows the [FAIRsharing guidance](<a href="https://fairsharing.gitbook.io/fairsharing/about-our-records/fair-assistance/syntactic-vs-semantic-knowledge-representation-languages).">https://fairsharing.gitbook.io/fairsharing/about-our-records/fair-assistance/syntactic-vs-semantic-knowledge-representation-languages).</a> This metric evaluates whether there is a declared metadata model or format that ultimately resolves to a basic representation format that is considered syntactic by the FAIRsharing registry. Note that all formats that match the guidance on semantic formats also fulfil the requirements for being syntactic formats. Communities may wish to use this metric in conjunction with others that examine the precise format of the resolved metadata. Note that, in order for this metric to function, tests must know the FAIRsharing database record URL/DOI so that FAIRsharing metadata may be retrieved. This can be done in a variety of ways, e.g. using the FAIRsharing API to find possible matches between the identifier and registered databases, hard coding the FAIRsharing record identifier, or expecting it to be provided as a second argument to the test.</p><br><br><p>#</p>
+        <%= metric_description %>
       </div>
     </div>
 
     <div class="row flex-space-between">
       <div class="col-md-12 align-items-center">
         <h4 class="text-left text-separation">Metric information</h4>
-        <a href="../../FM_I1_M_DbFormalLangSyntax.ttl" title="RDF Turtle">
+        <a href="<%= metric_turtle %>" title="RDF Turtle">
           <img border="0" src="http://www.w3.org/RDF/icons/rdf_flyer.24" alt="RDF Icon"/>
         </a>
       </div>
@@ -49,58 +49,58 @@
 
     <div class="row row-equal">
       <div class="col-md-3 well tag_div"><strong>Title</strong></div>
-      <div class="col-md-9 well">FAIR Metric - I1 - Metadata - Database-level knowledge representation languages (syntactic)</div>
+      <div class="col-md-9 well"><%= metric_title %></div>
     </div>
 
     <div class="row row-equal">
       <div class="col-md-3 well tag_div"><strong>Identifier</strong></div>
-      <div class="col-md-9 well"><a href="https://w3id.org/fair-metrics/general/FM_I1_M_DbFormalLangSyntax" target="_blank">https://w3id.org/fair-metrics/general/FM_I1_M_DbFormalLangSyntax</a></div>
+      <div class="col-md-9 well"><a href="<%= metric_identifier %>" target="_blank"><%= metric_identifier %></a></div>
     </div>
 
     <div class="row row-equal">
       <div class="col-md-3 well tag_div"><strong>Keywords</strong></div>
-      <div class="col-md-9 well">FAIR, I1, identifier, metadata</div>
+      <div class="col-md-9 well"><%= metric_keywords %></div>
     </div>
 
     <div class="row row-equal">
       <div class="col-md-3 well tag_div"><strong>Contact Point</strong></div>
-      <div class="col-md-9 well"><a href="http://orcid.org/0000-0002-7702-4495" target="_blank">Allyson L. Lister</a>, <a href="mailto:mark.wilkinson@upm.es" target="_blank">Mark D. Wilkinson</a></div>
+      <div class="col-md-9 well"><%= metric_contactPoint %></div>
     </div>
 
     <div class="row row-equal">
       <div class="col-md-3 well tag_div"><strong>Version</strong></div>
-      <div class="col-md-9 well">Champion1.0</div>
+      <div class="col-md-9 well"><%= metric_version %></div>
     </div>
 
     <div class="row row-equal">
       <div class="col-md-3 well tag_div"><strong>License</strong></div>
-      <div class="col-md-9 well"><a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">https://creativecommons.org/licenses/by/4.0/</a></div>
+      <div class="col-md-9 well"><a href="<%= metric_license %>" target="_blank"><%= metric_license %></a></div>
     </div>
 
     <div class="row row-equal">
       <div class="col-md-3 well tag_div"><strong>Principle</strong></div>
-      <div class="col-md-9 well"><a href="https://doi.org/10.25504/FAIRsharing.ec5648" target="_blank">https://doi.org/10.25504/FAIRsharing.ec5648</a></div> 
+      <div class="col-md-9 well"><a href="<%= metric_dimension %>" target="_blank"><%= metric_dimension %></a></div> 
     </div>
 
     <div class="row row-equal">
       <div class="col-md-3 well tag_div"><strong>Applicable for</strong></div>
       <div class="col-md-9 well">
-        <a href="https://schema.org/CreativeWork" target="_blank">https://schema.org/CreativeWork</a>
+        <a href="<%= metric_applicable_for %>" target="_blank"><%= metric_applicable_for %></a>
       </div>
     </div>
 
     <div class="row row-equal">
       <div class="col-md-3 well tag_div"><strong>Supported by</strong></div>
       <div class="col-md-9 well">
-        <a href="https://w3id.org/FAIR-Champion" target="_blank">https://w3id.org/FAIR-Champion</a>
+        <a href="<%= metric_supported_by %>" target="_blank"><%= metric_supported_by %></a>
       </div>
     </div>
 
     <div class="row row-equal">
       <div class="col-md-3 well tag_div"><strong>Metric Status</strong></div>
       <div class="col-md-2 well">
-        <span class="status-indicator Active"></span>
-        <span>Active</span>
+        <span class="status-indicator <%= metric_status %>"></span>
+        <span><%= metric_status || 'Active' %></span>
       </div>
       <div class="col-md-7">
         <span class="status-indicator Active"></span><strong>Active</strong>
@@ -113,7 +113,7 @@
     <div class="row row-equal">
       <div class="col-md-3 well tag_div"><strong>Used in Test</strong></div>
       <div class="col-md-9 well">
-        <a href="" target="_blank"></a>
+        <a href="<%= metric_test || '#' %>" target="_blank"><%= metric_test || '—' %></a>
       </div>
     </div>
   </div>

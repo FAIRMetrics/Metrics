@@ -1,0 +1,37 @@
+\<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title><%= test_name || test_title %></title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+</head>
+<body>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <style>
+    .row { margin-bottom: 10px; }
+    .well { margin: 0; padding: 10px; min-height: 40px; }
+    .tag_div { margin-right: 10px; }
+    .row-equal { display: flex; align-items: stretch; }
+    .status-indicator { display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 8px; vertical-align: middle; }
+    .status-indicator.Active { background-color: #28a745; }
+  </style>
+
+  <div class="container">
+    <div class="row"><div class="col-md-12"><h1 class="text-center"><%= test_name || test_title %></h1></div></div>
+    <div class="row"><div class="col-md-12 well"><%= test_description %></div></div>
+
+    <div class="row row-equal">
+      <div class="col-md-3 well tag_div"><strong>Identifier</strong></div>
+      <div class="col-md-9 well"><a href="<%= test_identifier %>" target="_blank"><%= test_identifier %></a></div>
+    </div>
+    <div class="row row-equal">
+      <div class="col-md-3 well tag_div"><strong>Contact Point</strong></div>
+      <div class="col-md-9 well"><%== test_contactPoint %></div>
+    </div>
+    <div class="row row-equal">
+      <div class="col-md-3 well tag_div"><strong>Version</strong></div>
+      <div class="col-md-9 well"><%= test_version || "" %></div>
+    </div>
+  </div>
+</body>
+</html>

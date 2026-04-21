@@ -1,195 +1,94 @@
-[
+{
+  "@context": {
+    "dcat": "http://www.w3.org/ns/dcat#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dc": "http://purl.org/dc/terms/",
+    "schemas": "https://schema.org/",
+    "vcard": "http://www.w3.org/2006/vcard/ns#"
+  },
+  "@graph": [
     {
-        "@id": "https://w3id.org/fair-metrics/general/FM_R1-1_M_StdLic",
-        "@type": [
-            "https://w3id.org/ftr#Metric",
-            "http://www.w3.org/ns/dcat#Dataset"
-        ],
-        "http://purl.org/dc/terms/description": [
-            {
-                "@value": "<p>This metric evaluates whether there is an explicit licence declaration present in the metadata retrieved upon resolution of the provided identifier.</p>\n\n    <p>R1.1 requires that metadata be released with a clear and accessible data usage licence. \nThe purpose of this principle is to ensure that reuse conditions are explicitly stated at the \nlevel of the individual digital object. This metric evaluates whether there is an explicit \nlicence declaration present in the metadata retrieved upon resolution of the provided \nidentifier. Under this interpretation, the evaluation checks whether the resolved \nmetadata contains a licence statement or reference that clearly specifies usage\n conditions for the record or its associated research object. A resource satisfies \n this metric if the resolved metadata includes at least one explicit licence declaration.</p>\n    "
-            }
-        ],
-        "http://purl.org/dc/terms/issued": [
-            {
-                "@type": "http://www.w3.org/2001/XMLSchema#date",
-                "@value": "2026-02-20"
-            }
-        ],
-        "http://purl.org/dc/terms/license": [
-            {
-                "@id": "https://creativecommons.org/licenses/by/4.0/"
-            }
-        ],
-        "http://purl.org/dc/terms/modified": [
-            {
-                "@type": "http://www.w3.org/2001/XMLSchema#date",
-                "@value": "2026-03-01"
-            }
-        ],
-        "http://purl.org/dc/terms/title": [
-            {
-                "@value": "FAIR Metric - R1.1 - Metadata - discoverable data license in metadata"
-            }
-        ],
-        "http://vivoweb.org/ontology/core#abbreviation": [
-            {
-                "@value": "FM_R1-1_M_StdLic"
-            }
-        ],
-        "http://www.w3.org/2000/01/rdf-schema#definedBy": [
-            {
-                "@id": "https://fairmetrics.github.io/Metrics/metric/general/FM_R1-1_M_StdLic.ttl"
-            }
-        ],
-        "http://www.w3.org/ns/dcat#contactPoint": [
-            {
-                "@id": "_:n1b40047d067b49f59c9e1329c5bd0f8eb1"
-            },
-            {
-                "@id": "_:n1b40047d067b49f59c9e1329c5bd0f8eb2"
-            },
-            {
-                "@id": "_:n1b40047d067b49f59c9e1329c5bd0f8eb3"
-            },
-            {
-                "@id": "_:n1b40047d067b49f59c9e1329c5bd0f8eb4"
-            }
-        ],
-        "http://www.w3.org/ns/dcat#keyword": [
-            {
-                "@value": "FAIR"
-            },
-            {
-                "@value": "R1.1"
-            },
-            {
-                "@value": "identifier"
-            },
-            {
-                "@value": "metadata"
-            }
-        ],
-        "http://www.w3.org/ns/dcat#landingPage": [
-            {
-                "@id": "https://w3id.org/fair-metrics/general/FM_R1-1_M_StdLic"
-            }
-        ],
-        "http://www.w3.org/ns/dcat#version": [
-            {
-                "@value": "Champion1.0"
-            }
-        ],
-        "http://www.w3.org/ns/dqv#inDimension": [
-            {
-                "@id": "https://doi.org/10.25504/FAIRsharing.482c33"
-            }
-        ],
-        "https://w3id.org/dpv#isApplicableFor": [
-            {
-                "@id": "https://schema.org/CreativeWork"
-            }
-        ],
-        "https://w3id.org/ftr#applicationArea": [
-            {
-                "@id": "http://www.fairsharing.org/ontology/subject/SRAO_0000401"
-            }
-        ],
-        "https://w3id.org/ftr#identifier": [
-            {
-                "@type": "http://www.w3.org/2001/XMLSchema#anyURI",
-                "@value": "https://w3id.org/fair-metrics/general/FM_R1-1_M_StdLic"
-            }
-        ],
-        "https://w3id.org/ftr#status": [
-            {
-                "@language": "en",
-                "@value": "Active"
-            }
-        ],
-        "https://w3id.org/ftr#supportedBy": [
-            {
-                "@id": "https://w3id.org/FAIR-Champion"
-            }
-        ]
+      "@id": "https://w3id.org/fair-metrics/general/FM_R1-1_M_StdLic",
+      "@type": [
+        "https://w3id.org/ftr#Metric",
+        "dcat:Dataset"
+      ],
+      "rdfs:definedBy": {
+        "@id": "https://fairmetrics.github.io/Metrics/metric/general/FM_R1-1_M_StdLic.ttl"
+      },
+      "https://w3id.org/ftr#identifier": {
+        "@type": "xsd:anyURI",
+        "@value": "https://w3id.org/fair-metrics/general/FM_R1-1_M_StdLic"
+      },
+      "dc:title": "FAIR Metric - R1.1 - Metadata - discoverable data license in metadata",
+      "http://vivoweb.org/ontology/core#abbreviation": "FM_R1-1_M_StdLic",
+      "dcat:landingPage": {
+        "@id": "https://w3id.org/fair-metrics/general/FM_R1-1_M_StdLic"
+      },
+      "dc:description": "<p>This metric evaluates whether there is an explicit licence declaration present in the metadata retrieved upon resolution of the provided identifier.</p>\n\n    <p>R1.1 requires that metadata be released with a clear and accessible data usage licence. \nThe purpose of this principle is to ensure that reuse conditions are explicitly stated at the \nlevel of the individual digital object. This metric evaluates whether there is an explicit \nlicence declaration present in the metadata retrieved upon resolution of the provided \nidentifier. Under this interpretation, the evaluation checks whether the resolved \nmetadata contains a licence statement or reference that clearly specifies usage\n conditions for the record or its associated research object. A resource satisfies \n this metric if the resolved metadata includes at least one explicit licence declaration.</p>\n    ",
+      "dcat:keyword": [
+        "FAIR",
+        "R1.1",
+        "identifier",
+        "metadata"
+      ],
+      "dcat:contactPoint": [
+        {
+          "@id": "_:g473060"
+        },
+        {
+          "@id": "_:g473080"
+        }
+      ],
+      "http://www.w3.org/ns/dqv#inDimension": {
+        "@id": "https://doi.org/10.25504/FAIRsharing.482c33"
+      },
+      "https://w3id.org/ftr#status": {
+        "@language": "en",
+        "@value": "Active"
+      },
+      "dc:issued": {
+        "@type": "xsd:date",
+        "@value": "2026-02-20"
+      },
+      "dc:modified": {
+        "@type": "xsd:date",
+        "@value": "2026-03-01"
+      },
+      "dcat:version": "Champion1.0",
+      "https://w3id.org/ftr#applicationArea": {
+        "@id": "http://www.fairsharing.org/ontology/subject/SRAO_0000401"
+      },
+      "dc:license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "https://w3id.org/ftr#supportedBy": {
+        "@id": "https://w3id.org/FAIR-Champion"
+      },
+      "https://w3id.org/dpv#isApplicableFor": {
+        "@id": "schemas:CreativeWork"
+      }
     },
     {
-        "@id": "_:n1b40047d067b49f59c9e1329c5bd0f8eb1",
-        "@type": [
-            "http://www.w3.org/2006/vcard/ns#Individual"
-        ],
-        "http://www.w3.org/2006/vcard/ns#fn": [
-            {
-                "@value": "Mark D. Wilkinson"
-            }
-        ],
-        "http://www.w3.org/2006/vcard/ns#hasEmail": [
-            {
-                "@id": "mailto:mark.wilkinson@upm.es"
-            }
-        ]
+      "@id": "_:g473060",
+      "@type": "vcard:Individual",
+      "vcard:fn": "Allyson L. Lister",
+      "http://vivoweb.org/ontology/core#orcidId": {
+        "@id": "http://orcid.org/0000-0002-7702-4495"
+      },
+      "vcard:hasEmail": {
+        "@id": "mailto:allyson.lister@oerc.ox.ac.uk"
+      }
     },
     {
-        "@id": "_:n1b40047d067b49f59c9e1329c5bd0f8eb2",
-        "@type": [
-            "http://www.w3.org/2006/vcard/ns#Individual"
-        ],
-        "http://vivoweb.org/ontology/core#orcidId": [
-            {
-                "@id": "http://orcid.org/0000-0002-7702-4495"
-            }
-        ],
-        "http://www.w3.org/2006/vcard/ns#fn": [
-            {
-                "@value": "Allyson L. Lister"
-            }
-        ],
-        "http://www.w3.org/2006/vcard/ns#hasEmail": [
-            {
-                "@id": "mailto:allyson.lister@oerc.ox.ac.uk"
-            }
-        ]
-    },
-    {
-        "@id": "_:n1b40047d067b49f59c9e1329c5bd0f8eb3",
-        "@type": [
-            "http://www.w3.org/2006/vcard/ns#Individual"
-        ],
-        "http://www.w3.org/2006/vcard/ns#fn": [
-            {
-                "@value": "Mark D. Wilkinson"
-            }
-        ],
-        "http://www.w3.org/2006/vcard/ns#hasEmail": [
-            {
-                "@id": "mailto:mark.wilkinson@upm.es"
-            }
-        ],
-        "http://www.w3.org/2006/vcard/ns#organization-name": [
-            {
-                "@value": "Wilkinson Laboratory, UPM, Madrid"
-            }
-        ]
-    },
-    {
-        "@id": "_:n1b40047d067b49f59c9e1329c5bd0f8eb4",
-        "@type": [
-            "http://www.w3.org/2006/vcard/ns#Individual"
-        ],
-        "http://www.w3.org/2006/vcard/ns#fn": [
-            {
-                "@value": "Mark D. Wilkinson"
-            }
-        ],
-        "http://www.w3.org/2006/vcard/ns#hasEmail": [
-            {
-                "@id": "mailto:mark.wilkinson@upm.es"
-            }
-        ],
-        "http://www.w3.org/2006/vcard/ns#organization-name": [
-            {
-                "@value": "Wilkinson Laboratory, UPM, Madrid"
-            }
-        ]
+      "@id": "_:g473080",
+      "@type": "vcard:Individual",
+      "vcard:fn": "Mark D. Wilkinson",
+      "vcard:organization-name": "Wilkinson Laboratory, UPM, Madrid",
+      "vcard:hasEmail": {
+        "@id": "mailto:mark.wilkinson@upm.es"
+      }
     }
-]
+  ]
+}

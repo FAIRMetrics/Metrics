@@ -1,130 +1,81 @@
-[
+{
+  "@context": {
+    "dcat": "http://www.w3.org/ns/dcat#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dc": "http://purl.org/dc/terms/",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "schemas": "https://schema.org/",
+    "foaf": "http://xmlns.com/foaf/0.1/",
+    "vcard": "http://www.w3.org/2006/vcard/ns#"
+  },
+  "@graph": [
     {
-        "@id": "https://w3id.org/fair-metrics/esrf/FM_F4_M_DOI_OA_ESRF",
-        "@type": [
-            "https://w3id.org/ftr#Metric",
-            "http://www.w3.org/ns/dcat#Dataset"
-        ],
-        "http://purl.org/dc/terms/description": [
-            {
-                "@value": " This metric applies to DOI objects. For publications entities, it ensures that its content, or a allowed copy is open access. For dataset entities it ensures that the data is open access (with or without embargo period). The reference services used are : https://unpaywall.org/ and https://openalex.org. While originally created as part of the OSTrails project to fulfil requirements within the PaNOSC cluster, this metric is subject agnostic and can be re-used by any community with these requirements for FAIR F4. "
-            }
-        ],
-        "http://purl.org/dc/terms/license": [
-            {
-                "@id": "https://creativecommons.org/licenses/by/4.0/"
-            }
-        ],
-        "http://purl.org/dc/terms/title": [
-            {
-                "@value": "FAIR Metric – F4 – Metadata - The content associated to a DOI is Open Access"
-            }
-        ],
-        "http://vivoweb.org/ontology/core#abbreviation": [
-            {
-                "@value": "FM_F4_M_DOI_OA_ESRF"
-            }
-        ],
-        "http://www.w3.org/2000/01/rdf-schema#definedBy": [
-            {
-                "@id": "https://fairmetrics.github.io/Metrics/metric/esrf/FM_F4_M_DOI_OA_ESRF.ttl"
-            }
-        ],
-        "http://www.w3.org/ns/dcat#contactPoint": [
-            {
-                "@id": "_:na78315adbd0041ddb4af6073cad5f455b1"
-            },
-            {
-                "@id": "_:na78315adbd0041ddb4af6073cad5f455b2"
-            }
-        ],
-        "http://www.w3.org/ns/dcat#keyword": [
-            {
-                "@value": "FAIR"
-            },
-            {
-                "@value": "open access"
-            },
-            {
-                "@value": "standard"
-            },
-            {
-                "@value": "f4"
-            }
-        ],
-        "http://www.w3.org/ns/dcat#landingPage": [
-            {
-                "@id": "https://fairsharing.org/6449"
-            }
-        ],
-        "http://www.w3.org/ns/dcat#version": [
-            {
-                "@value": "esrf1.0"
-            }
-        ],
-        "https://w3id.org/dpv#isApplicableFor": [
-            {
-                "@id": "https://schema.org/CreativeWork"
-            }
-        ],
-        "https://w3id.org/ftr#applicationArea": [
-            {
-                "@id": "http://www.fairsharing.org/ontology/subject/SRAO_0000401"
-            }
-        ],
-        "https://w3id.org/ftr#identifier": [
-            {
-                "@type": "http://www.w3.org/2001/XMLSchema#anyURI",
-                "@value": "https://w3id.org/fair-metrics/esrf/FM_F4_M_DOI_OA_ESRF"
-            }
-        ],
-        "https://w3id.org/ftr#status": [
-            {
-                "@language": "en",
-                "@value": "Active"
-            }
-        ],
-        "https://w3id.org/ftr#supportedBy": [
-            {
-                "@id": "https://w3id.org/FAIR-Champion"
-            }
-        ]
+      "@id": "https://w3id.org/fair-metrics/esrf/FM_F4_M_DOI_OA_ESRF",
+      "@type": [
+        "https://w3id.org/ftr#Metric",
+        "dcat:Dataset"
+      ],
+      "https://w3id.org/ftr#identifier": {
+        "@type": "xsd:anyURI",
+        "@value": "https://w3id.org/fair-metrics/esrf/FM_F4_M_DOI_OA_ESRF"
+      },
+      "dc:title": "FAIR Metric – F4 – Metadata - The content associated to a DOI is Open Access",
+      "http://vivoweb.org/ontology/core#abbreviation": "FM_F4_M_DOI_OA_ESRF",
+      "dc:description": " This metric applies to DOI objects. For publications entities, it ensures that its content, or a allowed copy is open access. For dataset entities it ensures that the data is open access (with or without embargo period). The reference services used are : https://unpaywall.org/ and https://openalex.org. While originally created as part of the OSTrails project to fulfil requirements within the PaNOSC cluster, this metric is subject agnostic and can be re-used by any community with these requirements for FAIR F4. ",
+      "dcat:keyword": [
+        "FAIR",
+        "open access",
+        "standard",
+        "f4"
+      ],
+      "rdfs:definedBy": {
+        "@id": "https://fairmetrics.github.io/Metrics/metric/esrf/FM_F4_M_DOI_OA_ESRF.ttl"
+      },
+      "dcat:landingPage": {
+        "@id": "https://fairsharing.org/6449"
+      },
+      "dcat:contactPoint": [
+        {
+          "@id": "_:g463700"
+        },
+        {
+          "@id": "_:g463740"
+        }
+      ],
+      "https://w3id.org/ftr#status": {
+        "@language": "en",
+        "@value": "Active"
+      },
+      "dcat:version": "esrf1.0",
+      "https://w3id.org/ftr#applicationArea": {
+        "@id": "http://www.fairsharing.org/ontology/subject/SRAO_0000401"
+      },
+      "dc:license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "https://w3id.org/ftr#supportedBy": {
+        "@id": "https://w3id.org/FAIR-Champion"
+      },
+      "https://w3id.org/dpv#isApplicableFor": {
+        "@id": "schemas:CreativeWork"
+      }
     },
     {
-        "@id": "_:na78315adbd0041ddb4af6073cad5f455b1",
-        "@type": [
-            "http://xmlns.com/foaf/0.1/Person"
-        ],
-        "http://www.w3.org/2006/vcard/ns#fn": [
-            {
-                "@value": "Renaud DUYME"
-            }
-        ],
-        "http://xmlns.com/foaf/0.1/mbox": [
-            {
-                "@id": "mailto:renaud.duyme@esrf.fr"
-            }
-        ]
+      "@id": "_:g463700",
+      "@type": "foaf:Person",
+      "vcard:fn": "Renaud DUYME",
+      "foaf:mbox": {
+        "@id": "mailto:renaud.duyme@esrf.fr"
+      }
     },
     {
-        "@id": "_:na78315adbd0041ddb4af6073cad5f455b2",
-        "@type": [
-            "http://www.w3.org/2006/vcard/ns#Individual"
-        ],
-        "http://www.w3.org/2006/vcard/ns#fn": [
-            {
-                "@value": "Mark D. Wilkinson"
-            }
-        ],
-        "http://www.w3.org/2006/vcard/ns#hasEmail": [
-            {
-                "@id": "mailto:mark.wilkinson@upm.es"
-            }
-        ],
-        "http://www.w3.org/2006/vcard/ns#organization-name": [
-            {
-                "@value": "Wilkinson Laboratory, UPM, Madrid"
-            }
-        ]
+      "@id": "_:g463740",
+      "@type": "vcard:Individual",
+      "vcard:fn": "Mark D. Wilkinson",
+      "vcard:organization-name": "Wilkinson Laboratory, UPM, Madrid",
+      "vcard:hasEmail": {
+        "@id": "mailto:mark.wilkinson@upm.es"
+      }
     }
-]
+  ]
+}

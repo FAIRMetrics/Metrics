@@ -1,171 +1,94 @@
-[
+{
+  "@context": {
+    "dcat": "http://www.w3.org/ns/dcat#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dc": "http://purl.org/dc/terms/",
+    "schemas": "https://schema.org/",
+    "vcard": "http://www.w3.org/2006/vcard/ns#"
+  },
+  "@graph": [
     {
-        "@id": "https://w3id.org/fair-metrics/general/FM_I2_M_FAIRVocabSemantic",
-        "@type": [
-            "https://w3id.org/ftr#Metric",
-            "http://www.w3.org/ns/dcat#Dataset"
-        ],
-        "http://purl.org/dc/terms/description": [
-            {
-                "@value": "<p>This semantic metric evaluates whether there is at least one vocabulary term used in the metadata that resolves to content in a linked data format (the definition of semantic formats follows [FAIRsharing guidance](<a href=\"https://fairsharing.gitbook.io/fairsharing/about-our-records/fair-assistance/syntactic-vs-semantic-knowledge-representation-languages)).\">https://fairsharing.gitbook.io/fairsharing/about-our-records/fair-assistance/syntactic-vs-semantic-knowledge-representation-languages)).</a></p>\n\n<p>I2 requires that metadata use vocabularies that follow FAIR principles. The purpose of this principle is to ensure that descriptive terms are drawn from such vocabularies, enabling consistent interpretation across systems and communities. Under this semantic interpretation, the evaluation checks whether there is at least one vocabulary term used in the metadata that resolves to content expressed in a linked data format. The resolved term must return structured content in a recognised linked data representation, with concepts and relationships defined. A resource satisfies this metric if at least one metadata element references a controlled vocabulary term that resolves to content in a linked data format (the definition of semantic formats follows [FAIRsharing guidance](<a href=\"https://fairsharing.gitbook.io/fairsharing/about-our-records/fair-assistance/syntactic-vs-semantic-knowledge-representation-languages)).\">https://fairsharing.gitbook.io/fairsharing/about-our-records/fair-assistance/syntactic-vs-semantic-knowledge-representation-languages)).</a></p>\n\n"
-            }
-        ],
-        "http://purl.org/dc/terms/issued": [
-            {
-                "@type": "http://www.w3.org/2001/XMLSchema#date",
-                "@value": "2026-03-01"
-            }
-        ],
-        "http://purl.org/dc/terms/license": [
-            {
-                "@id": "https://creativecommons.org/licenses/by/4.0/"
-            }
-        ],
-        "http://purl.org/dc/terms/modified": [
-            {
-                "@type": "http://www.w3.org/2001/XMLSchema#date",
-                "@value": "2026-03-01"
-            }
-        ],
-        "http://purl.org/dc/terms/title": [
-            {
-                "@value": "FAIR Metric - I2 - Metadata - uses FAIR vocabularies (semantic)"
-            }
-        ],
-        "http://vivoweb.org/ontology/core#abbreviation": [
-            {
-                "@value": "FM_I2_M_FAIRVocabSemantic"
-            }
-        ],
-        "http://www.w3.org/2000/01/rdf-schema#definedBy": [
-            {
-                "@id": "https://fairmetrics.github.io/Metrics/metric/general/FM_I2_M_FAIRVocabSemantic.ttl"
-            }
-        ],
-        "http://www.w3.org/ns/dcat#contactPoint": [
-            {
-                "@id": "_:nbed084c3613843ada250737c9db2a55ab1"
-            },
-            {
-                "@id": "_:nbed084c3613843ada250737c9db2a55ab2"
-            },
-            {
-                "@id": "_:nbed084c3613843ada250737c9db2a55ab3"
-            }
-        ],
-        "http://www.w3.org/ns/dcat#keyword": [
-            {
-                "@value": "FAIR"
-            },
-            {
-                "@value": "I2"
-            },
-            {
-                "@value": "identifier"
-            },
-            {
-                "@value": "metadata"
-            }
-        ],
-        "http://www.w3.org/ns/dcat#landingPage": [
-            {
-                "@id": "https://w3id.org/fair-metrics/general/FM_I2_M_FAIRVocabSemantic"
-            }
-        ],
-        "http://www.w3.org/ns/dcat#version": [
-            {
-                "@value": "Champion1.0"
-            }
-        ],
-        "http://www.w3.org/ns/dqv#inDimension": [
-            {
-                "@id": "https://doi.org/10.25504/FAIRsharing.96d4af"
-            }
-        ],
-        "https://w3id.org/dpv#isApplicableFor": [
-            {
-                "@id": "https://schema.org/CreativeWork"
-            }
-        ],
-        "https://w3id.org/ftr#applicationArea": [
-            {
-                "@id": "http://www.fairsharing.org/ontology/subject/SRAO_0000401"
-            }
-        ],
-        "https://w3id.org/ftr#identifier": [
-            {
-                "@type": "http://www.w3.org/2001/XMLSchema#anyURI",
-                "@value": "https://w3id.org/fair-metrics/general/FM_I2_M_FAIRVocabSemantic"
-            }
-        ],
-        "https://w3id.org/ftr#status": [
-            {
-                "@language": "en",
-                "@value": "Active"
-            }
-        ],
-        "https://w3id.org/ftr#supportedBy": [
-            {
-                "@id": "https://w3id.org/FAIR-Champion"
-            }
-        ]
+      "@id": "https://w3id.org/fair-metrics/general/FM_I2_M_FAIRVocabSemantic",
+      "@type": [
+        "https://w3id.org/ftr#Metric",
+        "dcat:Dataset"
+      ],
+      "rdfs:definedBy": {
+        "@id": "https://fairmetrics.github.io/Metrics/metric/general/FM_I2_M_FAIRVocabSemantic.ttl"
+      },
+      "https://w3id.org/ftr#identifier": {
+        "@type": "xsd:anyURI",
+        "@value": "https://w3id.org/fair-metrics/general/FM_I2_M_FAIRVocabSemantic"
+      },
+      "dc:title": "FAIR Metric - I2 - Metadata - uses FAIR vocabularies (semantic)",
+      "http://vivoweb.org/ontology/core#abbreviation": "FM_I2_M_FAIRVocabSemantic",
+      "dcat:landingPage": {
+        "@id": "https://w3id.org/fair-metrics/general/FM_I2_M_FAIRVocabSemantic"
+      },
+      "dc:description": "<p>This semantic metric evaluates whether there is at least one vocabulary term used in the metadata that resolves to content in a linked data format (the definition of semantic formats follows [FAIRsharing guidance](<a href=\"https://fairsharing.gitbook.io/fairsharing/about-our-records/fair-assistance/syntactic-vs-semantic-knowledge-representation-languages)).\">https://fairsharing.gitbook.io/fairsharing/about-our-records/fair-assistance/syntactic-vs-semantic-knowledge-representation-languages)).</a></p>\n\n<p>I2 requires that metadata use vocabularies that follow FAIR principles. The purpose of this principle is to ensure that descriptive terms are drawn from such vocabularies, enabling consistent interpretation across systems and communities. Under this semantic interpretation, the evaluation checks whether there is at least one vocabulary term used in the metadata that resolves to content expressed in a linked data format. The resolved term must return structured content in a recognised linked data representation, with concepts and relationships defined. A resource satisfies this metric if at least one metadata element references a controlled vocabulary term that resolves to content in a linked data format (the definition of semantic formats follows [FAIRsharing guidance](<a href=\"https://fairsharing.gitbook.io/fairsharing/about-our-records/fair-assistance/syntactic-vs-semantic-knowledge-representation-languages)).\">https://fairsharing.gitbook.io/fairsharing/about-our-records/fair-assistance/syntactic-vs-semantic-knowledge-representation-languages)).</a></p>\n\n",
+      "dcat:keyword": [
+        "FAIR",
+        "I2",
+        "identifier",
+        "metadata"
+      ],
+      "http://www.w3.org/ns/dqv#inDimension": {
+        "@id": "https://doi.org/10.25504/FAIRsharing.96d4af"
+      },
+      "dcat:contactPoint": [
+        {
+          "@id": "_:g470600"
+        },
+        {
+          "@id": "_:g470620"
+        }
+      ],
+      "https://w3id.org/ftr#status": {
+        "@language": "en",
+        "@value": "Active"
+      },
+      "dc:issued": {
+        "@type": "xsd:date",
+        "@value": "2026-03-01"
+      },
+      "dc:modified": {
+        "@type": "xsd:date",
+        "@value": "2026-03-01"
+      },
+      "dcat:version": "Champion1.0",
+      "https://w3id.org/ftr#applicationArea": {
+        "@id": "http://www.fairsharing.org/ontology/subject/SRAO_0000401"
+      },
+      "dc:license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "https://w3id.org/ftr#supportedBy": {
+        "@id": "https://w3id.org/FAIR-Champion"
+      },
+      "https://w3id.org/dpv#isApplicableFor": {
+        "@id": "schemas:CreativeWork"
+      }
     },
     {
-        "@id": "_:nbed084c3613843ada250737c9db2a55ab1",
-        "@type": [
-            "http://www.w3.org/2006/vcard/ns#Individual"
-        ],
-        "http://www.w3.org/2006/vcard/ns#fn": [
-            {
-                "@value": "Mark D. Wilkinson"
-            }
-        ],
-        "http://www.w3.org/2006/vcard/ns#hasEmail": [
-            {
-                "@id": "mailto:mark.wilkinson@upm.es"
-            }
-        ]
+      "@id": "_:g470600",
+      "@type": "vcard:Individual",
+      "vcard:fn": "Allyson L. Lister",
+      "http://vivoweb.org/ontology/core#orcidId": {
+        "@id": "http://orcid.org/0000-0002-7702-4495"
+      },
+      "vcard:hasEmail": {
+        "@id": "mailto:allyson.lister@oerc.ox.ac.uk"
+      }
     },
     {
-        "@id": "_:nbed084c3613843ada250737c9db2a55ab2",
-        "@type": [
-            "http://www.w3.org/2006/vcard/ns#Individual"
-        ],
-        "http://vivoweb.org/ontology/core#orcidId": [
-            {
-                "@id": "http://orcid.org/0000-0002-7702-4495"
-            }
-        ],
-        "http://www.w3.org/2006/vcard/ns#fn": [
-            {
-                "@value": "Allyson L. Lister"
-            }
-        ],
-        "http://www.w3.org/2006/vcard/ns#hasEmail": [
-            {
-                "@id": "mailto:allyson.lister@oerc.ox.ac.uk"
-            }
-        ]
-    },
-    {
-        "@id": "_:nbed084c3613843ada250737c9db2a55ab3",
-        "@type": [
-            "http://www.w3.org/2006/vcard/ns#Individual"
-        ],
-        "http://www.w3.org/2006/vcard/ns#fn": [
-            {
-                "@value": "Mark D. Wilkinson"
-            }
-        ],
-        "http://www.w3.org/2006/vcard/ns#hasEmail": [
-            {
-                "@id": "mailto:mark.wilkinson@upm.es"
-            }
-        ],
-        "http://www.w3.org/2006/vcard/ns#organization-name": [
-            {
-                "@value": "Wilkinson Laboratory, UPM, Madrid"
-            }
-        ]
+      "@id": "_:g470620",
+      "@type": "vcard:Individual",
+      "vcard:fn": "Mark D. Wilkinson",
+      "vcard:organization-name": "Wilkinson Laboratory, UPM, Madrid",
+      "vcard:hasEmail": {
+        "@id": "mailto:mark.wilkinson@upm.es"
+      }
     }
-]
+  ]
+}

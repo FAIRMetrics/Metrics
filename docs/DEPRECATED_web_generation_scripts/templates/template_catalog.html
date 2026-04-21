@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>FAIR Metrics Catalogue</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <!-- Add your full original catalog CSS + JS here if you want the filter functionality -->
+</head>
+<body>
+  <div class="container">
+    <h1 class="text-center">FAIR Metrics Catalogue</h1>
+
+    <div id="test" class="section">
+      <h2>Tests</h2>
+      <table class="table">
+        <thead><tr><th>Name</th><th>Title</th><th>Keywords</th></tr></thead>
+        <tbody>
+          <% tests.each do |t| %>
+          <tr>
+            <td><a href="<%= t['identifier'] %>"><%= t['name'] %></a></td>
+            <td><%= t['title'] %></td>
+            <td><%= t['keywords'] %></td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <div id="metric" class="section">
+      <h2>Metrics</h2>
+      <table class="table">
+        <thead><tr><th>Name</th><th>Title</th><th>Keywords</th></tr></thead>
+        <tbody>
+          <% metrics.each do |m| %>
+          <tr>
+            <td><a href="<%= m['identifier'] %>"><%= m['name'] %></a></td>
+            <td><%= m['title'] %></td>
+            <td><%= m['keywords'] %></td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <div id="benchmark" class="section">
+      <h2>Benchmarks</h2>
+      <table class="table">
+        <thead><tr><th>Name</th><th>Title</th><th>Keywords</th></tr></thead>
+        <tbody>
+          <% benchmarks.each do |b| %>
+          <tr>
+            <td><a href="<%= b['identifier'] %>"><%= b['name'] %></a></td>
+            <td><%= b['title'] %></td>
+            <td><%= b['keywords'] %></td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+</html>

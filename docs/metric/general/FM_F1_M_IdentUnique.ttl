@@ -30,11 +30,8 @@ dqv:inDimension <https://doi.org/10.25504/FAIRsharing.a2cea7> ;
 
     dcat:landingPage          <https://w3id.org/fair-metrics/general/FM_F1_M_IdentUnique> ;
 
-    dcat:contactPoint           [
-        a                     vcard:Individual ;
-        vcard:fn              "Mark D. Wilkinson" ;
-        vcard:hasEmail             <mailto:mark.wilkinson@upm.es> ;
-    ] ;
+
+
     dcat:contactPoint           [
         a                     vcard:Individual ;
         vcard:fn              "Allyson L. Lister" ;
@@ -48,14 +45,7 @@ dqv:inDimension <https://doi.org/10.25504/FAIRsharing.a2cea7> ;
         vcard:organization-name "Wilkinson Laboratory, UPM, Madrid";
         vcard:hasEmail             <mailto:mark.wilkinson@upm.es> ;
     ] ;
-    
-    dcat:contactPoint           [
-        a                     vcard:Individual ;
-        vcard:fn              "Mark D. Wilkinson" ;
-        vcard:organization-name "Wilkinson Laboratory, UPM, Madrid";
-        vcard:hasEmail             <mailto:mark.wilkinson@upm.es> ;
-    ] ;
-    
+
 	ftr:status "Active"@en ;
 
     dcterms:issued            "2026-02-24"^^xsd:date ;

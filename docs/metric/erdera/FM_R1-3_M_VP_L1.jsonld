@@ -1,156 +1,85 @@
-[
+{
+  "@context": {
+    "dcat": "http://www.w3.org/ns/dcat#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dc": "http://purl.org/dc/terms/",
+    "schemas": "https://schema.org/",
+    "vcard": "http://www.w3.org/2006/vcard/ns#"
+  },
+  "@graph": [
     {
-        "@id": "https://w3id.org/fair-metrics/erdera/FM_R1-3_M_VP_L1",
-        "@type": [
-            "https://w3id.org/ftr#Metric",
-            "http://www.w3.org/ns/dcat#Dataset"
-        ],
-        "http://purl.org/dc/terms/description": [
-            {
-                "@value": "The ERDERA Project has strict requirements for minimal metadata to onboard their Virtual Platform. \n                            These include: Migration away from deprecated EJP purl properties to the w3id equivalents.  Presence of the VPDiscoverable prpoperty. Properties: dcat:theme dcat:contactPoint dct:description\n                            dcat:keyword dct:language dct:license\n                            dct:publisher dct:title dcat:contactPoint dcat:landingPage.  \n                        It does not extensively test the substructure of the dct:publisher, but it must be a foaf:Agent with a foaf:name.\n"
-            }
-        ],
-        "http://purl.org/dc/terms/issued": [
-            {
-                "@type": "http://www.w3.org/2001/XMLSchema#date",
-                "@value": "2026-04-06"
-            }
-        ],
-        "http://purl.org/dc/terms/license": [
-            {
-                "@id": "https://creativecommons.org/licenses/by/4.0/"
-            }
-        ],
-        "http://purl.org/dc/terms/modified": [
-            {
-                "@type": "http://www.w3.org/2001/XMLSchema#date",
-                "@value": "2026-04-06"
-            }
-        ],
-        "http://purl.org/dc/terms/title": [
-            {
-                "@value": "ERDERA Metric - R1.3 - Metadata - Minimal VP Metadata for Level 1 Compliance"
-            }
-        ],
-        "http://vivoweb.org/ontology/core#abbreviation": [
-            {
-                "@value": "FM_R1-3_M_VP_L1"
-            }
-        ],
-        "http://www.w3.org/2000/01/rdf-schema#definedBy": [
-            {
-                "@id": "https://fairmetrics.github.io/Metrics/metric/erdera/FM_R1-3_M_VP_L1.ttl"
-            }
-        ],
-        "http://www.w3.org/ns/dcat#contactPoint": [
-            {
-                "@id": "_:n21b9ebfe2ba045568328e1ef44ae1470b1"
-            },
-            {
-                "@id": "_:n21b9ebfe2ba045568328e1ef44ae1470b2"
-            }
-        ],
-        "http://www.w3.org/ns/dcat#keyword": [
-            {
-                "@value": "FAIR"
-            },
-            {
-                "@value": "R1.3"
-            },
-            {
-                "@value": "identifier"
-            },
-            {
-                "@value": "metadata"
-            },
-            {
-                "@value": "ERDERA"
-            },
-            {
-                "@value": "virtual platform"
-            }
-        ],
-        "http://www.w3.org/ns/dcat#landingPage": [
-            {
-                "@id": "https://w3id.org/fair-metrics/erdera/FM_R1-3_M_VP_L1"
-            }
-        ],
-        "http://www.w3.org/ns/dcat#version": [
-            {
-                "@value": "Champion1.0"
-            }
-        ],
-        "http://www.w3.org/ns/dqv#inDimension": [
-            {
-                "@id": "https://doi.org/10.25504/FAIRsharing.87d197"
-            }
-        ],
-        "https://w3id.org/dpv#isApplicableFor": [
-            {
-                "@id": "https://schema.org/CreativeWork"
-            }
-        ],
-        "https://w3id.org/ftr#applicationArea": [
-            {
-                "@id": "http://purl.obolibrary.org/obo/NCIT_C4873"
-            },
-            {
-                "@id": "http://purl.obolibrary.org/obo/OGMS_0000031"
-            }
-        ],
-        "https://w3id.org/ftr#identifier": [
-            {
-                "@type": "http://www.w3.org/2001/XMLSchema#anyURI",
-                "@value": "https://w3id.org/fair-metrics/erdera/FM_R1-3_M_VP_L1"
-            }
-        ],
-        "https://w3id.org/ftr#status": [
-            {
-                "@language": "en",
-                "@value": "Active"
-            }
-        ],
-        "https://w3id.org/ftr#supportedBy": [
-            {
-                "@id": "https://w3id.org/FAIR-Champion"
-            }
-        ]
+      "@id": "https://w3id.org/fair-metrics/erdera/FM_R1-3_M_VP_L1",
+      "@type": [
+        "https://w3id.org/ftr#Metric",
+        "dcat:Dataset"
+      ],
+      "rdfs:definedBy": {
+        "@id": "https://fairmetrics.github.io/Metrics/metric/erdera/FM_R1-3_M_VP_L1.ttl"
+      },
+      "https://w3id.org/ftr#identifier": {
+        "@type": "xsd:anyURI",
+        "@value": "https://w3id.org/fair-metrics/erdera/FM_R1-3_M_VP_L1"
+      },
+      "dc:title": "ERDERA Metric - R1.3 - Metadata - Minimal VP Metadata for Level 1 Compliance",
+      "http://vivoweb.org/ontology/core#abbreviation": "FM_R1-3_M_VP_L1",
+      "dcat:landingPage": {
+        "@id": "https://w3id.org/fair-metrics/erdera/FM_R1-3_M_VP_L1"
+      },
+      "dc:description": "The ERDERA Project has strict requirements for minimal metadata to onboard their Virtual Platform. \n                            These include: Migration away from deprecated EJP purl properties to the w3id equivalents.  Presence of the VPDiscoverable prpoperty. Properties: dcat:theme dcat:contactPoint dct:description\n                            dcat:keyword dct:language dct:license\n                            dct:publisher dct:title dcat:contactPoint dcat:landingPage.  \n                        It does not extensively test the substructure of the dct:publisher, but it must be a foaf:Agent with a foaf:name.\n",
+      "dcat:keyword": [
+        "FAIR",
+        "R1.3",
+        "identifier",
+        "metadata",
+        "ERDERA",
+        "virtual platform"
+      ],
+      "dcat:contactPoint": {
+        "@id": "_:g461380"
+      },
+      "https://w3id.org/ftr#status": {
+        "@language": "en",
+        "@value": "Active"
+      },
+      "dc:issued": {
+        "@type": "xsd:date",
+        "@value": "2026-04-06"
+      },
+      "dc:modified": {
+        "@type": "xsd:date",
+        "@value": "2026-04-06"
+      },
+      "dcat:version": "Champion1.0",
+      "https://w3id.org/ftr#applicationArea": [
+        {
+          "@id": "http://purl.obolibrary.org/obo/NCIT_C4873"
+        },
+        {
+          "@id": "http://purl.obolibrary.org/obo/OGMS_0000031"
+        }
+      ],
+      "dc:license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "http://www.w3.org/ns/dqv#inDimension": {
+        "@id": "https://doi.org/10.25504/FAIRsharing.87d197"
+      },
+      "https://w3id.org/ftr#supportedBy": {
+        "@id": "https://w3id.org/FAIR-Champion"
+      },
+      "https://w3id.org/dpv#isApplicableFor": {
+        "@id": "schemas:CreativeWork"
+      }
     },
     {
-        "@id": "_:n21b9ebfe2ba045568328e1ef44ae1470b1",
-        "@type": [
-            "http://www.w3.org/2006/vcard/ns#Individual"
-        ],
-        "http://www.w3.org/2006/vcard/ns#fn": [
-            {
-                "@value": "Mark D. Wilkinson"
-            }
-        ],
-        "http://www.w3.org/2006/vcard/ns#hasEmail": [
-            {
-                "@id": "mailto:mark.wilkinson@upm.es"
-            }
-        ]
-    },
-    {
-        "@id": "_:n21b9ebfe2ba045568328e1ef44ae1470b2",
-        "@type": [
-            "http://www.w3.org/2006/vcard/ns#Individual"
-        ],
-        "http://www.w3.org/2006/vcard/ns#fn": [
-            {
-                "@value": "Mark D. Wilkinson"
-            }
-        ],
-        "http://www.w3.org/2006/vcard/ns#hasEmail": [
-            {
-                "@id": "mailto:mark.wilkinson@upm.es"
-            }
-        ],
-        "http://www.w3.org/2006/vcard/ns#organization-name": [
-            {
-                "@value": "Wilkinson Laboratory, UPM, Madrid"
-            }
-        ]
+      "@id": "_:g461380",
+      "@type": "vcard:Individual",
+      "vcard:fn": "Mark D. Wilkinson",
+      "vcard:organization-name": "Wilkinson Laboratory, UPM, Madrid",
+      "vcard:hasEmail": {
+        "@id": "mailto:mark.wilkinson@upm.es"
+      }
     }
-]
+  ]
+}

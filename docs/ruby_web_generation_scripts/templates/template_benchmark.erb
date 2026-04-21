@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title><%= benchmark_name || benchmark_title %></title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+</head>
+<body>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <style>
+    .row { margin-bottom: 10px; }
+    .well { margin: 0; padding: 10px; min-height: 40px; }
+    .tag_div { margin-right: 10px; }
+    .row-equal { display: flex; align-items: stretch; }
+  </style>
+
+  <div class="container">
+    <div class="row"><div class="col-md-12"><h1 class="text-center"><%= benchmark_name || benchmark_title %></h1></div></div>
+    <div class="row"><div class="col-md-12 well"><%= benchmark_description %></div></div>
+
+    <div class="row row-equal">
+      <div class="col-md-3 well tag_div"><strong>Identifier</strong></div>
+      <div class="col-md-9 well"><a href="<%= benchmark_identifier %>" target="_blank"><%= benchmark_identifier %></a></div>
+    </div>
+    <div class="row row-equal">
+      <div class="col-md-3 well tag_div"><strong>Contact Point</strong></div>
+      <div class="col-md-9 well"><%== benchmark_contactPoint %></div>
+    </div>
+  </div>
+</body>
+</html>

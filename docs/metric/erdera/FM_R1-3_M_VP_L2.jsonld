@@ -1,159 +1,86 @@
-[
+{
+  "@context": {
+    "dcat": "http://www.w3.org/ns/dcat#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dc": "http://purl.org/dc/terms/",
+    "schemas": "https://schema.org/",
+    "vcard": "http://www.w3.org/2006/vcard/ns#"
+  },
+  "@graph": [
     {
-        "@id": "https://w3id.org/fair-metrics/erdera/FM_R1-3_M_VP_L2",
-        "@type": [
-            "https://w3id.org/ftr#Metric",
-            "http://www.w3.org/ns/dcat#Dataset"
-        ],
-        "http://purl.org/dc/terms/description": [
-            {
-                "@value": "\n                           The ERDERA Project has strict requirements for minimal metadata to onboard their Virtual Platform. \n                            For Level 2, you must first be Level 1 compliant (see https://w3id.org/fair-metrics/erdera/FM_R1-3_M_VP_L1).\n                            In addition, you must declare yourself as a dcat Data Service, and have a landingPage at a minimimum.\n\n"
-            }
-        ],
-        "http://purl.org/dc/terms/issued": [
-            {
-                "@type": "http://www.w3.org/2001/XMLSchema#date",
-                "@value": "2026-04-06"
-            }
-        ],
-        "http://purl.org/dc/terms/license": [
-            {
-                "@id": "https://creativecommons.org/licenses/by/4.0/"
-            }
-        ],
-        "http://purl.org/dc/terms/modified": [
-            {
-                "@type": "http://www.w3.org/2001/XMLSchema#date",
-                "@value": "2026-04-06"
-            }
-        ],
-        "http://purl.org/dc/terms/title": [
-            {
-                "@value": "ERDERA Metric - R1.3 - Metadata - Metadata meets minimal VP Metadata for ERDERA Virtual Platform Level 2 Compliance  "
-            }
-        ],
-        "http://vivoweb.org/ontology/core#abbreviation": [
-            {
-                "@value": "FM_R1-3_M_VP_L2"
-            }
-        ],
-        "http://www.w3.org/2000/01/rdf-schema#definedBy": [
-            {
-                "@id": "https://fairmetrics.github.io/Metrics/metric/erdera/FM_R1-3_M_VP_L2.ttl"
-            }
-        ],
-        "http://www.w3.org/ns/dcat#contactPoint": [
-            {
-                "@id": "_:ne38ff645a081466b9198460841dae860b1"
-            },
-            {
-                "@id": "_:ne38ff645a081466b9198460841dae860b2"
-            }
-        ],
-        "http://www.w3.org/ns/dcat#keyword": [
-            {
-                "@value": "FAIR"
-            },
-            {
-                "@value": "R1.3"
-            },
-            {
-                "@value": "identifier"
-            },
-            {
-                "@value": "metadata"
-            },
-            {
-                "@value": "ERDERA"
-            },
-            {
-                "@value": "virtual platform"
-            },
-            {
-                "@value": "data service"
-            }
-        ],
-        "http://www.w3.org/ns/dcat#landingPage": [
-            {
-                "@id": "https://w3id.org/fair-metrics/erdera/FM_R1-3_M_VP_L2"
-            }
-        ],
-        "http://www.w3.org/ns/dcat#version": [
-            {
-                "@value": "Champion1.0"
-            }
-        ],
-        "http://www.w3.org/ns/dqv#inDimension": [
-            {
-                "@id": "https://doi.org/10.25504/FAIRsharing.87d197"
-            }
-        ],
-        "https://w3id.org/dpv#isApplicableFor": [
-            {
-                "@id": "https://schema.org/CreativeWork"
-            }
-        ],
-        "https://w3id.org/ftr#applicationArea": [
-            {
-                "@id": "http://purl.obolibrary.org/obo/NCIT_C4873"
-            },
-            {
-                "@id": "http://purl.obolibrary.org/obo/OGMS_0000031"
-            }
-        ],
-        "https://w3id.org/ftr#identifier": [
-            {
-                "@type": "http://www.w3.org/2001/XMLSchema#anyURI",
-                "@value": "https://w3id.org/fair-metrics/erdera/FM_R1-3_M_VP_L2"
-            }
-        ],
-        "https://w3id.org/ftr#status": [
-            {
-                "@language": "en",
-                "@value": "Active"
-            }
-        ],
-        "https://w3id.org/ftr#supportedBy": [
-            {
-                "@id": "https://w3id.org/FAIR-Champion"
-            }
-        ]
+      "@id": "https://w3id.org/fair-metrics/erdera/FM_R1-3_M_VP_L2",
+      "@type": [
+        "https://w3id.org/ftr#Metric",
+        "dcat:Dataset"
+      ],
+      "rdfs:definedBy": {
+        "@id": "https://fairmetrics.github.io/Metrics/metric/erdera/FM_R1-3_M_VP_L2.ttl"
+      },
+      "https://w3id.org/ftr#identifier": {
+        "@type": "xsd:anyURI",
+        "@value": "https://w3id.org/fair-metrics/erdera/FM_R1-3_M_VP_L2"
+      },
+      "dc:title": "ERDERA Metric - R1.3 - Metadata - Metadata meets minimal VP Metadata for ERDERA Virtual Platform Level 2 Compliance  ",
+      "http://vivoweb.org/ontology/core#abbreviation": "FM_R1-3_M_VP_L2",
+      "dcat:landingPage": {
+        "@id": "https://w3id.org/fair-metrics/erdera/FM_R1-3_M_VP_L2"
+      },
+      "dc:description": "\n                           The ERDERA Project has strict requirements for minimal metadata to onboard their Virtual Platform. \n                            For Level 2, you must first be Level 1 compliant (see https://w3id.org/fair-metrics/erdera/FM_R1-3_M_VP_L1).\n                            In addition, you must declare yourself as a dcat Data Service, and have a landingPage at a minimimum.\n\n",
+      "dcat:keyword": [
+        "FAIR",
+        "R1.3",
+        "identifier",
+        "metadata",
+        "ERDERA",
+        "virtual platform",
+        "data service"
+      ],
+      "https://w3id.org/ftr#status": {
+        "@language": "en",
+        "@value": "Active"
+      },
+      "dcat:contactPoint": {
+        "@id": "_:g462880"
+      },
+      "dc:issued": {
+        "@type": "xsd:date",
+        "@value": "2026-04-06"
+      },
+      "dc:modified": {
+        "@type": "xsd:date",
+        "@value": "2026-04-06"
+      },
+      "dcat:version": "Champion1.0",
+      "https://w3id.org/ftr#applicationArea": [
+        {
+          "@id": "http://purl.obolibrary.org/obo/NCIT_C4873"
+        },
+        {
+          "@id": "http://purl.obolibrary.org/obo/OGMS_0000031"
+        }
+      ],
+      "dc:license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "http://www.w3.org/ns/dqv#inDimension": {
+        "@id": "https://doi.org/10.25504/FAIRsharing.87d197"
+      },
+      "https://w3id.org/ftr#supportedBy": {
+        "@id": "https://w3id.org/FAIR-Champion"
+      },
+      "https://w3id.org/dpv#isApplicableFor": {
+        "@id": "schemas:CreativeWork"
+      }
     },
     {
-        "@id": "_:ne38ff645a081466b9198460841dae860b1",
-        "@type": [
-            "http://www.w3.org/2006/vcard/ns#Individual"
-        ],
-        "http://www.w3.org/2006/vcard/ns#fn": [
-            {
-                "@value": "Mark D. Wilkinson"
-            }
-        ],
-        "http://www.w3.org/2006/vcard/ns#hasEmail": [
-            {
-                "@id": "mailto:mark.wilkinson@upm.es"
-            }
-        ]
-    },
-    {
-        "@id": "_:ne38ff645a081466b9198460841dae860b2",
-        "@type": [
-            "http://www.w3.org/2006/vcard/ns#Individual"
-        ],
-        "http://www.w3.org/2006/vcard/ns#fn": [
-            {
-                "@value": "Mark D. Wilkinson"
-            }
-        ],
-        "http://www.w3.org/2006/vcard/ns#hasEmail": [
-            {
-                "@id": "mailto:mark.wilkinson@upm.es"
-            }
-        ],
-        "http://www.w3.org/2006/vcard/ns#organization-name": [
-            {
-                "@value": "Wilkinson Laboratory, UPM, Madrid"
-            }
-        ]
+      "@id": "_:g462880",
+      "@type": "vcard:Individual",
+      "vcard:fn": "Mark D. Wilkinson",
+      "vcard:organization-name": "Wilkinson Laboratory, UPM, Madrid",
+      "vcard:hasEmail": {
+        "@id": "mailto:mark.wilkinson@upm.es"
+      }
     }
-]
+  ]
+}

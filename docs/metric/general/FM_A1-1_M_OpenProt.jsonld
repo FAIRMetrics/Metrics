@@ -1,140 +1,86 @@
-[
+{
+  "@context": {
+    "dcat": "http://www.w3.org/ns/dcat#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dc": "http://purl.org/dc/terms/",
+    "schemas": "https://schema.org/",
+    "vcard": "http://www.w3.org/2006/vcard/ns#"
+  },
+  "@graph": [
     {
-        "@id": "https://w3id.org/fair-metrics/general/FM_A1-1_M_OpenProt",
-        "@type": [
-            "https://w3id.org/ftr#Metric",
-            "http://www.w3.org/ns/dcat#Dataset"
-        ],
-        "http://purl.org/dc/terms/description": [
-            {
-                "@value": "open protocol for (meta)data retrieval. This metric aligns with FAIR Principle A1.1."
-            }
-        ],
-        "http://purl.org/dc/terms/license": [
-            {
-                "@id": "https://creativecommons.org/licenses/by/4.0/"
-            }
-        ],
-        "http://purl.org/dc/terms/title": [
-            {
-                "@value": "FAIR Metric – A1.1 – Metadata - Open protocol for (meta)data retrieval"
-            }
-        ],
-        "http://vivoweb.org/ontology/core#abbreviation": [
-            {
-                "@value": "FM_A1-1_M_OpenProt"
-            }
-        ],
-        "http://www.w3.org/2000/01/rdf-schema#definedBy": [
-            {
-                "@id": "https://w3id.org/fair-metrics/general/FM_A1-1_M_OpenProt.ttl"
-            }
-        ],
-        "http://www.w3.org/ns/dcat#contactPoint": [
-            {
-                "@id": "_:n977a03b001724d0e8bc19995fecba83cb1"
-            },
-            {
-                "@id": "_:n977a03b001724d0e8bc19995fecba83cb2"
-            }
-        ],
-        "http://www.w3.org/ns/dcat#keyword": [
-            {
-                "@value": "FAIR"
-            },
-            {
-                "@value": "accessibility"
-            },
-            {
-                "@value": "protocol"
-            },
-            {
-                "@value": "open"
-            },
-            {
-                "@value": "standard"
-            },
-            {
-                "@value": "A1.1"
-            }
-        ],
-        "http://www.w3.org/ns/dcat#landingPage": [
-            {
-                "@id": "https://w3id.org/fair-metrics/general/FM_A1-1_M_OpenProt"
-            }
-        ],
-        "http://www.w3.org/ns/dcat#version": [
-            {
-                "@value": "Champion1.0"
-            }
-        ],
-        "http://www.w3.org/ns/dqv#inDimension": [
-            {
-                "@id": "https://doi.org/10.25504/FAIRsharing.7612c1"
-            }
-        ],
-        "https://w3id.org/dpv#isApplicableFor": [
-            {
-                "@id": "https://schema.org/Dataset"
-            }
-        ],
-        "https://w3id.org/ftr#applicationArea": [
-            {
-                "@id": "http://www.fairsharing.org/ontology/subject/SRAO_0000401"
-            }
-        ],
-        "https://w3id.org/ftr#hasPositiveValidation": [
-            {
-                "@id": "https://w3id.org/duchenne-fdp"
-            }
-        ],
-        "https://w3id.org/ftr#identifier": [
-            {
-                "@type": "http://www.w3.org/2001/XMLSchema#anyURI",
-                "@value": "https://w3id.org/fair-metrics/general/FM_A1-1_M_OpenProt"
-            }
-        ],
-        "https://w3id.org/ftr#supportedBy": [
-            {
-                "@id": "https://w3id.org/FAIR-Champion"
-            }
-        ]
+      "@id": "https://w3id.org/fair-metrics/general/FM_A1-1_M_OpenProt",
+      "@type": [
+        "https://w3id.org/ftr#Metric",
+        "dcat:Dataset"
+      ],
+      "rdfs:definedBy": {
+        "@id": "https://w3id.org/fair-metrics/general/FM_A1-1_M_OpenProt.ttl"
+      },
+      "https://w3id.org/ftr#identifier": {
+        "@type": "xsd:anyURI",
+        "@value": "https://w3id.org/fair-metrics/general/FM_A1-1_M_OpenProt"
+      },
+      "dc:title": "FAIR Metric – A1.1 – Metadata - Open protocol for (meta)data retrieval",
+      "http://vivoweb.org/ontology/core#abbreviation": "FM_A1-1_M_OpenProt",
+      "dc:description": "open protocol for (meta)data retrieval. This metric aligns with FAIR Principle A1.1.",
+      "dcat:keyword": [
+        "FAIR",
+        "accessibility",
+        "protocol",
+        "open",
+        "standard",
+        "A1.1"
+      ],
+      "dcat:landingPage": {
+        "@id": "https://w3id.org/fair-metrics/general/FM_A1-1_M_OpenProt"
+      },
+      "http://www.w3.org/ns/dqv#inDimension": {
+        "@id": "https://doi.org/10.25504/FAIRsharing.7612c1"
+      },
+      "dcat:contactPoint": [
+        {
+          "@id": "_:g465620"
+        },
+        {
+          "@id": "_:g465660"
+        }
+      ],
+      "dcat:version": "Champion1.0",
+      "https://w3id.org/ftr#applicationArea": {
+        "@id": "http://www.fairsharing.org/ontology/subject/SRAO_0000401"
+      },
+      "dc:license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "https://w3id.org/ftr#hasPositiveValidation": {
+        "@id": "https://w3id.org/duchenne-fdp"
+      },
+      "https://w3id.org/ftr#supportedBy": {
+        "@id": "https://w3id.org/FAIR-Champion"
+      },
+      "https://w3id.org/dpv#isApplicableFor": {
+        "@id": "schemas:Dataset"
+      }
     },
     {
-        "@id": "_:n977a03b001724d0e8bc19995fecba83cb1",
-        "@type": [
-            "http://www.w3.org/2006/vcard/ns#Individual"
-        ],
-        "http://www.w3.org/2006/vcard/ns#fn": [
-            {
-                "@value": "Mark D. Wilkinson"
-            }
-        ],
-        "http://www.w3.org/2006/vcard/ns#hasEmail": [
-            {
-                "@id": "mailto:markw@illuminae.com"
-            }
-        ]
+      "@id": "_:g465620",
+      "@type": "vcard:Individual",
+      "vcard:fn": "Mark D. Wilkinson",
+      "vcard:hasEmail": {
+        "@id": "mailto:markw@illuminae.com"
+      }
     },
     {
-        "@id": "_:n977a03b001724d0e8bc19995fecba83cb2",
-        "@type": [
-            "http://www.w3.org/2006/vcard/ns#Individual"
-        ],
-        "http://vivoweb.org/ontology/core#orcidId": [
-            {
-                "@id": "http://orcid.org/0000-0002-7702-4495"
-            }
-        ],
-        "http://www.w3.org/2006/vcard/ns#fn": [
-            {
-                "@value": "Allyson L. Lister"
-            }
-        ],
-        "http://www.w3.org/2006/vcard/ns#hasEmail": [
-            {
-                "@id": "mailto:allyson.lister@oerc.ox.ac.uk"
-            }
-        ]
+      "@id": "_:g465660",
+      "@type": "vcard:Individual",
+      "vcard:fn": "Allyson L. Lister",
+      "http://vivoweb.org/ontology/core#orcidId": {
+        "@id": "http://orcid.org/0000-0002-7702-4495"
+      },
+      "vcard:hasEmail": {
+        "@id": "mailto:allyson.lister@oerc.ox.ac.uk"
+      }
     }
-]
+  ]
+}

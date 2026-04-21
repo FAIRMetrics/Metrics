@@ -1,176 +1,97 @@
-[
+{
+  "@context": {
+    "dcat": "http://www.w3.org/ns/dcat#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dc": "http://purl.org/dc/terms/",
+    "schemas": "https://schema.org/",
+    "vcard": "http://www.w3.org/2006/vcard/ns#"
+  },
+  "@graph": [
     {
-        "@id": "https://w3id.org/fair-metrics/general/FM_F3_M_MetaIdent",
-        "@type": [
-            "https://w3id.org/ftr#Metric",
-            "http://www.w3.org/ns/dcat#Dataset"
-        ],
-        "http://purl.org/dc/terms/description": [
-            {
-                "@value": "<p>This metric evaluates whether the metadata record includes its own identifier, distinct from the identifier assigned to the research object it describes.</p>\n\n<p>This metric is concerned with the record-level traceability aspect of FAIR; while the F3 principle was originally created to require only the research object identifier within the metadata record, this metric expands that requirement to ensure that the metadata also includes its own identifier. This ensures that the metadata itself is machine-actionable and can be retrieved, accessed, and managed as an independent entity in an indexing system. If a metadata record lacks its own unique, resolvable identifier, it cannot be reliably cited, tracked, or versioned independently of the research object it describes.  This metric evaluates whether the metadata resolved from the identifier provided as input contains that identifier.</p>\n\n"
-            }
-        ],
-        "http://purl.org/dc/terms/issued": [
-            {
-                "@type": "http://www.w3.org/2001/XMLSchema#date",
-                "@value": "2026-02-20"
-            }
-        ],
-        "http://purl.org/dc/terms/license": [
-            {
-                "@id": "https://creativecommons.org/licenses/by/4.0/"
-            }
-        ],
-        "http://purl.org/dc/terms/modified": [
-            {
-                "@type": "http://www.w3.org/2001/XMLSchema#date",
-                "@value": "2026-02-25"
-            }
-        ],
-        "http://purl.org/dc/terms/title": [
-            {
-                "@value": "FAIR Metric - F3 - Metadata - includes its own identifier"
-            }
-        ],
-        "http://vivoweb.org/ontology/core#abbreviation": [
-            {
-                "@value": "FM_F3_M_MetaIdent"
-            }
-        ],
-        "http://www.w3.org/2000/01/rdf-schema#definedBy": [
-            {
-                "@id": "https://fairmetrics.github.io/Metrics/metric/general/FM_F3_M_MetaIdent.ttl"
-            }
-        ],
-        "http://www.w3.org/ns/dcat#contactPoint": [
-            {
-                "@id": "_:n4f934999d30b489b805716938ebafa15b1"
-            },
-            {
-                "@id": "_:n4f934999d30b489b805716938ebafa15b2"
-            },
-            {
-                "@id": "_:n4f934999d30b489b805716938ebafa15b3"
-            }
-        ],
-        "http://www.w3.org/ns/dcat#keyword": [
-            {
-                "@value": "FAIR"
-            },
-            {
-                "@value": "F3"
-            },
-            {
-                "@value": "identifier"
-            },
-            {
-                "@value": "metadata"
-            }
-        ],
-        "http://www.w3.org/ns/dcat#landingPage": [
-            {
-                "@id": "https://w3id.org/fair-metrics/general/FM_F3_M_MetaIdent"
-            }
-        ],
-        "http://www.w3.org/ns/dcat#version": [
-            {
-                "@value": "Champion1.0"
-            }
-        ],
-        "http://www.w3.org/ns/dqv#inDimension": [
-            {
-                "@id": "https://doi.org/10.25504/FAIRsharing.820324"
-            }
-        ],
-        "https://w3id.org/dpv#isApplicableFor": [
-            {
-                "@id": "https://schema.org/CreativeWork"
-            }
-        ],
-        "https://w3id.org/ftr#applicationArea": [
-            {
-                "@id": "http://www.fairsharing.org/ontology/subject/SRAO_0000401"
-            }
-        ],
-        "https://w3id.org/ftr#hasPositiveValidation": [
-            {
-                "@id": "https://doi.org/10.5281/zenodo.17901310(https://doi.org/10.5281/zenodo.17901310)"
-            }
-        ],
-        "https://w3id.org/ftr#identifier": [
-            {
-                "@type": "http://www.w3.org/2001/XMLSchema#anyURI",
-                "@value": "https://w3id.org/fair-metrics/general/FM_F3_M_MetaIdent"
-            }
-        ],
-        "https://w3id.org/ftr#status": [
-            {
-                "@language": "en",
-                "@value": "Active"
-            }
-        ],
-        "https://w3id.org/ftr#supportedBy": [
-            {
-                "@id": "https://w3id.org/FAIR-Champion"
-            }
-        ]
+      "@id": "https://w3id.org/fair-metrics/general/FM_F3_M_MetaIdent",
+      "@type": [
+        "https://w3id.org/ftr#Metric",
+        "dcat:Dataset"
+      ],
+      "rdfs:definedBy": {
+        "@id": "https://fairmetrics.github.io/Metrics/metric/general/FM_F3_M_MetaIdent.ttl"
+      },
+      "https://w3id.org/ftr#identifier": {
+        "@type": "xsd:anyURI",
+        "@value": "https://w3id.org/fair-metrics/general/FM_F3_M_MetaIdent"
+      },
+      "dc:title": "FAIR Metric - F3 - Metadata - includes its own identifier",
+      "http://vivoweb.org/ontology/core#abbreviation": "FM_F3_M_MetaIdent",
+      "dcat:landingPage": {
+        "@id": "https://w3id.org/fair-metrics/general/FM_F3_M_MetaIdent"
+      },
+      "dc:description": "<p>This metric evaluates whether the metadata record includes its own identifier, distinct from the identifier assigned to the research object it describes.</p>\n\n<p>This metric is concerned with the record-level traceability aspect of FAIR; while the F3 principle was originally created to require only the research object identifier within the metadata record, this metric expands that requirement to ensure that the metadata also includes its own identifier. This ensures that the metadata itself is machine-actionable and can be retrieved, accessed, and managed as an independent entity in an indexing system. If a metadata record lacks its own unique, resolvable identifier, it cannot be reliably cited, tracked, or versioned independently of the research object it describes.  This metric evaluates whether the metadata resolved from the identifier provided as input contains that identifier.</p>\n\n",
+      "dcat:keyword": [
+        "FAIR",
+        "F3",
+        "identifier",
+        "metadata"
+      ],
+      "http://www.w3.org/ns/dqv#inDimension": {
+        "@id": "https://doi.org/10.25504/FAIRsharing.820324"
+      },
+      "dcat:contactPoint": [
+        {
+          "@id": "_:g468060"
+        },
+        {
+          "@id": "_:g468080"
+        }
+      ],
+      "https://w3id.org/ftr#status": {
+        "@language": "en",
+        "@value": "Active"
+      },
+      "dc:issued": {
+        "@type": "xsd:date",
+        "@value": "2026-02-20"
+      },
+      "dc:modified": {
+        "@type": "xsd:date",
+        "@value": "2026-02-25"
+      },
+      "dcat:version": "Champion1.0",
+      "https://w3id.org/ftr#applicationArea": {
+        "@id": "http://www.fairsharing.org/ontology/subject/SRAO_0000401"
+      },
+      "dc:license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "https://w3id.org/ftr#hasPositiveValidation": {
+        "@id": "https://doi.org/10.5281/zenodo.17901310(https://doi.org/10.5281/zenodo.17901310)"
+      },
+      "https://w3id.org/ftr#supportedBy": {
+        "@id": "https://w3id.org/FAIR-Champion"
+      },
+      "https://w3id.org/dpv#isApplicableFor": {
+        "@id": "schemas:CreativeWork"
+      }
     },
     {
-        "@id": "_:n4f934999d30b489b805716938ebafa15b1",
-        "@type": [
-            "http://www.w3.org/2006/vcard/ns#Individual"
-        ],
-        "http://www.w3.org/2006/vcard/ns#fn": [
-            {
-                "@value": "Mark D. Wilkinson"
-            }
-        ],
-        "http://www.w3.org/2006/vcard/ns#hasEmail": [
-            {
-                "@id": "mailto:mark.wilkinson@upm.es"
-            }
-        ]
+      "@id": "_:g468060",
+      "@type": "vcard:Individual",
+      "vcard:fn": "Allyson L. Lister",
+      "http://vivoweb.org/ontology/core#orcidId": {
+        "@id": "http://orcid.org/0000-0002-7702-4495"
+      },
+      "vcard:hasEmail": {
+        "@id": "mailto:allyson.lister@oerc.ox.ac.uk"
+      }
     },
     {
-        "@id": "_:n4f934999d30b489b805716938ebafa15b2",
-        "@type": [
-            "http://www.w3.org/2006/vcard/ns#Individual"
-        ],
-        "http://vivoweb.org/ontology/core#orcidId": [
-            {
-                "@id": "http://orcid.org/0000-0002-7702-4495"
-            }
-        ],
-        "http://www.w3.org/2006/vcard/ns#fn": [
-            {
-                "@value": "Allyson L. Lister"
-            }
-        ],
-        "http://www.w3.org/2006/vcard/ns#hasEmail": [
-            {
-                "@id": "mailto:allyson.lister@oerc.ox.ac.uk"
-            }
-        ]
-    },
-    {
-        "@id": "_:n4f934999d30b489b805716938ebafa15b3",
-        "@type": [
-            "http://www.w3.org/2006/vcard/ns#Individual"
-        ],
-        "http://www.w3.org/2006/vcard/ns#fn": [
-            {
-                "@value": "Mark D. Wilkinson"
-            }
-        ],
-        "http://www.w3.org/2006/vcard/ns#hasEmail": [
-            {
-                "@id": "mailto:mark.wilkinson@upm.es"
-            }
-        ],
-        "http://www.w3.org/2006/vcard/ns#organization-name": [
-            {
-                "@value": "Wilkinson Laboratory, UPM, Madrid"
-            }
-        ]
+      "@id": "_:g468080",
+      "@type": "vcard:Individual",
+      "vcard:fn": "Mark D. Wilkinson",
+      "vcard:organization-name": "Wilkinson Laboratory, UPM, Madrid",
+      "vcard:hasEmail": {
+        "@id": "mailto:mark.wilkinson@upm.es"
+      }
     }
-]
+  ]
+}
