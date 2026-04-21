@@ -5,14 +5,6 @@
             "https://w3id.org/ftr#Metric",
             "http://www.w3.org/ns/dcat#Dataset"
         ],
-        "http://purl.org/dc/terms/creator": [
-            {
-                "@id": "_:n5258fca1ecf94b368a668c3511d6974db1"
-            },
-            {
-                "@id": "_:n5258fca1ecf94b368a668c3511d6974db2"
-            }
-        ],
         "http://purl.org/dc/terms/description": [
             {
                 "@value": "<p>This metric evaluates whether there are qualified (labelled or named) links in the metadata that reference external IRIs; specifically, IRIs that do not share the same domain name as that of the provided identifier.</p>\n\n<p>I3 requires that metadata include qualified references to other metadata. The purpose of this principle is to ensure that digital objects are connected to the wider research ecosystem through explicitly defined and semantically meaningful relationships. This metric evaluates whether there are qualified (labelled or named) links in the metadata that reference external IRIs. Under this interpretation, the evaluation retrieves the metadata upon resolution of the provided identifier and identifies all labelled relationships that reference IRIs. The domain names of the referenced IRIs are then compared against the domain name of the identifier provided to the evaluation tool. Links that resolve to IRIs with a different domain name are considered external references. Only qualified relationships — that is, links expressed with an explicit relationship type — are considered. A resource satisfies this metric if at least one qualified reference to an external IRI (i.e., with a different domain name than the identifier under evaluation) is present in the metadata.</p>\n\n"
@@ -48,6 +40,14 @@
         "http://www.w3.org/2000/01/rdf-schema#definedBy": [
             {
                 "@id": "https://fairmetrics.github.io/Metrics/metric/general/FM_I3_M_QualRef.ttl"
+            }
+        ],
+        "http://www.w3.org/ns/dcat#contactPoint": [
+            {
+                "@id": "_:n187b7fb451dd4a9ead692be97890218cb1"
+            },
+            {
+                "@id": "_:n187b7fb451dd4a9ead692be97890218cb2"
             }
         ],
         "http://www.w3.org/ns/dcat#keyword": [
@@ -97,7 +97,7 @@
         ]
     },
     {
-        "@id": "_:n5258fca1ecf94b368a668c3511d6974db1",
+        "@id": "_:n187b7fb451dd4a9ead692be97890218cb1",
         "@type": [
             "http://www.w3.org/2006/vcard/ns#Individual"
         ],
@@ -113,7 +113,7 @@
         ]
     },
     {
-        "@id": "_:n5258fca1ecf94b368a668c3511d6974db2",
+        "@id": "_:n187b7fb451dd4a9ead692be97890218cb2",
         "@type": [
             "http://www.w3.org/2006/vcard/ns#Individual"
         ],
@@ -129,7 +129,7 @@
         ],
         "http://www.w3.org/2006/vcard/ns#hasEmail": [
             {
-                "@id": "mailto:mark.wilkinson@upm.es"
+                "@id": "mailto:allyson.lister@oerc.ox.ac.uk"
             }
         ]
     }

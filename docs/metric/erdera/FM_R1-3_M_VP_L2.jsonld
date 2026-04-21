@@ -5,11 +5,6 @@
             "https://w3id.org/ftr#Metric",
             "http://www.w3.org/ns/dcat#Dataset"
         ],
-        "http://purl.org/dc/terms/creator": [
-            {
-                "@id": "_:nc1f4815c130d4383b4c1967f2ce6bc26b1"
-            }
-        ],
         "http://purl.org/dc/terms/description": [
             {
                 "@value": "\n                           The ERDERA Project has strict requirements for minimal metadata to onboard their Virtual Platform. \n                            For Level 2, you must first be Level 1 compliant (see https://w3id.org/fair-metrics/erdera/FM_R1-3_M_VP_L1).\n                            In addition, you must declare yourself as a dcat Data Service, and have a landingPage at a minimimum.\n\n"
@@ -45,6 +40,11 @@
         "http://www.w3.org/2000/01/rdf-schema#definedBy": [
             {
                 "@id": "https://fairmetrics.github.io/Metrics/metric/erdera/FM_R1-3_M_VP_L2.ttl"
+            }
+        ],
+        "http://www.w3.org/ns/dcat#contactPoint": [
+            {
+                "@id": "_:n6e6aff430b674829925d202bd52762f8b1"
             }
         ],
         "http://www.w3.org/ns/dcat#keyword": [
@@ -117,7 +117,7 @@
         ]
     },
     {
-        "@id": "_:nc1f4815c130d4383b4c1967f2ce6bc26b1",
+        "@id": "_:n6e6aff430b674829925d202bd52762f8b1",
         "@type": [
             "http://www.w3.org/2006/vcard/ns#Individual"
         ],

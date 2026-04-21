@@ -27,7 +27,7 @@
 
     dcat:landingPage          <https://w3id.org/fair-metrics/general/FM_A1-1_M_HTTPSProt> ;
 
-    dcterms:creator           [
+    dcat:contactPoint           [
         a                     vcard:Individual ;
         vcard:fn              "Allyson L. Lister" ;
         vivo:orcidId          <http://orcid.org/0000-0002-7702-4495> ;

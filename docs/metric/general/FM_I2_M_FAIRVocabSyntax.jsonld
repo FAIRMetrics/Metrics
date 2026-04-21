@@ -5,14 +5,6 @@
             "https://w3id.org/ftr#Metric",
             "http://www.w3.org/ns/dcat#Dataset"
         ],
-        "http://purl.org/dc/terms/creator": [
-            {
-                "@id": "_:n530f1cdf67e74ec0af4d8a540ab66e7eb1"
-            },
-            {
-                "@id": "_:n530f1cdf67e74ec0af4d8a540ab66e7eb2"
-            }
-        ],
         "http://purl.org/dc/terms/description": [
             {
                 "@value": "<p>This metric evaluates whether there is at least one vocabulary term used in the metadata that resolves, as a syntactic interpretation of a minimally FAIR vocabulary.</p>\n\n<p>I2 requires that metadata use vocabularies that follow FAIR principles. The purpose of this principle is to ensure that descriptive terms are drawn from such  vocabularies, enabling consistent interpretation across systems and communities.  This metric evaluates whether there is at least one vocabulary term used in the metadata that resolves. The evaluation checks whether the resolved metadata contains at least one term that itself can be resolved (to anything). The outcome of that resolution is not required to demonstrate full FAIR compliance under this metric; rather, the presence of at least one resolvable vocabulary term is sufficient. A resource satisfies this metric if at least one metadata element references a recognised controlled vocabulary term that resolves.</p>\n\n<p>#</p>"
@@ -48,6 +40,14 @@
         "http://www.w3.org/2000/01/rdf-schema#definedBy": [
             {
                 "@id": "https://fairmetrics.github.io/Metrics/metric/general/FM_I2_M_FAIRVocabSyntax.ttl"
+            }
+        ],
+        "http://www.w3.org/ns/dcat#contactPoint": [
+            {
+                "@id": "_:n1d6f1be3ee874b6cb8552512d547939ab1"
+            },
+            {
+                "@id": "_:n1d6f1be3ee874b6cb8552512d547939ab2"
             }
         ],
         "http://www.w3.org/ns/dcat#keyword": [
@@ -97,7 +97,7 @@
         ]
     },
     {
-        "@id": "_:n530f1cdf67e74ec0af4d8a540ab66e7eb1",
+        "@id": "_:n1d6f1be3ee874b6cb8552512d547939ab1",
         "@type": [
             "http://www.w3.org/2006/vcard/ns#Individual"
         ],
@@ -113,7 +113,7 @@
         ]
     },
     {
-        "@id": "_:n530f1cdf67e74ec0af4d8a540ab66e7eb2",
+        "@id": "_:n1d6f1be3ee874b6cb8552512d547939ab2",
         "@type": [
             "http://www.w3.org/2006/vcard/ns#Individual"
         ],
@@ -129,7 +129,7 @@
         ],
         "http://www.w3.org/2006/vcard/ns#hasEmail": [
             {
-                "@id": "mailto:mark.wilkinson@upm.es"
+                "@id": "mailto:allyson.lister@oerc.ox.ac.uk"
             }
         ]
     }

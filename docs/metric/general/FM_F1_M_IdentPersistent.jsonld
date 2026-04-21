@@ -5,14 +5,6 @@
             "https://w3id.org/ftr#Metric",
             "http://www.w3.org/ns/dcat#Dataset"
         ],
-        "http://purl.org/dc/terms/creator": [
-            {
-                "@id": "_:n8dae0ff9ab2145b8a75072d56f9ce9f2b1"
-            },
-            {
-                "@id": "_:n8dae0ff9ab2145b8a75072d56f9ce9f2b2"
-            }
-        ],
         "http://purl.org/dc/terms/description": [
             {
                 "@value": "<p>This metric evaluates whether the identifier provided as input satisfies the EOSC-PID aligned [FAIRsharing definition](<a href=\"https://fairsharing.gitbook.io/fairsharing/record-sections-and-fields/general-information/globally-unique-persistent-and-resolvable-identifier-schemas)\">https://fairsharing.gitbook.io/fairsharing/record-sections-and-fields/general-information/globally-unique-persistent-and-resolvable-identifier-schemas)</a> of persistence.</p>\n\n<p>F1 requires that metadata be assigned a globally unique, persistent and resolvable identifier. This metric is particularly concerned with the persistence aspect of GUPRIs; persistence is required to guarantee long-term continuity of reference. Without persistence, identifiers may break, change or be reassigned, undermining citation, traceability and reproducibility.  In this metric, the definition of persistence follows the [FAIRsharing guidance](<a href=\"https://fairsharing.gitbook.io/fairsharing/record-sections-and-fields/general-information/globally-unique-persistent-and-resolvable-identifier-schemas)\">https://fairsharing.gitbook.io/fairsharing/record-sections-and-fields/general-information/globally-unique-persistent-and-resolvable-identifier-schemas)</a> on Globally Unique, Persistent and Resolvable Identifier (GUPRI) schemas. This definition requires that the identifier schema must have clear community backing for the schema and its long-term maintenance. The syntax of the schema must be stable, and the referred object should itself should also be stable, though there are various ways to show this (e.g., a dataset might be completely immutable, while a record describing an organisation is likely to change as the organisations homepage, name or other attributes change). This metric evaluates whether the identifier provided as input is issued under a schema that meets the FAIRsharing definition of persistence. The evaluation assesses whether the identifier schema demonstrates documented long-term maintenance and governance consistent with these criteria.</p>\n\n<p>For an in-depth understanding of the issues around identifiers, please see [<a href=\"http://dx.plos.org/10.1371/journal.pbio.2001414\">http://dx.plos.org/10.1371/journal.pbio.2001414</a>](<a href=\"http://dx.plos.org/10.1371/journal.pbio.2001414).\">http://dx.plos.org/10.1371/journal.pbio.2001414).</a> #</p>"
@@ -48,6 +40,14 @@
         "http://www.w3.org/2000/01/rdf-schema#definedBy": [
             {
                 "@id": "https://fairmetrics.github.io/Metrics/metric/general/FM_F1_M_IdentPersistent.ttl"
+            }
+        ],
+        "http://www.w3.org/ns/dcat#contactPoint": [
+            {
+                "@id": "_:ndfcfddc5234d4cccbd1d3c8f9baa22e4b1"
+            },
+            {
+                "@id": "_:ndfcfddc5234d4cccbd1d3c8f9baa22e4b2"
             }
         ],
         "http://www.w3.org/ns/dcat#keyword": [
@@ -113,7 +113,7 @@
         ]
     },
     {
-        "@id": "_:n8dae0ff9ab2145b8a75072d56f9ce9f2b1",
+        "@id": "_:ndfcfddc5234d4cccbd1d3c8f9baa22e4b1",
         "@type": [
             "http://www.w3.org/2006/vcard/ns#Individual"
         ],
@@ -129,7 +129,7 @@
         ]
     },
     {
-        "@id": "_:n8dae0ff9ab2145b8a75072d56f9ce9f2b2",
+        "@id": "_:ndfcfddc5234d4cccbd1d3c8f9baa22e4b2",
         "@type": [
             "http://www.w3.org/2006/vcard/ns#Individual"
         ],
@@ -145,7 +145,7 @@
         ],
         "http://www.w3.org/2006/vcard/ns#hasEmail": [
             {
-                "@id": "mailto:mark.wilkinson@upm.es"
+                "@id": "mailto:allyson.lister@oerc.ox.ac.uk"
             }
         ]
     }

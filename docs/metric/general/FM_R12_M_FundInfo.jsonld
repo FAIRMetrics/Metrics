@@ -5,11 +5,6 @@
             "https://w3id.org/ftr#Metric",
             "http://www.w3.org/ns/dcat#Dataset"
         ],
-        "http://purl.org/dc/terms/creator": [
-            {
-                "@id": "_:n8b294ba72f3247c3baca3900113f3d35b1"
-            }
-        ],
         "http://purl.org/dc/terms/description": [
             {
                 "@value": "<p>This metric evaluates DOIs to determine whether there is structured funding information declared in the metadata retrieved upon resolution of the provided identifier, providing one facet of evaluation for this R1.2.</p>\n\n<p>R1.2 requires that (meta)data be associated with detailed provenance. The purpose of this principle is to ensure that the financial support underlying a digital object is documented and transparent. This metric evaluates whether there is structured funding information declared in the metadata retrieved upon resolution of the provided identifier. Under this interpretation, the evaluation checks for the presence of at least one funding reference, such as a funder name, grant identifier, or structured funding relationship. The funding information must be explicitly represented in the metadata. A resource satisfies this metric if at least one funding reference is present in the resolved metadata (DOIs only) of the following types only: DataCite fundingReferences, Crossref funder.</p>\n\n<p>#</p>"
@@ -33,6 +28,11 @@
         "http://www.w3.org/2000/01/rdf-schema#definedBy": [
             {
                 "@id": "https://fairmetrics.github.io/Metrics/metric/general/FM_R12_M_FundInfo.ttl"
+            }
+        ],
+        "http://www.w3.org/ns/dcat#contactPoint": [
+            {
+                "@id": "_:n4609ee33a2124ee2a64a24f72a44a529b1"
             }
         ],
         "http://www.w3.org/ns/dcat#keyword": [
@@ -82,7 +82,7 @@
         ]
     },
     {
-        "@id": "_:n8b294ba72f3247c3baca3900113f3d35b1",
+        "@id": "_:n4609ee33a2124ee2a64a24f72a44a529b1",
         "@type": [
             "http://www.w3.org/2006/vcard/ns#Individual"
         ],
@@ -93,7 +93,7 @@
         ],
         "http://www.w3.org/2006/vcard/ns#fn": [
             {
-                "@value": "Allyson L. Lister"
+                "@value": "Renaud Duyme"
             }
         ],
         "http://www.w3.org/2006/vcard/ns#hasEmail": [

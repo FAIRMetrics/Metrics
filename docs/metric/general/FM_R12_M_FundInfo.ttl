@@ -27,9 +27,9 @@
 
     dcat:landingPage          <https://w3id.org/fair-metrics/general/FM_R12_M_FundInfo> ;
 
-    dcterms:creator           [
+    dcat:contactPoint           [
         a                     vcard:Individual ;
-        vcard:fn              "Allyson L. Lister" ;
+        vcard:fn              "Renaud Duyme" ;
         vivo:orcidId          <http://orcid.org/0000-0002-7702-4495> ;
         vcard:hasEmail             <mailto:renaud.duyme@esrf.fr> ;
     ] ;

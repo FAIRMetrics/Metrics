@@ -5,11 +5,6 @@
             "https://w3id.org/ftr#Metric",
             "http://www.w3.org/ns/dcat#Dataset"
         ],
-        "http://purl.org/dc/terms/creator": [
-            {
-                "@id": "_:nb9682bf1cf5c47cb91000d0f0b67c9f7b1"
-            }
-        ],
         "http://purl.org/dc/terms/description": [
             {
                 "@value": "Metadata uses a formal, accessible, shared, broadly applicable language. This metric aligns with FAIR Principle I1."
@@ -33,6 +28,14 @@
         "http://www.w3.org/2000/01/rdf-schema#definedBy": [
             {
                 "@id": "https://w3id.org/fair-metrics/general/FM_I1_M_FormLang.ttl"
+            }
+        ],
+        "http://www.w3.org/ns/dcat#contactPoint": [
+            {
+                "@id": "_:n0305b532a9104e87b4b41c6481bfdcceb1"
+            },
+            {
+                "@id": "_:n0305b532a9104e87b4b41c6481bfdcceb2"
             }
         ],
         "http://www.w3.org/ns/dcat#keyword": [
@@ -90,7 +93,7 @@
         ]
     },
     {
-        "@id": "_:nb9682bf1cf5c47cb91000d0f0b67c9f7b1",
+        "@id": "_:n0305b532a9104e87b4b41c6481bfdcceb1",
         "@type": [
             "http://www.w3.org/2006/vcard/ns#Individual"
         ],
@@ -102,6 +105,27 @@
         "http://www.w3.org/2006/vcard/ns#hasEmail": [
             {
                 "@id": "mailto:markw@illuminae.com"
+            }
+        ]
+    },
+    {
+        "@id": "_:n0305b532a9104e87b4b41c6481bfdcceb2",
+        "@type": [
+            "http://www.w3.org/2006/vcard/ns#Individual"
+        ],
+        "http://vivoweb.org/ontology/core#orcidId": [
+            {
+                "@id": "http://orcid.org/0000-0002-7702-4495"
+            }
+        ],
+        "http://www.w3.org/2006/vcard/ns#fn": [
+            {
+                "@value": "Allyson L. Lister"
+            }
+        ],
+        "http://www.w3.org/2006/vcard/ns#hasEmail": [
+            {
+                "@id": "mailto:allyson.lister@oerc.ox.ac.uk"
             }
         ]
     }

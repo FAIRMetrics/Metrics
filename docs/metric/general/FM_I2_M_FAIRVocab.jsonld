@@ -5,11 +5,6 @@
             "https://w3id.org/ftr#Metric",
             "http://www.w3.org/ns/dcat#Dataset"
         ],
-        "http://purl.org/dc/terms/creator": [
-            {
-                "@id": "_:n4a4542d766924a60b1ab846a66c0fdc2b1"
-            }
-        ],
         "http://purl.org/dc/terms/description": [
             {
                 "@value": "Metadata uses fair vocabularies. This metric aligns with FAIR Principle I2."
@@ -33,6 +28,14 @@
         "http://www.w3.org/2000/01/rdf-schema#definedBy": [
             {
                 "@id": "https://w3id.org/fair-metrics/general/FM_I2_M_FAIRVocab.ttl"
+            }
+        ],
+        "http://www.w3.org/ns/dcat#contactPoint": [
+            {
+                "@id": "_:n6a138d5e41aa42cbba504f18531c752eb1"
+            },
+            {
+                "@id": "_:n6a138d5e41aa42cbba504f18531c752eb2"
             }
         ],
         "http://www.w3.org/ns/dcat#keyword": [
@@ -87,7 +90,7 @@
         ]
     },
     {
-        "@id": "_:n4a4542d766924a60b1ab846a66c0fdc2b1",
+        "@id": "_:n6a138d5e41aa42cbba504f18531c752eb1",
         "@type": [
             "http://www.w3.org/2006/vcard/ns#Individual"
         ],
@@ -99,6 +102,27 @@
         "http://www.w3.org/2006/vcard/ns#hasEmail": [
             {
                 "@id": "mailto:markw@illuminae.com"
+            }
+        ]
+    },
+    {
+        "@id": "_:n6a138d5e41aa42cbba504f18531c752eb2",
+        "@type": [
+            "http://www.w3.org/2006/vcard/ns#Individual"
+        ],
+        "http://vivoweb.org/ontology/core#orcidId": [
+            {
+                "@id": "http://orcid.org/0000-0002-7702-4495"
+            }
+        ],
+        "http://www.w3.org/2006/vcard/ns#fn": [
+            {
+                "@value": "Allyson L. Lister"
+            }
+        ],
+        "http://www.w3.org/2006/vcard/ns#hasEmail": [
+            {
+                "@id": "mailto:allyson.lister@oerc.ox.ac.uk"
             }
         ]
     }

@@ -5,11 +5,6 @@
             "https://w3id.org/ftr#Metric",
             "http://www.w3.org/ns/dcat#Dataset"
         ],
-        "http://purl.org/dc/terms/creator": [
-            {
-                "@id": "_:na1142e84d22b49f181ee8148f36ae8e0b1"
-            }
-        ],
         "http://purl.org/dc/terms/description": [
             {
                 "@value": "<p>This metric evaluates whether there is at least one dc:creator with an ORCID in the metadata retrieved upon resolution of the provided identifier, providing one facet of evaluation for this R1.2.</p>\n\n<p>R1.2 requires that metadata be associated with detailed provenance. The purpose of this principle is to ensure that the origins and responsible individuals associated with a digital object are clearly identified, supporting attribution and transparency. This metric evaluates whether there is at least one dc:creator with an ORCID in the metadata retrieved upon resolution of the provided identifier, providing one facet of evaluation for this R1.2. Under this interpretation, the evaluation checks whether the resolved metadata includes an ORCID identifier associated with a person in the defined dc:creator role.</p>\n\n<p>#</p>"
@@ -33,6 +28,11 @@
         "http://www.w3.org/2000/01/rdf-schema#definedBy": [
             {
                 "@id": "https://fairmetrics.github.io/Metrics/metric/general/FM_R12_M_CreatorORCiD.ttl"
+            }
+        ],
+        "http://www.w3.org/ns/dcat#contactPoint": [
+            {
+                "@id": "_:nf469188efe484efea99b3acf22a93ee4b1"
             }
         ],
         "http://www.w3.org/ns/dcat#keyword": [
@@ -82,7 +82,7 @@
         ]
     },
     {
-        "@id": "_:na1142e84d22b49f181ee8148f36ae8e0b1",
+        "@id": "_:nf469188efe484efea99b3acf22a93ee4b1",
         "@type": [
             "http://www.w3.org/2006/vcard/ns#Individual"
         ],

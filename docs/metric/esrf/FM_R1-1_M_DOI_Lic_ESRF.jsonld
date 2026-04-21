@@ -5,11 +5,6 @@
             "https://w3id.org/ftr#Metric",
             "http://www.w3.org/ns/dcat#Dataset"
         ],
-        "http://purl.org/dc/terms/creator": [
-            {
-                "@id": "_:n5d59204673e54b67aa35c51b937ed763b1"
-            }
-        ],
         "http://purl.org/dc/terms/description": [
             {
                 "@value": " This metric ensures that the research object provided by the supplied DOI is associated to licence information in the DOI registration agency metadata. Note that more generic metrics exist that do not specialise R1.1 to DOIs only; this is intended to be a more granular metric specific to DOIs. "
@@ -33,6 +28,11 @@
         "http://www.w3.org/2000/01/rdf-schema#definedBy": [
             {
                 "@id": "https://fairmetrics.github.io/Metrics/metric/esrf/FM_R1-1_M_DOI_Lic_ESRF.ttl"
+            }
+        ],
+        "http://www.w3.org/ns/dcat#contactPoint": [
+            {
+                "@id": "_:nda22857f220c41e8b6ccf85e910b255ab1"
             }
         ],
         "http://www.w3.org/ns/dcat#keyword": [
@@ -82,7 +82,7 @@
         ]
     },
     {
-        "@id": "_:n5d59204673e54b67aa35c51b937ed763b1",
+        "@id": "_:nda22857f220c41e8b6ccf85e910b255ab1",
         "@type": [
             "http://xmlns.com/foaf/0.1/Person"
         ],

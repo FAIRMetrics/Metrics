@@ -5,14 +5,6 @@
             "https://w3id.org/ftr#Metric",
             "http://www.w3.org/ns/dcat#Dataset"
         ],
-        "http://purl.org/dc/terms/creator": [
-            {
-                "@id": "_:n969ddba36ea94103b9fe0fb705435096b1"
-            },
-            {
-                "@id": "_:n969ddba36ea94103b9fe0fb705435096b2"
-            }
-        ],
         "http://purl.org/dc/terms/description": [
             {
                 "@value": "<p>If the resolution protocol supports authentication and authorization for access to restricted content.</p>\n\n<p>A1.2 requires that the protocol used to retrieve research objects clearly describes any necessary authentication and authorisation procedures. This ensures that access conditions are transparent and that restricted content is accessed in a defined and controlled way. Optionally, if a FAIRsharing record for the hosting database is provided, the evaluation first checks the declared [data access conditions](<a href=\"https://fairsharing.gitbook.io/fairsharing/additional-information/database-conditions#data-access-condition).\">https://fairsharing.gitbook.io/fairsharing/additional-information/database-conditions#data-access-condition).</a> If the access condition is “open”, tests will pass immediately. Next, if access is restricted, the resolution protocol is then evaluated to determine whether it supports authentication and authorisation. If the test does make use of the FAIRsharing record, this can ensure a pass for completely open access databases, even if a test implementation does not recognise a particular protocol. A resource satisfies this metric if access is declared as open in FAIRsharing record metadata, or if restricted access to metadata is supported by appropriate authentication and authorisation mechanisms. Note that identification of the FAIRsharing database record URL/DOI (so that FAIRsharing metadata may be retrieved) can be done in a variety of ways, e.g. using the FAIRsharing API to find possible matches between the identifier and registered databases, hard coding the FAIRsharing record identifier, or expecting it to be provided as a second argument to the test.</p>\n"
@@ -48,6 +40,14 @@
         "http://www.w3.org/2000/01/rdf-schema#definedBy": [
             {
                 "@id": "https://fairmetrics.github.io/Metrics/metric/general/FM_A1-2_M_Auth.ttl"
+            }
+        ],
+        "http://www.w3.org/ns/dcat#contactPoint": [
+            {
+                "@id": "_:nc7b0d18b9dbc4d9c9efba911711680fcb1"
+            },
+            {
+                "@id": "_:nc7b0d18b9dbc4d9c9efba911711680fcb2"
             }
         ],
         "http://www.w3.org/ns/dcat#keyword": [
@@ -97,7 +97,7 @@
         ]
     },
     {
-        "@id": "_:n969ddba36ea94103b9fe0fb705435096b1",
+        "@id": "_:nc7b0d18b9dbc4d9c9efba911711680fcb1",
         "@type": [
             "http://www.w3.org/2006/vcard/ns#Individual"
         ],
@@ -113,7 +113,7 @@
         ]
     },
     {
-        "@id": "_:n969ddba36ea94103b9fe0fb705435096b2",
+        "@id": "_:nc7b0d18b9dbc4d9c9efba911711680fcb2",
         "@type": [
             "http://www.w3.org/2006/vcard/ns#Individual"
         ],
@@ -129,7 +129,7 @@
         ],
         "http://www.w3.org/2006/vcard/ns#hasEmail": [
             {
-                "@id": "mailto:mark.wilkinson@upm.es"
+                "@id": "mailto:allyson.lister@oerc.ox.ac.uk"
             }
         ]
     }

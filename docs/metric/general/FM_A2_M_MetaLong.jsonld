@@ -5,11 +5,6 @@
             "https://w3id.org/ftr#Metric",
             "http://www.w3.org/ns/dcat#Dataset"
         ],
-        "http://purl.org/dc/terms/creator": [
-            {
-                "@id": "_:n9465d650916b44fba1d5bd0e56417607b1"
-            }
-        ],
         "http://purl.org/dc/terms/description": [
             {
                 "@value": "metadata is long-lived and independently accessible. This metric aligns with FAIR Principle A2."
@@ -33,6 +28,14 @@
         "http://www.w3.org/2000/01/rdf-schema#definedBy": [
             {
                 "@id": "https://w3id.org/fair-metrics/general/FM_A2_M_MetaLong.ttl"
+            }
+        ],
+        "http://www.w3.org/ns/dcat#contactPoint": [
+            {
+                "@id": "_:ne5064fa2d24e48c5a13fb1e0b943439ab1"
+            },
+            {
+                "@id": "_:ne5064fa2d24e48c5a13fb1e0b943439ab2"
             }
         ],
         "http://www.w3.org/ns/dcat#keyword": [
@@ -90,7 +93,7 @@
         ]
     },
     {
-        "@id": "_:n9465d650916b44fba1d5bd0e56417607b1",
+        "@id": "_:ne5064fa2d24e48c5a13fb1e0b943439ab1",
         "@type": [
             "http://www.w3.org/2006/vcard/ns#Individual"
         ],
@@ -102,6 +105,27 @@
         "http://www.w3.org/2006/vcard/ns#hasEmail": [
             {
                 "@id": "mailto:markw@illuminae.com"
+            }
+        ]
+    },
+    {
+        "@id": "_:ne5064fa2d24e48c5a13fb1e0b943439ab2",
+        "@type": [
+            "http://www.w3.org/2006/vcard/ns#Individual"
+        ],
+        "http://vivoweb.org/ontology/core#orcidId": [
+            {
+                "@id": "http://orcid.org/0000-0002-7702-4495"
+            }
+        ],
+        "http://www.w3.org/2006/vcard/ns#fn": [
+            {
+                "@value": "Allyson L. Lister"
+            }
+        ],
+        "http://www.w3.org/2006/vcard/ns#hasEmail": [
+            {
+                "@id": "mailto:allyson.lister@oerc.ox.ac.uk"
             }
         ]
     }

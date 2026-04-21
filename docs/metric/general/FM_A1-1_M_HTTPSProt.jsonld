@@ -5,11 +5,6 @@
             "https://w3id.org/ftr#Metric",
             "http://www.w3.org/ns/dcat#Dataset"
         ],
-        "http://purl.org/dc/terms/creator": [
-            {
-                "@id": "_:nd7ad7f4f2a424e58bf993fb8cdd2c799b1"
-            }
-        ],
         "http://purl.org/dc/terms/description": [
             {
                 "@value": "<p>This metric evaluates whether the protocol used to retrieve metadata referenced by the provided identifier is either HTTP or HTTPS and therefore openly specified, free to implement, and universally implementable.</p>\n\n<p>Principle A1.1 requires that metadata be retrievable by an open, free, and universally implementable protocol. The intent is to ensure that access to metadata is not gated by proprietary technologies, non-standardized interfaces, or restrictive licensing that prevents automated integration and universal access. Protocols such as HTTP(S) are the gold standard for this requirement because they are openly specified web standards, free for any developer to implement, and universally supported across virtually all modern software environments and programming languages. Protocols that are closed source or that have royalties associated with them could prevent users from being able to obtain the resource. By mandating these standards, we ensure that metadata remains accessible to the widest possible range of humans, harvesters and research discovery services. This metric evaluates whether the metadata access protocol satisfies the requirements for open, free, and universal implementation. The evaluation checks for the use of the HTTP or HTTPS protocols.</p>\n\n"
@@ -33,6 +28,11 @@
         "http://www.w3.org/2000/01/rdf-schema#definedBy": [
             {
                 "@id": "https://fairmetrics.github.io/Metrics/metric/general/FM_A1-1_M_HTTPSProt.ttl"
+            }
+        ],
+        "http://www.w3.org/ns/dcat#contactPoint": [
+            {
+                "@id": "_:nb6f0a0c664f0484c94f00e5db5b4682ab1"
             }
         ],
         "http://www.w3.org/ns/dcat#keyword": [
@@ -82,7 +82,7 @@
         ]
     },
     {
-        "@id": "_:nd7ad7f4f2a424e58bf993fb8cdd2c799b1",
+        "@id": "_:nb6f0a0c664f0484c94f00e5db5b4682ab1",
         "@type": [
             "http://www.w3.org/2006/vcard/ns#Individual"
         ],

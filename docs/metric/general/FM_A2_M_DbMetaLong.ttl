@@ -25,16 +25,16 @@
 
     dcat:landingPage          <https://w3id.org/fair-metrics/general/FM_A2_M_DbMetaLong> ;
 
-    dcterms:creator           [
+    dcat:contactPoint           [
         a                     vcard:Individual ;
         vcard:fn              "Mark D. Wilkinson" ;
         vcard:hasEmail             <mailto:mark.wilkinson@upm.es> ;
     ] ;
-    dcterms:creator           [
+    dcat:contactPoint           [
         a                     vcard:Individual ;
         vcard:fn              "Allyson L. Lister" ;
         vivo:orcidId          <http://orcid.org/0000-0002-7702-4495> ;
-        vcard:hasEmail             <mailto:mark.wilkinson@upm.es> ;
+        vcard:hasEmail             <mailto:allyson.lister@oerc.ox.ac.uk> ;
     ] ;
 
     dcterms:issued            "2026-03-01"^^xsd:date ;

@@ -5,14 +5,6 @@
             "https://w3id.org/ftr#Metric",
             "http://www.w3.org/ns/dcat#Dataset"
         ],
-        "http://purl.org/dc/terms/creator": [
-            {
-                "@id": "_:n29f13e229c6d40c58d7ec01a0c5ea6bbb1"
-            },
-            {
-                "@id": "_:n29f13e229c6d40c58d7ec01a0c5ea6bbb2"
-            }
-        ],
         "http://purl.org/dc/terms/description": [
             {
                 "@value": "<p>This metric evaluates whether the metadata record includes its own identifier, distinct from the identifier assigned to the research object it describes.</p>\n\n<p>This metric is concerned with the record-level traceability aspect of FAIR; while the F3 principle was originally created to require only the research object identifier within the metadata record, this metric expands that requirement to ensure that the metadata also includes its own identifier. This ensures that the metadata itself is machine-actionable and can be retrieved, accessed, and managed as an independent entity in an indexing system. If a metadata record lacks its own unique, resolvable identifier, it cannot be reliably cited, tracked, or versioned independently of the research object it describes.  This metric evaluates whether the metadata resolved from the identifier provided as input contains that identifier.</p>\n\n"
@@ -48,6 +40,14 @@
         "http://www.w3.org/2000/01/rdf-schema#definedBy": [
             {
                 "@id": "https://fairmetrics.github.io/Metrics/metric/general/FM_F3_M_MetaIdent.ttl"
+            }
+        ],
+        "http://www.w3.org/ns/dcat#contactPoint": [
+            {
+                "@id": "_:nb8127088087f4a23a5b39b7ca841d28bb1"
+            },
+            {
+                "@id": "_:nb8127088087f4a23a5b39b7ca841d28bb2"
             }
         ],
         "http://www.w3.org/ns/dcat#keyword": [
@@ -102,7 +102,7 @@
         ]
     },
     {
-        "@id": "_:n29f13e229c6d40c58d7ec01a0c5ea6bbb1",
+        "@id": "_:nb8127088087f4a23a5b39b7ca841d28bb1",
         "@type": [
             "http://www.w3.org/2006/vcard/ns#Individual"
         ],
@@ -118,7 +118,7 @@
         ]
     },
     {
-        "@id": "_:n29f13e229c6d40c58d7ec01a0c5ea6bbb2",
+        "@id": "_:nb8127088087f4a23a5b39b7ca841d28bb2",
         "@type": [
             "http://www.w3.org/2006/vcard/ns#Individual"
         ],
@@ -134,7 +134,7 @@
         ],
         "http://www.w3.org/2006/vcard/ns#hasEmail": [
             {
-                "@id": "mailto:mark.wilkinson@upm.es"
+                "@id": "mailto:allyson.lister@oerc.ox.ac.uk"
             }
         ]
     }

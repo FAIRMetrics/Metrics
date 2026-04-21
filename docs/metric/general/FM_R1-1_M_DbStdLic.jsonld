@@ -5,14 +5,6 @@
             "https://w3id.org/ftr#Metric",
             "http://www.w3.org/ns/dcat#Dataset"
         ],
-        "http://purl.org/dc/terms/creator": [
-            {
-                "@id": "_:n48f73fb6eae146cf98696e9396d54c81b1"
-            },
-            {
-                "@id": "_:n48f73fb6eae146cf98696e9396d54c81b2"
-            }
-        ],
         "http://purl.org/dc/terms/description": [
             {
                 "@value": "<p>This metric evaluates whether there is at least one licence declared at the database level in the FAIRsharing registry record associated with the identifier under evaluation (see FAIRsharing [documentation for licences](<a href=\"https://fairsharing.gitbook.io/fairsharing/record-sections-and-fields/licences-and-support-links/licences)).\">https://fairsharing.gitbook.io/fairsharing/record-sections-and-fields/licences-and-support-links/licences)).</a></p>\n\n<p>R1.1 requires that metadata be released with a clear and accessible data usage licence. The purpose of this principle is to ensure that reuse conditions are explicitly stated and legally unambiguous. This metric evaluates whether there is at least one licence declared at the database level in the FAIRsharing registry record associated with the identifier under evaluation. Under this interpretation, the evaluation retrieves the FAIRsharing registry record for the owning database and checks for the presence of one or more values in the “Licences” field, as defined in the [FAIRsharing registry documentation](<a href=\"https://fairsharing.gitbook.io/fairsharing/record-sections-and-fields/licences-and-support-links/licences).\">https://fairsharing.gitbook.io/fairsharing/record-sections-and-fields/licences-and-support-links/licences).</a> These licences represent usage conditions known to apply within the database. A resource satisfies this metric if the FAIRsharing registry record for the database lists at least one recognised licence. While a useful measure, this information only provides a list of licences that apply to content, and does not explicitly state which one applies to which research objects, nor does it ensure that the database uses a licence for every research object. However, in cases where the licence information is not provided within the resolved metadata, this will provide some extra information.  Communities may wish to use this metric in conjunction with others that will evaluate resolved metadata where the specific licence format and structure is known. Note that, in order for this metric to function, tests must know the FAIRsharing database record URL/DOI so that FAIRsharing metadata may be retrieved. This can be done in a variety of ways, e.g. using the FAIRsharing API to find possible matches between the identifier and registered databases, hard coding the FAIRsharing record identifier, or expecting it to be provided as a second argument to the test.</p>\n\n<p>#</p>"
@@ -48,6 +40,14 @@
         "http://www.w3.org/2000/01/rdf-schema#definedBy": [
             {
                 "@id": "https://fairmetrics.github.io/Metrics/metric/general/FM_R1-1_M_DbStdLic.ttl"
+            }
+        ],
+        "http://www.w3.org/ns/dcat#contactPoint": [
+            {
+                "@id": "_:nc534471af6b04a32bfe78d128605cea3b1"
+            },
+            {
+                "@id": "_:nc534471af6b04a32bfe78d128605cea3b2"
             }
         ],
         "http://www.w3.org/ns/dcat#keyword": [
@@ -97,7 +97,7 @@
         ]
     },
     {
-        "@id": "_:n48f73fb6eae146cf98696e9396d54c81b1",
+        "@id": "_:nc534471af6b04a32bfe78d128605cea3b1",
         "@type": [
             "http://www.w3.org/2006/vcard/ns#Individual"
         ],
@@ -113,7 +113,7 @@
         ]
     },
     {
-        "@id": "_:n48f73fb6eae146cf98696e9396d54c81b2",
+        "@id": "_:nc534471af6b04a32bfe78d128605cea3b2",
         "@type": [
             "http://www.w3.org/2006/vcard/ns#Individual"
         ],
@@ -129,7 +129,7 @@
         ],
         "http://www.w3.org/2006/vcard/ns#hasEmail": [
             {
-                "@id": "mailto:mark.wilkinson@upm.es"
+                "@id": "mailto:allyson.lister@oerc.ox.ac.uk"
             }
         ]
     }

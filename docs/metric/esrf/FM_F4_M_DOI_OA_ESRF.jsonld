@@ -5,11 +5,6 @@
             "https://w3id.org/ftr#Metric",
             "http://www.w3.org/ns/dcat#Dataset"
         ],
-        "http://purl.org/dc/terms/creator": [
-            {
-                "@id": "_:n4c557719605f4f2db20b71e9d17c0ea5b1"
-            }
-        ],
         "http://purl.org/dc/terms/description": [
             {
                 "@value": " This metric applies to DOI objects. For publications entities, it ensures that its content, or a allowed copy is open access. For dataset entities it ensures that the data is open access (with or without embargo period). The reference services used are : https://unpaywall.org/ and https://openalex.org. While originally created as part of the OSTrails project to fulfil requirements within the PaNOSC cluster, this metric is subject agnostic and can be re-used by any community with these requirements for FAIR F4. "
@@ -33,6 +28,11 @@
         "http://www.w3.org/2000/01/rdf-schema#definedBy": [
             {
                 "@id": "https://fairmetrics.github.io/Metrics/metric/esrf/FM_F4_M_DOI_OA_ESRF.ttl"
+            }
+        ],
+        "http://www.w3.org/ns/dcat#contactPoint": [
+            {
+                "@id": "_:n979575a94eed4a06b2430c5104986917b1"
             }
         ],
         "http://www.w3.org/ns/dcat#keyword": [
@@ -82,7 +82,7 @@
         ]
     },
     {
-        "@id": "_:n4c557719605f4f2db20b71e9d17c0ea5b1",
+        "@id": "_:n979575a94eed4a06b2430c5104986917b1",
         "@type": [
             "http://xmlns.com/foaf/0.1/Person"
         ],

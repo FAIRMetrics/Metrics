@@ -5,11 +5,6 @@
             "https://w3id.org/ftr#Metric",
             "http://www.w3.org/ns/dcat#Dataset"
         ],
-        "http://purl.org/dc/terms/creator": [
-            {
-                "@id": "_:n42e5ee676c2e4c559a29c9ed16803df9b1"
-            }
-        ],
         "http://purl.org/dc/terms/description": [
             {
                 "@value": "<p>This metric evaluates whether there is a declared relationship (related to, implements or outputs) to a model/format from the hosting database for the provided identifier in the FAIRsharing registry, and that the associated model/format has a machine-readable structure.</p>\n\n<p>I1 requires that metadata use a formal, accessible, shared and broadly applicable language for knowledge representation. The purpose of this principle is to ensure that metadata is expressed in a standardised format that can be interpreted and exchanged across systems. In this metric, the definition of syntactic and semantic formats follows the [FAIRsharing guidance](<a href=\"https://fairsharing.gitbook.io/fairsharing/about-our-records/fair-assistance/syntactic-vs-semantic-knowledge-representation-languages).\">https://fairsharing.gitbook.io/fairsharing/about-our-records/fair-assistance/syntactic-vs-semantic-knowledge-representation-languages).</a> This metric evaluates whether there is a declared metadata model or format that ultimately resolves to a basic representation format that is considered syntactic by the FAIRsharing registry. Note that all formats that match the guidance on semantic formats also fulfil the requirements for being syntactic formats. Communities may wish to use this metric in conjunction with others that examine the precise format of the resolved metadata. Note that, in order for this metric to function, tests must know the FAIRsharing database record URL/DOI so that FAIRsharing metadata may be retrieved. This can be done in a variety of ways, e.g. using the FAIRsharing API to find possible matches between the identifier and registered databases, hard coding the FAIRsharing record identifier, or expecting it to be provided as a second argument to the test.</p>\n\n<p>#</p>"
@@ -33,6 +28,11 @@
         "http://www.w3.org/2000/01/rdf-schema#definedBy": [
             {
                 "@id": "https://fairmetrics.github.io/Metrics/metric/general/FM_I1_M_DbFormalLangSyntax.ttl"
+            }
+        ],
+        "http://www.w3.org/ns/dcat#contactPoint": [
+            {
+                "@id": "_:nef0bd2ee76f141aba8645e453e45f11eb1"
             }
         ],
         "http://www.w3.org/ns/dcat#keyword": [
@@ -82,7 +82,7 @@
         ]
     },
     {
-        "@id": "_:n42e5ee676c2e4c559a29c9ed16803df9b1",
+        "@id": "_:nef0bd2ee76f141aba8645e453e45f11eb1",
         "@type": [
             "http://www.w3.org/2006/vcard/ns#Individual"
         ],

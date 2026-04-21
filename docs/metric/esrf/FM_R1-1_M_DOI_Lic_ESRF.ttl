@@ -22,7 +22,7 @@
     rdfs:definedBy <https://fairmetrics.github.io/Metrics/metric/esrf/FM_R1-1_M_DOI_Lic_ESRF.ttl> ;
     dcat:landingPage          <https://fairsharing.org/7465> ;
     
-dcterms:creator               [
+dcat:contactPoint               [
     a                     foaf:Person ;
     vcard:fn             "Renaud DUYME" ;
     foaf:mbox             <mailto:renaud.duyme@esrf.fr>

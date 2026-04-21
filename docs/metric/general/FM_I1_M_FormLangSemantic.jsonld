@@ -5,14 +5,6 @@
             "https://w3id.org/ftr#Metric",
             "http://www.w3.org/ns/dcat#Dataset"
         ],
-        "http://purl.org/dc/terms/creator": [
-            {
-                "@id": "_:nf908a17d1d6b4d91aa1004a2cc324c7fb1"
-            },
-            {
-                "@id": "_:nf908a17d1d6b4d91aa1004a2cc324c7fb2"
-            }
-        ],
         "http://purl.org/dc/terms/description": [
             {
                 "@value": "<p>This metric evaluates whether there is a resolved metadata representation that conforms to a recognised semantic knowledge representation language.</p>\n\n<p>I1 requires that metadata use a formal, accessible, shared and broadly applicable language for knowledge representation. The purpose of this principle is to ensure that metadata, when retrieved, is expressed in a formally defined knowledge representation language. In this metric, the definition of syntactic and semantic formats follows the [FAIRsharing guidance](<a href=\"https://fairsharing.gitbook.io/fairsharing/about-our-records/fair-assistance/syntactic-vs-semantic-knowledge-representation-languages).\">https://fairsharing.gitbook.io/fairsharing/about-our-records/fair-assistance/syntactic-vs-semantic-knowledge-representation-languages).</a> Under this semantic interpretation, a resource satisfies this metric if the resolved metadata meets these defined semantic criteria for structured representation.</p>\n\n"
@@ -48,6 +40,14 @@
         "http://www.w3.org/2000/01/rdf-schema#definedBy": [
             {
                 "@id": "https://fairmetrics.github.io/Metrics/metric/general/FM_I1_M_FormLangSemantic.ttl"
+            }
+        ],
+        "http://www.w3.org/ns/dcat#contactPoint": [
+            {
+                "@id": "_:nc84dc32fdfc74f739febf967483078beb1"
+            },
+            {
+                "@id": "_:nc84dc32fdfc74f739febf967483078beb2"
             }
         ],
         "http://www.w3.org/ns/dcat#keyword": [
@@ -97,7 +97,7 @@
         ]
     },
     {
-        "@id": "_:nf908a17d1d6b4d91aa1004a2cc324c7fb1",
+        "@id": "_:nc84dc32fdfc74f739febf967483078beb1",
         "@type": [
             "http://www.w3.org/2006/vcard/ns#Individual"
         ],
@@ -113,7 +113,7 @@
         ]
     },
     {
-        "@id": "_:nf908a17d1d6b4d91aa1004a2cc324c7fb2",
+        "@id": "_:nc84dc32fdfc74f739febf967483078beb2",
         "@type": [
             "http://www.w3.org/2006/vcard/ns#Individual"
         ],
@@ -129,7 +129,7 @@
         ],
         "http://www.w3.org/2006/vcard/ns#hasEmail": [
             {
-                "@id": "mailto:mark.wilkinson@upm.es"
+                "@id": "mailto:allyson.lister@oerc.ox.ac.uk"
             }
         ]
     }

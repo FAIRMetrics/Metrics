@@ -5,14 +5,6 @@
             "https://w3id.org/ftr#Metric",
             "http://www.w3.org/ns/dcat#Dataset"
         ],
-        "http://purl.org/dc/terms/creator": [
-            {
-                "@id": "_:n2d28058b6ba943d2a3b23f0df0772107b1"
-            },
-            {
-                "@id": "_:n2d28058b6ba943d2a3b23f0df0772107b2"
-            }
-        ],
         "http://purl.org/dc/terms/description": [
             {
                 "@value": "<p>This metric evaluates whether the identifier provided as input satisfies the EOSC-PID aligned [FAIRsharing definition](<a href=\"https://fairsharing.gitbook.io/fairsharing/record-sections-and-fields/general-information/globally-unique-persistent-and-resolvable-identifier-schemas)\">https://fairsharing.gitbook.io/fairsharing/record-sections-and-fields/general-information/globally-unique-persistent-and-resolvable-identifier-schemas)</a> of resolvability.</p>\n\n<p>F1 requires that metadata be assigned a globally unique, persistent and resolvable identifier. This metric is particularly concerned with the resolvability aspect of GUPRIs. For this metric, there must also be a known machine-actionable resolution protocol for the identifier. Although resolvability is not explicitly mentioned in the original Nature paper on the FAIR Principles, due to the relationship among global uniqueness, persistence and resolvability, please note that the [GO FAIR Foundation states](<a href=\"https://www.gofair.foundation/f1)\">https://www.gofair.foundation/f1)</a> that FAIR implementations should require all three aspects. As such, some aspects of this metric overlap with FAIR A1. Resolvability is required so that identifiers are actionable for both humans and machines. In this metric, the definition of persistence follows the [FAIRsharing guidance](<a href=\"https://fairsharing.gitbook.io/fairsharing/record-sections-and-fields/general-information/globally-unique-persistent-and-resolvable-identifier-schemas)\">https://fairsharing.gitbook.io/fairsharing/record-sections-and-fields/general-information/globally-unique-persistent-and-resolvable-identifier-schemas)</a> on Globally Unique, Persistent and Resolvable Identifier (GUPRI) schemas. This definition requires that humans and machines must be able to use the identifier to access information on the digital object. To make it globally resolvable as per the EOSC PID definition, it further needs to be part of a namespace defined by a syntax that is controlled by an Authority. There should be an established tombstoning or equivalent procedure. This metric evaluates whether the identifier provided as input satisfies the FAIRsharing definition of resolvability. The evaluation assesses whether the identifier schema supports the community definition provided by FAIRsharing.</p>\n\n<p>For an in-depth understanding of the issues around identifiers, please see http://dx.plos.org/10.1371/journal.pbio.2001414\">http://dx.plos.org/10.1371/journal.pbio.2001414\n"
@@ -48,6 +40,14 @@
         "http://www.w3.org/2000/01/rdf-schema#definedBy": [
             {
                 "@id": "https://fairmetrics.github.io/Metrics/metric/general/FM_F1_M_IdentUnique.ttl"
+            }
+        ],
+        "http://www.w3.org/ns/dcat#contactPoint": [
+            {
+                "@id": "_:n118e836367504011a2930d7054441dedb1"
+            },
+            {
+                "@id": "_:n118e836367504011a2930d7054441dedb2"
             }
         ],
         "http://www.w3.org/ns/dcat#keyword": [
@@ -113,7 +113,7 @@
         ]
     },
     {
-        "@id": "_:n2d28058b6ba943d2a3b23f0df0772107b1",
+        "@id": "_:n118e836367504011a2930d7054441dedb1",
         "@type": [
             "http://www.w3.org/2006/vcard/ns#Individual"
         ],
@@ -129,7 +129,7 @@
         ]
     },
     {
-        "@id": "_:n2d28058b6ba943d2a3b23f0df0772107b2",
+        "@id": "_:n118e836367504011a2930d7054441dedb2",
         "@type": [
             "http://www.w3.org/2006/vcard/ns#Individual"
         ],
@@ -145,7 +145,7 @@
         ],
         "http://www.w3.org/2006/vcard/ns#hasEmail": [
             {
-                "@id": "mailto:mark.wilkinson@upm.es"
+                "@id": "mailto:allyson.lister@oerc.ox.ac.uk"
             }
         ]
     }

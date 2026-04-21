@@ -5,14 +5,6 @@
             "https://w3id.org/ftr#Metric",
             "http://www.w3.org/ns/dcat#Dataset"
         ],
-        "http://purl.org/dc/terms/creator": [
-            {
-                "@id": "_:n67ae5f13250a40beba6d243e733f37dbb1"
-            },
-            {
-                "@id": "_:n67ae5f13250a40beba6d243e733f37dbb2"
-            }
-        ],
         "http://purl.org/dc/terms/description": [
             {
                 "@value": "<p>This semantic metric evaluates whether there is at least one vocabulary term used in the metadata that resolves to content in a linked data format (the definition of semantic formats follows [FAIRsharing guidance](<a href=\"https://fairsharing.gitbook.io/fairsharing/about-our-records/fair-assistance/syntactic-vs-semantic-knowledge-representation-languages)).\">https://fairsharing.gitbook.io/fairsharing/about-our-records/fair-assistance/syntactic-vs-semantic-knowledge-representation-languages)).</a></p>\n\n<p>I2 requires that metadata use vocabularies that follow FAIR principles. The purpose of this principle is to ensure that descriptive terms are drawn from such vocabularies, enabling consistent interpretation across systems and communities. Under this semantic interpretation, the evaluation checks whether there is at least one vocabulary term used in the metadata that resolves to content expressed in a linked data format. The resolved term must return structured content in a recognised linked data representation, with concepts and relationships defined. A resource satisfies this metric if at least one metadata element references a controlled vocabulary term that resolves to content in a linked data format (the definition of semantic formats follows [FAIRsharing guidance](<a href=\"https://fairsharing.gitbook.io/fairsharing/about-our-records/fair-assistance/syntactic-vs-semantic-knowledge-representation-languages)).\">https://fairsharing.gitbook.io/fairsharing/about-our-records/fair-assistance/syntactic-vs-semantic-knowledge-representation-languages)).</a></p>\n\n"
@@ -48,6 +40,14 @@
         "http://www.w3.org/2000/01/rdf-schema#definedBy": [
             {
                 "@id": "https://fairmetrics.github.io/Metrics/metric/general/FM_I2_M_FAIRVocabSemantic.ttl"
+            }
+        ],
+        "http://www.w3.org/ns/dcat#contactPoint": [
+            {
+                "@id": "_:n9ca8d5cef3984f518965be8ee8ba2425b1"
+            },
+            {
+                "@id": "_:n9ca8d5cef3984f518965be8ee8ba2425b2"
             }
         ],
         "http://www.w3.org/ns/dcat#keyword": [
@@ -97,7 +97,7 @@
         ]
     },
     {
-        "@id": "_:n67ae5f13250a40beba6d243e733f37dbb1",
+        "@id": "_:n9ca8d5cef3984f518965be8ee8ba2425b1",
         "@type": [
             "http://www.w3.org/2006/vcard/ns#Individual"
         ],
@@ -113,7 +113,7 @@
         ]
     },
     {
-        "@id": "_:n67ae5f13250a40beba6d243e733f37dbb2",
+        "@id": "_:n9ca8d5cef3984f518965be8ee8ba2425b2",
         "@type": [
             "http://www.w3.org/2006/vcard/ns#Individual"
         ],
@@ -129,7 +129,7 @@
         ],
         "http://www.w3.org/2006/vcard/ns#hasEmail": [
             {
-                "@id": "mailto:mark.wilkinson@upm.es"
+                "@id": "mailto:allyson.lister@oerc.ox.ac.uk"
             }
         ]
     }

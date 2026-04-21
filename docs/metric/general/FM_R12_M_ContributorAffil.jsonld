@@ -5,11 +5,6 @@
             "https://w3id.org/ftr#Metric",
             "http://www.w3.org/ns/dcat#Dataset"
         ],
-        "http://purl.org/dc/terms/creator": [
-            {
-                "@id": "_:ne52ab24aab75444b97fc7f5f59e47580b1"
-            }
-        ],
         "http://purl.org/dc/terms/description": [
             {
                 "@value": "\n    <p>This metric evaluates whether there is structured affiliation information associated with at least one author or core contributor in the metadata retrieved upon resolution of the provided identifier, providing one facet of evaluation for this R1.2.</p>\n\n<p>R1.2 requires that metadata be associated with detailed provenance. The purpose of \nthis principle is to ensure that the institutional context of authors or contributors is \ndocumented, enabling attribution and transparency. This metric evaluates whether\n there is structured affiliation information associated with at least one author \n or core contributor in the metadata retrieved upon resolution of the provided \n identifier. Under this interpretation, the evaluation checks whether at least \n one identified person (e.g., creator or contributor) is associated with an\n  organisation through a structured affiliation field or relationship. The \n  affiliation must be explicitly represented in the metadata, rather than implied. \nA resource satisfies this metric if at least one author or contributor includes any \nnonzero value in the resolved \nmetadata of the following types only: citation_author_institution field name, \n    DataCite creators affiliation (DOIs only), \n    Crossref author/investigator/lead-investigator affiliation (DOIs only).</p>\n\n"
@@ -33,6 +28,11 @@
         "http://www.w3.org/2000/01/rdf-schema#definedBy": [
             {
                 "@id": "https://fairmetrics.github.io/Metrics/metric/general/FM_R12_M_ContributorAffil.ttl"
+            }
+        ],
+        "http://www.w3.org/ns/dcat#contactPoint": [
+            {
+                "@id": "_:n495e5658c0544a95bb429b21e743f14fb1"
             }
         ],
         "http://www.w3.org/ns/dcat#keyword": [
@@ -82,7 +82,7 @@
         ]
     },
     {
-        "@id": "_:ne52ab24aab75444b97fc7f5f59e47580b1",
+        "@id": "_:n495e5658c0544a95bb429b21e743f14fb1",
         "@type": [
             "http://www.w3.org/2006/vcard/ns#Individual"
         ],
