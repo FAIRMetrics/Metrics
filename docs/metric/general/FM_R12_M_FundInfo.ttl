@@ -8,6 +8,7 @@
 @prefix schema:  <https://schema.org/> .
 @prefix vivo:    <http://vivoweb.org/ontology/core#> .
 @prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dqv:    <http://www.w3.org/ns/dqv#> .
 
 <https://w3id.org/fair-metrics/general/FM_R12_M_FundInfo>
     a                          ftr:Metric, dcat:Dataset ;
@@ -24,6 +25,7 @@
 
 <p>#</p>""" ;
     dcat:keyword              "FAIR", "R1.2", "identifier", "metadata" ;
+    dqv:inDimension <https://doi.org/10.25504/FAIRsharing.3e9860> ;
 
     dcat:landingPage          <https://w3id.org/fair-metrics/general/FM_R12_M_FundInfo> ;
 
@@ -34,6 +36,15 @@
         vcard:hasEmail             <mailto:renaud.duyme@esrf.fr> ;
     ] ;
 
+
+    dcat:contactPoint           [
+        a                     vcard:Individual ;
+        vcard:fn              "Mark D. Wilkinson" ;
+        vcard:organization-name "Wilkinson Laboratory, UPM, Madrid";
+        vcard:hasEmail             <mailto:mark.wilkinson@upm.es> ;
+    ] ;
+    
+	ftr:status "Active"@en ;
     dcat:version              "Champion1.0" ;
 
     ftr:applicationArea       <http://www.fairsharing.org/ontology/subject/SRAO_0000401> ;

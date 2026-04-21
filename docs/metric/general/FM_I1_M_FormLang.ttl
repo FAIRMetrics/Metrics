@@ -8,6 +8,7 @@
 @prefix schema:  <https://schema.org/> .
 @prefix vivo:    <http://vivoweb.org/ontology/core#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dqv:    <http://www.w3.org/ns/dqv#> .
 
 
 <https://w3id.org/fair-metrics/general/FM_I1_M_FormLang>
@@ -21,7 +22,8 @@
     vivo:abbreviation         "FM_I1_M_FormLang" ;
     dcterms:description       """Metadata uses a formal, accessible, shared, broadly applicable language. This metric aligns with FAIR Principle I1.""" ;
     dcat:keyword              "FAIR", "interoperability", "knowledge-representation", "FAIR-vocabulary", "I1" ;
-    
+        dqv:inDimension <https://doi.org/10.25504/FAIRsharing.ec5648> ;
+
     dcat:landingPage <https://w3id.org/fair-metrics/general/FM_I1_M_FormLang> ;
     
 dcat:contactPoint               [
@@ -36,6 +38,14 @@ dcat:contactPoint               [
         vcard:hasEmail             <mailto:allyson.lister@oerc.ox.ac.uk> ;
     ] ;
 
+    dcat:contactPoint           [
+        a                     vcard:Individual ;
+        vcard:fn              "Mark D. Wilkinson" ;
+        vcard:organization-name "Wilkinson Laboratory, UPM, Madrid";
+        vcard:hasEmail             <mailto:mark.wilkinson@upm.es> ;
+    ] ;
+    
+	ftr:status "Active"@en ;
 dcat:version           "Champion1.0" ;
 
 ftr:applicationArea       <http://www.fairsharing.org/ontology/subject/SRAO_0000401> ;

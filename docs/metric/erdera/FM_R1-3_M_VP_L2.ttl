@@ -34,7 +34,13 @@
         vcard:fn              "Mark D. Wilkinson" ;
         vcard:hasEmail             <mailto:mark.wilkinson@upm.es> ;
     ] ;
-
+	ftr:status "Active"@en ;
+    dcat:contactPoint           [
+        a                     vcard:Individual ;
+        vcard:fn              "Mark D. Wilkinson" ;
+        vcard:organization-name "Wilkinson Laboratory, UPM, Madrid";
+        vcard:hasEmail             <mailto:mark.wilkinson@upm.es> ;
+    ] ;
 
     dcterms:issued            "2026-04-06"^^xsd:date ;
     dcterms:modified          "2026-04-06"^^xsd:date ;

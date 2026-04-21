@@ -8,6 +8,7 @@
 @prefix schema:  <https://schema.org/> .
 @prefix vivo:    <http://vivoweb.org/ontology/core#> .
 @prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dqv:    <http://www.w3.org/ns/dqv#> .
 
 <https://w3id.org/fair-metrics/general/FM_I1_M_DbFormalLangSyntax>
     a                          ftr:Metric, dcat:Dataset ;
@@ -17,6 +18,7 @@
     dcterms:title             "FAIR Metric - I1 - Metadata - Database-level knowledge representation languages (syntactic)" ;
     vivo:abbreviation         "FM_I1_M_DbFormalLangSyntax" ;
     dcat:landingPage          <https://w3id.org/fair-metrics/general/FM_I1_M_DbFormalLangSyntax> ;
+dqv:inDimension <https://doi.org/10.25504/FAIRsharing.ec5648> ;
 
     dcterms:description       """<p>This metric evaluates whether there is a declared relationship (related to, implements or outputs) to a model/format from the hosting database for the provided identifier in the FAIRsharing registry, and that the associated model/format has a machine-readable structure.</p>
 
@@ -34,6 +36,14 @@
         vcard:hasEmail             <mailto:allyson.lister@oerc.ox.ac.uk> ;
     ] ;
 
+    dcat:contactPoint           [
+        a                     vcard:Individual ;
+        vcard:fn              "Mark D. Wilkinson" ;
+        vcard:organization-name "Wilkinson Laboratory, UPM, Madrid";
+        vcard:hasEmail             <mailto:mark.wilkinson@upm.es> ;
+    ] ;
+    
+	ftr:status "Active"@en ;
     dcat:version              "Champion1.0" ;
 
     ftr:applicationArea       <http://www.fairsharing.org/ontology/subject/SRAO_0000401> ;

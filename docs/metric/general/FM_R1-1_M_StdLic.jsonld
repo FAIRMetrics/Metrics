@@ -44,10 +44,16 @@
         ],
         "http://www.w3.org/ns/dcat#contactPoint": [
             {
-                "@id": "_:n322f5c76362b45a2ab1785b1c79efd02b1"
+                "@id": "_:n1b40047d067b49f59c9e1329c5bd0f8eb1"
             },
             {
-                "@id": "_:n322f5c76362b45a2ab1785b1c79efd02b2"
+                "@id": "_:n1b40047d067b49f59c9e1329c5bd0f8eb2"
+            },
+            {
+                "@id": "_:n1b40047d067b49f59c9e1329c5bd0f8eb3"
+            },
+            {
+                "@id": "_:n1b40047d067b49f59c9e1329c5bd0f8eb4"
             }
         ],
         "http://www.w3.org/ns/dcat#keyword": [
@@ -74,6 +80,11 @@
                 "@value": "Champion1.0"
             }
         ],
+        "http://www.w3.org/ns/dqv#inDimension": [
+            {
+                "@id": "https://doi.org/10.25504/FAIRsharing.482c33"
+            }
+        ],
         "https://w3id.org/dpv#isApplicableFor": [
             {
                 "@id": "https://schema.org/CreativeWork"
@@ -90,6 +101,12 @@
                 "@value": "https://w3id.org/fair-metrics/general/FM_R1-1_M_StdLic"
             }
         ],
+        "https://w3id.org/ftr#status": [
+            {
+                "@language": "en",
+                "@value": "Active"
+            }
+        ],
         "https://w3id.org/ftr#supportedBy": [
             {
                 "@id": "https://w3id.org/FAIR-Champion"
@@ -97,7 +114,7 @@
         ]
     },
     {
-        "@id": "_:n322f5c76362b45a2ab1785b1c79efd02b1",
+        "@id": "_:n1b40047d067b49f59c9e1329c5bd0f8eb1",
         "@type": [
             "http://www.w3.org/2006/vcard/ns#Individual"
         ],
@@ -113,7 +130,7 @@
         ]
     },
     {
-        "@id": "_:n322f5c76362b45a2ab1785b1c79efd02b2",
+        "@id": "_:n1b40047d067b49f59c9e1329c5bd0f8eb2",
         "@type": [
             "http://www.w3.org/2006/vcard/ns#Individual"
         ],
@@ -130,6 +147,48 @@
         "http://www.w3.org/2006/vcard/ns#hasEmail": [
             {
                 "@id": "mailto:allyson.lister@oerc.ox.ac.uk"
+            }
+        ]
+    },
+    {
+        "@id": "_:n1b40047d067b49f59c9e1329c5bd0f8eb3",
+        "@type": [
+            "http://www.w3.org/2006/vcard/ns#Individual"
+        ],
+        "http://www.w3.org/2006/vcard/ns#fn": [
+            {
+                "@value": "Mark D. Wilkinson"
+            }
+        ],
+        "http://www.w3.org/2006/vcard/ns#hasEmail": [
+            {
+                "@id": "mailto:mark.wilkinson@upm.es"
+            }
+        ],
+        "http://www.w3.org/2006/vcard/ns#organization-name": [
+            {
+                "@value": "Wilkinson Laboratory, UPM, Madrid"
+            }
+        ]
+    },
+    {
+        "@id": "_:n1b40047d067b49f59c9e1329c5bd0f8eb4",
+        "@type": [
+            "http://www.w3.org/2006/vcard/ns#Individual"
+        ],
+        "http://www.w3.org/2006/vcard/ns#fn": [
+            {
+                "@value": "Mark D. Wilkinson"
+            }
+        ],
+        "http://www.w3.org/2006/vcard/ns#hasEmail": [
+            {
+                "@id": "mailto:mark.wilkinson@upm.es"
+            }
+        ],
+        "http://www.w3.org/2006/vcard/ns#organization-name": [
+            {
+                "@value": "Wilkinson Laboratory, UPM, Madrid"
             }
         ]
     }

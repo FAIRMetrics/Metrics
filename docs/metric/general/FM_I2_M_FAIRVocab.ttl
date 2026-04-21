@@ -8,6 +8,7 @@
 @prefix schema:  <https://schema.org/> .
 @prefix vivo:    <http://vivoweb.org/ontology/core#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dqv:    <http://www.w3.org/ns/dqv#> .
 
 
 <https://w3id.org/fair-metrics/general/FM_I2_M_FAIRVocab>
@@ -21,7 +22,8 @@
     vivo:abbreviation         "FM_I2_M_FAIRVocab" ;
     dcterms:description       """Metadata uses fair vocabularies. This metric aligns with FAIR Principle I2.""" ;
     dcat:keyword              "FAIR", "interoperability", "vocabulary", "FAIR", "I2" ;
-    
+        dqv:inDimension <https://doi.org/10.25504/FAIRsharing.96d4af> ;
+
     dcat:landingPage <https://w3id.org/fair-metrics/general/FM_I2_M_FAIRVocab> ;
     
 dcat:contactPoint               [

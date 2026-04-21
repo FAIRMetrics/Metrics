@@ -8,6 +8,7 @@
 @prefix schema:  <https://schema.org/> .
 @prefix vivo:    <http://vivoweb.org/ontology/core#> .
 @prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dqv:    <http://www.w3.org/ns/dqv#> .
 
 <https://w3id.org/fair-metrics/general/FM_A1-1_M_HTTPSProt>
     a                          ftr:Metric, dcat:Dataset ;
@@ -24,7 +25,7 @@
 
 """ ;
     dcat:keyword              "FAIR", "A1.1", "identifier", "metadata" ;
-
+dqv:inDimension <https://doi.org/10.25504/FAIRsharing.7612c1> ;
     dcat:landingPage          <https://w3id.org/fair-metrics/general/FM_A1-1_M_HTTPSProt> ;
 
     dcat:contactPoint           [
@@ -32,6 +33,13 @@
         vcard:fn              "Allyson L. Lister" ;
         vivo:orcidId          <http://orcid.org/0000-0002-7702-4495> ;
         vcard:hasEmail             <mailto:allyson.lister@oerc.ox.ac.uk> ;
+    ] ;
+	ftr:status "Active"@en ;
+    dcat:contactPoint           [
+        a                     vcard:Individual ;
+        vcard:fn              "Mark D. Wilkinson" ;
+        vcard:organization-name "Wilkinson Laboratory, UPM, Madrid";
+        vcard:hasEmail             <mailto:mark.wilkinson@upm.es> ;
     ] ;
 
     dcat:version              "Champion1.0" ;

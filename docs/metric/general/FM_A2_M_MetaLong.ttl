@@ -8,6 +8,7 @@
 @prefix schema:  <https://schema.org/> .
 @prefix vivo:    <http://vivoweb.org/ontology/core#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dqv:    <http://www.w3.org/ns/dqv#> .
 
 
 <https://w3id.org/fair-metrics/general/FM_A2_M_MetaLong>
@@ -20,7 +21,8 @@
     vivo:abbreviation         "FM_A2_M_MetaLong" ;
     dcterms:description       """metadata is long-lived and independently accessible. This metric aligns with FAIR Principle A2.""" ;
     dcat:keyword              "FAIR", "accessibility", "metadata", "persistence", "A2" ;
-    
+       dqv:inDimension <https://doi.org/10.25504/FAIRsharing.7c4d7f> ; 
+
     dcat:landingPage <https://w3id.org/fair-metrics/general/FM_A2_M_MetaLong> ;
     
 dcat:contactPoint               [
@@ -35,6 +37,22 @@ dcat:contactPoint               [
         vcard:hasEmail             <mailto:allyson.lister@oerc.ox.ac.uk> ;
     ] ;
 
+    dcat:contactPoint           [
+        a                     vcard:Individual ;
+        vcard:fn              "Mark D. Wilkinson" ;
+        vcard:organization-name "Wilkinson Laboratory, UPM, Madrid";
+        vcard:hasEmail             <mailto:mark.wilkinson@upm.es> ;
+    ] ;
+    
+
+    dcat:contactPoint           [
+        a                     vcard:Individual ;
+        vcard:fn              "Mark D. Wilkinson" ;
+        vcard:organization-name "Wilkinson Laboratory, UPM, Madrid";
+        vcard:hasEmail             <mailto:mark.wilkinson@upm.es> ;
+    ] ;
+    
+	ftr:status "Active"@en ;
 dcat:version           "Champion1.0" ;
 
 ftr:applicationArea       <http://www.fairsharing.org/ontology/subject/SRAO_0000401> ;

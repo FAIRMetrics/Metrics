@@ -32,7 +32,10 @@
         ],
         "http://www.w3.org/ns/dcat#contactPoint": [
             {
-                "@id": "_:nda22857f220c41e8b6ccf85e910b255ab1"
+                "@id": "_:n55ad1388fc3a4df6a081c42bd159b8c7b1"
+            },
+            {
+                "@id": "_:n55ad1388fc3a4df6a081c42bd159b8c7b2"
             }
         ],
         "http://www.w3.org/ns/dcat#keyword": [
@@ -75,6 +78,12 @@
                 "@value": "https://w3id.org/fair-metrics/esrf/FM_R1-1_M_DOI_Lic_ESRF"
             }
         ],
+        "https://w3id.org/ftr#status": [
+            {
+                "@language": "en",
+                "@value": "Active"
+            }
+        ],
         "https://w3id.org/ftr#supportedBy": [
             {
                 "@id": "https://w3id.org/FAIR-Champion"
@@ -82,7 +91,7 @@
         ]
     },
     {
-        "@id": "_:nda22857f220c41e8b6ccf85e910b255ab1",
+        "@id": "_:n55ad1388fc3a4df6a081c42bd159b8c7b1",
         "@type": [
             "http://xmlns.com/foaf/0.1/Person"
         ],
@@ -94,6 +103,27 @@
         "http://xmlns.com/foaf/0.1/mbox": [
             {
                 "@id": "mailto:renaud.duyme@esrf.fr"
+            }
+        ]
+    },
+    {
+        "@id": "_:n55ad1388fc3a4df6a081c42bd159b8c7b2",
+        "@type": [
+            "http://www.w3.org/2006/vcard/ns#Individual"
+        ],
+        "http://www.w3.org/2006/vcard/ns#fn": [
+            {
+                "@value": "Mark D. Wilkinson"
+            }
+        ],
+        "http://www.w3.org/2006/vcard/ns#hasEmail": [
+            {
+                "@id": "mailto:mark.wilkinson@upm.es"
+            }
+        ],
+        "http://www.w3.org/2006/vcard/ns#organization-name": [
+            {
+                "@value": "Wilkinson Laboratory, UPM, Madrid"
             }
         ]
     }

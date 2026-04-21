@@ -8,6 +8,7 @@
 @prefix schema:  <https://schema.org/> .
 @prefix vivo:    <http://vivoweb.org/ontology/core#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dqv:    <http://www.w3.org/ns/dqv#> .
 
 <https://w3id.org/fair-metrics/general/FM_A1-1_M_OpenProt>
     a                          ftr:Metric, dcat:Dataset ;
@@ -20,7 +21,8 @@
     dcat:keyword              "FAIR", "accessibility", "protocol", "open", "standard", "A1.1" ;
     
     dcat:landingPage <https://w3id.org/fair-metrics/general/FM_A1-1_M_OpenProt> ;
-    
+    dqv:inDimension <https://doi.org/10.25504/FAIRsharing.7612c1> ;
+
 dcat:contactPoint               [
     a                     vcard:Individual ;
     vcard:fn             "Mark D. Wilkinson" ;

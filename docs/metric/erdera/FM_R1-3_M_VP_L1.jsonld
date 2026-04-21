@@ -44,7 +44,10 @@
         ],
         "http://www.w3.org/ns/dcat#contactPoint": [
             {
-                "@id": "_:na0f194e4282747e6b513e4170bffae39b1"
+                "@id": "_:n21b9ebfe2ba045568328e1ef44ae1470b1"
+            },
+            {
+                "@id": "_:n21b9ebfe2ba045568328e1ef44ae1470b2"
             }
         ],
         "http://www.w3.org/ns/dcat#keyword": [
@@ -114,7 +117,7 @@
         ]
     },
     {
-        "@id": "_:na0f194e4282747e6b513e4170bffae39b1",
+        "@id": "_:n21b9ebfe2ba045568328e1ef44ae1470b1",
         "@type": [
             "http://www.w3.org/2006/vcard/ns#Individual"
         ],
@@ -126,6 +129,27 @@
         "http://www.w3.org/2006/vcard/ns#hasEmail": [
             {
                 "@id": "mailto:mark.wilkinson@upm.es"
+            }
+        ]
+    },
+    {
+        "@id": "_:n21b9ebfe2ba045568328e1ef44ae1470b2",
+        "@type": [
+            "http://www.w3.org/2006/vcard/ns#Individual"
+        ],
+        "http://www.w3.org/2006/vcard/ns#fn": [
+            {
+                "@value": "Mark D. Wilkinson"
+            }
+        ],
+        "http://www.w3.org/2006/vcard/ns#hasEmail": [
+            {
+                "@id": "mailto:mark.wilkinson@upm.es"
+            }
+        ],
+        "http://www.w3.org/2006/vcard/ns#organization-name": [
+            {
+                "@value": "Wilkinson Laboratory, UPM, Madrid"
             }
         ]
     }

@@ -44,10 +44,13 @@
         ],
         "http://www.w3.org/ns/dcat#contactPoint": [
             {
-                "@id": "_:n670e7128b67b415a8628613bfaeabfc9b1"
+                "@id": "_:n0dcea021a3d14eb1a8789eaeaaae5e27b1"
             },
             {
-                "@id": "_:n670e7128b67b415a8628613bfaeabfc9b2"
+                "@id": "_:n0dcea021a3d14eb1a8789eaeaaae5e27b2"
+            },
+            {
+                "@id": "_:n0dcea021a3d14eb1a8789eaeaaae5e27b3"
             }
         ],
         "http://www.w3.org/ns/dcat#keyword": [
@@ -74,6 +77,11 @@
                 "@value": "Champion1.0"
             }
         ],
+        "http://www.w3.org/ns/dqv#inDimension": [
+            {
+                "@id": "https://doi.org/10.25504/FAIRsharing.ec5648"
+            }
+        ],
         "https://w3id.org/dpv#isApplicableFor": [
             {
                 "@id": "https://schema.org/CreativeWork"
@@ -90,6 +98,12 @@
                 "@value": "https://w3id.org/fair-metrics/general/FM_I1_M_FormLangSyntax"
             }
         ],
+        "https://w3id.org/ftr#status": [
+            {
+                "@language": "en",
+                "@value": "Active"
+            }
+        ],
         "https://w3id.org/ftr#supportedBy": [
             {
                 "@id": "https://w3id.org/FAIR-Champion"
@@ -97,7 +111,7 @@
         ]
     },
     {
-        "@id": "_:n670e7128b67b415a8628613bfaeabfc9b1",
+        "@id": "_:n0dcea021a3d14eb1a8789eaeaaae5e27b1",
         "@type": [
             "http://www.w3.org/2006/vcard/ns#Individual"
         ],
@@ -113,7 +127,7 @@
         ]
     },
     {
-        "@id": "_:n670e7128b67b415a8628613bfaeabfc9b2",
+        "@id": "_:n0dcea021a3d14eb1a8789eaeaaae5e27b2",
         "@type": [
             "http://www.w3.org/2006/vcard/ns#Individual"
         ],
@@ -130,6 +144,27 @@
         "http://www.w3.org/2006/vcard/ns#hasEmail": [
             {
                 "@id": "mailto:allyson.lister@oerc.ox.ac.uk"
+            }
+        ]
+    },
+    {
+        "@id": "_:n0dcea021a3d14eb1a8789eaeaaae5e27b3",
+        "@type": [
+            "http://www.w3.org/2006/vcard/ns#Individual"
+        ],
+        "http://www.w3.org/2006/vcard/ns#fn": [
+            {
+                "@value": "Mark D. Wilkinson"
+            }
+        ],
+        "http://www.w3.org/2006/vcard/ns#hasEmail": [
+            {
+                "@id": "mailto:mark.wilkinson@upm.es"
+            }
+        ],
+        "http://www.w3.org/2006/vcard/ns#organization-name": [
+            {
+                "@value": "Wilkinson Laboratory, UPM, Madrid"
             }
         ]
     }

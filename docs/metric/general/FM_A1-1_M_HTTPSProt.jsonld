@@ -32,7 +32,10 @@
         ],
         "http://www.w3.org/ns/dcat#contactPoint": [
             {
-                "@id": "_:nb6f0a0c664f0484c94f00e5db5b4682ab1"
+                "@id": "_:ne1fd748bcf414b018fe014aef85ecce5b1"
+            },
+            {
+                "@id": "_:ne1fd748bcf414b018fe014aef85ecce5b2"
             }
         ],
         "http://www.w3.org/ns/dcat#keyword": [
@@ -59,6 +62,11 @@
                 "@value": "Champion1.0"
             }
         ],
+        "http://www.w3.org/ns/dqv#inDimension": [
+            {
+                "@id": "https://doi.org/10.25504/FAIRsharing.7612c1"
+            }
+        ],
         "https://w3id.org/dpv#isApplicableFor": [
             {
                 "@id": "https://schema.org/CreativeWork"
@@ -75,6 +83,12 @@
                 "@value": "https://w3id.org/fair-metrics/general/FM_A1-1_M_HTTPSProt"
             }
         ],
+        "https://w3id.org/ftr#status": [
+            {
+                "@language": "en",
+                "@value": "Active"
+            }
+        ],
         "https://w3id.org/ftr#supportedBy": [
             {
                 "@id": "https://w3id.org/FAIR-Champion"
@@ -82,7 +96,7 @@
         ]
     },
     {
-        "@id": "_:nb6f0a0c664f0484c94f00e5db5b4682ab1",
+        "@id": "_:ne1fd748bcf414b018fe014aef85ecce5b1",
         "@type": [
             "http://www.w3.org/2006/vcard/ns#Individual"
         ],
@@ -99,6 +113,27 @@
         "http://www.w3.org/2006/vcard/ns#hasEmail": [
             {
                 "@id": "mailto:allyson.lister@oerc.ox.ac.uk"
+            }
+        ]
+    },
+    {
+        "@id": "_:ne1fd748bcf414b018fe014aef85ecce5b2",
+        "@type": [
+            "http://www.w3.org/2006/vcard/ns#Individual"
+        ],
+        "http://www.w3.org/2006/vcard/ns#fn": [
+            {
+                "@value": "Mark D. Wilkinson"
+            }
+        ],
+        "http://www.w3.org/2006/vcard/ns#hasEmail": [
+            {
+                "@id": "mailto:mark.wilkinson@upm.es"
+            }
+        ],
+        "http://www.w3.org/2006/vcard/ns#organization-name": [
+            {
+                "@value": "Wilkinson Laboratory, UPM, Madrid"
             }
         ]
     }
