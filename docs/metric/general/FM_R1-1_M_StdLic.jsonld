@@ -14,7 +14,7 @@
         "https://w3id.org/ftr#Metric",
         "dcat:Dataset"
       ],
-      "rdfs:definedBy": {
+      "rdfs:isDefinedBy": {
         "@id": "https://fairmetrics.github.io/Metrics/metric/general/FM_R1-1_M_StdLic.ttl"
       },
       "https://w3id.org/ftr#identifier": {
@@ -35,10 +35,10 @@
       ],
       "dcat:contactPoint": [
         {
-          "@id": "_:g473060"
+          "@id": "_:g472940"
         },
         {
-          "@id": "_:g473080"
+          "@id": "_:g472960"
         }
       ],
       "http://www.w3.org/ns/dqv#inDimension": {
@@ -71,7 +71,7 @@
       }
     },
     {
-      "@id": "_:g473060",
+      "@id": "_:g472940",
       "@type": "vcard:Individual",
       "vcard:fn": "Allyson L. Lister",
       "http://vivoweb.org/ontology/core#orcidId": {
@@ -82,7 +82,7 @@
       }
     },
     {
-      "@id": "_:g473080",
+      "@id": "_:g472960",
       "@type": "vcard:Individual",
       "vcard:fn": "Mark D. Wilkinson",
       "vcard:organization-name": "Wilkinson Laboratory, UPM, Madrid",

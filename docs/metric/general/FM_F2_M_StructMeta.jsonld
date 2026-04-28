@@ -14,7 +14,7 @@
         "https://w3id.org/ftr#Metric",
         "dcat:Dataset"
       ],
-      "rdfs:definedBy": {
+      "rdfs:isDefinedBy": {
         "@id": "https://w3id.org/fair-metrics/general/FM_F2_M_StructMeta.ttl"
       },
       "https://w3id.org/ftr#identifier": {
@@ -39,10 +39,10 @@
       },
       "dcat:contactPoint": [
         {
-          "@id": "_:g467860"
+          "@id": "_:g468520"
         },
         {
-          "@id": "_:g467900"
+          "@id": "_:g468560"
         }
       ],
       "dcat:version": "Champion1.0",
@@ -63,7 +63,7 @@
       }
     },
     {
-      "@id": "_:g467860",
+      "@id": "_:g468520",
       "@type": "vcard:Individual",
       "vcard:fn": "Mark D. Wilkinson",
       "vcard:hasEmail": {
@@ -71,7 +71,7 @@
       }
     },
     {
-      "@id": "_:g467900",
+      "@id": "_:g468560",
       "@type": "vcard:Individual",
       "vcard:fn": "Allyson L. Lister",
       "http://vivoweb.org/ontology/core#orcidId": {

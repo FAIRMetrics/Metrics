@@ -14,7 +14,7 @@
         "https://w3id.org/ftr#Metric",
         "dcat:Dataset"
       ],
-      "rdfs:definedBy": {
+      "rdfs:isDefinedBy": {
         "@id": "https://fairmetrics.github.io/Metrics/metric/erdera/FM_R1-3_M_VP_L1.ttl"
       },
       "https://w3id.org/ftr#identifier": {
@@ -36,7 +36,7 @@
         "virtual platform"
       ],
       "dcat:contactPoint": {
-        "@id": "_:g461380"
+        "@id": "_:g461360"
       },
       "https://w3id.org/ftr#status": {
         "@language": "en",
@@ -73,7 +73,7 @@
       }
     },
     {
-      "@id": "_:g461380",
+      "@id": "_:g461360",
       "@type": "vcard:Individual",
       "vcard:fn": "Mark D. Wilkinson",
       "vcard:organization-name": "Wilkinson Laboratory, UPM, Madrid",

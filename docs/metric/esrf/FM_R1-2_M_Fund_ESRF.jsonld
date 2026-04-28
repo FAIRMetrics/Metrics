@@ -29,7 +29,7 @@
         "standard",
         "r1.2"
       ],
-      "rdfs:definedBy": {
+      "rdfs:isDefinedBy": {
         "@id": "https://fairmetrics.github.io/Metrics/metric/esrf/FM_R1-2_M_Fund_ESRF.ttl"
       },
       "dcat:landingPage": {
@@ -37,10 +37,10 @@
       },
       "dcat:contactPoint": [
         {
-          "@id": "_:g465180"
+          "@id": "_:g465040"
         },
         {
-          "@id": "_:g465200"
+          "@id": "_:g465060"
         }
       ],
       "https://w3id.org/ftr#status": {
@@ -62,7 +62,7 @@
       }
     },
     {
-      "@id": "_:g465180",
+      "@id": "_:g465040",
       "@type": "foaf:Person",
       "vcard:fn": "Renaud DUYME",
       "foaf:mbox": {
@@ -70,7 +70,7 @@
       }
     },
     {
-      "@id": "_:g465200",
+      "@id": "_:g465060",
       "@type": "vcard:Individual",
       "vcard:fn": "Mark D. Wilkinson",
       "vcard:organization-name": "Wilkinson Laboratory, UPM, Madrid",

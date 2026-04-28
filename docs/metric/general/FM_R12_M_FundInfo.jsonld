@@ -14,7 +14,7 @@
         "https://w3id.org/ftr#Metric",
         "dcat:Dataset"
       ],
-      "rdfs:definedBy": {
+      "rdfs:isDefinedBy": {
         "@id": "https://fairmetrics.github.io/Metrics/metric/general/FM_R12_M_FundInfo.ttl"
       },
       "https://w3id.org/ftr#identifier": {
@@ -38,10 +38,10 @@
       },
       "dcat:contactPoint": [
         {
-          "@id": "_:g473980"
+          "@id": "_:g473620"
         },
         {
-          "@id": "_:g474060"
+          "@id": "_:g473640"
         }
       ],
       "https://w3id.org/ftr#status": {
@@ -63,7 +63,7 @@
       }
     },
     {
-      "@id": "_:g473980",
+      "@id": "_:g473620",
       "@type": "vcard:Individual",
       "vcard:fn": "Renaud Duyme",
       "http://vivoweb.org/ontology/core#orcidId": {
@@ -74,7 +74,7 @@
       }
     },
     {
-      "@id": "_:g474060",
+      "@id": "_:g473640",
       "@type": "vcard:Individual",
       "vcard:fn": "Mark D. Wilkinson",
       "vcard:organization-name": "Wilkinson Laboratory, UPM, Madrid",
