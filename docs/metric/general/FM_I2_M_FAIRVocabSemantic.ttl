@@ -12,7 +12,7 @@
 
 <https://w3id.org/fair-metrics/general/FM_I2_M_FAIRVocabSemantic>
     a                          ftr:Metric, dcat:Dataset ;
-    rdfs:definedBy            <https://fairmetrics.github.io/Metrics/metric/general/FM_I2_M_FAIRVocabSemantic.ttl> ;
+    rdfs:isDefinedBy            <https://fairmetrics.github.io/Metrics/metric/general/FM_I2_M_FAIRVocabSemantic.ttl> ;
 
     ftr:identifier            "https://w3id.org/fair-metrics/general/FM_I2_M_FAIRVocabSemantic"^^xsd:anyURI ;
     dcterms:title             "FAIR Metric - I2 - Metadata - uses FAIR vocabularies (semantic)" ;

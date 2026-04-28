@@ -13,7 +13,7 @@
 
 <https://w3id.org/fair-metrics/general/FM_I1_M_FormLang>
     a                          ftr:Metric, dcat:Dataset ;
-    rdfs:definedBy <https://w3id.org/fair-metrics/general/FM_I1_M_FormLang.ttl> ;
+    rdfs:isDefinedBy <https://w3id.org/fair-metrics/general/FM_I1_M_FormLang.ttl> ;
     
     ftr:identifier            "https://w3id.org/fair-metrics/general/FM_I1_M_FormLang"^^xsd:anyURI ;
 

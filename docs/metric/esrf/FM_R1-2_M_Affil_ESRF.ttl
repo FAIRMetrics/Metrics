@@ -19,7 +19,7 @@
     vivo:abbreviation         "FM_R1-2_M_Affil_ESRF" ;
     dcterms:description       """ This metric ensures that the research object provided by the supplied URL or DOI has metadata containing author affiliation. """ ;
     dcat:keyword              "FAIR", "reusability", "affiliation", "standard", "r1.2" ;
-    rdfs:definedBy <https://fairmetrics.github.io/Metrics/metric/esrf/FM_R1-2_M_Affil_ESRF.ttl> ;
+    rdfs:isDefinedBy <https://fairmetrics.github.io/Metrics/metric/esrf/FM_R1-2_M_Affil_ESRF.ttl> ;
     dcat:landingPage          <https://fairsharing.org/7494> ;
     
 dcat:contactPoint               [

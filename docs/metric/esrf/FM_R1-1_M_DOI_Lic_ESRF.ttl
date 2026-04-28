@@ -19,7 +19,7 @@
     vivo:abbreviation         "FM_R1-1_M_DOI_Lic_ESRF" ;
     dcterms:description       """ This metric ensures that the research object provided by the supplied DOI is associated to licence information in the DOI registration agency metadata. Note that more generic metrics exist that do not specialise R1.1 to DOIs only; this is intended to be a more granular metric specific to DOIs. """ ;
     dcat:keyword              "FAIR", "reusability", "standard", "r1.1" ;
-    rdfs:definedBy <https://fairmetrics.github.io/Metrics/metric/esrf/FM_R1-1_M_DOI_Lic_ESRF.ttl> ;
+    rdfs:isDefinedBy <https://fairmetrics.github.io/Metrics/metric/esrf/FM_R1-1_M_DOI_Lic_ESRF.ttl> ;
     dcat:landingPage          <https://fairsharing.org/7465> ;
     
 dcat:contactPoint               [

@@ -12,7 +12,7 @@
 
 <https://w3id.org/fair-metrics/general/FM_F1_M_IdentUnique>
     a                          ftr:Metric, dcat:Dataset ;
-    rdfs:definedBy            <https://fairmetrics.github.io/Metrics/metric/general/FM_F1_M_IdentUnique.ttl> ;
+    rdfs:isDefinedBy            <https://fairmetrics.github.io/Metrics/metric/general/FM_F1_M_IdentUnique.ttl> ;
 
     ftr:identifier            "https://w3id.org/fair-metrics/general/FM_F1_M_IdentUnique"^^xsd:anyURI ;
     dcterms:title             "FAIR Metric - F1 - Metadata - Identifier is resolvable" ;

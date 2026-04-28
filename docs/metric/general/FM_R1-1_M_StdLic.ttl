@@ -12,7 +12,7 @@
 
 <https://w3id.org/fair-metrics/general/FM_R1-1_M_StdLic>
     a                          ftr:Metric, dcat:Dataset ;
-    rdfs:definedBy            <https://fairmetrics.github.io/Metrics/metric/general/FM_R1-1_M_StdLic.ttl> ;
+    rdfs:isDefinedBy            <https://fairmetrics.github.io/Metrics/metric/general/FM_R1-1_M_StdLic.ttl> ;
 
     ftr:identifier            "https://w3id.org/fair-metrics/general/FM_R1-1_M_StdLic"^^xsd:anyURI ;
     dcterms:title             "FAIR Metric - R1.1 - Metadata - discoverable data license in metadata" ;

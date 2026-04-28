@@ -18,7 +18,7 @@
     vivo:abbreviation         "FM_F4_M_DOI_OA_ESRF" ;
     dcterms:description       """ This metric applies to DOI objects. For publications entities, it ensures that its content, or a allowed copy is open access. For dataset entities it ensures that the data is open access (with or without embargo period). The reference services used are : https://unpaywall.org/ and https://openalex.org. While originally created as part of the OSTrails project to fulfil requirements within the PaNOSC cluster, this metric is subject agnostic and can be re-used by any community with these requirements for FAIR F4. """ ;
     dcat:keyword              "FAIR", "open access", "standard", "f4" ;
-    rdfs:definedBy <https://fairmetrics.github.io/Metrics/metric/esrf/FM_F4_M_DOI_OA_ESRF.ttl> ;
+    rdfs:isDefinedBy <https://fairmetrics.github.io/Metrics/metric/esrf/FM_F4_M_DOI_OA_ESRF.ttl> ;
     dcat:landingPage          <https://fairsharing.org/6449> ;
     
 dcat:contactPoint               [

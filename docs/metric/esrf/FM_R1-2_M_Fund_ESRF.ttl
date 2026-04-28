@@ -19,7 +19,7 @@
     vivo:abbreviation         "FM_R1-2_M_Fund_ESRF" ;
     dcterms:description       """This metric ensures that the research object provided by the supplied URL or DOI has metadata containing funding information. """ ;
     dcat:keyword              "FAIR", "reusability", "funding", "standard", "r1.2" ;
-    rdfs:definedBy <https://fairmetrics.github.io/Metrics/metric/esrf/FM_R1-2_M_Fund_ESRF.ttl> ;
+    rdfs:isDefinedBy <https://fairmetrics.github.io/Metrics/metric/esrf/FM_R1-2_M_Fund_ESRF.ttl> ;
     dcat:landingPage          <https://fairsharing.org/7496> ;
     
 dcat:contactPoint               [

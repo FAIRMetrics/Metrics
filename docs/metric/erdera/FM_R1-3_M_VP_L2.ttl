@@ -12,7 +12,7 @@
 
 <https://w3id.org/fair-metrics/erdera/FM_R1-3_M_VP_L2>
     a                          ftr:Metric, dcat:Dataset ;
-    rdfs:definedBy            <https://fairmetrics.github.io/Metrics/metric/erdera/FM_R1-3_M_VP_L2.ttl> ;
+    rdfs:isDefinedBy            <https://fairmetrics.github.io/Metrics/metric/erdera/FM_R1-3_M_VP_L2.ttl> ;
 
     ftr:identifier            "https://w3id.org/fair-metrics/erdera/FM_R1-3_M_VP_L2"^^xsd:anyURI ;
     dcterms:title             "ERDERA Metric - R1.3 - Metadata - Metadata meets minimal VP Metadata for ERDERA Virtual Platform Level 2 Compliance  " ;

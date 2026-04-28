@@ -13,7 +13,7 @@
 
 <https://w3id.org/fair-metrics/general/FM_A2_M_MetaLong>
     a                          ftr:Metric, dcat:Dataset ;
-    rdfs:definedBy <https://w3id.org/fair-metrics/general/FM_A2_M_MetaLong.ttl> ;
+    rdfs:isDefinedBy <https://w3id.org/fair-metrics/general/FM_A2_M_MetaLong.ttl> ;
     
     ftr:identifier            "https://w3id.org/fair-metrics/general/FM_A2_M_MetaLong"^^xsd:anyURI ;
 

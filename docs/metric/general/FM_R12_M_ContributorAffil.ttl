@@ -12,7 +12,7 @@
 
 <https://w3id.org/fair-metrics/general/FM_R12_M_ContributorAffil>
     a                          ftr:Metric, dcat:Dataset ;
-    rdfs:definedBy            <https://fairmetrics.github.io/Metrics/metric/general/FM_R12_M_ContributorAffil.ttl> ;
+    rdfs:isDefinedBy            <https://fairmetrics.github.io/Metrics/metric/general/FM_R12_M_ContributorAffil.ttl> ;
 
     ftr:identifier            "https://w3id.org/fair-metrics/general/FM_R12_M_ContributorAffil"^^xsd:anyURI ;
     dcterms:title             "FAIR Metric - R1.2 - Metadata - contributor affiliation" ;

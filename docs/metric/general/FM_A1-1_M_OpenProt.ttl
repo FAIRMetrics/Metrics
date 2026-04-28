@@ -12,7 +12,7 @@
 
 <https://w3id.org/fair-metrics/general/FM_A1-1_M_OpenProt>
     a                          ftr:Metric, dcat:Dataset ;
-    rdfs:definedBy <https://w3id.org/fair-metrics/general/FM_A1-1_M_OpenProt.ttl> ;
+    rdfs:isDefinedBy <https://w3id.org/fair-metrics/general/FM_A1-1_M_OpenProt.ttl> ;
     
     ftr:identifier            "https://w3id.org/fair-metrics/general/FM_A1-1_M_OpenProt"^^xsd:anyURI ;
     dcterms:title             "FAIR Metric – A1.1 – Metadata - Open protocol for (meta)data retrieval" ;

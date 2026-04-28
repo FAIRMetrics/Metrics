@@ -12,7 +12,7 @@
 
 <https://w3id.org/fair-metrics/general/FM_I1_M_DbFormalLangSyntax>
     a                          ftr:Metric, dcat:Dataset ;
-    rdfs:definedBy            <https://fairmetrics.github.io/Metrics/metric/general/FM_I1_M_DbFormalLangSyntax.ttl> ;
+    rdfs:isDefinedBy            <https://fairmetrics.github.io/Metrics/metric/general/FM_I1_M_DbFormalLangSyntax.ttl> ;
 
     ftr:identifier            "https://w3id.org/fair-metrics/general/FM_I1_M_DbFormalLangSyntax"^^xsd:anyURI ;
     dcterms:title             "FAIR Metric - I1 - Metadata - Database-level knowledge representation languages (syntactic)" ;
