@@ -41,7 +41,7 @@
         "@value": "Active"
       },
       "dcat:contactPoint": {
-        "@id": "_:g462820"
+        "@id": "_:g462580"
       },
       "dc:issued": {
         "@type": "xsd:date",
@@ -74,7 +74,7 @@
       }
     },
     {
-      "@id": "_:g462820",
+      "@id": "_:g462580",
       "@type": "vcard:Individual",
       "vcard:fn": "Mark D. Wilkinson",
       "vcard:organization-name": "Wilkinson Laboratory, UPM, Madrid",

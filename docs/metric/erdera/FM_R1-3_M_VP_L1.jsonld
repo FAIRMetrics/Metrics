@@ -36,7 +36,7 @@
         "virtual platform"
       ],
       "dcat:contactPoint": {
-        "@id": "_:g461360"
+        "@id": "_:g461320"
       },
       "https://w3id.org/ftr#status": {
         "@language": "en",
@@ -73,7 +73,7 @@
       }
     },
     {
-      "@id": "_:g461360",
+      "@id": "_:g461320",
       "@type": "vcard:Individual",
       "vcard:fn": "Mark D. Wilkinson",
       "vcard:organization-name": "Wilkinson Laboratory, UPM, Madrid",

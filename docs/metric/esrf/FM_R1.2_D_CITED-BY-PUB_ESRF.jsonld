@@ -1,0 +1,90 @@
+{
+  "@context": {
+    "dcat": "http://www.w3.org/ns/dcat#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dc": "http://purl.org/dc/terms/",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "schemas": "https://schema.org/",
+    "foaf": "http://xmlns.com/foaf/0.1/",
+    "vcard": "http://www.w3.org/2006/vcard/ns#"
+  },
+  "@graph": [
+    {
+      "@id": "https://w3id.org/fair-metrics/esrf/FM_R1.2_D_CITED-BY-PUB_ESRF",
+      "@type": [
+        "https://w3id.org/ftr#Metric",
+        "dcat:Dataset"
+      ],
+      "https://w3id.org/ftr#identifier": {
+        "@type": "xsd:anyURI",
+        "@value": "https://w3id.org/fair-metrics/esrf/FM_R1.2_D_CITED-BY-PUB_ESRF"
+      },
+      "dc:title": "FAIR Metric - R1.2 - Dataset - The dataset is cited in a publication",
+      "http://vivoweb.org/ontology/core#abbreviation": "FM_R1.2_D_CITED-BY-PUB_ESRF",
+      "dc:description": " ## What is being measured?\n\nThis metric evaluates whether the research object provided by the supplied DOI has been formally recognised and cited within the scholarly literature. The assessment uses the DOI to query global citation indexes and aggregation services, such as OpenAlex (searching both full-text data availability sections and reference lists) and OpenCitations. The metric passes if the dataset identifier is found within the citation network of at least one external publication (in the reference section or in text).\n\n## Why should we measure it?\n\nUnder FAIR Principle R1.2, metadata must be associated with detailed provenance to support its evaluation and reuse. Formal citation in a peer-reviewed publication is a robust indicator of a research object’s provenance. This is useful because:\n\n    Contextual Provenance: Citations often link datasets to the specific findings, methodologies, and interpretations described in a paper, providing a narrative context that standard metadata fields cannot capture.\n    Tracking Impact: For institutions and researchers, identifying citations is critical for demonstrating the “reach” of research data and fulfilling the provenance requirements of funding bodies.\n ",
+      "dcat:keyword": [
+        "FAIR",
+        "open access",
+        "standard",
+        "R1.2",
+        "dataset",
+        "citation",
+        "provenance",
+        "neutron science",
+        "photon science",
+        "ESRF"
+      ],
+      "rdfs:isDefinedBy": {
+        "@id": "https://fairmetrics.github.io/Metrics/metric/esrf/FM_R1.2_D_CITED-BY-PUB_ESRF.ttl"
+      },
+      "dcat:landingPage": {
+        "@id": "https://fairsharing.org/7466"
+      },
+      "dcat:contactPoint": [
+        {
+          "@id": "_:g466000"
+        },
+        {
+          "@id": "_:g466020"
+        }
+      ],
+      "https://w3id.org/ftr#status": {
+        "@language": "en",
+        "@value": "Active"
+      },
+      "dcat:version": "esrf1.0",
+      "https://w3id.org/ftr#applicationArea": {
+        "@id": "http://www.fairsharing.org/ontology/subject/SRAO_0000401"
+      },
+      "dc:license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "https://w3id.org/ftr#supportedBy": {
+        "@id": "https://w3id.org/FAIR-Champion"
+      },
+      "http://www.w3.org/ns/dqv#inDimension": {
+        "@id": "https://doi.org/10.25504/FAIRsharing.3e9860"
+      },
+      "https://w3id.org/dpv#isApplicableFor": {
+        "@id": "schemas:CreativeWork"
+      }
+    },
+    {
+      "@id": "_:g466000",
+      "@type": "foaf:Person",
+      "vcard:fn": "Renaud DUYME",
+      "foaf:mbox": {
+        "@id": "mailto:renaud.duyme@esrf.fr"
+      }
+    },
+    {
+      "@id": "_:g466020",
+      "@type": "vcard:Individual",
+      "vcard:fn": "Mark D. Wilkinson",
+      "vcard:organization-name": "Wilkinson Laboratory, UPM, Madrid",
+      "vcard:hasEmail": {
+        "@id": "mailto:mark.wilkinson@upm.es"
+      }
+    }
+  ]
+}

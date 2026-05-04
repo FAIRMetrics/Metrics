@@ -8,6 +8,8 @@
 @prefix schema:  <https://schema.org/> .
 @prefix vivo:    <http://vivoweb.org/ontology/core#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dqv:    <http://www.w3.org/ns/dqv#> .
+
 
 
 <https://w3id.org/fair-metrics/esrf/FM_R1-2_M_Affil_ESRF>
@@ -42,4 +44,6 @@ ftr:applicationArea       <http://www.fairsharing.org/ontology/subject/SRAO_0000
 dcterms:license           <https://creativecommons.org/licenses/by/4.0/> ;
 
 ftr:supportedBy <https://w3id.org/FAIR-Champion> ;
+dqv:inDimension <https://doi.org/10.25504/FAIRsharing.3e9860> ;
+
 dpv:isApplicableFor       schema:CreativeWork .  

@@ -37,10 +37,10 @@
       },
       "dcat:contactPoint": [
         {
-          "@id": "_:g464860"
+          "@id": "_:g464020"
         },
         {
-          "@id": "_:g464880"
+          "@id": "_:g464040"
         }
       ],
       "https://w3id.org/ftr#status": {
@@ -57,12 +57,15 @@
       "https://w3id.org/ftr#supportedBy": {
         "@id": "https://w3id.org/FAIR-Champion"
       },
+      "http://www.w3.org/ns/dqv#inDimension": {
+        "@id": "https://doi.org/10.25504/FAIRsharing.3e9860"
+      },
       "https://w3id.org/dpv#isApplicableFor": {
         "@id": "schemas:CreativeWork"
       }
     },
     {
-      "@id": "_:g464860",
+      "@id": "_:g464020",
       "@type": "foaf:Person",
       "vcard:fn": "Renaud DUYME",
       "foaf:mbox": {
@@ -70,7 +73,7 @@
       }
     },
     {
-      "@id": "_:g464880",
+      "@id": "_:g464040",
       "@type": "vcard:Individual",
       "vcard:fn": "Mark D. Wilkinson",
       "vcard:organization-name": "Wilkinson Laboratory, UPM, Madrid",
