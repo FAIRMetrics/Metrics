@@ -38,10 +38,10 @@
       },
       "dcat:contactPoint": [
         {
-          "@id": "_:g470780"
+          "@id": "_:g470340"
         },
         {
-          "@id": "_:g470820"
+          "@id": "_:g470380"
         }
       ],
       "dcat:version": "Champion1.0",
@@ -62,7 +62,7 @@
       }
     },
     {
-      "@id": "_:g470780",
+      "@id": "_:g470340",
       "@type": "vcard:Individual",
       "vcard:fn": "Mark D. Wilkinson",
       "vcard:hasEmail": {
@@ -70,7 +70,7 @@
       }
     },
     {
-      "@id": "_:g470820",
+      "@id": "_:g470380",
       "@type": "vcard:Individual",
       "vcard:fn": "Allyson L. Lister",
       "http://vivoweb.org/ontology/core#orcidId": {

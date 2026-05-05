@@ -39,10 +39,10 @@
       },
       "dcat:contactPoint": [
         {
-          "@id": "_:g467200"
+          "@id": "_:g467320"
         },
         {
-          "@id": "_:g467280"
+          "@id": "_:g467340"
         }
       ],
       "https://w3id.org/ftr#status": {
@@ -67,7 +67,7 @@
       }
     },
     {
-      "@id": "_:g467200",
+      "@id": "_:g467320",
       "@type": "vcard:Individual",
       "vcard:fn": "Allyson L. Lister",
       "http://vivoweb.org/ontology/core#orcidId": {
@@ -78,7 +78,7 @@
       }
     },
     {
-      "@id": "_:g467280",
+      "@id": "_:g467340",
       "@type": "vcard:Individual",
       "vcard:fn": "Mark D. Wilkinson",
       "vcard:organization-name": "Wilkinson Laboratory, UPM, Madrid",

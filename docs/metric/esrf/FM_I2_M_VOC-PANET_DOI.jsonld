@@ -10,37 +10,36 @@
   },
   "@graph": [
     {
-      "@id": "https://w3id.org/fair-metrics/esrf/FM_R1-2_M_Fund_ESRF",
+      "@id": "https://w3id.org/fair-metrics/esrf/FM_I2_M_VOC-PANET_DOI",
       "@type": [
         "https://w3id.org/ftr#Metric",
         "dcat:Dataset"
       ],
       "https://w3id.org/ftr#identifier": {
         "@type": "xsd:anyURI",
-        "@value": "https://w3id.org/fair-metrics/esrf/FM_R1-2_M_Fund_ESRF"
+        "@value": "https://w3id.org/fair-metrics/esrf/FM_I2_M_VOC-PANET_DOI"
       },
-      "dc:title": "FAIR Metric – R1.1 – Metadata - Funding information is defined in metadata   ",
-      "http://vivoweb.org/ontology/core#abbreviation": "FM_R1-2_M_Fund_ESRF",
-      "dc:description": "This metric ensures that the research object provided by the supplied URL or DOI has metadata containing funding information. ",
+      "dc:title": "FAIR Metric - DOI metadata contains a link to a community ontology term - PaNET",
+      "http://vivoweb.org/ontology/core#abbreviation": "FM_I2_M_VOC-PANET_DOI",
+      "dc:description": " This metric ensures that the research object provided by the supplied URL is associated with a DataCite DOI whose metadata contains a PaNET subject term. This means that the DataCite metadata for the research object’s DOI must define a subject from PaNET using schemeUri or subjectScheme. The supplied URL can be one of: a doi.org domain URL or a DOI target repository domain URL.",
       "dcat:keyword": [
         "FAIR",
-        "reusability",
-        "funding",
+        "open access",
         "standard",
-        "r1.2"
+        "f4"
       ],
       "rdfs:isDefinedBy": {
-        "@id": "https://fairmetrics.github.io/Metrics/metric/esrf/FM_R1-2_M_Fund_ESRF.ttl"
+        "@id": "https://fairmetrics.github.io/Metrics/metric/esrf/FM_I2_M_VOC-PANET_DOI.ttl"
       },
       "dcat:landingPage": {
-        "@id": "https://fairsharing.org/7496"
+        "@id": "https://fairsharing.org/6465"
       },
       "dcat:contactPoint": [
         {
-          "@id": "_:g464380"
+          "@id": "_:g463780"
         },
         {
-          "@id": "_:g464400"
+          "@id": "_:g463800"
         }
       ],
       "https://w3id.org/ftr#status": {
@@ -58,14 +57,14 @@
         "@id": "https://w3id.org/FAIR-Champion"
       },
       "http://www.w3.org/ns/dqv#inDimension": {
-        "@id": "https://doi.org/10.25504/FAIRsharing.3e9860"
+        "@id": "https://doi.org/10.25504/FAIRsharing.96d4af"
       },
       "https://w3id.org/dpv#isApplicableFor": {
         "@id": "schemas:CreativeWork"
       }
     },
     {
-      "@id": "_:g464380",
+      "@id": "_:g463780",
       "@type": "foaf:Person",
       "vcard:fn": "Renaud DUYME",
       "foaf:mbox": {
@@ -73,7 +72,7 @@
       }
     },
     {
-      "@id": "_:g464400",
+      "@id": "_:g463800",
       "@type": "vcard:Individual",
       "vcard:fn": "Mark D. Wilkinson",
       "vcard:organization-name": "Wilkinson Laboratory, UPM, Madrid",
