@@ -10,17 +10,17 @@
   },
   "@graph": [
     {
-      "@id": "https://w3id.org/fair-metrics/esrf/FM_I2_M_VOC-PANET_DOI",
+      "@id": "https://w3id.org/fair-metrics/esrf/FM_I2_M_VOC-PANET_DOI_ESRF",
       "@type": [
         "https://w3id.org/ftr#Metric",
         "dcat:Dataset"
       ],
       "https://w3id.org/ftr#identifier": {
         "@type": "xsd:anyURI",
-        "@value": "https://w3id.org/fair-metrics/esrf/FM_I2_M_VOC-PANET_DOI"
+        "@value": "https://w3id.org/fair-metrics/esrf/FM_I2_M_VOC-PANET_DOI_ESRF"
       },
       "dc:title": "FAIR Metric - DOI metadata contains a link to a community ontology term - PaNET",
-      "http://vivoweb.org/ontology/core#abbreviation": "FM_I2_M_VOC-PANET_DOI",
+      "http://vivoweb.org/ontology/core#abbreviation": "FM_I2_M_VOC-PANET_DOI_ESRF",
       "dc:description": " This metric ensures that the research object provided by the supplied URL is associated with a DataCite DOI whose metadata contains a PaNET subject term. This means that the DataCite metadata for the research object’s DOI must define a subject from PaNET using schemeUri or subjectScheme. The supplied URL can be one of: a doi.org domain URL or a DOI target repository domain URL.",
       "dcat:keyword": [
         "FAIR",
@@ -29,7 +29,7 @@
         "f4"
       ],
       "rdfs:isDefinedBy": {
-        "@id": "https://fairmetrics.github.io/Metrics/metric/esrf/FM_I2_M_VOC-PANET_DOI.ttl"
+        "@id": "https://fairmetrics.github.io/Metrics/metric/esrf/FM_I2_M_VOC-PANET_DOI_ESRF.ttl"
       },
       "dcat:landingPage": {
         "@id": "https://fairsharing.org/6465"

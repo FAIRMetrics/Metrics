@@ -38,10 +38,10 @@
       },
       "dcat:contactPoint": [
         {
-          "@id": "_:g472780"
+          "@id": "_:g472600"
         },
         {
-          "@id": "_:g472800"
+          "@id": "_:g472620"
         }
       ],
       "https://w3id.org/ftr#status": {
@@ -63,7 +63,7 @@
       }
     },
     {
-      "@id": "_:g472780",
+      "@id": "_:g472600",
       "@type": "vcard:Individual",
       "vcard:fn": "Renaud Duyme",
       "http://vivoweb.org/ontology/core#orcidId": {
@@ -74,7 +74,7 @@
       }
     },
     {
-      "@id": "_:g472800",
+      "@id": "_:g472620",
       "@type": "vcard:Individual",
       "vcard:fn": "Mark D. Wilkinson",
       "vcard:organization-name": "Wilkinson Laboratory, UPM, Madrid",
