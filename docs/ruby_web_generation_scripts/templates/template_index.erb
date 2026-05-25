@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title><%= page_title %></title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+</head>
+<body>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <style>
+    body { background-color: #f9f9f9; }
+    .page-header { margin-bottom: 24px; }
+    .breadcrumb { background: none; padding: 0; margin-bottom: 8px; font-size: 14px; }
+    .item-row { border-bottom: 1px solid #e5e5e5; padding: 14px 0; }
+    .item-row:last-child { border-bottom: none; }
+    .item-title { font-size: 16px; font-weight: bold; }
+    .item-title a { color: #337ab7; }
+    .item-title a:hover { text-decoration: underline; }
+    .item-desc { color: #666; font-size: 14px; margin-top: 4px; }
+    .item-badge {
+      display: inline-block; padding: 2px 8px; border-radius: 10px;
+      font-size: 12px; font-weight: bold; background-color: #d9edf7;
+      color: #31708f; margin-left: 8px; vertical-align: middle;
+    }
+    .footer-row { margin-top: 40px; border-top: 1px solid #e5e5e5; padding-top: 16px; }
+  </style>
+
+  <div class="container">
+    <div class="row page-header">
+      <div class="col-md-12">
+        <% if back_link %>
+        <ol class="breadcrumb">
+          <li><a href="<%= back_link %>">FAIR Metrics Catalogue</a></li>
+          <li class="active"><%= page_title.sub(' — FAIR Metrics', '') %></li>
+        </ol>
+        <% end %>
+        <h1><%= page_title %></h1>
+        <p class="text-muted"><%= items.size %> item<%= items.size == 1 ? '' : 's' %></p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <% items.each do |item| %>
+        <div class="item-row">
+          <div class="item-title">
+            <a href="<%= item[:href] %>"><%= item[:name] %></a>
+            <% if item[:badge] %>
+            <span class="item-badge"><%= item[:badge] %></span>
+            <% end %>
+          </div>
+          <% if item[:description] && !item[:description].strip.empty? %>
+          <div class="item-desc"><%= item[:description] %></div>
+          <% end %>
+        </div>
+        <% end %>
+      </div>
+    </div>
+
+  </div>
+<%= acknowledgements_html %>
+</body>
+</html>

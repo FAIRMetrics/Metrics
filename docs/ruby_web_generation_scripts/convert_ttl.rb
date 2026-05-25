@@ -33,6 +33,7 @@ class TTLConverter
     @source_dir = File.expand_path(source_dir)
     @dest_dir   = destination_dir ? File.expand_path(destination_dir) : @source_dir
     @landing_dir = File.join(@dest_dir, 'landingpages')
+    @index_entries = {}
     warn "landingdir = #{@landing_dir}  "
   end
 
@@ -71,7 +72,17 @@ class TTLConverter
       html_path = File.join(html_dir, "#{basename}.html")
       warn html_path
 
-      ttl_to_html(ttl_path, html_path, template_path, sparql_query)
+      data = ttl_to_html(ttl_path, html_path, template_path, sparql_query)
+      next unless data && html_dir != @landing_dir
+
+      @index_entries[html_dir] ||= []
+      @index_entries[html_dir] << {
+        href: "#{basename}.html",
+        name: (data[:metric_name] || data[:test_name] || data[:benchmark_name] || basename).to_s,
+        description: plain_text_excerpt(
+          (data[:metric_description] || data[:test_description] || data[:benchmark_description] || '').to_s
+        )
+      }
     end
   end
 
@@ -96,8 +107,10 @@ class TTLConverter
 
     File.write(html_path, html)
     puts "✓ HTML:   #{html_path}"
+    data
   rescue StandardError => e
     puts "✗ HTML error #{ttl_path}: #{e.message}"
+    nil
   end
 
   # Robust contactPoint extraction (handles bnodes + vivo:orcidId)
@@ -178,13 +191,57 @@ class TTLConverter
       benchmark_identifier: subject.to_s,
       benchmark_description: (row && row[:description] || '').to_s.gsub("\n", '<br>'),
       benchmark_contactPoint: extract_contact_point_html(graph, subject),
-      benchmark_turtle: "#{basename}.ttl"
+      benchmark_turtle: "#{basename}.ttl",
+
+      acknowledgements_html: ACKNOWLEDGEMENTS_HTML
     }
   end
 
   def generate_catalog_and_index
-    # Basic implementation - you can expand later with full item_to_list logic
-    puts 'ℹ️  Catalog & index generation stub (ready for full port if needed)'
+    index_template_path = File.join('templates', 'template_index.erb')
+    unless File.exist?(index_template_path)
+      puts '⚠️  template_index.erb not found, skipping index generation'
+      return
+    end
+
+    renderer = ERB.new(File.read(index_template_path), trim_mode: '-')
+    top_level_items = []
+
+    @index_entries.each do |dir, entries|
+      subfolder_name = dir.sub("#{@landing_dir}/", '')
+      items = entries.sort_by { |i| i[:name] }
+
+      html = renderer.result_with_hash(
+        page_title: "#{subfolder_name.capitalize} — FAIR Metrics",
+        back_link: '../index.html',
+        items: items,
+        acknowledgements_html: ACKNOWLEDGEMENTS_HTML
+      )
+      index_path = File.join(dir, 'index.html')
+      File.write(index_path, html)
+      puts "✓ Index:  #{index_path}"
+
+      top_level_items << {
+        href: "#{subfolder_name}/index.html",
+        name: subfolder_name.capitalize,
+        description: "#{items.size} item#{items.size == 1 ? '' : 's'}"
+      }
+    end
+
+    top_html = renderer.result_with_hash(
+      page_title: 'FAIR Metrics Catalogue',
+      back_link: nil,
+      items: top_level_items.sort_by { |i| i[:name] },
+      acknowledgements_html: ACKNOWLEDGEMENTS_HTML
+    )
+    top_index_path = File.join(@landing_dir, 'index.html')
+    File.write(top_index_path, top_html)
+    puts "✓ Index:  #{top_index_path}"
+  end
+
+  def plain_text_excerpt(html, max_length = 200)
+    text = html.gsub(/<[^>]+>/, '').gsub(/\s+/, ' ').strip
+    text.length > max_length ? "#{text[0, max_length]}…" : text
   end
 
   # SPARQL Queries (simplified but functional - extend as needed)
@@ -217,6 +274,34 @@ class TTLConverter
 
   QUERY_TEST = QUERY_METRIC.gsub('ftr:Metric', 'ftr:Test')
   QUERY_BENCHMARK = QUERY_METRIC.gsub('ftr:Metric', 'ftr:Benchmark')
+
+  ACKNOWLEDGEMENTS_HTML = <<~HTML.freeze
+    <div style="background:#1a3a6b;color:#fff;padding:28px 0;margin-top:40px;">
+      <div class="container">
+        <div class="row" style="display:flex;align-items:center;flex-wrap:wrap;">
+          <div class="col-md-2 col-sm-3 text-center" style="margin-bottom:10px;">
+            <a href="https://ostrails.eu" target="_blank">
+              <img src="https://ostrails.eu/images/OSTrails-LOGO/SVG/logo%20white%202.svg"
+                   alt="OSTrails" style="height:60px;max-width:100%;">
+            </a>
+          </div>
+          <div class="col-md-8 col-sm-6" style="font-size:13px;line-height:1.7;padding:0 20px;margin-bottom:10px;">
+            Developed in the context of the
+            <a href="https://ostrails.eu" target="_blank" style="color:#9fcfee;font-weight:bold;">OSTrails</a>
+            project. This project has received funding from the European Union&#8217;s Horizon Europe
+            framework programme under grant agreement No.&nbsp;101130187. Views and opinions expressed are
+            however those of the author(s) only and do not necessarily reflect those of the European Union
+            or the European Research Executive Agency. Neither the European Union nor the European Research
+            Executive Agency can be held responsible for them.
+          </div>
+          <div class="col-md-2 col-sm-3 text-center" style="margin-bottom:10px;">
+            <img src="https://ostrails.eu/images/GraspOS_Branding/EN-Funded%20by%20the%20EU-WHITE.png"
+                 alt="Funded by the European Union" style="height:60px;max-width:100%;">
+          </div>
+        </div>
+      </div>
+    </div>
+  HTML
 end
 
 # CLI

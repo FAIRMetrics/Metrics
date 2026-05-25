@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>General — FAIR Metrics</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+</head>
+<body>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <style>
+    body { background-color: #f9f9f9; }
+    .page-header { margin-bottom: 24px; }
+    .breadcrumb { background: none; padding: 0; margin-bottom: 8px; font-size: 14px; }
+    .item-row { border-bottom: 1px solid #e5e5e5; padding: 14px 0; }
+    .item-row:last-child { border-bottom: none; }
+    .item-title { font-size: 16px; font-weight: bold; }
+    .item-title a { color: #337ab7; }
+    .item-title a:hover { text-decoration: underline; }
+    .item-desc { color: #666; font-size: 14px; margin-top: 4px; }
+    .item-badge {
+      display: inline-block; padding: 2px 8px; border-radius: 10px;
+      font-size: 12px; font-weight: bold; background-color: #d9edf7;
+      color: #31708f; margin-left: 8px; vertical-align: middle;
+    }
+    .footer-row { margin-top: 40px; border-top: 1px solid #e5e5e5; padding-top: 16px; }
+  </style>
+
+  <div class="container">
+    <div class="row page-header">
+      <div class="col-md-12">
+        
+        <ol class="breadcrumb">
+          <li><a href="../index.html">FAIR Metrics Catalogue</a></li>
+          <li class="active">General</li>
+        </ol>
+        
+        <h1>General — FAIR Metrics</h1>
+        <p class="text-muted">22 items</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        
+        <div class="item-row">
+          <div class="item-title">
+            <a href="FM_A1-1_M_HTTPSProt.html">FAIR Metric - A1.1 - Metadata - HTTP(S) retrieval protocol</a>
+            
+          </div>
+          
+          <div class="item-desc">This metric evaluates whether the protocol used to retrieve metadata referenced by the provided identifier is either HTTP or HTTPS and therefore openly specified, free to implement, and universally im…</div>
+          
+        </div>
+        
+        <div class="item-row">
+          <div class="item-title">
+            <a href="FM_A1-2_M_Auth.html">FAIR Metric - A1.2 - Metadata - retrieval protocol supports auth</a>
+            
+          </div>
+          
+          <div class="item-desc">If the resolution protocol supports authentication and authorization for access to restricted content.A1.2 requires that the protocol used to retrieve research objects clearly describes any necessary …</div>
+          
+        </div>
+        
+        <div class="item-row">
+          <div class="item-title">
+            <a href="FM_A2_M_DbMetaLong.html">FAIR Metric - A2 - Metadata - Database persistence policy</a>
+            
+          </div>
+          
+          <div class="item-desc">This metric evaluates whether there is a policy for metadata persistence declared by the managing database and included within its FAIRsharing database record metadata.A2 requires that metadata remain…</div>
+          
+        </div>
+        
+        <div class="item-row">
+          <div class="item-title">
+            <a href="FM_A2_M_MetaLong.html">FAIR Metric - A2 - Metadata - Metadata is long-lived and independently accessible</a>
+            
+          </div>
+          
+          <div class="item-desc">metadata is long-lived and independently accessible. This metric aligns with FAIR Principle A2.</div>
+          
+        </div>
+        
+        <div class="item-row">
+          <div class="item-title">
+            <a href="FM_F1_M_IdentUnique.html">FAIR Metric - F1 - Metadata - Identifier is Unique</a>
+            
+          </div>
+          
+          <div class="item-desc">This metric evaluates whether the identifier provided as input satisfies the EOSC-PID aligned FAIRsharing definition of global uniqueness.Why should we measure it?FAIR Principle F1 requires that metad…</div>
+          
+        </div>
+        
+        <div class="item-row">
+          <div class="item-title">
+            <a href="FM_F1_M_IdentPersistent.html">FAIR Metric - F1 - Metadata - Identifier is persistent</a>
+            
+          </div>
+          
+          <div class="item-desc">This metric evaluates whether the identifier provided as input satisfies the EOSC-PID aligned [FAIRsharing definition](https://fairsharing.gitbook.io/fairsharing/record-sections-and-fields/general-inf…</div>
+          
+        </div>
+        
+        <div class="item-row">
+          <div class="item-title">
+            <a href="FM_F3_M_DataIdent.html">FAIR Metric - F3 - Metadata - includes its own identifier</a>
+            
+          </div>
+          
+          <div class="item-desc">This metric evaluates whether the metadata record explicitly includes the identifier of the research object(s) it describes.F3 requires that metadata include the identifier(s) of the research object(s…</div>
+          
+        </div>
+        
+        <div class="item-row">
+          <div class="item-title">
+            <a href="FM_F3_M_MetaIdent.html">FAIR Metric - F3 - Metadata - includes its own identifier</a>
+            
+          </div>
+          
+          <div class="item-desc">This metric evaluates whether the metadata record includes its own identifier, distinct from the identifier assigned to the research object it describes.This metric is concerned with the record-level …</div>
+          
+        </div>
+        
+        <div class="item-row">
+          <div class="item-title">
+            <a href="FM_F4_M_MetaIndexed.html">FAIR Metric - F4 - Metadata - indexed in a searchable resource</a>
+            
+          </div>
+          
+          <div class="item-desc">This metric evaluates whether metadata can be discovered by web-based search engines. The evaluation requires the identifier to first resolve to its metadata; then, both the identifier and the content…</div>
+          
+        </div>
+        
+        <div class="item-row">
+          <div class="item-title">
+            <a href="FM_I1_M_DbFormalLangSemantic.html">FAIR Metric - I1 - Metadata - Database-level knowledge representation languages (semantic)</a>
+            
+          </div>
+          
+          <div class="item-desc">This metric evaluates whether there is a declared metadata model or format that is based in a representation format that is considered grounded / linked data within the FAIRsharing registry (for more …</div>
+          
+        </div>
+        
+        <div class="item-row">
+          <div class="item-title">
+            <a href="FM_I1_M_DbFormalLangSyntax.html">FAIR Metric - I1 - Metadata - Database-level knowledge representation languages (syntactic)</a>
+            
+          </div>
+          
+          <div class="item-desc">This metric evaluates whether there is a declared relationship (related to, implements or outputs) to a model/format from the hosting database for the provided identifier in the FAIRsharing registry, …</div>
+          
+        </div>
+        
+        <div class="item-row">
+          <div class="item-title">
+            <a href="FM_I1_M_FormLangSemantic.html">FAIR Metric - I1 - Metadata - Uses Knowledge representation language (semantic)</a>
+            
+          </div>
+          
+          <div class="item-desc">This metric evaluates whether there is a resolved metadata representation that conforms to a recognised semantic knowledge representation language.I1 requires that metadata use a formal, accessible, s…</div>
+          
+        </div>
+        
+        <div class="item-row">
+          <div class="item-title">
+            <a href="FM_I1_M_FormLangSyntax.html">FAIR Metric - I1 - Metadata - Uses Knowledge representation language (syntactic)</a>
+            
+          </div>
+          
+          <div class="item-desc">This metric evaluates whether there is a structured metadata representation returned upon resolution of the provided identifier.I1 requires that metadata use a formal, accessible, shared and broadly a…</div>
+          
+        </div>
+        
+        <div class="item-row">
+          <div class="item-title">
+            <a href="FM_I3_M_QualRef.html">FAIR Metric - I3 - Metadata - Contains Qualified Outward Links</a>
+            
+          </div>
+          
+          <div class="item-desc">This metric evaluates whether there are qualified (labelled or named) links in the metadata that reference external IRIs; specifically, IRIs that do not share the same domain name as that of the provi…</div>
+          
+        </div>
+        
+        <div class="item-row">
+          <div class="item-title">
+            <a href="FM_R1-1_M_DbStdLic.html">FAIR Metric - R1.1 - Metadata - Database-level licenses</a>
+            
+          </div>
+          
+          <div class="item-desc">This metric evaluates whether there is at least one licence declared at the database level in the FAIRsharing registry record associated with the identifier under evaluation (see FAIRsharing [document…</div>
+          
+        </div>
+        
+        <div class="item-row">
+          <div class="item-title">
+            <a href="FM_R1-1_M_StdLic.html">FAIR Metric - R1.1 - Metadata - discoverable data license in metadata</a>
+            
+          </div>
+          
+          <div class="item-desc">This metric evaluates whether there is an explicit licence declaration present in the metadata retrieved upon resolution of the provided identifier. R1.1 requires that metadata be released with a clea…</div>
+          
+        </div>
+        
+        <div class="item-row">
+          <div class="item-title">
+            <a href="FM_R12_D_CitedInPub.html">FAIR Metric - R1.2 - Data - cited in publication</a>
+            
+          </div>
+          
+          <div class="item-desc">This metric evaluates whether there is evidence that the research object identifier(s) linked to the metadata identifier provided to the evaluation is cited in one or more scholarly publication reposi…</div>
+          
+        </div>
+        
+        <div class="item-row">
+          <div class="item-title">
+            <a href="FM_R12_M_ContributorAffil.html">FAIR Metric - R1.2 - Metadata - contributor affiliation</a>
+            
+          </div>
+          
+          <div class="item-desc">This metric evaluates whether there is structured affiliation information associated with at least one author or core contributor in the metadata retrieved upon resolution of the provided identifier, …</div>
+          
+        </div>
+        
+        <div class="item-row">
+          <div class="item-title">
+            <a href="FM_R12_M_CreatorORCiD.html">FAIR Metric - R1.2 - Metadata - creator ORCiD</a>
+            
+          </div>
+          
+          <div class="item-desc">This metric evaluates whether there is at least one dc:creator with an ORCID in the metadata retrieved upon resolution of the provided identifier, providing one facet of evaluation for this R1.2.R1.2 …</div>
+          
+        </div>
+        
+        <div class="item-row">
+          <div class="item-title">
+            <a href="FM_R12_M_FundInfo.html">FAIR Metric - R1.2 - Metadata - funding information</a>
+            
+          </div>
+          
+          <div class="item-desc">This metric evaluates DOIs to determine whether there is structured funding information declared in the metadata retrieved upon resolution of the provided identifier, providing one facet of evaluation…</div>
+          
+        </div>
+        
+        <div class="item-row">
+          <div class="item-title">
+            <a href="FM_A1-1_M_OpenProt.html">FAIR Metric – A1.1 – Metadata - Open protocol for (meta)data retrieval</a>
+            
+          </div>
+          
+          <div class="item-desc">open protocol for (meta)data retrieval. This metric aligns with FAIR Principle A1.1.</div>
+          
+        </div>
+        
+        <div class="item-row">
+          <div class="item-title">
+            <a href="FM_I1_M_FormLang.html">FAIR Metric – I1 – Metadata - Metadata uses a formal, accessible, shared, broadly applicable language</a>
+            
+          </div>
+          
+          <div class="item-desc">Metadata uses a formal, accessible, shared, broadly applicable language. This metric aligns with FAIR Principle I1.</div>
+          
+        </div>
+        
+      </div>
+    </div>
+
+  </div>
+<div style="background:#1a3a6b;color:#fff;padding:28px 0;margin-top:40px;">
+  <div class="container">
+    <div class="row" style="display:flex;align-items:center;flex-wrap:wrap;">
+      <div class="col-md-2 col-sm-3 text-center" style="margin-bottom:10px;">
+        <a href="https://ostrails.eu" target="_blank">
+          <img src="https://ostrails.eu/images/OSTrails-LOGO/SVG/logo%20white%202.svg"
+               alt="OSTrails" style="height:60px;max-width:100%;">
+        </a>
+      </div>
+      <div class="col-md-8 col-sm-6" style="font-size:13px;line-height:1.7;padding:0 20px;margin-bottom:10px;">
+        Developed in the context of the
+        <a href="https://ostrails.eu" target="_blank" style="color:#9fcfee;font-weight:bold;">OSTrails</a>
+        project. This project has received funding from the European Union&#8217;s Horizon Europe
+        framework programme under grant agreement No.&nbsp;101130187. Views and opinions expressed are
+        however those of the author(s) only and do not necessarily reflect those of the European Union
+        or the European Research Executive Agency. Neither the European Union nor the European Research
+        Executive Agency can be held responsible for them.
+      </div>
+      <div class="col-md-2 col-sm-3 text-center" style="margin-bottom:10px;">
+        <img src="https://ostrails.eu/images/GraspOS_Branding/EN-Funded%20by%20the%20EU-WHITE.png"
+             alt="Funded by the European Union" style="height:60px;max-width:100%;">
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
