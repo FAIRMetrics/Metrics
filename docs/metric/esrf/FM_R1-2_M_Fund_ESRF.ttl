@@ -17,7 +17,7 @@
     ftr:identifier            "https://w3id.org/fair-metrics/esrf/FM_R1-2_M_Fund_ESRF"^^xsd:anyURI ;
 
 
-    dcterms:title             "FAIR Metric – R1.1 – Metadata - Funding information is defined in metadata   " ;
+    dcterms:title             "FAIR Metric - R1.1 - Metadata - Funding information is defined in metadata" ;
     vivo:abbreviation         "FM_R1-2_M_Fund_ESRF" ;
     dcterms:description       """This metric ensures that the research object provided by the supplied URL or DOI has metadata containing funding information. """ ;
     dcat:keyword              "FAIR", "reusability", "funding", "standard", "r1.2" ;

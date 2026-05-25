@@ -18,7 +18,7 @@
     ftr:identifier            "https://w3id.org/fair-metrics/general/FM_I1_M_FormLang"^^xsd:anyURI ;
 
 
-    dcterms:title             "FAIR Metric – I1 – Metadata - Metadata uses a formal, accessible, shared, broadly applicable language" ;
+    dcterms:title             "FAIR Metric - I1 - Metadata - Metadata uses a formal, accessible, shared, broadly applicable language" ;
     vivo:abbreviation         "FM_I1_M_FormLang" ;
     dcterms:description       """Metadata uses a formal, accessible, shared, broadly applicable language. This metric aligns with FAIR Principle I1.""" ;
     dcat:keyword              "FAIR", "interoperability", "knowledge-representation", "FAIR-vocabulary", "I1" ;

@@ -19,7 +19,7 @@
         "@type": "xsd:anyURI",
         "@value": "https://w3id.org/fair-metrics/esrf/FM_F4_M_DOI_OA_ESRF"
       },
-      "dc:title": "FAIR Metric – F4 – Metadata - The content associated to a DOI is Open Access",
+      "dc:title": "FAIR Metric - F4 - Metadata - The content associated to a DOI is Open Access",
       "http://vivoweb.org/ontology/core#abbreviation": "FM_F4_M_DOI_OA_ESRF",
       "dc:description": " This metric applies to DOI objects. For publications entities, it ensures that its content, or a allowed copy is open access. For dataset entities it ensures that the data is open access (with or without embargo period). The reference services used are : https://unpaywall.org/ and https://openalex.org. While originally created as part of the OSTrails project to fulfil requirements within the PaNOSC cluster, this metric is subject agnostic and can be re-used by any community with these requirements for FAIR F4. ",
       "dcat:keyword": [

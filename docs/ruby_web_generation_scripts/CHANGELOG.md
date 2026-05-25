@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.3.0] - 2026-05-25
+
+### Changed
+- `run` now calls `FileUtils.rm_rf(@landing_dir)` before `mkdir_p`, so every generation event fully replaces the `landingpages` folder. HTML files whose source TTL has been removed are no longer left behind.
+
 ## [1.2.0] - 2026-05-25
 
 ### Added

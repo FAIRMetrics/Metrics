@@ -38,6 +38,7 @@ class TTLConverter
   end
 
   def run
+    FileUtils.rm_rf(@landing_dir)
     FileUtils.mkdir_p(@landing_dir)
 
     process_type('metric',    'template_metric.erb',    QUERY_METRIC)
@@ -209,7 +210,7 @@ class TTLConverter
 
     @index_entries.each do |dir, entries|
       subfolder_name = dir.sub("#{@landing_dir}/", '')
-      items = entries.sort_by { |i| i[:name] }
+      items = entries.sort_by { |i| i[:href].downcase }
 
       html = renderer.result_with_hash(
         page_title: "#{subfolder_name.capitalize} — FAIR Metrics",
@@ -231,7 +232,7 @@ class TTLConverter
     top_html = renderer.result_with_hash(
       page_title: 'FAIR Metrics Catalogue',
       back_link: nil,
-      items: top_level_items.sort_by { |i| i[:name] },
+      items: top_level_items.sort_by { |i| i[:name].downcase },
       acknowledgements_html: ACKNOWLEDGEMENTS_HTML
     )
     top_index_path = File.join(@landing_dir, 'index.html')
