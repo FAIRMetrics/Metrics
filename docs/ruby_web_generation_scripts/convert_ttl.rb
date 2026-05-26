@@ -167,8 +167,7 @@ class TTLConverter
       metric_license: (row && row[:license] || '').to_s,
       metric_status: (row && row[:metric_status] || 'Active').to_s,
       metric_landing_page: (row && row[:landing_page] || '').to_s,
-      # metric_turtle: "#{basename}.ttl",
-      metric_turtle: "../../#{basename}.ttl", # Adjusted path for linking from landingpages}"
+      metric_turtle: (row && row[:defined_by] || "../../#{File.dirname(ttl_path).sub("#{@source_dir}/", '')}/#{basename}.ttl").to_s,
       metric_test: (row && row[:test] || '').to_s,
       metric_applicable_for: (row && row[:applicable_for] || '').to_s,
       metric_supported_by: (row && row[:supported_by] || '').to_s,
@@ -253,9 +252,10 @@ class TTLConverter
     PREFIX vivo: <http://vivoweb.org/ontology/core#>
     PREFIX dqv:    <http://www.w3.org/ns/dqv#>
     PREFIX dpv:     <https://w3id.org/dpv#>
+    PREFIX rdfs:   <http://www.w3.org/2000/01/rdf-schema#>
 
     SELECT ?s ?title ?label ?description ?version ?license ?keywords ?dimension ?landing_page ?metric_status
-           ?applicable_for ?supported_by ?same_as ?test
+           ?applicable_for ?supported_by ?same_as ?test ?defined_by
     WHERE {
       ?s a ftr:Metric .
       ?s dcterms:title ?title .
@@ -264,6 +264,7 @@ class TTLConverter
       ?s dcat:version ?version .
       ?s dcterms:license ?license .
       ?s dcat:landingPage ?landing_page .
+      OPTIONAL { ?s rdfs:isDefinedBy ?defined_by }
       OPTIONAL { ?s dqv:inDimension ?dimension }
       OPTIONAL { ?s ftr:status ?metric_status }
       OPTIONAL { ?s dcat:keyword ?keywords }
