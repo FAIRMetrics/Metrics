@@ -1,0 +1,63 @@
+@prefix vcard:   <http://www.w3.org/2006/vcard/ns#> .
+@prefix ftr:     <https://w3id.org/ftr#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix foaf:    <http://xmlns.com/foaf/0.1/> .
+@prefix dcat:    <http://www.w3.org/ns/dcat#> .
+@prefix dpv:     <https://w3id.org/dpv#> .
+@prefix schema:  <https://schema.org/> .
+@prefix vivo:    <http://vivoweb.org/ontology/core#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dqv:    <http://www.w3.org/ns/dqv#> .
+
+<https://w3id.org/fair-metrics/general/FM_I2_M_ResolvabilityOfTerms>
+    a                          ftr:Metric, dcat:Dataset ;
+    rdfs:isDefinedBy            <https://fairmetrics.github.io/Metrics/metric/general/FM_I2_M_ResolvabilityOfTerms.ttl> ;
+
+    ftr:identifier            "https://w3id.org/fair-metrics/general/FM_I2_M_ResolvabilityOfTerms"^^xsd:anyURI ;
+    dcterms:title             "FAIR Metric – I2 – Metadata - Resolvability of metadata terms" ;
+    vivo:abbreviation         "FM_I2_M_ResolvabilityOfTerms" ;
+    dcat:landingPage          <https://w3id.org/fair-metrics/general/FM_I2_M_ResolvabilityOfTerms> ;
+
+    dcterms:description       """<p/>This metric evaluates whether the property terms (predicates or keys) used within the metadata record under evaluation are themselves resolvable.
+
+<p/>Implementations should inspect the structure or context of the metadata (such as a JSON-LD @context mapping or XML namespace declaration) to construct full URIs for the property terms. For example, if a record declares a @context of http://schema.org/ and uses the property term inLanguage, implementations should construct the URI http://schema.org/inLanguage and attempt to resolve it over HTTP(S).
+
+<p/>As a minimal implementation of Principle I2, a metadata record should receive a pass from test implementations of this metric if at least one property term URI can be constructed and resolves successfully. It receives a fail result if property term URIs can be constructed from the record but none of them resolve. If no URIs can be constructed from the property terms within the metadata record, the result is indeterminate.
+
+<p/>Why should we measure it?
+
+<p/>FAIR Principle I2 requires that metadata use vocabularies that follow FAIR principles, ensuring that descriptive terms can be unambiguously interpreted across systems. Verifying that metadata property terms resolve to active definitions allows automated tools to look up the underlying schema rules, preventing semantic misinterpretations and supporting consistent processing across the research community.
+""" ;
+    dcat:keyword              "FAIR", "I2", "resolvability", "metadata" ;
+dqv:inDimension <https://doi.org/10.25504/FAIRsharing.96d4af> ;
+    dcat:landingPage          <https://w3id.org/fair-metrics/general/FM_I2_M_ResolvabilityOfTerms> ;
+
+    dcat:contactPoint           [
+        a                     vcard:Individual ;
+        vcard:fn              "Allyson L. Lister" ;
+        vivo:orcidId          <http://orcid.org/0000-0002-7702-4495> ;
+        vcard:hasEmail             <mailto:allyson.lister@oerc.ox.ac.uk> ;
+    ] ;
+
+
+    dcat:contactPoint           [
+        a                     vcard:Individual ;
+        vcard:fn              "Mark D. Wilkinson" ;
+        vcard:organization-name "Wilkinson Laboratory, UPM, Madrid";
+        vcard:hasEmail             <mailto:mark.wilkinson@upm.es> ;
+    ] ;
+    
+	ftr:status "Active"@en ;
+    dcterms:issued            "2026-10-05"^^xsd:date ;
+    dcterms:modified          "2026-10-05"^^xsd:date ;
+
+    dcat:version              "Champion1.0" ;
+
+    ftr:applicationArea       <http://www.fairsharing.org/ontology/subject/SRAO_0000401> ;
+    dcterms:license           <https://creativecommons.org/licenses/by/4.0/> ;
+
+
+    ftr:supportedBy           <https://w3id.org/FAIR-Champion> ;
+    dpv:isApplicableFor       schema:CreativeWork .
+
