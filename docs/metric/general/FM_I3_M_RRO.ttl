@@ -1,0 +1,65 @@
+@prefix vcard:   <http://www.w3.org/2006/vcard/ns#> .
+@prefix ftr:     <https://w3id.org/ftr#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix foaf:    <http://xmlns.com/foaf/0.1/> .
+@prefix dcat:    <http://www.w3.org/ns/dcat#> .
+@prefix dpv:     <https://w3id.org/dpv#> .
+@prefix schema:  <https://schema.org/> .
+@prefix vivo:    <http://vivoweb.org/ontology/core#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dqv:    <http://www.w3.org/ns/dqv#> .
+
+<https://w3id.org/fair-metrics/general/FM_I3_M_RRO>
+    a                          ftr:Metric, dcat:Dataset ;
+    rdfs:isDefinedBy            <https://fairmetrics.github.io/Metrics/metric/general/FM_I3_M_RRO.ttl> ;
+
+    ftr:identifier            "https://w3id.org/fair-metrics/general/FM_I3_M_RRO"^^xsd:anyURI ;
+    dcterms:title             "FAIR Metric - I3 - Metadata - Contains Qualified Links to Related Research Objects" ;
+    vivo:abbreviation         "FM_I3_M_RRO" ;
+    dcat:landingPage          <https://w3id.org/fair-metrics/general/FM_I3_M_RRO> ;
+
+    dcterms:description       """<p>This metric evaluates whether there are qualified (labelled or named) 
+    links in the metadata that reference other research objects; 
+        notably, unlike the FM_I3_M_QualRef Metric, this metrics, does NOT reqiure that 
+        referencd IRIs are in a different domain than the provided identifie, allowing cross-references
+        between related local records to be acceptable to pass this metric</p>
+
+<p>I3 requires that metadata include qualified references to other metadata. 
+The purpose of this principle is to ensure that digital objects are connected to the wider 
+research ecosystem through explicitly defined and semantically meaningful relationships. 
+""";
+    dcat:keyword              "FAIR", "I3", "identifier", "metadata" ;
+
+    dcat:landingPage          <https://w3id.org/fair-metrics/general/FM_I3_M_RRO> ;
+    dqv:inDimension <https://doi.org/10.25504/FAIRsharing.ae22b8> ;
+
+
+    dcat:contactPoint           [
+        a                     vcard:Individual ;
+        vcard:fn              "Allyson L. Lister" ;
+        vivo:orcidId          <http://orcid.org/0000-0002-7702-4495> ;
+        vcard:hasEmail             <mailto:allyson.lister@oerc.ox.ac.uk> ;
+    ] ;
+
+
+    dcat:contactPoint           [
+        a                     vcard:Individual ;
+        vcard:fn              "Mark D. Wilkinson" ;
+        vcard:organization-name "Wilkinson Laboratory, UPM, Madrid";
+        vcard:hasEmail             <mailto:mark.wilkinson@upm.es> ;
+    ] ;
+    
+	ftr:status "Active"@en ;
+    dcterms:issued            "2026-02-20"^^xsd:date ;
+    dcterms:modified          "2026-03-01"^^xsd:date ;
+
+    dcat:version              "Champion1.0" ;
+
+    ftr:applicationArea       <http://www.fairsharing.org/ontology/subject/SRAO_0000401> ;
+    dcterms:license           <https://creativecommons.org/licenses/by/4.0/> ;
+
+
+    ftr:supportedBy           <https://w3id.org/FAIR-Champion> ;
+    dpv:isApplicableFor       schema:CreativeWork .
+

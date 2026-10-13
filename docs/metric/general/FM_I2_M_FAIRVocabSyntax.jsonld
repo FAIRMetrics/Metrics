@@ -1,0 +1,94 @@
+{
+  "@context": {
+    "dcat": "http://www.w3.org/ns/dcat#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dc": "http://purl.org/dc/terms/",
+    "schemas": "https://schema.org/",
+    "vcard": "http://www.w3.org/2006/vcard/ns#"
+  },
+  "@graph": [
+    {
+      "@id": "https://w3id.org/fair-metrics/general/FM_I2_M_FAIRVocabSyntax",
+      "@type": [
+        "https://w3id.org/ftr#Metric",
+        "dcat:Dataset"
+      ],
+      "rdfs:isDefinedBy": {
+        "@id": "https://fairmetrics.github.io/Metrics/metric/general/FM_I2_M_FAIRVocabSyntax.ttl"
+      },
+      "https://w3id.org/ftr#identifier": {
+        "@type": "xsd:anyURI",
+        "@value": "https://w3id.org/fair-metrics/general/FM_I2_M_FAIRVocabSyntax"
+      },
+      "dc:title": "FAIR Metric - I2 - Metadata - uses FAIR vocabularies (syntactic)",
+      "http://vivoweb.org/ontology/core#abbreviation": "FM_I2_M_FAIRVocabSyntax",
+      "dcat:landingPage": {
+        "@id": "https://w3id.org/fair-metrics/general/FM_I2_M_FAIRVocabSyntax"
+      },
+      "dc:description": "This metric evaluates whether there is at least one vocabulary term used in the metadata that resolves, as a syntactic interpretation of a minimally FAIR vocabulary.\nWhy should we measure it?\n\nI2 requires that metadata use vocabularies that follow FAIR principles. The purpose of this principle is to ensure that descriptive terms are drawn from such vocabularies, enabling consistent interpretation across systems and communities.\n\nThis metric evaluates whether there is at least one vocabulary term used in the metadata that resolves. The evaluation checks whether the resolved metadata contains at least one term that itself can be resolved (to anything).\n\nThe outcome of that resolution is not required to demonstrate full FAIR compliance under this metric; rather, the presence of at least one resolvable vocabulary term is sufficient.\n\nA resource satisfies this metric if at least one metadata element references a recognised controlled vocabulary term that resolves.\n",
+      "dcat:keyword": [
+        "FAIR",
+        "I1",
+        "identifier",
+        "metadata"
+      ],
+      "http://www.w3.org/ns/dqv#inDimension": {
+        "@id": "https://doi.org/10.25504/FAIRsharing.96d4af"
+      },
+      "dcat:contactPoint": [
+        {
+          "@id": "_:g470760"
+        },
+        {
+          "@id": "_:g470780"
+        }
+      ],
+      "https://w3id.org/ftr#status": {
+        "@language": "en",
+        "@value": "Active"
+      },
+      "dc:issued": {
+        "@type": "xsd:date",
+        "@value": "2026-09-01"
+      },
+      "dc:modified": {
+        "@type": "xsd:date",
+        "@value": "2026-09-01"
+      },
+      "dcat:version": "Champion1.0",
+      "https://w3id.org/ftr#applicationArea": {
+        "@id": "http://www.fairsharing.org/ontology/subject/SRAO_0000401"
+      },
+      "dc:license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "https://w3id.org/ftr#supportedBy": {
+        "@id": "https://w3id.org/FAIR-Champion"
+      },
+      "https://w3id.org/dpv#isApplicableFor": {
+        "@id": "schemas:CreativeWork"
+      }
+    },
+    {
+      "@id": "_:g470760",
+      "@type": "vcard:Individual",
+      "vcard:fn": "Allyson L. Lister",
+      "http://vivoweb.org/ontology/core#orcidId": {
+        "@id": "http://orcid.org/0000-0002-7702-4495"
+      },
+      "vcard:hasEmail": {
+        "@id": "mailto:allyson.lister@oerc.ox.ac.uk"
+      }
+    },
+    {
+      "@id": "_:g470780",
+      "@type": "vcard:Individual",
+      "vcard:fn": "Mark D. Wilkinson",
+      "vcard:organization-name": "Wilkinson Laboratory, UPM, Madrid",
+      "vcard:hasEmail": {
+        "@id": "mailto:mark.wilkinson@upm.es"
+      }
+    }
+  ]
+}

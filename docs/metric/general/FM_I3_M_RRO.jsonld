@@ -1,0 +1,94 @@
+{
+  "@context": {
+    "dcat": "http://www.w3.org/ns/dcat#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dc": "http://purl.org/dc/terms/",
+    "schemas": "https://schema.org/",
+    "vcard": "http://www.w3.org/2006/vcard/ns#"
+  },
+  "@graph": [
+    {
+      "@id": "https://w3id.org/fair-metrics/general/FM_I3_M_RRO",
+      "@type": [
+        "https://w3id.org/ftr#Metric",
+        "dcat:Dataset"
+      ],
+      "rdfs:isDefinedBy": {
+        "@id": "https://fairmetrics.github.io/Metrics/metric/general/FM_I3_M_RRO.ttl"
+      },
+      "https://w3id.org/ftr#identifier": {
+        "@type": "xsd:anyURI",
+        "@value": "https://w3id.org/fair-metrics/general/FM_I3_M_RRO"
+      },
+      "dc:title": "FAIR Metric - I3 - Metadata - Contains Qualified Links to Related Research Objects",
+      "http://vivoweb.org/ontology/core#abbreviation": "FM_I3_M_RRO",
+      "dcat:landingPage": {
+        "@id": "https://w3id.org/fair-metrics/general/FM_I3_M_RRO"
+      },
+      "dc:description": "<p>This metric evaluates whether there are qualified (labelled or named) \n    links in the metadata that reference other research objects; \n        notably, unlike the FM_I3_M_QualRef Metric, this metrics, does NOT reqiure that \n        referencd IRIs are in a different domain than the provided identifie, allowing cross-references\n        between related local records to be acceptable to pass this metric</p>\n\n<p>I3 requires that metadata include qualified references to other metadata. \nThe purpose of this principle is to ensure that digital objects are connected to the wider \nresearch ecosystem through explicitly defined and semantically meaningful relationships. \n",
+      "dcat:keyword": [
+        "FAIR",
+        "I3",
+        "identifier",
+        "metadata"
+      ],
+      "http://www.w3.org/ns/dqv#inDimension": {
+        "@id": "https://doi.org/10.25504/FAIRsharing.ae22b8"
+      },
+      "dcat:contactPoint": [
+        {
+          "@id": "_:g471320"
+        },
+        {
+          "@id": "_:g471400"
+        }
+      ],
+      "https://w3id.org/ftr#status": {
+        "@language": "en",
+        "@value": "Active"
+      },
+      "dc:issued": {
+        "@type": "xsd:date",
+        "@value": "2026-02-20"
+      },
+      "dc:modified": {
+        "@type": "xsd:date",
+        "@value": "2026-03-01"
+      },
+      "dcat:version": "Champion1.0",
+      "https://w3id.org/ftr#applicationArea": {
+        "@id": "http://www.fairsharing.org/ontology/subject/SRAO_0000401"
+      },
+      "dc:license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "https://w3id.org/ftr#supportedBy": {
+        "@id": "https://w3id.org/FAIR-Champion"
+      },
+      "https://w3id.org/dpv#isApplicableFor": {
+        "@id": "schemas:CreativeWork"
+      }
+    },
+    {
+      "@id": "_:g471320",
+      "@type": "vcard:Individual",
+      "vcard:fn": "Allyson L. Lister",
+      "http://vivoweb.org/ontology/core#orcidId": {
+        "@id": "http://orcid.org/0000-0002-7702-4495"
+      },
+      "vcard:hasEmail": {
+        "@id": "mailto:allyson.lister@oerc.ox.ac.uk"
+      }
+    },
+    {
+      "@id": "_:g471400",
+      "@type": "vcard:Individual",
+      "vcard:fn": "Mark D. Wilkinson",
+      "vcard:organization-name": "Wilkinson Laboratory, UPM, Madrid",
+      "vcard:hasEmail": {
+        "@id": "mailto:mark.wilkinson@upm.es"
+      }
+    }
+  ]
+}
