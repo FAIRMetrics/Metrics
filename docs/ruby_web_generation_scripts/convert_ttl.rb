@@ -1,6 +1,42 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
+# convert_ttl.rb — build JSON-LD files and HTML landing pages from Turtle definitions.
+#
+# USAGE
+#   ruby convert_ttl.rb -i SOURCE_DIR [-o DEST_DIR]
+#
+#   Run it FROM THIS DIRECTORY (docs/ruby_web_generation_scripts), because the
+#   ERB templates are loaded from the relative path ./templates/.
+#
+# OPTIONS
+#   -i, --input DIR   (required) The directory that CONTAINS the metric/, test/
+#                     and/or benchmark/ subfolders — not the metric folder itself.
+#                     For this repository that is the docs/ folder, i.e. "..".
+#   -o, --output DIR  (optional) The directory in which the "landingpages" folder
+#                     is created. Defaults to the value of -i.
+#
+# WHAT IT DOES
+#   For every *.ttl found (recursively) under SOURCE_DIR/{metric,test,benchmark}:
+#     1. JSON-LD: writes <name>.jsonld right next to the .ttl file
+#        (always in the source tree, regardless of -o).
+#     2. HTML:    writes <name>.html under DEST_DIR/landingpages/, mirroring the
+#        sub-folder hierarchy beneath metric/ (test/, benchmark/), with the leading
+#        type folder removed.
+#     3. Writes an index.html in each landingpages sub-folder, plus a top-level
+#        landingpages/index.html catalogue.
+#   NOTE: DEST_DIR/landingpages is DELETED and regenerated on every run.
+#
+# EXAMPLE (from the repository root)
+#   cd docs/ruby_web_generation_scripts
+#   ruby convert_ttl.rb -i .. -o ..
+#
+#   docs/metric/erdera/FM_R1-3_M_VP_L1.ttl
+#     -> docs/metric/erdera/FM_R1-3_M_VP_L1.jsonld
+#     -> docs/landingpages/erdera/FM_R1-3_M_VP_L1.html
+#     -> docs/landingpages/erdera/index.html
+#     -> docs/landingpages/index.html
+
 require 'linkeddata'
 require 'rdf/turtle'
 require 'json/ld'
@@ -310,8 +346,10 @@ end
 options = {}
 OptionParser.new do |opts|
   opts.banner = 'Usage: ruby convert_ttl.rb -i SOURCE [-o DEST]'
-  opts.on('-i', '--input DIR', 'Source directory') { |v| options[:input] = v }
-  opts.on('-o', '--output DIR', 'Destination directory') { |v| options[:output] = v }
+  opts.separator 'Run from docs/ruby_web_generation_scripts (templates/ is resolved relative to cwd).'
+  opts.separator 'Example: ruby convert_ttl.rb -i .. -o ..'
+  opts.on('-i', '--input DIR', 'Directory containing metric/, test/, benchmark/ (e.g. ..)') { |v| options[:input] = v }
+  opts.on('-o', '--output DIR', 'Where landingpages/ is created (default: same as -i)') { |v| options[:output] = v }
 end.parse!
 
 abort 'Error: --input (-i) is required' if options[:input].nil?

@@ -1,0 +1,94 @@
+{
+  "@context": {
+    "dcat": "http://www.w3.org/ns/dcat#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dc": "http://purl.org/dc/terms/",
+    "schemas": "https://schema.org/",
+    "vcard": "http://www.w3.org/2006/vcard/ns#"
+  },
+  "@graph": [
+    {
+      "@id": "https://w3id.org/fair-metrics/general/FM_I2_M_ResolvabilityOfTerms",
+      "@type": [
+        "https://w3id.org/ftr#Metric",
+        "dcat:Dataset"
+      ],
+      "rdfs:isDefinedBy": {
+        "@id": "https://fairmetrics.github.io/Metrics/metric/general/FM_I2_M_ResolvabilityOfTerms.ttl"
+      },
+      "https://w3id.org/ftr#identifier": {
+        "@type": "xsd:anyURI",
+        "@value": "https://w3id.org/fair-metrics/general/FM_I2_M_ResolvabilityOfTerms"
+      },
+      "dc:title": "FAIR Metric – I2 – Metadata - Resolvability of metadata terms",
+      "http://vivoweb.org/ontology/core#abbreviation": "FM_I2_M_ResolvabilityOfTerms",
+      "dcat:landingPage": {
+        "@id": "https://w3id.org/fair-metrics/general/FM_I2_M_ResolvabilityOfTerms"
+      },
+      "dc:description": "<p/>This metric evaluates whether the property terms (predicates or keys) used within the metadata record under evaluation are themselves resolvable.\n\n<p/>Implementations should inspect the structure or context of the metadata (such as a JSON-LD @context mapping or XML namespace declaration) to construct full URIs for the property terms. For example, if a record declares a @context of http://schema.org/ and uses the property term inLanguage, implementations should construct the URI http://schema.org/inLanguage and attempt to resolve it over HTTP(S).\n\n<p/>As a minimal implementation of Principle I2, a metadata record should receive a pass from test implementations of this metric if at least one property term URI can be constructed and resolves successfully. It receives a fail result if property term URIs can be constructed from the record but none of them resolve. If no URIs can be constructed from the property terms within the metadata record, the result is indeterminate.\n\n<p/>Why should we measure it?\n\n<p/>FAIR Principle I2 requires that metadata use vocabularies that follow FAIR principles, ensuring that descriptive terms can be unambiguously interpreted across systems. Verifying that metadata property terms resolve to active definitions allows automated tools to look up the underlying schema rules, preventing semantic misinterpretations and supporting consistent processing across the research community.\n",
+      "dcat:keyword": [
+        "FAIR",
+        "I2",
+        "resolvability",
+        "metadata"
+      ],
+      "http://www.w3.org/ns/dqv#inDimension": {
+        "@id": "https://doi.org/10.25504/FAIRsharing.96d4af"
+      },
+      "dcat:contactPoint": [
+        {
+          "@id": "_:g470460"
+        },
+        {
+          "@id": "_:g470480"
+        }
+      ],
+      "https://w3id.org/ftr#status": {
+        "@language": "en",
+        "@value": "Active"
+      },
+      "dc:issued": {
+        "@type": "xsd:date",
+        "@value": "2026-10-05"
+      },
+      "dc:modified": {
+        "@type": "xsd:date",
+        "@value": "2026-10-05"
+      },
+      "dcat:version": "Champion1.0",
+      "https://w3id.org/ftr#applicationArea": {
+        "@id": "http://www.fairsharing.org/ontology/subject/SRAO_0000401"
+      },
+      "dc:license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "https://w3id.org/ftr#supportedBy": {
+        "@id": "https://w3id.org/FAIR-Champion"
+      },
+      "https://w3id.org/dpv#isApplicableFor": {
+        "@id": "schemas:CreativeWork"
+      }
+    },
+    {
+      "@id": "_:g470460",
+      "@type": "vcard:Individual",
+      "vcard:fn": "Allyson L. Lister",
+      "http://vivoweb.org/ontology/core#orcidId": {
+        "@id": "http://orcid.org/0000-0002-7702-4495"
+      },
+      "vcard:hasEmail": {
+        "@id": "mailto:allyson.lister@oerc.ox.ac.uk"
+      }
+    },
+    {
+      "@id": "_:g470480",
+      "@type": "vcard:Individual",
+      "vcard:fn": "Mark D. Wilkinson",
+      "vcard:organization-name": "Wilkinson Laboratory, UPM, Madrid",
+      "vcard:hasEmail": {
+        "@id": "mailto:mark.wilkinson@upm.es"
+      }
+    }
+  ]
+}
