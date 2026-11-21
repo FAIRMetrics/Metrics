@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.3.1] - 2026-11-21
+
+### Fixed
+- JSON-LD generation failed for every TTL file (`undefined method '[]' for JSON::Ext::Generator::State`) after the `json` gem was upgraded to 3.x, which removed `State#[]`. `multi_json` 1.21 calls it on the serializer options that `json-ld` passes in. Added a conditional `[]` to the existing `State` monkey patch. It is defined only when the method is missing, so behaviour under `json` 2.x is unchanged. Mark Wilkinson required that the fix stay compatible with his own command-line runs of the script.
+
+### Documentation
+- Header comment and `--help` banner already document the correct invocation: `cd docs/ruby_web_generation_scripts && ruby convert_ttl.rb -i .. -o ..`.
+
 ## [1.3.0] - 2026-05-25
 
 ### Changed
