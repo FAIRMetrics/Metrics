@@ -4,7 +4,6 @@
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
     "xsd": "http://www.w3.org/2001/XMLSchema#",
     "dc": "http://purl.org/dc/terms/",
-    "schemas": "https://schema.org/",
     "vcard": "http://www.w3.org/2006/vcard/ns#"
   },
   "@graph": [
@@ -41,7 +40,7 @@
         "@value": "Active"
       },
       "dcat:contactPoint": {
-        "@id": "_:g462580"
+        "@id": "_:g462820"
       },
       "dc:issued": {
         "@type": "xsd:date",
@@ -70,11 +69,11 @@
         "@id": "https://w3id.org/FAIR-Champion"
       },
       "https://w3id.org/dpv#isApplicableFor": {
-        "@id": "schemas:CreativeWork"
+        "@id": "dcat:DataService"
       }
     },
     {
-      "@id": "_:g462580",
+      "@id": "_:g462820",
       "@type": "vcard:Individual",
       "vcard:fn": "Mark D. Wilkinson",
       "vcard:organization-name": "Wilkinson Laboratory, UPM, Madrid",

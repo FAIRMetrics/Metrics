@@ -62,6 +62,15 @@ class JSON::Ext::Generator::State
     # Convert to real Hash, drop keys, then reconstruct (safe since to_h exists)
     to_h.except(*keys)
   end
+
+  # multi_json >= 1.21 reads options[:adapter] from the serializer options,
+  # which json-ld passes as a State object. json 2.x State has [] natively;
+  # json 3.x removed it, so only add it when missing (no-op on older gems).
+  unless method_defined?(:[])
+    def [](key)
+      to_h[key]
+    end
+  end
 end
 
 class TTLConverter
