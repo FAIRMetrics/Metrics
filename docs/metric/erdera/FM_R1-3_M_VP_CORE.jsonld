@@ -26,7 +26,7 @@
       "dcat:landingPage": {
         "@id": "https://w3id.org/fair-metrics/erdera/FM_R1-3_M_VP_CORE"
       },
-      "dc:description": "The ERDERA Project has strict requirements for minimal \n    metadata to onboard their Virtual Platform. \n    This metric evaluates whether the metadata provided for a Virtual Platform \n    meets the ERDERA expectations for a 'useful' metadata record.  \n    These include a title with at least 4 words, and a description with at least 200 characters.",
+      "dc:description": "The ERDERA Project has strict requirements for minimal \n    metadata to onboard their Virtual Platform. \n    This metric evaluates whether the metadata provided for a Virtual Platform \n    meets the ERDERA expectations for a 'useful' metadata record.\n    Titles and descriptions are used for discovery, so they must contain words that a\n    searcher could actually use. The title must contain at least 1 distinctive word, and\n    the description must contain at least 2 distinctive words that do not already appear\n    in the title. A distinctive word is one that is not generic: common English stopwords,\n    words naming the type of record (e.g. dataset, catalog, registry), placeholders\n    (e.g. test, TBD, lorem ipsum), words shared by every ERDERA record (e.g. rare, disease,\n    patients, research), and promotional filler (e.g. comprehensive, valuable, provides).\n    The aim is to reject placeholder and boilerplate metadata (e.g. a description of\n    'a dataset'), not to grade the quality of the writing.",
       "dcat:keyword": [
         "FAIR",
         "R1.3",

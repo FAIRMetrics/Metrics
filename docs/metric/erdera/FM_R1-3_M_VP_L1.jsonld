@@ -26,7 +26,7 @@
       "dcat:landingPage": {
         "@id": "https://w3id.org/fair-metrics/erdera/FM_R1-3_M_VP_L1"
       },
-      "dc:description": "The ERDERA Project has strict requirements for minimal metadata to onboard their Virtual Platform. \n                            These include: Migration away from deprecated EJP purl properties to the w3id equivalents.  Presence of the VPDiscoverable prpoperty. Properties: dcat:theme dcat:contactPoint dct:description\n                            dcat:keyword dct:language dct:license\n                            dct:publisher dct:title dcat:contactPoint dcat:landingPage.  \n                        It does not extensively test the substructure of the dct:publisher, but it must be a foaf:Agent with a foaf:name.\n",
+      "dc:description": "The ERDERA Project has strict requirements for minimal metadata to onboard their Virtual Platform. \n                            These include: Migration away from deprecated EJP purl properties to the w3id equivalents.  Properties: dcat:theme dcat:contactPoint dct:description\n                            dcat:keyword dct:language dct:license\n                            dct:publisher dct:title dcat:landingPage.\n                        Registering a resource with the ERDERA Index is itself the request to be discovered by the Virtual Platform, so the record does not need to carry the ejprd:VPDiscoverable flag; the Index adds it.\n                        It does not extensively test the substructure of the dct:publisher, but it must be a foaf:Agent with a foaf:name.\n",
       "dcat:keyword": [
         "FAIR",
         "R1.3",
@@ -36,7 +36,7 @@
         "virtual platform"
       ],
       "dcat:contactPoint": {
-        "@id": "_:g461420"
+        "@id": "_:g462680"
       },
       "https://w3id.org/ftr#status": {
         "@language": "en",
@@ -48,7 +48,7 @@
       },
       "dc:modified": {
         "@type": "xsd:date",
-        "@value": "2026-04-06"
+        "@value": "2026-11-21"
       },
       "dcat:version": "Champion1.0",
       "https://w3id.org/ftr#applicationArea": [
@@ -73,7 +73,7 @@
       }
     },
     {
-      "@id": "_:g461420",
+      "@id": "_:g462680",
       "@type": "vcard:Individual",
       "vcard:fn": "Mark D. Wilkinson",
       "vcard:organization-name": "Wilkinson Laboratory, UPM, Madrid",

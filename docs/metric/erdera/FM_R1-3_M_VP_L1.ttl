@@ -21,9 +21,10 @@
     dcat:landingPage          <https://w3id.org/fair-metrics/erdera/FM_R1-3_M_VP_L1> ;
 
     dcterms:description       """The ERDERA Project has strict requirements for minimal metadata to onboard their Virtual Platform. 
-                            These include: Migration away from deprecated EJP purl properties to the w3id equivalents.  Presence of the VPDiscoverable prpoperty. Properties: dcat:theme dcat:contactPoint dct:description
+                            These include: Migration away from deprecated EJP purl properties to the w3id equivalents.  Properties: dcat:theme dcat:contactPoint dct:description
                             dcat:keyword dct:language dct:license
-                            dct:publisher dct:title dcat:contactPoint dcat:landingPage.  
+                            dct:publisher dct:title dcat:landingPage.
+                        Registering a resource with the ERDERA Index is itself the request to be discovered by the Virtual Platform, so the record does not need to carry the ejprd:VPDiscoverable flag; the Index adds it.
                         It does not extensively test the substructure of the dct:publisher, but it must be a foaf:Agent with a foaf:name.
 """;
     dcat:keyword              "FAIR", "R1.3", "identifier", "metadata", "ERDERA", "virtual platform"   ;
@@ -39,7 +40,7 @@
     ] ;
 	ftr:status "Active"@en ;
     dcterms:issued            "2026-04-06"^^xsd:date ;
-    dcterms:modified          "2026-04-06"^^xsd:date ;
+    dcterms:modified          "2026-11-21"^^xsd:date ;
 
     dcat:version              "Champion1.0" ;
 
