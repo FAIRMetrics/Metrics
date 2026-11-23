@@ -4,7 +4,6 @@
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
     "xsd": "http://www.w3.org/2001/XMLSchema#",
     "dc": "http://purl.org/dc/terms/",
-    "schemas": "https://schema.org/",
     "vcard": "http://www.w3.org/2006/vcard/ns#"
   },
   "@graph": [
@@ -48,7 +47,7 @@
       },
       "dc:modified": {
         "@type": "xsd:date",
-        "@value": "2026-11-21"
+        "@value": "2026-11-23"
       },
       "dcat:version": "Champion1.0",
       "https://w3id.org/ftr#applicationArea": [
@@ -69,7 +68,7 @@
         "@id": "https://w3id.org/FAIR-Champion"
       },
       "https://w3id.org/dpv#isApplicableFor": {
-        "@id": "schemas:CreativeWork"
+        "@id": "dcat:Dataset"
       }
     },
     {
